@@ -36,29 +36,11 @@
                         <ul class="list-group list-group-gap m-a-0">
                             <li class="list-group-item dark-white box-shadow-z0 b">
                               <span class="pull-left m-r">
-                                <img src="images/a0.jpg" alt="..." class="w-40 img-circle">
+                                <img src="back/images/a0.jpg" alt="..." class="w-40 img-circle">
                               </span>
                                 <span class="clear block">
                                 Use awesome <a href="#" class="text-primary">animate.css</a><br>
                                 <small class="text-muted">10 minutes ago</small>
-                              </span>
-                            </li>
-                            <li class="list-group-item dark-white box-shadow-z0 b">
-                              <span class="pull-left m-r">
-                                <img src="images/a1.jpg" alt="..." class="w-40 img-circle">
-                              </span>
-                                <span class="clear block">
-                                <a href="#" class="text-primary">Joe</a> Added you as friend<br>
-                                <small class="text-muted">2 hours ago</small>
-                              </span>
-                            </li>
-                            <li class="list-group-item dark-white text-color box-shadow-z0 b">
-                              <span class="pull-left m-r">
-                                <img src="images/a2.jpg" alt="..." class="w-40 img-circle">
-                              </span>
-                                <span class="clear block">
-                                <a href="#" class="text-primary">Danie</a> sent you a message<br>
-                                <small class="text-muted">1 day ago</small>
                               </span>
                             </li>
                         </ul>
@@ -69,7 +51,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link clear" data-toggle="dropdown">
                       <span class="avatar w-32">
-                        <img src="images/a3.jpg" class="w-full rounded" alt="...">
+                        <img src="back/images/a3.jpg" class="w-full rounded" alt="...">
                       </span>
                 </a>
                 <div class="dropdown-menu w dropdown-menu-scale pull-right">
@@ -89,7 +71,11 @@
                     <a class="dropdown-item" href="docs.html">
                         Need help?
                     </a>
-                    <a class="dropdown-item" href="signin.html">Sign out</a>
+                    <a class="dropdown-item" href="/logout" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Выйти</a>
+                    <form id="logout-form" action="/logout" method="POST" class="d-none">
+                        <input type="hidden" :value="csrf" name="_token">
+                    </form>
                 </div>
             </li>
         </ul>
