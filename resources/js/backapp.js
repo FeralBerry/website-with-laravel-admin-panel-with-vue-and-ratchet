@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import * as VueRouter from 'vue-router';
 
 import HeaderBackComponent from "./components/back/HeaderComponent";
+import ProfileComponent from "./components/back/ProfileComponent";
 import SettingsComponent from "./components/back/SettingsComponent";
 import LeftBarComponent from "./components/back/LeftBarComponent";
 import HomeComponent from "./components/back/HomeComponent";
@@ -11,6 +12,7 @@ import WebSocketComponent from "./components/back/WebSocketComponent";
 
 const routes = [
     {path: '/user', component: HomeComponent},
+    {path: '/user/profile', component: ProfileComponent},
     {path: '/user/settings', component: SettingsComponent},
 ];
 const router = VueRouter.createRouter({
@@ -23,6 +25,7 @@ app.use(router);
 
 app.component('back-header-component', HeaderBackComponent);
 app.component('settings-component', SettingsComponent);
+app.component('profile-component', ProfileComponent);
 app.component('left-bar-component', LeftBarComponent);
 app.component('home-component', HomeComponent);
 app.component('footer-component', FooterComponent);

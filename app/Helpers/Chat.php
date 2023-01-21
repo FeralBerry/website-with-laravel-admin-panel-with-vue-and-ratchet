@@ -26,7 +26,6 @@ class Chat implements MessageComponentInterface {
         $command = json_decode($msg);
         $user_id = $from->resourceId;
         if($command->command == 'connect'){
-
             /*$data = $this->chatController->connect($from,$command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
@@ -41,7 +40,7 @@ class Chat implements MessageComponentInterface {
             }*/
 
         }
-        elseif($command->command == 'reconnect'){
+        /*elseif($command->command == 'reconnect'){
             $data = [
                 'message' =>'reconnect'
             ];
@@ -202,7 +201,7 @@ class Chat implements MessageComponentInterface {
                     $client->send(json_encode($data));
                 }
             }
-        }
+        }*/
     }
     public function onClose(ConnectionInterface $conn) {
         $users = DB::table('users')

@@ -424,7 +424,7 @@
                 </div>
             </a>
             <div class="dropdown-menu w dropdown-menu-scale ">
-                <router-link class="dropdown-item" to="/user/settings">
+                <router-link class="dropdown-item" to="/user/profile">
                     <span>Profile</span>
                 </router-link>
                 <router-link class="dropdown-item" to="/user/settings">
