@@ -27,11 +27,11 @@
             <footer-component></footer-component>
         </div>
         <div class="app-body">
-            <router-view></router-view>
+            <router-view :data='{!! json_encode($data) !!}'></router-view>
         </div>
     </div>
     <!-- / -->
-    <!-- ############ SWITHCHER START-->
+    {{--<!-- ############ SWITHCHER START-->
     <div id="switcher">
         <div class="switcher dark-white" id="sw-theme">
             <a href="#" data-ui-toggle-class="active" data-ui-target="#sw-theme" class="dark-white sw-btn">
@@ -107,7 +107,7 @@
             </div>
         </div>
     </div>
-    <!-- ############ SWITHCHER END-->
+    <!-- ############ SWITHCHER END-->--}}
 
     <!-- ############ LAYOUT END-->
     <web-socket-component></web-socket-component>

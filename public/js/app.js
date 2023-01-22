@@ -21556,7 +21556,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fa fa-search"
 })])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / search form ")])], -1 /* HOISTED */);
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<li class=\"nav-item dropdown pos-stc-xs\"><a class=\"nav-link clear\" data-toggle=\"dropdown\"><i class=\"ion-android-notifications-none w-24\"></i><span class=\"label up p-a-0 danger\"></span></a><!-- dropdown --><div class=\"dropdown-menu pull-right w-xl animated fadeIn no-bg no-border no-shadow\"><div class=\"scrollable\" style=\"max-height:220px;\"><ul class=\"list-group list-group-gap m-a-0\"><li class=\"list-group-item dark-white box-shadow-z0 b\"><span class=\"pull-left m-r\"><img src=\"back/images/a0.jpg\" alt=\"...\" class=\"w-40 img-circle\"></span><span class=\"clear block\"> Use awesome <a href=\"#\" class=\"text-primary\">animate.css</a><br><small class=\"text-muted\">10 minutes ago</small></span></li></ul></div></div><!-- / dropdown --></li>", 1);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<li class=\"nav-item dropdown pos-stc-xs\"><a class=\"nav-link clear\" data-toggle=\"dropdown\"><i class=\"ion-android-notifications-none w-24\"></i><span class=\"label up p-a-0 danger\"></span></a><!-- dropdown --><div class=\"dropdown-menu pull-right w-xl animated fadeIn no-bg no-border no-shadow\"><div class=\"scrollable\" style=\"max-height:220px;\"><ul class=\"list-group list-group-gap m-a-0\"><li class=\"list-group-item dark-white box-shadow-z0 b\"><span class=\"pull-left m-r\"><img src=\"/back/images/a0.jpg\" alt=\"...\" class=\"w-40 img-circle\"></span><span class=\"clear block\"> Use awesome <a href=\"#\" class=\"text-primary\">animate.css</a><br><small class=\"text-muted\">10 minutes ago</small></span></li></ul></div></div><!-- / dropdown --></li>", 1);
 var _hoisted_7 = {
   "class": "nav-item dropdown"
 };
@@ -21566,32 +21566,59 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "avatar w-32"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "back/images/a3.jpg",
+  src: "/back/images/a3.jpg",
   "class": "w-full rounded",
   alt: "..."
 })])], -1 /* HOISTED */);
 var _hoisted_9 = {
   "class": "dropdown-menu w dropdown-menu-scale pull-right"
 };
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<a class=\"dropdown-item\" href=\"profile.html\"><span>Profile</span></a><a class=\"dropdown-item\" href=\"setting.html\"><span>Settings</span></a><a class=\"dropdown-item\" href=\"app.inbox.html\"><span>Inbox</span></a><a class=\"dropdown-item\" href=\"app.message.html\"><span>Message</span></a><div class=\"dropdown-divider\"></div><a class=\"dropdown-item\" href=\"docs.html\"> Need help? </a>", 6);
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Free Courses", -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Profile", -1 /* HOISTED */);
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Settings", -1 /* HOISTED */);
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   "class": "dropdown-item",
   href: "/logout",
   onclick: "event.preventDefault();\n                                                     document.getElementById('logout-form').submit();"
 }, "Выйти", -1 /* HOISTED */);
-var _hoisted_17 = {
+var _hoisted_14 = {
   id: "logout-form",
   action: "/logout",
   method: "POST",
   "class": "d-none"
 };
-var _hoisted_18 = ["value"];
+var _hoisted_15 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" nabar right "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_4, [_hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" nabar right "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_4, [_hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    "class": "dropdown-item",
+    to: "/user/free/courses"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_10];
+    }),
+    _: 1 /* STABLE */
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    "class": "dropdown-item",
+    to: "/user/profile"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_11];
+    }),
+    _: 1 /* STABLE */
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    "class": "dropdown-item",
+    to: "/user/settings"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_12];
+    }),
+    _: 1 /* STABLE */
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<a class=\"dropdown-item\" href=\"app.inbox.html\">\n                        <span>Inbox</span>\n                    </a>\n                    <a class=\"dropdown-item\" href=\"app.message.html\">\n                        <span>Message</span>\n                    </a>\n                    <div class=\"dropdown-divider\"></div>\n                    <a class=\"dropdown-item\" href=\"docs.html\">\n                        Need help?\n                    </a>"), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
     value: $data.csrf,
     name: "_token"
-  }, null, 8 /* PROPS */, _hoisted_18)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / navbar right ")]);
+  }, null, 8 /* PROPS */, _hoisted_15)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / navbar right ")]);
 }
 
 /***/ }),
@@ -22096,21 +22123,17 @@ var _hoisted_6 = {
   action: "/login"
 };
 var _hoisted_7 = ["value"];
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"form-group\"><input type=\"text\" name=\"email\" class=\"login-input\" placeholder=\"Email\"><span class=\"input-icon\"><i class=\"fa fa-envelope-o\"></i></span></div><div class=\"form-group\"><input type=\"password\" class=\"login-input\" name=\"password\" placeholder=\"Pasword\"><span class=\"input-icon\"><i class=\"fa fa-lock\"></i></span></div>", 2);
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "button-fullwidth cws-button bt-color-3 border-radius"
-}, "CREATE AN ACCOUNT", -1 /* HOISTED */);
-
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"form-group\"><input type=\"text\" name=\"email\" class=\"login-input\" placeholder=\"Email\"><span class=\"input-icon\"><i class=\"fa fa-envelope-o\"></i></span></div><div class=\"form-group\"><input type=\"password\" class=\"login-input\" name=\"password\" placeholder=\"Pasword\"><span class=\"input-icon\"><i class=\"fa fa-lock\"></i></span></div><button class=\"button-fullwidth cws-button bt-color-3 border-radius\">LOGIN</button>", 3);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_bread_crumb_component, {
     data: $props.data,
     key: $data.componentKey
-  }, null, 8 /* PROPS */, ["data"]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"form-group\">\n                                <input type=\"text\" class=\"login-input\" placeholder=\"Username\">\n                                <span class=\"input-icon\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-user\"></i>\n\t\t\t\t\t\t\t</span>\n                            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 8 /* PROPS */, ["data"]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     name: "_token",
     type: "hidden",
     value: $data.csrf
-  }, null, 8 /* PROPS */, _hoisted_7), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"form-group\">\n                                <input type=\"text\" class=\"login-input\" placeholder=\"Confirm pasword\">\n                                <span class=\"input-icon\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-lock\"></i>\n\t\t\t\t\t\t\t</span>\n                            </div>"), _hoisted_10])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" page content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"page-content woocommerce\">\n        &lt;!&ndash; contact form section &ndash;&gt;\n        <div class=\"grid-row clear-fix\">\n            <div class=\"grid-col-row\">\n                <div class=\"grid-col grid-col-8\">\n                    <section>\n                        <h2>Contact us</h2>\n                        <div class=\"widget-contact-form\">\n                            &lt;!&ndash; contact-form &ndash;&gt;\n                            <div class=\"info-boxes error-message alert-boxes error-alert\" id=\"feedback-form-errors\">\n                                <strong>Attention!</strong>\n                                <div class=\"message\"></div>\n                            </div>\n                            <div class=\"email_server_responce\"></div>\n                            <form action=\"php/contacts-process.php\" method=\"post\" class=\"contact-form alt clear-fix\">\n                                <input type=\"text\" name=\"name\" value=\"\" size=\"40\" placeholder=\"Your Name\" aria-invalid=\"false\" aria-required=\"true\">\n                                <input type=\"text\" name=\"email\" value=\"\" size=\"40\" placeholder=\"Your Email\" aria-required=\"true\">\n                                <input type=\"text\" name=\"subject\" value=\"\" size=\"40\" placeholder=\"Subject\" aria-invalid=\"false\" aria-required=\"true\">\n                                <textarea name=\"message\"  cols=\"40\" rows=\"3\" placeholder=\"Your Message\" aria-invalid=\"false\" aria-required=\"true\"></textarea>\n                                <input type=\"submit\" value=\"Send\" class=\"cws-button border-radius alt\">\n                            </form>\n                            &lt;!&ndash;/contact-form &ndash;&gt;\n                        </div>\n                    </section>\n                </div>\n                <div class=\"grid-col grid-col-4 widget-address\">\n                    <section>\n                        <h2>Our Offices</h2>\n                        <address>\n                            <p>Donec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis justo at suscipit. Etiam id faucibus augue, sit amet ultricies nisi.</p>\n                            <p><strong class=\"fs-18\">Address:</strong><br/>250 Biscayne Blvd. (North) 11st Floor<br/>New World Tower Miami, Florida 33148</p>\n                            <p><strong class=\"fs-18\">Phone number:</strong><br/>\n                                <a href=\"tel:305-333552\">(305)333-5522</a><br/>\n                                <a href=\"tel:305-333552\">(305)333-5522</a>\n                            </p>\n                            <p><strong class=\"fs-18\">E-mail:</strong><br/>\n                                <a href=\"mailto:uni@domain.com\">uni@domain.com</a><br/>\n                                <a href=\"mailto:uni@domain.com\">sales@your-site.com</a>\n                            </p>\n                        </address>\n                    </section>\n                </div>\n            </div>\n        </div>\n        &lt;!&ndash; / contact form section &ndash;&gt;\n    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / page content ")], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, _hoisted_7), _hoisted_8])])])])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -22213,7 +22236,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "hidden",
     value: $data.csrf,
     name: "_token"
-  }, null, 8 /* PROPS */, _hoisted_7), _hoisted_8])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" page content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"page-content woocommerce\">\n        &lt;!&ndash; contact form section &ndash;&gt;\n        <div class=\"grid-row clear-fix\">\n            <div class=\"grid-col-row\">\n                <div class=\"grid-col grid-col-8\">\n                    <section>\n                        <h2>Contact us</h2>\n                        <div class=\"widget-contact-form\">\n                            &lt;!&ndash; contact-form &ndash;&gt;\n                            <div class=\"info-boxes error-message alert-boxes error-alert\" id=\"feedback-form-errors\">\n                                <strong>Attention!</strong>\n                                <div class=\"message\"></div>\n                            </div>\n                            <div class=\"email_server_responce\"></div>\n                            <form action=\"php/contacts-process.php\" method=\"post\" class=\"contact-form alt clear-fix\">\n                                <input type=\"text\" name=\"name\" value=\"\" size=\"40\" placeholder=\"Your Name\" aria-invalid=\"false\" aria-required=\"true\">\n                                <input type=\"text\" name=\"email\" value=\"\" size=\"40\" placeholder=\"Your Email\" aria-required=\"true\">\n                                <input type=\"text\" name=\"subject\" value=\"\" size=\"40\" placeholder=\"Subject\" aria-invalid=\"false\" aria-required=\"true\">\n                                <textarea name=\"message\"  cols=\"40\" rows=\"3\" placeholder=\"Your Message\" aria-invalid=\"false\" aria-required=\"true\"></textarea>\n                                <input type=\"submit\" value=\"Send\" class=\"cws-button border-radius alt\">\n                            </form>\n                            &lt;!&ndash;/contact-form &ndash;&gt;\n                        </div>\n                    </section>\n                </div>\n                <div class=\"grid-col grid-col-4 widget-address\">\n                    <section>\n                        <h2>Our Offices</h2>\n                        <address>\n                            <p>Donec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis justo at suscipit. Etiam id faucibus augue, sit amet ultricies nisi.</p>\n                            <p><strong class=\"fs-18\">Address:</strong><br/>250 Biscayne Blvd. (North) 11st Floor<br/>New World Tower Miami, Florida 33148</p>\n                            <p><strong class=\"fs-18\">Phone number:</strong><br/>\n                                <a href=\"tel:305-333552\">(305)333-5522</a><br/>\n                                <a href=\"tel:305-333552\">(305)333-5522</a>\n                            </p>\n                            <p><strong class=\"fs-18\">E-mail:</strong><br/>\n                                <a href=\"mailto:uni@domain.com\">uni@domain.com</a><br/>\n                                <a href=\"mailto:uni@domain.com\">sales@your-site.com</a>\n                            </p>\n                        </address>\n                    </section>\n                </div>\n            </div>\n        </div>\n        &lt;!&ndash; / contact form section &ndash;&gt;\n    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / page content ")], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, _hoisted_7), _hoisted_8])])])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),

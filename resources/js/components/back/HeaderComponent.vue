@@ -36,7 +36,7 @@
                         <ul class="list-group list-group-gap m-a-0">
                             <li class="list-group-item dark-white box-shadow-z0 b">
                               <span class="pull-left m-r">
-                                <img src="back/images/a0.jpg" alt="..." class="w-40 img-circle">
+                                <img src="/back/images/a0.jpg" alt="..." class="w-40 img-circle">
                               </span>
                                 <span class="clear block">
                                 Use awesome <a href="#" class="text-primary">animate.css</a><br>
@@ -51,17 +51,21 @@
             <li class="nav-item dropdown">
                 <a class="nav-link clear" data-toggle="dropdown">
                       <span class="avatar w-32">
-                        <img src="back/images/a3.jpg" class="w-full rounded" alt="...">
+                        <img src="/back/images/a3.jpg" class="w-full rounded" alt="...">
                       </span>
                 </a>
                 <div class="dropdown-menu w dropdown-menu-scale pull-right">
-                    <a class="dropdown-item" href="profile.html">
+                    <router-link class="dropdown-item" to="/user/free/courses">
+                        <span>Free Courses</span>
+                    </router-link>
+                    <router-link class="dropdown-item" to="/user/profile">
                         <span>Profile</span>
-                    </a>
-                    <a class="dropdown-item" href="setting.html">
+                    </router-link>
+                    <router-link class="dropdown-item" to="/user/settings">
                         <span>Settings</span>
-                    </a>
-                    <a class="dropdown-item" href="app.inbox.html">
+                    </router-link>
+
+                    <!--<a class="dropdown-item" href="app.inbox.html">
                         <span>Inbox</span>
                     </a>
                     <a class="dropdown-item" href="app.message.html">
@@ -70,7 +74,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="docs.html">
                         Need help?
-                    </a>
+                    </a>-->
                     <a class="dropdown-item" href="/logout" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Выйти</a>
                     <form id="logout-form" action="/logout" method="POST" class="d-none">

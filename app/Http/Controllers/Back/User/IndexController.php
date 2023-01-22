@@ -17,4 +17,10 @@ class IndexController extends BackController
         ]);
         return view('back.user.index',['data' => $data]);
     }
+    public function profile(){
+        $data = array_merge($this->mainData(),[
+
+        ]);
+        return view('back.user.index',['data' => $data]);
+    }
 }

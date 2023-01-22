@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth', 'web']], function() {
         Route::group($user, function () {
             Route::get('/', ['uses' => 'IndexController@index', 'as' => 'back-user-index']);
             Route::get('/settings', ['uses' => 'IndexController@settings', 'as' => 'back-user-settings']);
+            Route::get('/profile', ['uses' => 'IndexController@profile', 'as' => 'back-user-profile']);
+            Route::get('/free/courses', ['uses' => 'FreeCoursesController@index', 'as' => 'back-free-courses-index']);
         });
     });
 });

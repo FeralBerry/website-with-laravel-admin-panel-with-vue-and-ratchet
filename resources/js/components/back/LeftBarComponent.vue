@@ -3,7 +3,7 @@
         <!-- brand -->
         <router-link to="/user" class="navbar-brand">
             <div data-ui-include="'images/logo.svg'"></div>
-            <img src="back/images/logo.png" alt="." class="hide">
+            <img src="/back/images/logo.png" alt="." class="hide">
             <span class="hidden-folded inline">aside</span>
         </router-link>
         <!-- / brand -->
@@ -24,12 +24,12 @@
                     </router-link>
                 </li>
                 <li>
-                    <a href="app.project.html" class="b-success">
+                    <router-link to="/user/free/courses" class="b-success">
           <span class="nav-icon text-white no-fade">
             <i class="ion-android-apps"></i>
           </span>
                         <span class="nav-text">Projects</span>
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a href="app.inbox.html" class="b-info">
@@ -413,7 +413,7 @@
             <a data-toggle="dropdown">
                 <div class="pull-left">
                     <div class="inline"><span class="avatar w-40 grey">JR</span></div>
-                    <img src="back/images/a0.jpg" alt="..." class="w-40 img-circle hide">
+                    <img src="/back/images/a0.jpg" alt="..." class="w-40 img-circle hide">
                 </div>
                 <div class="clear hidden-folded p-x">
                     <span class="block _500 text-muted">Jean Reyes</span>
@@ -430,7 +430,7 @@
                 <router-link class="dropdown-item" to="/user/settings">
                     <span>Settings</span>
                 </router-link>
-                <a class="dropdown-item" href="app.inbox.html">
+                <!--<a class="dropdown-item" href="app.inbox.html">
                     <span>Inbox</span>
                 </a>
                 <a class="dropdown-item" href="app.message.html">
@@ -439,7 +439,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="docs.html">
                     Need help?
-                </a>
+                </a>-->
                 <a class="dropdown-item" href="/logout" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Выйти</a>
                 <form id="logout-form" action="/logout" method="POST" class="d-none">
