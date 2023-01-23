@@ -28,7 +28,7 @@
           <span class="nav-icon text-white no-fade">
             <i class="ion-android-apps"></i>
           </span>
-                        <span class="nav-text">Projects</span>
+                        <span class="nav-text">Бесплатные курсы</span>
                     </router-link>
                 </li>
                 <li>
@@ -424,19 +424,19 @@
                 </div>
             </a>
             <div class="dropdown-menu w dropdown-menu-scale ">
+                <router-link class="dropdown-item" to="/user/free/courses">
+                    <span>Бесплатные курсы</span>
+                </router-link>
+                <div class="dropdown-divider"></div>
                 <router-link class="dropdown-item" to="/user/profile">
-                    <span>Profile</span>
+                    <span>Профиль</span>
                 </router-link>
                 <router-link class="dropdown-item" to="/user/settings">
-                    <span>Settings</span>
+                    <span>Настройки</span>
                 </router-link>
                 <!--<a class="dropdown-item" href="app.inbox.html">
                     <span>Inbox</span>
                 </a>
-                <a class="dropdown-item" href="app.message.html">
-                    <span>Message</span>
-                </a>
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="docs.html">
                     Need help?
                 </a>-->

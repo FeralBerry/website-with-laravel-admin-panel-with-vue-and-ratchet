@@ -1,6 +1,6 @@
 <?php
 namespace App\Helpers;
-use App\Http\Controllers\Front\ChatController;
+use App\Http\Controllers\Back\ChatController;
 use Illuminate\Support\Facades\DB;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -26,19 +26,18 @@ class Chat implements MessageComponentInterface {
         $command = json_decode($msg);
         $user_id = $from->resourceId;
         if($command->command == 'connect'){
-            /*$data = $this->chatController->connect($from,$command);
+            $data = $this->chatController->connect($from,$command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
-            $data2 = $this->chatController->connection($from,$command);
+            /*$data2 = $this->chatController->connection($from,$command);
             foreach ($this->clients as $client) {
                 if ($from !== $client) {
                     $client->send(json_encode($data2));
                 }
             }*/
-
         }
         /*elseif($command->command == 'reconnect'){
             $data = [

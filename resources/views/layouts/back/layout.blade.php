@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="user_id" content="{{ Auth::user()->id }}">
+    <meta name="user_id" content="{{ Auth::id() }}">
     @include('layouts.back.up_config')
 </head>
 <body>

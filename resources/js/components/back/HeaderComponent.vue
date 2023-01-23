@@ -56,13 +56,13 @@
                 </a>
                 <div class="dropdown-menu w dropdown-menu-scale pull-right">
                     <router-link class="dropdown-item" to="/user/free/courses">
-                        <span>Free Courses</span>
+                        <span>Бесплатные курсы</span>
                     </router-link>
                     <router-link class="dropdown-item" to="/user/profile">
-                        <span>Profile</span>
+                        <span>Профиль</span>
                     </router-link>
                     <router-link class="dropdown-item" to="/user/settings">
-                        <span>Settings</span>
+                        <span>Настройки</span>
                     </router-link>
 
                     <!--<a class="dropdown-item" href="app.inbox.html">

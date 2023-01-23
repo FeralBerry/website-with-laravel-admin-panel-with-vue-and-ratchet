@@ -35,4 +35,10 @@ class FreeCoursesController extends BackController
         ]);
         return view('back.user.index',['data' => $data]);
     }
+    public function singleCourse($id){
+        $data = array_merge($this->mainData(),[
+
+        ]);
+        return view('back.user.index',['data' => $data]);
+    }
 }

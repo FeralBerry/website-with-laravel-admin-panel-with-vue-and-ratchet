@@ -1,15 +1,16 @@
 <?php
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\Friends;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
     public function connection($from,$command){
-        $users = DB::table('users')
+        /*$users = DB::table('users')
             ->where('connectionId',$from->resourceId)
             ->get();
         foreach ($users as $user){
@@ -20,54 +21,21 @@ class ChatController extends Controller
             'user_id' => $command->user_id,
             'status' => $status,
         ];
-        return $data;
+        return $data;*/
     }
     public function connect($from,$command){
-        $auth_user_id = $command->user_id;
-        $connection_id = $from->resourceId;
-        $friends = DB::table('friends')
-            ->where('user_id',$auth_user_id)
-            ->whereRaw('friends.user_id != friends.friend_id')
-            ->get();
         DB::table('users')
-            ->where('id',$auth_user_id)
+            ->where('id',$command->user_id)
             ->update([
-                'online' => 1,
-                'connectionId' => $connection_id,
+                'connection_id' => $from->resourceId
             ]);
-        $users = DB::table('users')
-            ->select([
-                'id',
-                'name',
-                'avatar',
-                'online',
-                'status',
-            ])->get();
-        $friend = [];
-        foreach ($users as $user){
-            foreach ($friends as $item){
-                if($item->friend_id == $user->id){
-                    $items = [
-                        'id' => $user->id,
-                        'name' => $user->name,
-                        'avatar' => $user->avatar,
-                        'room_id' => $item->room_id,
-                        'status' => $user->status,
-                        'online' => $user->online
-                    ];
-                    $friend[] = $items;
-                }
-            }
-        }
-        $count_friend = count($friend);
         $data = [
-            'message' => 'friends_list',
-            'friends' => $friend,
-            'count_friend' => $count_friend,
+            'message' => 'new_connect',
+            'user_id' => $command->user_id,
         ];
         return $data;
     }
-    public function openChat($command){
+    /*public function openChat($command){
         $chat = DB::table('chat')
             ->where('room_id',$command->room_id)
             ->get();
@@ -538,5 +506,5 @@ class ChatController extends Controller
     }
     public function noAccessFriend($command){
 
-    }
+    }*/
 }

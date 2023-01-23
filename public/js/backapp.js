@@ -21090,8 +21090,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "FooterComponent",
   props: ['data'],
+  data: function data() {
+    return {
+      today: '',
+      date_now: ''
+    };
+  },
   mounted: function mounted() {},
-  created: function created() {}
+  created: function created() {
+    this.today = new Date();
+    this.date_now = this.today.getFullYear();
+  }
 });
 
 /***/ }),
@@ -21261,22 +21270,24 @@ __webpack_require__.r(__webpack_exports__);
   name: "WebSocketComponent",
   props: ['data'],
   data: function data() {
-    return {
-      user_id: document.querySelector('meta[name="user_id"]').content
-    };
+    return {};
   },
   mounted: function mounted() {},
   created: function created() {
     var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
     /*var protocol = 'ws://';
     if (window.location.protocol === 'https:') {
         protocol = 'wss://';
     }
     var wsUri =protocol+ "127.0.0.1:4710";
     this.connection = new WebSocket(wsUri)*/
-    connection.onmessage = function (event) {};
+    connection.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      if (data.message === 'new_message') {}
+    };
     connection.onopen = function (event) {
-      connection.send('{"command":"connect","user_id":"' + this.user_id + '"}');
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
       console.log("Соединение установлено");
     };
   }
@@ -21299,13 +21310,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "pull-right text-sm text-muted"
-}, "Version 1.0.1", -1 /* HOISTED */);
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+}, "Version 1.0.3", -1 /* HOISTED */);
+var _hoisted_2 = {
   "class": "text-sm text-muted"
-}, "© Copyright.", -1 /* HOISTED */);
-
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, _hoisted_2], 64 /* STABLE_FRAGMENT */);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_2, "© Copyright. 2020 - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.date_now), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -21321,8 +21331,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "render": () => (/* binding */ render)
 /* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return null;
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, " course ");
 }
 
 /***/ }),
@@ -21533,9 +21545,9 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_9 = {
   "class": "dropdown-menu w dropdown-menu-scale pull-right"
 };
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Free Courses", -1 /* HOISTED */);
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Profile", -1 /* HOISTED */);
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Settings", -1 /* HOISTED */);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Бесплатные курсы", -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Профиль", -1 /* HOISTED */);
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Настройки", -1 /* HOISTED */);
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   "class": "dropdown-item",
   href: "/logout",
@@ -21660,7 +21672,7 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 })], -1 /* HOISTED */);
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-text"
-}, "Projects", -1 /* HOISTED */);
+}, "Бесплатные курсы", -1 /* HOISTED */);
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<li><a href=\"app.inbox.html\" class=\"b-info\"><span class=\"nav-icon text-white no-fade\"><i class=\"ion-email\"></i></span><span class=\"nav-text\">Inbox</span></a></li><li><a href=\"app.message.html\" class=\"b-default\"><span class=\"nav-label\"><b class=\"label label-xs rounded danger\"></b></span><span class=\"nav-icon\"><i class=\"ion-chatbubble-working\"></i></span><span class=\"nav-text\">Messages</span></a></li><li><a href=\"app.contact.html\" class=\"b-default\"><span class=\"nav-icon\"><i class=\"ion-person\"></i></span><span class=\"nav-text\">Contacts</span></a></li><li class=\"nav-header hidden-folded m-t\"><span class=\"text-xs\">UI Elements</span></li><li><a><span class=\"nav-caret\"><i class=\"fa fa-caret-down\"></i></span><span class=\"nav-icon\"><i class=\"ion-plus-circled\"></i></span><span class=\"nav-text\">UI kit</span></a><ul class=\"nav-sub nav-mega nav-mega-3\"><li><a href=\"ui.arrow.html\"><span class=\"nav-text\">Arrow</span></a></li><li><a href=\"ui.box.html\"><span class=\"nav-text\">Box</span></a></li><li><a href=\"ui.button.html\"><span class=\"nav-text\">Button</span></a></li><li><a href=\"ui.color.html\"><span class=\"nav-text\">Color</span></a></li><li><a href=\"ui.dropdown.html\"><span class=\"nav-text\">Dropdown</span></a></li><li><a href=\"ui.grid.html\"><span class=\"nav-text\">Grid</span></a></li><li><a href=\"ui.icon.html\"><span class=\"nav-text\">Icon</span></a></li><li><a href=\"ui.label.html\"><span class=\"nav-text\">Label</span></a></li><li><a href=\"ui.list.html\"><span class=\"nav-text\">List Group</span></a></li><li><a href=\"ui.modal.html\"><span class=\"nav-text\">Modal</span></a></li><li><a href=\"ui.nav.html\"><span class=\"nav-text\">Nav</span></a></li><li><a href=\"ui.progress.html\"><span class=\"nav-text\">Progress</span></a></li><li><a href=\"ui.social.html\"><span class=\"nav-text\">Social</span></a></li><li><a href=\"ui.sortable.html\"><span class=\"nav-text\">Sortable</span></a></li><li><a href=\"ui.streamline.html\"><span class=\"nav-text\">Streamline</span></a></li><li><a href=\"ui.timeline.html\"><span class=\"nav-text\">Timeline</span></a></li><li><a href=\"map.vector.html\"><span class=\"nav-text\">Vector Map</span></a></li><li><a href=\"ui.widget.html\"><span class=\"nav-text\">Widget</span></a></li></ul></li><li><a><span class=\"nav-caret\"><i class=\"fa fa-caret-down\"></i></span><span class=\"nav-icon\"><i class=\"ion-ios-photos\"></i></span><span class=\"nav-text\">Pages</span></a><ul class=\"nav-sub nav-mega\"><li><a href=\"profile.html\"><span class=\"nav-text\">Profile</span></a></li><li><a href=\"setting.html\"><span class=\"nav-text\">Setting</span></a></li><li><a href=\"search.html\"><span class=\"nav-text\">Search</span></a></li><li><a href=\"faq.html\"><span class=\"nav-text\">FAQ</span></a></li><li><a href=\"gallery.html\"><span class=\"nav-text\">Gallery</span></a></li><li><a href=\"invoice.html\"><span class=\"nav-text\">Invoice</span></a></li><li><a href=\"price.html\"><span class=\"nav-text\">Price</span></a></li><li><a href=\"blank.html\"><span class=\"nav-text\">Blank</span></a></li><li><a href=\"signin.html\"><span class=\"nav-text\">Sign In</span></a></li><li><a href=\"signup.html\"><span class=\"nav-text\">Sign Up</span></a></li><li><a href=\"forgot-password.html\"><span class=\"nav-text\">Forgot Password</span></a></li><li><a href=\"lockme.html\"><span class=\"nav-text\">Lockme Screen</span></a></li><li><a href=\"404.html\"><span class=\"nav-text\">Error 404</span></a></li><li><a href=\"505.html\"><span class=\"nav-text\">Error 505</span></a></li></ul></li><li><a><span class=\"nav-caret\"><i class=\"fa fa-caret-down\"></i></span><span class=\"nav-icon\"><i class=\"ion-checkmark-circled\"></i></span><span class=\"nav-text\">Form</span></a><ul class=\"nav-sub\"><li><a href=\"form.layout.html\"><span class=\"nav-text\">Form Layout</span></a></li><li><a href=\"form.element.html\"><span class=\"nav-text\">Form Element</span></a></li><li><a href=\"form.validation.html\"><span class=\"nav-text\">Form Validation</span></a></li><li><a href=\"form.select.html\"><span class=\"nav-text\">Select</span></a></li><li><a href=\"form.editor.html\"><span class=\"nav-text\">Editor</span></a></li><li><a href=\"form.picker.html\"><span class=\"nav-text\">Picker</span></a></li><li><a href=\"form.wizard.html\"><span class=\"nav-text\">Wizard</span></a></li><li><a href=\"form.dropzone.html\" class=\"no-ajax\"><span class=\"nav-text\">File Upload</span></a></li><li><a href=\"form.calendar.html\"><span class=\"nav-text\">Calendar</span></a></li></ul></li><li><a><span class=\"nav-caret\"><i class=\"fa fa-caret-down\"></i></span><span class=\"nav-icon\"><i class=\"ion-ios-grid-view\"></i></span><span class=\"nav-text\">Tables</span></a><ul class=\"nav-sub\"><li><a href=\"static.html\"><span class=\"nav-text\">Static table</span></a></li><li><a href=\"datatable.html\"><span class=\"nav-text\">Datatable</span></a></li><li><a href=\"footable.html\"><span class=\"nav-text\">Footable</span></a></li></ul></li><li><a><span class=\"nav-caret\"><i class=\"fa fa-caret-down\"></i></span><span class=\"nav-icon\"><i class=\"ion-pie-graph\"></i></span><span class=\"nav-text\">Charts</span></a><ul class=\"nav-sub\"><li><a href=\"chart.html\"><span class=\"nav-text\">Chart</span></a></li><li><a href=\"chartjs.html\"><span class=\"nav-text\">Chartjs</span></a></li><li><a><span class=\"nav-caret\"><i class=\"fa fa-caret-down\"></i></span><span class=\"nav-text\">Echarts</span></a><ul class=\"nav-sub\"><li><a href=\"echarts-line.html\"><span class=\"nav-text\">line</span></a></li><li><a href=\"echarts-bar.html\"><span class=\"nav-text\">Bar</span></a></li><li><a href=\"echarts-pie.html\"><span class=\"nav-text\">Pie</span></a></li><li><a href=\"echarts-scatter.html\"><span class=\"nav-text\">Scatter</span></a></li><li><a href=\"echarts-radar-chord.html\"><span class=\"nav-text\">Radar &amp; Chord</span></a></li><li><a href=\"echarts-gauge-funnel.html\"><span class=\"nav-text\">Gauges &amp; Funnel</span></a></li><li><a href=\"echarts-map.html\"><span class=\"nav-text\">Map</span></a></li></ul></li></ul></li>", 9);
 var _hoisted_22 = {
   "data-flex-no-shrink": ""
@@ -21672,20 +21684,24 @@ var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticV
 var _hoisted_25 = {
   "class": "dropdown-menu w dropdown-menu-scale"
 };
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Profile", -1 /* HOISTED */);
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Settings", -1 /* HOISTED */);
-var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Бесплатные курсы", -1 /* HOISTED */);
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "dropdown-divider"
+}, null, -1 /* HOISTED */);
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Профиль", -1 /* HOISTED */);
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Настройки", -1 /* HOISTED */);
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   "class": "dropdown-item",
   href: "/logout",
   onclick: "event.preventDefault();\n                                                     document.getElementById('logout-form').submit();"
 }, "Выйти", -1 /* HOISTED */);
-var _hoisted_29 = {
+var _hoisted_31 = {
   id: "logout-form",
   action: "/logout",
   method: "POST",
   "class": "d-none"
 };
-var _hoisted_30 = ["value"];
+var _hoisted_32 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" brand "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
@@ -21714,10 +21730,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1 /* STABLE */
   })]), _hoisted_13])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     "class": "dropdown-item",
-    to: "/user/profile"
+    to: "/user/free/courses"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_26];
+    }),
+    _: 1 /* STABLE */
+  }), _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    "class": "dropdown-item",
+    to: "/user/profile"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_28];
     }),
     _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
@@ -21725,14 +21749,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     to: "/user/settings"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_27];
+      return [_hoisted_29];
     }),
     _: 1 /* STABLE */
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<a class=\"dropdown-item\" href=\"app.inbox.html\">\n                    <span>Inbox</span>\n                </a>\n                <a class=\"dropdown-item\" href=\"app.message.html\">\n                    <span>Message</span>\n                </a>\n                <div class=\"dropdown-divider\"></div>\n                <a class=\"dropdown-item\" href=\"docs.html\">\n                    Need help?\n                </a>"), _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<a class=\"dropdown-item\" href=\"app.inbox.html\">\n                    <span>Inbox</span>\n                </a>\n                <a class=\"dropdown-item\" href=\"docs.html\">\n                    Need help?\n                </a>"), _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
     value: $data.csrf,
     name: "_token"
-  }, null, 8 /* PROPS */, _hoisted_30)])])])])], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, _hoisted_32)])])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
