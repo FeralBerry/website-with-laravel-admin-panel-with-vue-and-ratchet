@@ -19,6 +19,8 @@ const routes = [
     {path: '/user/settings', component: SettingsComponent},
     {path: '/user/free/courses', component: FreeCoursesComponent},
     {path: '/user/free/course/:id', component: FreeCourseComponent},
+    {path: '/user/free/course/:course/:id', component: FreeCourseArticlePageComponent},
+
 ];
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(''),

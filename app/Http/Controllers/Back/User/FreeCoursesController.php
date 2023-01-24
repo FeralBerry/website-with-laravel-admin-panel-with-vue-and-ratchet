@@ -39,8 +39,22 @@ class FreeCoursesController extends BackController
             ->where('free_courses_name_id',$id)
             ->get();
         $data = array_merge($this->mainData(),[
-
+            'free_courses_navigate' => $free_courses_navigate
         ]);
-        return view('back.user.index',['data' => $data,'free_courses_navigate' => $free_courses_navigate]);
+        return view('back.user.index',['data' => $data]);
+    }
+    public function articlePage($course,$id){
+        $free_courses_navigate = DB::table('free_courses')
+            ->where('free_courses_name_id',$course)
+            ->get();
+        $page_content = DB::table('free_courses')
+            ->where('free_courses_name_id',$course)
+            ->where('id',$id)
+            ->get();
+        $data = array_merge($this->mainData(),[
+            'free_courses_navigate' => $free_courses_navigate,
+            'page_content' => $page_content
+        ]);
+        return view('back.user.index',['data' => $data]);
     }
 }

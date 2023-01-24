@@ -114,9 +114,6 @@
 </div>
 
 @include('layouts.back.down_config')
-@if(Route::currentRouteName() == 'back-free-course-article-page-index' || Route::currentRouteName() == 'back-free-course-index')
-    <script src="{{ asset('js/backcourses.js') }}"></script>
-@endif
 <script src="{{ asset('js/backapp.js') }}"></script>
 
 </body>
