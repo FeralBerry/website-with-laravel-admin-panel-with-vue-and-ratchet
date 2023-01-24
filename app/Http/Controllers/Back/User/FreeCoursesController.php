@@ -10,7 +10,6 @@ class FreeCoursesController extends BackController
         $free_courses_name = DB::table('free_courses_name')
             ->get();
         foreach ($free_courses_name as $courses_name => $value){
-
             $free_courses = DB::table('free_courses')
                 ->where('free_courses_name_id',$free_courses_name[$courses_name]->id)
                 ->get();
@@ -36,9 +35,12 @@ class FreeCoursesController extends BackController
         return view('back.user.index',['data' => $data]);
     }
     public function singleCourse($id){
+        $free_courses_navigate = DB::table('free_courses')
+            ->where('free_courses_name_id',$id)
+            ->get();
         $data = array_merge($this->mainData(),[
 
         ]);
-        return view('back.user.index',['data' => $data]);
+        return view('back.user.index',['data' => $data,'free_courses_navigate' => $free_courses_navigate]);
     }
 }

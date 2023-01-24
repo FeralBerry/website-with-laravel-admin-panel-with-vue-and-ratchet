@@ -6,6 +6,7 @@ use App\Http\Controllers\Back\BackController;
 class IndexController extends BackController
 {
     public function index(){
+
         $data = array_merge($this->mainData(),[
 
         ]);
@@ -23,4 +24,5 @@ class IndexController extends BackController
         ]);
         return view('back.user.index',['data' => $data]);
     }
+
 }
