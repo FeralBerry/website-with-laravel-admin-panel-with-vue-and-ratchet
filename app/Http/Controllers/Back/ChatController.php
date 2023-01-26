@@ -35,6 +35,17 @@ class ChatController extends Controller
         ];
         return $data;
     }
+    public function open_course($command){
+        $free_courses = DB::table('free_courses')
+            ->where('free_courses_name_id',$command->course)
+            ->where('id',$command->course_id)
+            ->get();
+        $data = [
+            'message' => 'open_course',
+            'free_courses' => $free_courses
+        ];
+        return $data;
+    }
     /*public function openChat($command){
         $chat = DB::table('chat')
             ->where('room_id',$command->room_id)

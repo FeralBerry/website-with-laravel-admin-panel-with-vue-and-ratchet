@@ -1,7 +1,7 @@
 <template>
     <div class="padding">
         <div class="row">
-            <div class="col-sm-8" v-for="content in this.page_content">
+            <div class="col-sm-8" id="course_page">
 
             </div>
             <div class="col-sm-4">

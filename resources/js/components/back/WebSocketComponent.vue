@@ -32,6 +32,6 @@
                 connection.send('{"command":"connect","user_id":"'+user_id+'"}');
                 console.log("Соединение установлено");
             }
-        }
+        },
     }
 </script>
