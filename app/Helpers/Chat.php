@@ -47,6 +47,14 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif ($command->command == 'open_free_courses'){
+            $data = $this->chatController->open_free_courses();
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         /*elseif($command->command == 'reconnect'){
             $data = [
                 'message' =>'reconnect'
@@ -212,16 +220,15 @@ class Chat implements MessageComponentInterface {
     }
     public function onClose(ConnectionInterface $conn) {
         $users = DB::table('users')
-            ->where('connectionId',$conn->resourceId)
+            ->where('connection_id',$conn->resourceId)
             ->get();
         foreach ($users as $user){
             $user_id = $user->id;
         }
         DB::table('users')
-            ->where('connectionId',$conn->resourceId)
+            ->where('connection_id',$conn->resourceId)
             ->update([
-                'connectionId' => NULL,
-                'online' => 0,
+                'connection_id' => NULL,
             ]);
         $msg = [
             'message' => 'disconnected_user',

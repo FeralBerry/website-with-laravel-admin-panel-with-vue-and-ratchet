@@ -26,7 +26,7 @@
         <div class="app-footer white bg p-a b-t">
             <footer-component></footer-component>
         </div>
-        <div class="app-body">
+        <div class="app-body" id="app-body">
             <router-view :data='{!! json_encode($data) !!}'></router-view>
         </div>
     </div>
@@ -110,11 +110,9 @@
     <!-- ############ SWITHCHER END-->--}}
 
     <!-- ############ LAYOUT END-->
-    <web-socket-component></web-socket-component>
 </div>
 
 @include('layouts.back.down_config')
 <script src="{{ asset('js/backapp.js') }}"></script>
-
 </body>
 </html>

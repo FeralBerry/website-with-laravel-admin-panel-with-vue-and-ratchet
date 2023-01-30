@@ -10,8 +10,6 @@ import SettingsComponent from "./components/back/SettingsComponent";
 import LeftBarComponent from "./components/back/LeftBarComponent";
 import HomeComponent from "./components/back/HomeComponent";
 import FooterComponent from "./components/back/FooterComponent";
-import WebSocketComponent from "./components/back/WebSocketComponent";
-import FreeCourseArticlePageComponent from "./components/back/FreeCourseArticlePageComponent";
 
 const routes = [
     {path: '/user', component: HomeComponent},
@@ -19,8 +17,6 @@ const routes = [
     {path: '/user/settings', component: SettingsComponent},
     {path: '/user/free/courses', component: FreeCoursesComponent},
     {path: '/user/free/course/:id', component: FreeCourseComponent},
-    {path: '/user/free/course/:course/:id', component: FreeCourseArticlePageComponent},
-
 ];
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(''),
@@ -35,11 +31,9 @@ app.component('settings-component', SettingsComponent);
 app.component('profile-component', ProfileComponent);
 app.component('free-courses-component', FreeCoursesComponent);
 app.component('free-course-component', FreeCourseComponent);
-app.component('free-course-article-page-component', FreeCourseArticlePageComponent);
 app.component('left-bar-component', LeftBarComponent);
 app.component('home-component', HomeComponent);
 app.component('footer-component', FooterComponent);
-app.component('web-socket-component', WebSocketComponent);
 // Object.entries(import.meta.glob('./!**!/!*.vue', { eager: true })).forEach(([path, definition]) => {
 //     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
 // });

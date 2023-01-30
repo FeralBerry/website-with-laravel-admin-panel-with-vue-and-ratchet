@@ -1,13 +1,10 @@
 <?php
 namespace App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
-use App\Models\Chat;
-use App\Models\Friends;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class ChatController extends Controller
+class ChatController extends BackController
 {
     public function connection($from,$command){
         /*$users = DB::table('users')
@@ -40,9 +37,43 @@ class ChatController extends Controller
             ->where('free_courses_name_id',$command->course)
             ->where('id',$command->course_id)
             ->get();
+        DB::table('users')
+            ->where('id',$command->user_id)
+            ->update([
+                'last_open_free_course_id' => $command->course_id
+            ]);
         $data = [
             'message' => 'open_course',
             'free_courses' => $free_courses
+        ];
+        return $data;
+    }
+    public function open_free_courses(){
+        $free_courses_name = DB::table('free_courses_name')
+            ->get();
+        foreach ($free_courses_name as $courses_name => $value){
+            $free_courses = DB::table('free_courses')
+                ->where('free_courses_name_id',$free_courses_name[$courses_name]->id)
+                ->get();
+            $free_courses_tasks = DB::table('free_courses')
+                ->where('free_courses_name_id',$free_courses_name[$courses_name]->id)
+                ->where('type',1)
+                ->get();
+            $free_courses_lessons = DB::table('free_courses')
+                ->where('free_courses_name_id',$free_courses_name[$courses_name]->id)
+                ->where('type',0)
+                ->get();
+            $array = json_encode($free_courses_name[$courses_name]);
+            $array = json_decode(str_replace('"}','","count_article":"'.count($free_courses).'"}',$array));
+            $array = json_encode($array);
+            $array = json_decode(str_replace('"}','","count_tasks":"'.count($free_courses_tasks).'"}',$array));
+            $array = json_encode($array);
+            $array = json_decode(str_replace('"}','","count_lessons":"'.count($free_courses_lessons).'"}',$array));
+            $free_courses_name[$courses_name] = $array;
+        }
+        $data = [
+            'message' => 'open_free_courses',
+            'free_courses_name' => $free_courses_name
         ];
         return $data;
     }
