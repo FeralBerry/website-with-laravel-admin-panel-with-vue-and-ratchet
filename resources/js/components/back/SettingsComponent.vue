@@ -5,19 +5,19 @@
                 <div class="nav-active-border left b-primary">
                     <ul class="nav nav-sm">
                         <li class="nav-item">
-                            <a class="nav-link block active" href="#" data-toggle="tab" data-target="#tab-1">Profile</a>
+                            <a class="nav-link block active" href="#" data-toggle="tab" data-target="#tab-1">Профиль</a>
                         </li>
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-2">Account Settings</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-3">Emails</a>
+                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-4">Уведомления</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-4">Notifications</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-5">Security</a>
+                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-5">Сменить пароль</a>
                         </li>
                     </ul>
                 </div>
@@ -26,44 +26,34 @@
         <div class="col-sm-9 col-lg-10 light bg">
             <div class="tab-content pos-rlt">
                 <div class="tab-pane active" id="tab-1">
-                    <div class="p-a-md b-b _600">Public profile</div>
-                    <form role="form" class="p-a-md col-md-6">
-                        <div class="form-group">
-                            <label>Profile picture</label>
-                            <div class="form-file">
-                                <input type="file">
-                                <button class="btn white">Upload new picture</button>
+                    <div class="p-a-md b-b _600">Публичный профиль</div>
+                    <div class="row" style="padding: 10px">
+                        <form method="post" action="/user/profile/edit" enctype="multipart/form-data">
+                            <input type="hidden" name="_token" :value="csrf">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Профиль</label>
+                                    <div class="form-file" v-if="data.auth_user_avatar">
+                                        <img id="user_avatar" :src="data.auth_user_avatar" style="position:absolute;height: 300px;width: 300px;z-index: 1">
+                                        <input style="z-index: 3;position: absolute;width: 300px;height: 300px" id="profile_avatar" name="avatar" type="file">
+                                    </div>
+                                    <div class="form-file" v-else>
+                                        <img id="user_avatar" src="/back/img/avatar/no-img.png" style="position:absolute;height: 300px;width: 300px;z-index: 1">
+                                        <input style="z-index: 3;position: absolute;width: 300px;height: 300px" id="profile_avatar" name="avatar" type="file">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>First Name</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>URL</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Company</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Location</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="checkbox">
-                            <label class="ui-check">
-                                <input type="checkbox"><i class="dark-white"></i> Available for hire
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-info m-t">Update</button>
-                    </form>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input id="profile_name" name="name" type="text" class="form-control">
+                                </div>
+                                <button id="profile_update" class="btn btn-info m-t">Обновить</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="tab-pane" id="tab-2">
+                <!--<div class="tab-pane" id="tab-2">
                     <div class="p-a-md b-b _600">Account settings</div>
                     <form role="form" class="p-a-md col-md-6">
                         <div class="form-group">
@@ -111,7 +101,7 @@
                         </div>
                         <button type="submit" class="btn btn-info m-t">Update</button>
                     </form>
-                </div>
+                </div>-->
                 <div class="tab-pane" id="tab-4">
                     <div class="p-a-md b-b _600">Notifications</div>
                     <form role="form" class="p-a-md col-md-6">
@@ -193,11 +183,56 @@
     export default {
         name: "SettingsComponent",
         props: ['data'],
+        data(){
+            return {
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            }
+        },
         mounted() {
 
         },
         created() {
-
+            let connection = new WebSocket("ws://127.0.0.1:4710");
+            $(function(){
+                $("#profile_avatar").on("click", function(){
+                    let profile_avatar = document.getElementById('profile_avatar')[0].files[0];
+                    $.ajax({
+                        url: '/user/profile/edit/avatar',
+                        method: 'POST',
+                        data:{
+                            '_token'    :   this.csrf,
+                            'avatar'    :   profile_avatar,
+                        },
+                        success: function (data) {
+                            let user_avatar = document.getElementById('user_avatar');
+                            if(data.avatar === null){
+                                user_avatar.src = 'back/img/avatar/no-img.png';
+                            } else {
+                                user_avatar.src = 'back/img/avatar/'+data.avatar;
+                            }
+                        },
+                    });
+                })
+            });
+            $(function(){
+                $("#profile_update").on("click", function(){
+                    let profile_name = document.getElementById('profile_name').value;
+                    $.ajax({
+                        url: '/user/profile/edit',
+                        method: 'POST',
+                        data:{
+                            '_token'    :   this.csrf,
+                            'name'      :   profile_name
+                        },
+                        success: function (data) {
+                            alert('Success')
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            });
         }
     }
 </script>

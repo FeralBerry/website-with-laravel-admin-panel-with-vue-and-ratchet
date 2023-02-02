@@ -21192,7 +21192,7 @@ __webpack_require__.r(__webpack_exports__);
         app_body.innerHTML = '<div class="padding">' + '        <div class="row">' + '            <div class="col-sm-12 col-md-12">' + '                <div class="row" id="courses">' + '</div></div></div></div>';
         data.free_courses_name.map(function (item) {
           var courses = document.getElementById('courses');
-          courses.innerHTML += '<div class="col-xs-12 col-sm-6 col-md-4"><div class="box text-center" style="background-color: rgba(255, 255, 255, 0.9)">' + '<div class="p-a-md">' + '<img src="' + item.img + '" style="position: absolute;width: 100%;z-index: -1;margin-left: -50%;">' + '<a href="' + item.link + '" class="text-md block">' + item.title + '</a>' + '<p><small>' + item.brief + '</small></p>' + '<a href="' + item.link + '" class="btn btn-sm btn-outline rounded b-accent">Начать</a>' + '</div><div class="row row-col no-gutter b-t warn"><div class="col-xs-4 b-r">' + '<a href="' + item.link + '" class="p-y block text-center" data-ui-toggle-class="">' + '<strong class="block">' + item.count_article + '</strong>' + '<span class="block">Тем</span></a></div><div class="col-xs-4 b-r">' + '<a href="' + item.link + '" class="p-y block text-center" data-ui-toggle-class="">' + '<strong class="block">' + item.count_tasks + '</strong><span class="block">Заданий</span></a>' + '</div><div class="col-xs-4">' + '<a href="' + item.link + '" class="p-y block text-center" data-ui-toggle-class="">' + '<strong class="block">' + item.count_lessons + '</strong><span class="block">Уроков</span></a>' + '</div></div></div></div>';
+          courses.innerHTML += '<div class="col-xs-12 col-sm-6 col-md-4"><div class="box text-center" style="background-color: rgba(255, 255, 255, 0.9)">' + '<div class="p-a-md" style="min-height: 250px;">' + '<img src="' + item.img + '" style="position: absolute;width: 100%;z-index: -1;margin-left: -50%;">' + '<a href="' + item.link + '" class="text-md block">' + item.title + '</a>' + '<p><small>' + item.brief + '</small></p>' + '<a href="' + item.link + '" class="btn btn-sm btn-outline rounded b-accent">Начать</a>' + '</div><div class="row row-col no-gutter b-t warn"><div class="col-xs-4 b-r">' + '<a href="' + item.link + '" class="p-y block text-center" data-ui-toggle-class="">' + '<strong class="block">' + item.count_article + '</strong>' + '<span class="block">Тем</span></a></div><div class="col-xs-4 b-r">' + '<a href="' + item.link + '" class="p-y block text-center" data-ui-toggle-class="">' + '<strong class="block">' + item.count_tasks + '</strong><span class="block">Заданий</span></a>' + '</div><div class="col-xs-4">' + '<a href="' + item.link + '" class="p-y block text-center" data-ui-toggle-class="">' + '<strong class="block">' + item.count_lessons + '</strong><span class="block">Уроков</span></a>' + '</div></div></div></div>';
         });
       }
     };
@@ -21306,8 +21306,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SettingsComponent",
   props: ['data'],
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    };
+  },
   mounted: function mounted() {},
-  created: function created() {}
+  created: function created() {
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    $(function () {
+      $("#profile_avatar").on("click", function () {
+        var profile_avatar = document.getElementById('profile_avatar')[0].files[0];
+        $.ajax({
+          url: '/user/profile/edit/avatar',
+          method: 'POST',
+          data: {
+            '_token': this.csrf,
+            'avatar': profile_avatar
+          },
+          success: function success(data) {
+            var user_avatar = document.getElementById('user_avatar');
+            if (data.avatar === null) {
+              user_avatar.src = 'back/img/avatar/no-img.png';
+            } else {
+              user_avatar.src = 'back/img/avatar/' + data.avatar;
+            }
+          }
+        });
+      });
+    });
+    $(function () {
+      $("#profile_update").on("click", function () {
+        var profile_name = document.getElementById('profile_name').value;
+        $.ajax({
+          url: '/user/profile/edit',
+          method: 'POST',
+          data: {
+            '_token': this.csrf,
+            'name': profile_name
+          },
+          success: function success(data) {
+            alert('Success');
+          },
+          error: function error(_error) {
+            console.log(_error);
+          }
+        });
+      });
+    });
+  }
 });
 
 /***/ }),
@@ -21850,186 +21897,98 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_1 = {
   "class": "row-col"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-sm-3 col-lg-2 b-r"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "p-y"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "nav-active-border left b-primary"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
-  "class": "nav nav-sm"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "nav-item"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  "class": "nav-link block active",
-  href: "#",
-  "data-toggle": "tab",
-  "data-target": "#tab-1"
-}, "Profile")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "nav-item"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  "class": "nav-link block",
-  href: "#",
-  "data-toggle": "tab",
-  "data-target": "#tab-2"
-}, "Account Settings")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "nav-item"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  "class": "nav-link block",
-  href: "#",
-  "data-toggle": "tab",
-  "data-target": "#tab-3"
-}, "Emails")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "nav-item"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  "class": "nav-link block",
-  href: "#",
-  "data-toggle": "tab",
-  "data-target": "#tab-4"
-}, "Notifications")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "nav-item"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  "class": "nav-link block",
-  href: "#",
-  "data-toggle": "tab",
-  "data-target": "#tab-5"
-}, "Security")])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-sm-3 col-lg-2 b-r\"><div class=\"p-y\"><div class=\"nav-active-border left b-primary\"><ul class=\"nav nav-sm\"><li class=\"nav-item\"><a class=\"nav-link block active\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-1\">Профиль</a></li><!--&lt;li class=&quot;nav-item&quot;&gt;\n                            &lt;a class=&quot;nav-link block&quot; href=&quot;#&quot; data-toggle=&quot;tab&quot; data-target=&quot;#tab-2&quot;&gt;Account Settings&lt;/a&gt;\n                        &lt;/li&gt;\n                        &lt;li class=&quot;nav-item&quot;&gt;\n                            &lt;a class=&quot;nav-link block&quot; href=&quot;#&quot; data-toggle=&quot;tab&quot; data-target=&quot;#tab-3&quot;&gt;Emails&lt;/a&gt;\n                        &lt;/li&gt;--><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-4\">Уведомления</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-5\">Сменить пароль</a></li></ul></div></div></div>", 1);
+var _hoisted_3 = {
   "class": "col-sm-9 col-lg-10 light bg"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_4 = {
   "class": "tab-content pos-rlt"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_5 = {
   "class": "tab-pane active",
   id: "tab-1"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "p-a-md b-b _600"
-}, "Public profile"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  role: "form",
-  "class": "p-a-md col-md-6"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, "Публичный профиль", -1 /* HOISTED */);
+var _hoisted_7 = {
+  "class": "row",
+  style: {
+    "padding": "10px"
+  }
+};
+var _hoisted_8 = {
+  method: "post",
+  action: "/user/profile/edit",
+  enctype: "multipart/form-data"
+};
+var _hoisted_9 = ["value"];
+var _hoisted_10 = {
+  "class": "col-md-6"
+};
+var _hoisted_11 = {
   "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Profile picture"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Профиль", -1 /* HOISTED */);
+var _hoisted_13 = {
+  key: 0,
   "class": "form-file"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+};
+var _hoisted_14 = ["src"];
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  style: {
+    "z-index": "3",
+    "position": "absolute",
+    "width": "300px",
+    "height": "300px"
+  },
+  id: "profile_avatar",
+  name: "avatar",
   type: "file"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "btn white"
-}, "Upload new picture")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "First Name"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "form-control"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Last Name"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "form-control"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "URL"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "form-control"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Company"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "form-control"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Location"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "form-control"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "checkbox"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "ui-check"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "checkbox"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "dark-white"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Available for hire ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "submit",
-  "class": "btn btn-info m-t"
-}, "Update")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "tab-pane",
-  id: "tab-2"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "p-a-md b-b _600"
-}, "Account settings"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  role: "form",
-  "class": "p-a-md col-md-6"
+}, null, -1 /* HOISTED */);
+var _hoisted_16 = {
+  key: 1,
+  "class": "form-file"
+};
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  id: "user_avatar",
+  src: "/back/img/avatar/no-img.png",
+  style: {
+    "position": "absolute",
+    "height": "300px",
+    "width": "300px",
+    "z-index": "1"
+  }
+}, null, -1 /* HOISTED */);
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  style: {
+    "z-index": "3",
+    "position": "absolute",
+    "width": "300px",
+    "height": "300px"
+  },
+  id: "profile_avatar",
+  name: "avatar",
+  type: "file"
+}, null, -1 /* HOISTED */);
+var _hoisted_19 = [_hoisted_17, _hoisted_18];
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-6"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Client ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  disabled: "",
-  "class": "form-control",
-  value: "d6386c0651d6380745846efe300b9869"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Secret Key"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  disabled: "",
-  "class": "form-control",
-  value: "3f9573e88f65787d86d8a685aeb4bd13"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "App Name"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "form-control"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "App URL"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Name"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  id: "profile_name",
+  name: "name",
   type: "text",
   "class": "form-control"
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "submit",
+  id: "profile_update",
   "class": "btn btn-info m-t"
-}, "Update")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "tab-pane",
-  id: "tab-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "p-a-md b-b _600"
-}, "Emails"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  role: "form",
-  "class": "p-a-md col-md-6"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "E-mail me whenever"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "checkbox"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "ui-check"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "checkbox"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "dark-white"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Anyone posts a comment ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "checkbox"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "ui-check"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "checkbox"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "dark-white"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Anyone follow me ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "checkbox"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "ui-check"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "checkbox"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "dark-white"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Anyone send me a message ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "checkbox"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "ui-check"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "checkbox"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "dark-white"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Anyone invite me to group ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "submit",
-  "class": "btn btn-info m-t"
-}, "Update")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, "Обновить")], -1 /* HOISTED */);
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tab-pane",
   id: "tab-4"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -22072,7 +22031,8 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Anyone invite me to group ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "btn btn-info m-t"
-}, "Update")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, "Update")])], -1 /* HOISTED */);
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tab-pane",
   id: "tab-5"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -22107,10 +22067,23 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "btn btn-danger m-t",
   "data-toggle": "modal",
   "data-target": "#modal"
-}, "Delete Account")])])])])], -1 /* HOISTED */);
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div id=\"modal\" class=\"modal fade animate black-overlay\" data-backdrop=\"false\"><div class=\"row-col h-v\"><div class=\"row-cell v-m\"><div class=\"modal-dialog modal-sm\"><div class=\"modal-content flip-y\"><div class=\"modal-body text-center\"><p class=\"p-y m-t\"><i class=\"fa fa-remove text-warning fa-3x\"></i></p><p>Are you sure to delete your account?</p></div><div class=\"modal-footer\"><button type=\"button\" class=\"btn white p-x-md\" data-dismiss=\"modal\">No</button><button type=\"button\" class=\"btn btn-danger p-x-md\" data-dismiss=\"modal\">Yes</button></div></div><!-- /.modal-content --></div></div></div></div>", 1);
+}, "Delete Account")])], -1 /* HOISTED */);
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div id=\"modal\" class=\"modal fade animate black-overlay\" data-backdrop=\"false\"><div class=\"row-col h-v\"><div class=\"row-cell v-m\"><div class=\"modal-dialog modal-sm\"><div class=\"modal-content flip-y\"><div class=\"modal-body text-center\"><p class=\"p-y m-t\"><i class=\"fa fa-remove text-warning fa-3x\"></i></p><p>Are you sure to delete your account?</p></div><div class=\"modal-footer\"><button type=\"button\" class=\"btn white p-x-md\" data-dismiss=\"modal\">No</button><button type=\"button\" class=\"btn btn-danger p-x-md\" data-dismiss=\"modal\">Yes</button></div></div><!-- /.modal-content --></div></div></div></div>", 1);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" .modal "), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / .modal ")], 64 /* STABLE_FRAGMENT */);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "hidden",
+    name: "_token",
+    value: $data.csrf
+  }, null, 8 /* PROPS */, _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, $props.data.auth_user_avatar ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    id: "user_avatar",
+    src: $props.data.auth_user_avatar,
+    style: {
+      "position": "absolute",
+      "height": "300px",
+      "width": "300px",
+      "z-index": "1"
+    }
+  }, null, 8 /* PROPS */, _hoisted_14), _hoisted_15])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, _hoisted_19))])]), _hoisted_20])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"tab-pane\" id=\"tab-2\">\n                    <div class=\"p-a-md b-b _600\">Account settings</div>\n                    <form role=\"form\" class=\"p-a-md col-md-6\">\n                        <div class=\"form-group\">\n                            <label>Client ID</label>\n                            <input type=\"text\" disabled class=\"form-control\" value=\"d6386c0651d6380745846efe300b9869\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>Secret Key</label>\n                            <input type=\"text\" disabled class=\"form-control\" value=\"3f9573e88f65787d86d8a685aeb4bd13\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>App Name</label>\n                            <input type=\"text\" class=\"form-control\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>App URL</label>\n                            <input type=\"text\" class=\"form-control\">\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-info m-t\">Update</button>\n                    </form>\n                </div>\n                <div class=\"tab-pane\" id=\"tab-3\">\n                    <div class=\"p-a-md b-b _600\">Emails</div>\n                    <form role=\"form\" class=\"p-a-md col-md-6\">\n                        <p>E-mail me whenever</p>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone posts a comment\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone follow me\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone send me a message\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone invite me to group\n                            </label>\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-info m-t\">Update</button>\n                    </form>\n                </div>"), _hoisted_21, _hoisted_22])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" .modal "), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / .modal ")], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),

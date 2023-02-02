@@ -22,6 +22,7 @@ class BackController extends Controller
             $auth = true;
             $auth_user_name = Auth::user()->name;
             $auth_user_id = Auth::user()->id;
+            $auth_user_avatar = Auth::user()->avatar;
             $last_open_free_course_id = Auth::user()->last_open_free_course_id;
         }
         $free_courses = NULL;
@@ -38,6 +39,7 @@ class BackController extends Controller
         $data = [
             'auth' => $auth,
             'user_name' => $auth_user_name,
+            'auth_user_avatar' => $auth_user_avatar,
             'auth_user_id' => $auth_user_id,
             'last_open_free_course_id' => $last_open_free_course_id,
             'free_courses_name' => $this->freeCoursesName(),

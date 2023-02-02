@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth', 'web']], function() {
             Route::get('/profile', ['uses' => 'IndexController@profile', 'as' => 'back-user-profile']);
             Route::get('/free/courses', ['uses' => 'FreeCoursesController@index', 'as' => 'back-free-courses-index']);
             Route::get('/free/course/{id}', ['uses' => 'FreeCoursesController@singleCourse', 'as' => 'back-free-course-index']);
+            Route::post('/profile/edit/avatar',['uses' => 'ProfileController@editProfileAvatar','as' => 'back-user-profile-edit-avatar']);
         });
     });
 });

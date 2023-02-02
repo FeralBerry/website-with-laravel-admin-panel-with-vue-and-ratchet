@@ -26,4 +26,3 @@
 <script src="{{ asset('back/scripts/ui-taburl.js') }}"></script>
 <script src="{{ asset('back/scripts/app.js') }}"></script>
 <script src="{{ asset('back/scripts/ajax.js') }}"></script>
-

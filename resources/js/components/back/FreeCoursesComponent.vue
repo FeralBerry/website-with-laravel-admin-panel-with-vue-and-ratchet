@@ -85,7 +85,7 @@
                     data.free_courses_name.map((item) => {
                         let courses = document.getElementById('courses');
                         courses.innerHTML += '<div class="col-xs-12 col-sm-6 col-md-4"><div class="box text-center" style="background-color: rgba(255, 255, 255, 0.9)">' +
-                            '<div class="p-a-md">' +
+                            '<div class="p-a-md" style="min-height: 250px;">' +
                             '<img src="'+item.img+'" style="position: absolute;width: 100%;z-index: -1;margin-left: -50%;">' +
                             '<a href="'+item.link+'" class="text-md block">'+item.title+'</a>' +
                             '<p><small>'+item.brief+'</small></p>' +
