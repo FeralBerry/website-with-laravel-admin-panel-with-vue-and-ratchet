@@ -28,29 +28,30 @@
                 <div class="tab-pane active" id="tab-1">
                     <div class="p-a-md b-b _600">Публичный профиль</div>
                     <div class="row" style="padding: 10px">
-                        <form method="post" action="/user/profile/edit" enctype="multipart/form-data">
-                            <input type="hidden" name="_token" :value="csrf">
-                            <div class="col-md-6">
+                        <div class="col-md-6">
+                            <form id="profile_avatar" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" :value="csrf" >
                                 <div class="form-group">
                                     <label>Профиль</label>
+                                    <button>Изменить</button>
                                     <div class="form-file" v-if="data.auth_user_avatar">
-                                        <img id="user_avatar" :src="data.auth_user_avatar" style="position:absolute;height: 300px;width: 300px;z-index: 1">
-                                        <input style="z-index: 3;position: absolute;width: 300px;height: 300px" id="profile_avatar" name="avatar" type="file">
+                                        <img id="user_avatar" :src="'/back/img/avatar/'+data.auth_user_avatar" style="position:absolute;height: 300px;width: 300px;z-index: 1">
+                                        <input style="z-index: 3;position: absolute;width: 300px;height: 300px" name="avatar" type="file">
                                     </div>
                                     <div class="form-file" v-else>
                                         <img id="user_avatar" src="/back/img/avatar/no-img.png" style="position:absolute;height: 300px;width: 300px;z-index: 1">
-                                        <input style="z-index: 3;position: absolute;width: 300px;height: 300px" id="profile_avatar" name="avatar" type="file">
+                                        <input style="z-index: 3;position: absolute;width: 300px;height: 300px" name="avatar" type="file">
                                     </div>
                                 </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input id="profile_name" name="name" type="text" class="form-control">
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input id="profile_name" name="name" type="text" class="form-control">
-                                </div>
-                                <button id="profile_update" class="btn btn-info m-t">Обновить</button>
-                            </div>
-                        </form>
+                            <button id="profile_update" class="btn btn-info m-t">Обновить</button>
+                        </div>
                     </div>
                 </div>
                 <!--<div class="tab-pane" id="tab-2">
@@ -193,27 +194,7 @@
         },
         created() {
             let connection = new WebSocket("ws://127.0.0.1:4710");
-            $(function(){
-                $("#profile_avatar").on("click", function(){
-                    let profile_avatar = document.getElementById('profile_avatar')[0].files[0];
-                    $.ajax({
-                        url: '/user/profile/edit/avatar',
-                        method: 'POST',
-                        data:{
-                            '_token'    :   this.csrf,
-                            'avatar'    :   profile_avatar,
-                        },
-                        success: function (data) {
-                            let user_avatar = document.getElementById('user_avatar');
-                            if(data.avatar === null){
-                                user_avatar.src = 'back/img/avatar/no-img.png';
-                            } else {
-                                user_avatar.src = 'back/img/avatar/'+data.avatar;
-                            }
-                        },
-                    });
-                })
-            });
+
             $(function(){
                 $("#profile_update").on("click", function(){
                     let profile_name = document.getElementById('profile_name').value;
@@ -225,11 +206,8 @@
                             'name'      :   profile_name
                         },
                         success: function (data) {
-                            alert('Success')
+                            alert(data);
                         },
-                        error: function (error) {
-                            console.log(error);
-                        }
                     });
                 });
             });

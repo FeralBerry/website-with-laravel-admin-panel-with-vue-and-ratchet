@@ -26,3 +26,29 @@
 <script src="{{ asset('back/scripts/ui-taburl.js') }}"></script>
 <script src="{{ asset('back/scripts/app.js') }}"></script>
 <script src="{{ asset('back/scripts/ajax.js') }}"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('body').on('submit', '#profile_avatar', function(event) {
+        event.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: '/user/profile/edit/avatar',
+            data: formData,
+            contentType: false,
+            cache : false,
+            processData: false,
+            success: function(data){
+                let user_avatar = document.getElementById('user_avatar');
+                user_avatar.src = '/back/img/avatar/'+data.src;
+                alert(data.msg);
+            }
+        });
+    });
+
+</script>
