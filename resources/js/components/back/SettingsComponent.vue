@@ -157,14 +157,17 @@
                                 <div class="form-group">
                                     <label>Старый пароль</label>
                                     <input type="password" name="old_password" class="form-control">
+                                    <div id="bad_old_password"></div>
                                 </div>
                                 <div class="form-group">
                                     <label>Новый пароль</label>
                                     <input type="password" name="new_password" class="form-control">
+                                    <div id="small_password"></div>
                                 </div>
                                 <div class="form-group">
                                     <label>Повторить новый пароль</label>
                                     <input type="password" name="confirm_password" class="form-control">
+                                    <div id="not_confirm_password"></div>
                                 </div>
                                 <button type="submit" class="btn btn-info">Обновить</button>
                             </form>

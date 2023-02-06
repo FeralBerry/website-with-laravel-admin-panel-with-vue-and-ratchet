@@ -7,6 +7,7 @@ use App\Http\Controllers\Back\BackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends BackController
 {
@@ -88,5 +89,31 @@ class ProfileController extends BackController
             ->delete();
         return redirect()->route('front-index');
     }
+    public function newPassword(Request $request){
+        $user_id = Auth::user()->id;
+        $users = DB::table('users')
+            ->where('id',$user_id)
+            ->get();
+        foreach ($users as $user){
+            if(Hash::make($request['old_password']) == $user->password){
+                if($request['new_password'] == $request['confirm_password']){
+                    if(strlen($request['new_password']) > 7){
+                        DB::table('users')
+                            ->where('id',$user_id)
+                            ->update([
+                                'password' => Hash::make($request['new_password']),
+                            ]);
+                        return 'Пароль успешно изменен.';
+                    } else {
+                        return 'Длинна пароля должна быть не меньше 8 символов.';
+                    }
+                } else {
+                    return 'Пароли не совпадают, проверьте пароли и повторите попытку.';
+                }
+            } else {
+                return 'Неверный старый пароль, введите верный пароль или воспользуйтесь восстановлением.';
+            }
+        }
 
+    }
 }
