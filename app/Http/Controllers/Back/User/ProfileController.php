@@ -75,9 +75,18 @@ class ProfileController extends BackController
     }
     public function deleteUser(){
         $user_id = Auth::user()->id;
+        $users = DB::table('users')
+            ->where('id',$user_id)
+            ->get();
+        foreach ($users as $user){
+            if($user->avatar !== NULL){
+                unlink(public_path('back/img/avatar/' . $user->avatar));
+            }
+        }
         DB::table('users')
             ->where('id',$user_id)
             ->delete();
         return redirect()->route('front-index');
     }
+
 }
