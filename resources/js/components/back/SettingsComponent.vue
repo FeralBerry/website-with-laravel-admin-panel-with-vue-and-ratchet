@@ -7,12 +7,12 @@
                         <li class="nav-item">
                             <a class="nav-link block active" href="#" data-toggle="tab" data-target="#tab-1">Профиль</a>
                         </li>
-                        <!--<li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-2">Account Settings</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-3">Emails</a>
-                        </li>-->
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-4">Уведомления</a>
                         </li>
@@ -28,12 +28,11 @@
                 <div class="tab-pane active" id="tab-1">
                     <div class="p-a-md b-b _600">Публичный профиль</div>
                     <div class="row" style="padding: 10px">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <form id="profile_avatar" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" :value="csrf" >
                                 <div class="form-group">
                                     <label>Профиль</label>
-                                    <button>Изменить</button>
                                     <div class="form-file" v-if="data.auth_user_avatar">
                                         <img id="user_avatar" :src="'/back/img/avatar/'+data.auth_user_avatar" style="position:absolute;height: 300px;width: 300px;z-index: 1">
                                         <input style="z-index: 3;position: absolute;width: 300px;height: 300px" name="avatar" type="file">
@@ -43,14 +42,22 @@
                                         <input style="z-index: 3;position: absolute;width: 300px;height: 300px" name="avatar" type="file">
                                     </div>
                                 </div>
+                                <button style="margin-top: 300px" class="btn btn-info m-t">Изменить</button>
                             </form>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input id="profile_name" name="name" type="text" class="form-control">
-                            </div>
-                            <button id="profile_update" class="btn btn-info m-t">Обновить</button>
+                        <div class="col-md-8">
+                            <form id="profile_settings" method="post">
+                                <input type="hidden" name="_token" :value="csrf" >
+                                <div class="form-group">
+                                    <label>Имя</label>
+                                    <input id="profile_name" name="name" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Девиз</label>
+                                    <textarea id="profile_slogan" name="slogan" class="form-control"></textarea>
+                                </div>
+                                <button id="profile_update" class="btn btn-info m-t">Обновить</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -131,29 +138,37 @@
                     </form>
                 </div>
                 <div class="tab-pane" id="tab-5">
-                    <div class="p-a-md b-b _600">Security</div>
+                    <div class="p-a-md b-b _600">Сменить данные</div>
                     <div class="p-a-md">
                         <div class="clearfix m-b-lg">
-                            <form role="form" class="col-md-6 p-a-0">
+                            <form id="new_email" method="post" class="col-md-6 p-a-0">
                                 <div class="form-group">
-                                    <label>Old Password</label>
-                                    <input type="password" class="form-control">
+                                    <label>E-mail</label>
+                                    <input type="email" name="email" class="form-control">
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-info m-b">Изменить</button>
+                                </div>
+                                <div class="col-md-12">
+                                    <a id="delete_user" onclick="return confirm('Уверены что нужно удалить аккаунт?')" class="btn btn-danger">Delete Account</a>
+                                </div>
+                            </form>
+                            <form id="new_password" method="post" role="form" class="col-md-6 p-a-0">
+                                <div class="form-group">
+                                    <label>Старый пароль</label>
+                                    <input type="password" name="old_password" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>New Password</label>
-                                    <input type="password" class="form-control">
+                                    <label>Новый пароль</label>
+                                    <input type="password" name="new_password" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>New Password Again</label>
-                                    <input type="password" class="form-control">
+                                    <label>Повторить новый пароль</label>
+                                    <input type="password" name="confirm_password" class="form-control">
                                 </div>
-                                <button type="submit" class="btn btn-info m-t">Update</button>
+                                <button type="submit" class="btn btn-info">Обновить</button>
                             </form>
                         </div>
-
-                        <p><strong>Delete account?</strong></p>
-                        <button type="submit" class="btn btn-danger m-t" data-toggle="modal" data-target="#modal">Delete Account</button>
-
                     </div>
                 </div>
             </div>
@@ -196,6 +211,18 @@
             let connection = new WebSocket("ws://127.0.0.1:4710");
 
             $(function(){
+                $('#delete_user').on('click',function () {
+                    $.ajax({
+                        url: '/user/profile/delete',
+                        method: 'POST',
+                        data:{
+                            '_token'    :   this.csrf,
+                        },
+                        success:function () {
+                            window.location = '/';
+                        }
+                    });
+                });
                 $("#profile_update").on("click", function(){
                     let profile_name = document.getElementById('profile_name').value;
                     $.ajax({

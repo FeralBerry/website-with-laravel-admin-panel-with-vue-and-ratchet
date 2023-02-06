@@ -50,5 +50,38 @@
             }
         });
     });
+    $('body').on('submit', '#profile_settings', function(event) {
+        event.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: '/user/profile/edit',
+            data: formData,
+            contentType: false,
+            cache : false,
+            processData: false,
+            success: function(data){
+                alert(data.msg);
+            }
+        });
+    });
+
+    $('body').on('submit', '#profile_settings', function(event) {
+        event.preventDefault();
+        let formData = new FormData(this);
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: '/user/profile/edit',
+            data: formData,
+            contentType: false,
+            cache : false,
+            processData: false,
+            success: function(data){
+                alert(data.msg);
+            }
+        });
+    });
 
 </script>

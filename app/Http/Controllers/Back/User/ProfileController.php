@@ -18,7 +18,8 @@ class ProfileController extends BackController
                 DB::table('users')
                     ->where('id',Auth::user()->id)
                     ->update([
-                        'name' => $request['name']
+                        'name' => $request['name'],
+                        'slogan' => $request['slogan']
                     ]);
                 return 'Имя успешно изменено';
             } else {
@@ -71,5 +72,12 @@ class ProfileController extends BackController
                 return $data;
             }
         }
+    }
+    public function deleteUser(){
+        $user_id = Auth::user()->id;
+        DB::table('users')
+            ->where('id',$user_id)
+            ->delete();
+        return redirect()->route('front-index');
     }
 }

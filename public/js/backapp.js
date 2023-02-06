@@ -21315,6 +21315,18 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var connection = new WebSocket("ws://127.0.0.1:4710");
     $(function () {
+      $('#delete_user').on('click', function () {
+        $.ajax({
+          url: '/user/profile/delete',
+          method: 'POST',
+          data: {
+            '_token': this.csrf
+          },
+          success: function success() {
+            window.location = '/';
+          }
+        });
+      });
       $("#profile_update").on("click", function () {
         var profile_name = document.getElementById('profile_name').value;
         $.ajax({
@@ -21876,7 +21888,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "row-col"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-sm-3 col-lg-2 b-r\"><div class=\"p-y\"><div class=\"nav-active-border left b-primary\"><ul class=\"nav nav-sm\"><li class=\"nav-item\"><a class=\"nav-link block active\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-1\">Профиль</a></li><!--&lt;li class=&quot;nav-item&quot;&gt;\n                            &lt;a class=&quot;nav-link block&quot; href=&quot;#&quot; data-toggle=&quot;tab&quot; data-target=&quot;#tab-2&quot;&gt;Account Settings&lt;/a&gt;\n                        &lt;/li&gt;\n                        &lt;li class=&quot;nav-item&quot;&gt;\n                            &lt;a class=&quot;nav-link block&quot; href=&quot;#&quot; data-toggle=&quot;tab&quot; data-target=&quot;#tab-3&quot;&gt;Emails&lt;/a&gt;\n                        &lt;/li&gt;--><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-4\">Уведомления</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-5\">Сменить пароль</a></li></ul></div></div></div>", 1);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-sm-3 col-lg-2 b-r\"><div class=\"p-y\"><div class=\"nav-active-border left b-primary\"><ul class=\"nav nav-sm\"><li class=\"nav-item\"><a class=\"nav-link block active\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-1\">Профиль</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-2\">Account Settings</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-3\">Emails</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-4\">Уведомления</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-5\">Сменить пароль</a></li></ul></div></div></div>", 1);
 var _hoisted_3 = {
   "class": "col-sm-9 col-lg-10 light bg"
 };
@@ -21897,7 +21909,7 @@ var _hoisted_7 = {
   }
 };
 var _hoisted_8 = {
-  "class": "col-md-6"
+  "class": "col-md-4"
 };
 var _hoisted_9 = {
   id: "profile_avatar",
@@ -21909,13 +21921,12 @@ var _hoisted_11 = {
   "class": "form-group"
 };
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Профиль", -1 /* HOISTED */);
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", null, "Изменить", -1 /* HOISTED */);
-var _hoisted_14 = {
+var _hoisted_13 = {
   key: 0,
   "class": "form-file"
 };
-var _hoisted_15 = ["src"];
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+var _hoisted_14 = ["src"];
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   style: {
     "z-index": "3",
     "position": "absolute",
@@ -21925,11 +21936,11 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   name: "avatar",
   type: "file"
 }, null, -1 /* HOISTED */);
-var _hoisted_17 = {
+var _hoisted_16 = {
   key: 1,
   "class": "form-file"
 };
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   id: "user_avatar",
   src: "/back/img/avatar/no-img.png",
   style: {
@@ -21939,7 +21950,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
     "z-index": "1"
   }
 }, null, -1 /* HOISTED */);
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   style: {
     "z-index": "3",
     "position": "absolute",
@@ -21949,21 +21960,23 @@ var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   name: "avatar",
   type: "file"
 }, null, -1 /* HOISTED */);
-var _hoisted_20 = [_hoisted_18, _hoisted_19];
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-6"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Name"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  id: "profile_name",
-  name: "name",
-  type: "text",
-  "class": "form-control"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  id: "profile_update",
+var _hoisted_19 = [_hoisted_17, _hoisted_18];
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  style: {
+    "margin-top": "300px"
+  },
   "class": "btn btn-info m-t"
-}, "Обновить")], -1 /* HOISTED */);
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, "Изменить", -1 /* HOISTED */);
+var _hoisted_21 = {
+  "class": "col-md-8"
+};
+var _hoisted_22 = {
+  id: "profile_settings",
+  method: "post"
+};
+var _hoisted_23 = ["value"];
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"form-group\"><label>Имя</label><input id=\"profile_name\" name=\"name\" type=\"text\" class=\"form-control\"></div><div class=\"form-group\"><label>Девиз</label><textarea id=\"profile_slogan\" name=\"slogan\" class=\"form-control\"></textarea></div><button id=\"profile_update\" class=\"btn btn-info m-t\">Обновить</button>", 3);
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tab-pane",
   id: "tab-4"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -22007,49 +22020,69 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   type: "submit",
   "class": "btn btn-info m-t"
 }, "Update")])], -1 /* HOISTED */);
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tab-pane",
   id: "tab-5"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "p-a-md b-b _600"
-}, "Security"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, "Сменить данные"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "p-a-md"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "clearfix m-b-lg"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  id: "new_email",
+  method: "post",
+  "class": "col-md-6 p-a-0"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "form-group"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "E-mail"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "email",
+  name: "email",
+  "class": "form-control"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-12"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "btn btn-info m-b"
+}, "Изменить")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-12"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  id: "delete_user",
+  onclick: "return confirm('Уверены что нужно удалить аккаунт?')",
+  "class": "btn btn-danger"
+}, "Delete Account")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  id: "new_password",
+  method: "post",
   role: "form",
   "class": "col-md-6 p-a-0"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Old Password"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Старый пароль"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   type: "password",
+  name: "old_password",
   "class": "form-control"
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "New Password"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Новый пароль"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   type: "password",
+  name: "new_password",
   "class": "form-control"
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "form-group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "New Password Again"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Повторить новый пароль"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   type: "password",
+  name: "confirm_password",
   "class": "form-control"
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
-  "class": "btn btn-info m-t"
-}, "Update")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Delete account?")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "submit",
-  "class": "btn btn-danger m-t",
-  "data-toggle": "modal",
-  "data-target": "#modal"
-}, "Delete Account")])], -1 /* HOISTED */);
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div id=\"modal\" class=\"modal fade animate black-overlay\" data-backdrop=\"false\"><div class=\"row-col h-v\"><div class=\"row-cell v-m\"><div class=\"modal-dialog modal-sm\"><div class=\"modal-content flip-y\"><div class=\"modal-body text-center\"><p class=\"p-y m-t\"><i class=\"fa fa-remove text-warning fa-3x\"></i></p><p>Are you sure to delete your account?</p></div><div class=\"modal-footer\"><button type=\"button\" class=\"btn white p-x-md\" data-dismiss=\"modal\">No</button><button type=\"button\" class=\"btn btn-danger p-x-md\" data-dismiss=\"modal\">Yes</button></div></div><!-- /.modal-content --></div></div></div></div>", 1);
+  "class": "btn btn-info"
+}, "Обновить")])])])], -1 /* HOISTED */);
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div id=\"modal\" class=\"modal fade animate black-overlay\" data-backdrop=\"false\"><div class=\"row-col h-v\"><div class=\"row-cell v-m\"><div class=\"modal-dialog modal-sm\"><div class=\"modal-content flip-y\"><div class=\"modal-body text-center\"><p class=\"p-y m-t\"><i class=\"fa fa-remove text-warning fa-3x\"></i></p><p>Are you sure to delete your account?</p></div><div class=\"modal-footer\"><button type=\"button\" class=\"btn white p-x-md\" data-dismiss=\"modal\">No</button><button type=\"button\" class=\"btn btn-danger p-x-md\" data-dismiss=\"modal\">Yes</button></div></div><!-- /.modal-content --></div></div></div></div>", 1);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
     name: "_token",
     value: $data.csrf
-  }, null, 8 /* PROPS */, _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, _hoisted_13, $props.data.auth_user_avatar ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  }, null, 8 /* PROPS */, _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, $props.data.auth_user_avatar ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     id: "user_avatar",
     src: '/back/img/avatar/' + $props.data.auth_user_avatar,
     style: {
@@ -22058,7 +22091,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "width": "300px",
       "z-index": "1"
     }
-  }, null, 8 /* PROPS */, _hoisted_15), _hoisted_16])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, _hoisted_20))])])]), _hoisted_21])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"tab-pane\" id=\"tab-2\">\n                    <div class=\"p-a-md b-b _600\">Account settings</div>\n                    <form role=\"form\" class=\"p-a-md col-md-6\">\n                        <div class=\"form-group\">\n                            <label>Client ID</label>\n                            <input type=\"text\" disabled class=\"form-control\" value=\"d6386c0651d6380745846efe300b9869\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>Secret Key</label>\n                            <input type=\"text\" disabled class=\"form-control\" value=\"3f9573e88f65787d86d8a685aeb4bd13\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>App Name</label>\n                            <input type=\"text\" class=\"form-control\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>App URL</label>\n                            <input type=\"text\" class=\"form-control\">\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-info m-t\">Update</button>\n                    </form>\n                </div>\n                <div class=\"tab-pane\" id=\"tab-3\">\n                    <div class=\"p-a-md b-b _600\">Emails</div>\n                    <form role=\"form\" class=\"p-a-md col-md-6\">\n                        <p>E-mail me whenever</p>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone posts a comment\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone follow me\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone send me a message\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone invite me to group\n                            </label>\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-info m-t\">Update</button>\n                    </form>\n                </div>"), _hoisted_22, _hoisted_23])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" .modal "), _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / .modal ")], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, _hoisted_14), _hoisted_15])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, _hoisted_19))]), _hoisted_20])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "hidden",
+    name: "_token",
+    value: $data.csrf
+  }, null, 8 /* PROPS */, _hoisted_23), _hoisted_24])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"tab-pane\" id=\"tab-2\">\n                    <div class=\"p-a-md b-b _600\">Account settings</div>\n                    <form role=\"form\" class=\"p-a-md col-md-6\">\n                        <div class=\"form-group\">\n                            <label>Client ID</label>\n                            <input type=\"text\" disabled class=\"form-control\" value=\"d6386c0651d6380745846efe300b9869\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>Secret Key</label>\n                            <input type=\"text\" disabled class=\"form-control\" value=\"3f9573e88f65787d86d8a685aeb4bd13\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>App Name</label>\n                            <input type=\"text\" class=\"form-control\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>App URL</label>\n                            <input type=\"text\" class=\"form-control\">\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-info m-t\">Update</button>\n                    </form>\n                </div>\n                <div class=\"tab-pane\" id=\"tab-3\">\n                    <div class=\"p-a-md b-b _600\">Emails</div>\n                    <form role=\"form\" class=\"p-a-md col-md-6\">\n                        <p>E-mail me whenever</p>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone posts a comment\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone follow me\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone send me a message\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone invite me to group\n                            </label>\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-info m-t\">Update</button>\n                    </form>\n                </div>"), _hoisted_27, _hoisted_28])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" .modal "), _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / .modal ")], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
