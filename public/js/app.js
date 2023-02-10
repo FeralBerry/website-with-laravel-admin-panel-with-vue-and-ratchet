@@ -21116,7 +21116,13 @@ __webpack_require__.r(__webpack_exports__);
   name: "MainComponent",
   props: ['data'],
   mounted: function mounted() {},
-  created: function created() {}
+  created: function created() {
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+    };
+  }
 });
 
 /***/ }),

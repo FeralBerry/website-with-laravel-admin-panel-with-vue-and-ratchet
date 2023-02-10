@@ -4,6 +4,8 @@ use App\Http\Controllers\Back\ChatController;
 use Illuminate\Support\Facades\DB;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use function Illuminate\Session\userId;
+
 
 class Chat implements MessageComponentInterface {
     protected $clients;
@@ -24,9 +26,8 @@ class Chat implements MessageComponentInterface {
 
     public function onMessage(ConnectionInterface $from, $msg) {
         $command = json_decode($msg);
-        $user_id = $from->resourceId;
         if($command->command == 'connect'){
-            $data = $this->chatController->connect($from,$command);
+            $data = $this->chatController->connect($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -43,6 +44,7 @@ class Chat implements MessageComponentInterface {
             $data = $this->chatController->open_course($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
+                    dump($client->resourceId);
                     $client->send(json_encode($data));
                 }
             }

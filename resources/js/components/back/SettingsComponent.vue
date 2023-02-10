@@ -8,16 +8,10 @@
                             <a class="nav-link block active" href="#" data-toggle="tab" data-target="#tab-1">Профиль</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-2">Account Settings</a>
+                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-2">Уведомления</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-3">Emails</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-4">Уведомления</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-5">Сменить пароль</a>
+                            <a class="nav-link block" href="#" data-toggle="tab" data-target="#tab-3">Сменить пароль</a>
                         </li>
                     </ul>
                 </div>
@@ -61,56 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="tab-pane" id="tab-2">
-                    <div class="p-a-md b-b _600">Account settings</div>
-                    <form role="form" class="p-a-md col-md-6">
-                        <div class="form-group">
-                            <label>Client ID</label>
-                            <input type="text" disabled class="form-control" value="d6386c0651d6380745846efe300b9869">
-                        </div>
-                        <div class="form-group">
-                            <label>Secret Key</label>
-                            <input type="text" disabled class="form-control" value="3f9573e88f65787d86d8a685aeb4bd13">
-                        </div>
-                        <div class="form-group">
-                            <label>App Name</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>App URL</label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-info m-t">Update</button>
-                    </form>
-                </div>
-                <div class="tab-pane" id="tab-3">
-                    <div class="p-a-md b-b _600">Emails</div>
-                    <form role="form" class="p-a-md col-md-6">
-                        <p>E-mail me whenever</p>
-                        <div class="checkbox">
-                            <label class="ui-check">
-                                <input type="checkbox"><i class="dark-white"></i> Anyone posts a comment
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="ui-check">
-                                <input type="checkbox"><i class="dark-white"></i> Anyone follow me
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="ui-check">
-                                <input type="checkbox"><i class="dark-white"></i> Anyone send me a message
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label class="ui-check">
-                                <input type="checkbox"><i class="dark-white"></i> Anyone invite me to group
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-info m-t">Update</button>
-                    </form>
-                </div>-->
-                <div class="tab-pane" id="tab-4">
+                <div class="tab-pane" id="tab-2">
                     <div class="p-a-md b-b _600">Notifications</div>
                     <form role="form" class="p-a-md col-md-6">
                         <p>Notice me whenever</p>
@@ -137,7 +82,7 @@
                         <button type="submit" class="btn btn-info m-t">Update</button>
                     </form>
                 </div>
-                <div class="tab-pane" id="tab-5">
+                <div class="tab-pane" id="tab-3">
                     <div class="p-a-md b-b _600">Сменить данные</div>
                     <div class="p-a-md">
                         <div class="clearfix m-b-lg">
@@ -202,24 +147,23 @@
     export default {
         name: "SettingsComponent",
         props: ['data'],
-        data(){
-            return {
-                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            }
-        },
         mounted() {
 
         },
         created() {
             let connection = new WebSocket("ws://127.0.0.1:4710");
-
+            let csrf = document.querySelector('meta[name="csrf-token"]').content;
+            let user_id = document.querySelector('meta[name="user_id"]').content;
+            connection.onopen = function(event){
+                connection.send('{"command":"connect","user_id":"'+user_id+'"}');
+            };
             $(function(){
                 $('#delete_user').on('click',function () {
                     $.ajax({
                         url: '/user/profile/delete',
                         method: 'POST',
                         data:{
-                            '_token'    :   this.csrf,
+                            '_token'    :   csrf,
                         },
                         success:function () {
                             window.location = '/';
@@ -232,7 +176,7 @@
                         url: '/user/profile/edit',
                         method: 'POST',
                         data:{
-                            '_token'    :   this.csrf,
+                            '_token'    :   csrf,
                             'name'      :   profile_name
                         },
                         success: function (data) {

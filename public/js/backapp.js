@@ -21121,40 +21121,25 @@ __webpack_require__.r(__webpack_exports__);
   props: ['data'],
   data: function data() {
     return {
-      connection: null,
       courses_navigate: [],
-      user_id: null,
       free_course: []
     };
   },
-  mounted: function mounted() {},
   created: function created() {
     var _this = this;
-    this.connection = new WebSocket("ws://127.0.0.1:4710");
-    this.user_id = document.querySelector('meta[name="user_id"]').content;
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+    };
     var i = 0;
     this.data.free_courses_navigate.map(function (item) {
       _this.courses_navigate[i] = item;
       i++;
     });
-    console.log(this.free_courses_navigate);
-    this.connection.onmessage = function (event) {
-      var data = JSON.parse(event.data);
-      if (data.message === 'open_course') {
-        var course_page = document.getElementById('course_article_page');
-        data.free_courses.map(function (item) {
-          course_page.innerHTML = item.description;
-        });
-      }
-    };
   },
-  methods: {
-    open_course: function open_course(course, id) {
-      $('.list-group-item').removeClass('active');
-      document.getElementById(id).classList.add('active');
-      this.connection.send('{"command":"open_course","user_id":"' + this.user_id + '","course":"' + course + '","course_id":"' + id + '"}');
-    }
-  }
+  mounted: function mounted() {},
+  methods: {}
 });
 
 /***/ }),
@@ -21182,7 +21167,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {},
   created: function created() {
     var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
     connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
       connection.send('{"command":"open_free_courses"}');
     };
     connection.onmessage = function (event) {
@@ -21196,7 +21183,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     };
-    //alert(this.courses_name);
   }
 });
 
@@ -21242,7 +21228,13 @@ __webpack_require__.r(__webpack_exports__);
   name: "MainComponent",
   props: ['data'],
   mounted: function mounted() {},
-  created: function created() {}
+  created: function created() {
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+    };
+  }
 });
 
 /***/ }),
@@ -21287,7 +21279,13 @@ __webpack_require__.r(__webpack_exports__);
   name: "ProfileComponent",
   props: ['data'],
   mounted: function mounted() {},
-  created: function created() {}
+  created: function created() {
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+    };
+  }
 });
 
 /***/ }),
@@ -21306,21 +21304,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SettingsComponent",
   props: ['data'],
-  data: function data() {
-    return {
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    };
-  },
   mounted: function mounted() {},
   created: function created() {
     var connection = new WebSocket("ws://127.0.0.1:4710");
+    var csrf = document.querySelector('meta[name="csrf-token"]').content;
+    var user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+    };
     $(function () {
       $('#delete_user').on('click', function () {
         $.ajax({
           url: '/user/profile/delete',
           method: 'POST',
           data: {
-            '_token': this.csrf
+            '_token': csrf
           },
           success: function success() {
             window.location = '/';
@@ -21333,7 +21331,7 @@ __webpack_require__.r(__webpack_exports__);
           url: '/user/profile/edit',
           method: 'POST',
           data: {
-            '_token': this.csrf,
+            '_token': csrf,
             'name': profile_name
           },
           success: function success(data) {
@@ -21404,24 +21402,18 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_6 = {
   "class": "list-group m-b"
 };
-var _hoisted_7 = ["onClick", "id"];
-var _hoisted_8 = ["onClick", "id"];
+var _hoisted_7 = ["id"];
+var _hoisted_8 = ["id"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.free_courses, function (courses) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.description), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */);
   }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.courses_navigate, function (item) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [item.id === $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
       key: 0,
-      onClick: function onClick($event) {
-        return $options.open_course(item.free_courses_name_id, item.id);
-      },
       id: item.id,
       "class": "active list-group-item"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_7)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), item.id != $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
       key: 1,
-      onClick: function onClick($event) {
-        return $options.open_course(item.free_courses_name_id, item.id);
-      },
       id: item.id,
       "class": "list-group-item"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_8)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
@@ -21888,7 +21880,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "row-col"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-sm-3 col-lg-2 b-r\"><div class=\"p-y\"><div class=\"nav-active-border left b-primary\"><ul class=\"nav nav-sm\"><li class=\"nav-item\"><a class=\"nav-link block active\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-1\">Профиль</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-2\">Account Settings</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-3\">Emails</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-4\">Уведомления</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-5\">Сменить пароль</a></li></ul></div></div></div>", 1);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-sm-3 col-lg-2 b-r\"><div class=\"p-y\"><div class=\"nav-active-border left b-primary\"><ul class=\"nav nav-sm\"><li class=\"nav-item\"><a class=\"nav-link block active\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-1\">Профиль</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-2\">Уведомления</a></li><li class=\"nav-item\"><a class=\"nav-link block\" href=\"#\" data-toggle=\"tab\" data-target=\"#tab-3\">Сменить пароль</a></li></ul></div></div></div>", 1);
 var _hoisted_3 = {
   "class": "col-sm-9 col-lg-10 light bg"
 };
@@ -21978,7 +21970,7 @@ var _hoisted_23 = ["value"];
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"form-group\"><label>Имя</label><input id=\"profile_name\" name=\"name\" type=\"text\" class=\"form-control\"></div><div class=\"form-group\"><label>Девиз</label><textarea id=\"profile_slogan\" name=\"slogan\" class=\"form-control\"></textarea></div><button id=\"profile_update\" class=\"btn btn-info m-t\">Обновить</button>", 3);
 var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tab-pane",
-  id: "tab-4"
+  id: "tab-2"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "p-a-md b-b _600"
 }, "Notifications"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
@@ -22022,7 +22014,7 @@ var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, "Update")])], -1 /* HOISTED */);
 var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tab-pane",
-  id: "tab-5"
+  id: "tab-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "p-a-md b-b _600"
 }, "Сменить данные"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -22087,7 +22079,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
     name: "_token",
-    value: $data.csrf
+    value: _ctx.csrf
   }, null, 8 /* PROPS */, _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, $props.data.auth_user_avatar ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     id: "user_avatar",
     src: '/back/img/avatar/' + $props.data.auth_user_avatar,
@@ -22100,8 +22092,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8 /* PROPS */, _hoisted_14), _hoisted_15])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, _hoisted_19))]), _hoisted_20])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
     name: "_token",
-    value: $data.csrf
-  }, null, 8 /* PROPS */, _hoisted_23), _hoisted_24])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"tab-pane\" id=\"tab-2\">\n                    <div class=\"p-a-md b-b _600\">Account settings</div>\n                    <form role=\"form\" class=\"p-a-md col-md-6\">\n                        <div class=\"form-group\">\n                            <label>Client ID</label>\n                            <input type=\"text\" disabled class=\"form-control\" value=\"d6386c0651d6380745846efe300b9869\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>Secret Key</label>\n                            <input type=\"text\" disabled class=\"form-control\" value=\"3f9573e88f65787d86d8a685aeb4bd13\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>App Name</label>\n                            <input type=\"text\" class=\"form-control\">\n                        </div>\n                        <div class=\"form-group\">\n                            <label>App URL</label>\n                            <input type=\"text\" class=\"form-control\">\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-info m-t\">Update</button>\n                    </form>\n                </div>\n                <div class=\"tab-pane\" id=\"tab-3\">\n                    <div class=\"p-a-md b-b _600\">Emails</div>\n                    <form role=\"form\" class=\"p-a-md col-md-6\">\n                        <p>E-mail me whenever</p>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone posts a comment\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone follow me\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone send me a message\n                            </label>\n                        </div>\n                        <div class=\"checkbox\">\n                            <label class=\"ui-check\">\n                                <input type=\"checkbox\"><i class=\"dark-white\"></i> Anyone invite me to group\n                            </label>\n                        </div>\n                        <button type=\"submit\" class=\"btn btn-info m-t\">Update</button>\n                    </form>\n                </div>"), _hoisted_27, _hoisted_28])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" .modal "), _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / .modal ")], 64 /* STABLE_FRAGMENT */);
+    value: _ctx.csrf
+  }, null, 8 /* PROPS */, _hoisted_23), _hoisted_24])])])]), _hoisted_27, _hoisted_28])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" .modal "), _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / .modal ")], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),

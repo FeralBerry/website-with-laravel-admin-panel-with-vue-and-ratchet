@@ -130,4 +130,34 @@
             }
         });
     });
+    @if(isset($data['free_courses_navigate']) && $data['free_courses_navigate'] !== NULL)
+        @for($i = 0;$i < count($data['free_courses_navigate']);$i++)
+            $('body').on('click', '#{{ $i+1 }}', function() {
+                let course_article_page = document.getElementById('course_article_page');
+                let free_courses_navigate = {!! $data['free_courses_navigate'] !!};
+                let course_id = null;
+                free_courses_navigate.map((item) => {
+                    course_id = item.free_courses_name_id;
+                });
+                $.ajax({
+                    type: "POST",
+                    url: '/user/free/course/'+course_id+'/'+{{ $i+1 }},
+                    data: {
+
+                    },
+                    success: function (data) {
+                        data.all_free_courses_id.map((item) => {
+                            let last_open_free_course_id = document.getElementById(item.id);
+                            last_open_free_course_id.classList.remove('active');
+                        });
+                        data.free_course.map((item) => {
+                            course_article_page.innerHTML = item.description;
+                            let id = document.getElementById(item.id);
+                            id.classList.add('active')
+                        });
+                    }
+                });
+            });
+        @endfor
+    @endif
 </script>

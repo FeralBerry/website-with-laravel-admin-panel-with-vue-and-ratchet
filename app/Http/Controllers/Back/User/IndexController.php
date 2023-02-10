@@ -6,7 +6,6 @@ use App\Http\Controllers\Back\BackController;
 class IndexController extends BackController
 {
     public function index(){
-
         $data = array_merge($this->mainData(),[
 
         ]);

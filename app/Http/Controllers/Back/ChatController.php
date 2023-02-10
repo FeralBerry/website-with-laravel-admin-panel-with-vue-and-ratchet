@@ -20,12 +20,7 @@ class ChatController extends BackController
         ];
         return $data;*/
     }
-    public function connect($from,$command){
-        DB::table('users')
-            ->where('id',$command->user_id)
-            ->update([
-                'connection_id' => $from->resourceId
-            ]);
+    public function connect($command){
         $data = [
             'message' => 'new_connect',
             'user_id' => $command->user_id,
@@ -44,7 +39,7 @@ class ChatController extends BackController
             ]);
         $data = [
             'message' => 'open_course',
-            'free_courses' => $free_courses
+            'free_courses' => $free_courses,
         ];
         return $data;
     }
