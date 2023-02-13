@@ -10,6 +10,7 @@ import SettingsComponent from "./components/back/SettingsComponent";
 import LeftBarComponent from "./components/back/LeftBarComponent";
 import HomeComponent from "./components/back/HomeComponent";
 import FooterComponent from "./components/back/FooterComponent";
+import BreadCrumbComponent from "./components/back/BreadCrumbComponent";
 
 const routes = [
     {path: '/user', component: HomeComponent},
@@ -27,6 +28,7 @@ const app = createApp({});
 app.use(router);
 
 app.component('back-header-component', HeaderBackComponent);
+app.component('bread-crumb-component', BreadCrumbComponent);
 app.component('settings-component', SettingsComponent);
 app.component('profile-component', ProfileComponent);
 app.component('free-courses-component', FreeCoursesComponent);

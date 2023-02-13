@@ -21076,6 +21076,26 @@ function genPropsAccessExp(name) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/BreadCrumbComponent.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/BreadCrumbComponent.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "BreadCrumbComponent",
+  props: ['data'],
+  mounted: function mounted() {},
+  created: function created() {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/FooterComponent.vue?vue&type=script&lang=js":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/FooterComponent.vue?vue&type=script&lang=js ***!
@@ -21345,6 +21365,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/BreadCrumbComponent.vue?vue&type=template&id=3a44fd5d":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/BreadCrumbComponent.vue?vue&type=template&id=3a44fd5d ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"content-header\"><div class=\"container-fluid\"><div class=\"row mb-2\"><div class=\"col-sm-6\"><h1 class=\"m-0\">Dashboard</h1></div><!-- /.col --><div class=\"col-sm-6\"><ol class=\"breadcrumb float-sm-right\"><li class=\"breadcrumb-item\"><a href=\"#\">Home</a></li><li class=\"breadcrumb-item active\">Dashboard v1</li></ol></div><!-- /.col --></div><!-- /.row --></div><!-- /.container-fluid --></div>", 1);
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Header (Page header) "), _hoisted_1], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/FooterComponent.vue?vue&type=template&id=b843ffb6":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/FooterComponent.vue?vue&type=template&id=b843ffb6 ***!
@@ -21586,11 +21626,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", {
+var _hoisted_1 = {
   "class": "main-header navbar navbar-expand navbar-white navbar-light"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Left navbar links "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+};
+var _hoisted_2 = {
   "class": "navbar-nav"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+};
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
   "class": "nav-item"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   "class": "nav-link",
@@ -21599,33 +21641,12 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   role: "button"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fas fa-bars"
-})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+})])], -1 /* HOISTED */);
+var _hoisted_4 = {
   "class": "nav-item d-none d-sm-inline-block"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "index3.html",
-  "class": "nav-link"
-}, "Home")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "nav-item d-none d-sm-inline-block"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  "class": "nav-link"
-}, "Contact")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" SEARCH FORM "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  "class": "form-inline ml-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-group input-group-sm"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  "class": "form-control form-control-navbar",
-  type: "search",
-  placeholder: "Search",
-  "aria-label": "Search"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-group-append"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "btn btn-navbar",
-  type: "submit"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fas fa-search"
-})])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right navbar links "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<form class=\"form-inline ml-3\"><div class=\"input-group input-group-sm\"><input class=\"form-control form-control-navbar\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\"><div class=\"input-group-append\"><button class=\"btn btn-navbar\" type=\"submit\"><i class=\"fas fa-search\"></i></button></div></div></form>", 1);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
   "class": "navbar-nav ml-auto"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Messages Dropdown Menu "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
   "class": "nav-item dropdown"
@@ -21645,7 +21666,7 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Message Start "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "media"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "dist/img/user1-128x128.jpg",
+  src: "/back/img/user1-128x128.jpg",
   alt: "User Avatar",
   "class": "img-size-50 mr-3 img-circle"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -21670,7 +21691,7 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Message Start "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "media"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "dist/img/user8-128x128.jpg",
+  src: "/back/img/user8-128x128.jpg",
   alt: "User Avatar",
   "class": "img-size-50 img-circle mr-3"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -21695,7 +21716,7 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Message Start "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "media"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "dist/img/user3-128x128.jpg",
+  src: "/back/img/user3-128x128.jpg",
   alt: "User Avatar",
   "class": "img-size-50 img-circle mr-3"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -21782,10 +21803,19 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   role: "button"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fas fa-th-large"
-})])])])], -1 /* HOISTED */);
+})])])], -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"navbar\" data-pjax>\n        <a data-toggle=\"modal\" data-target=\"#aside\" class=\"navbar-item pull-left hidden-lg-up p-r m-a-0\">\n            <i class=\"ion-navicon\"></i>\n        </a>\n        <div class=\"navbar-item pull-left h5\" id=\"pageTitle\">Dashboard</div>\n        &lt;!&ndash; nabar right &ndash;&gt;\n        <ul class=\"nav navbar-nav pull-right\">\n            <li class=\"nav-item dropdown pos-stc-xs\">\n                <a class=\"nav-link\" data-toggle=\"dropdown\">\n                    <i class=\"ion-android-search w-24\"></i>\n                </a>\n                <div class=\"dropdown-menu text-color w-md animated fadeInUp pull-right\">\n                    &lt;!&ndash; search form &ndash;&gt;\n                    <form class=\"navbar-form form-inline navbar-item m-a-0 p-x v-m\" role=\"search\">\n                        <div class=\"form-group l-h m-a-0\">\n                            <div class=\"input-group\">\n                                <input type=\"text\" class=\"form-control\" placeholder=\"Search projects...\">\n                                <span class=\"input-group-btn\">\n                              <button type=\"submit\" class=\"btn white b-a no-shadow\"><i class=\"fa fa-search\"></i></button>\n                            </span>\n                            </div>\n                        </div>\n                    </form>\n                    &lt;!&ndash; / search form &ndash;&gt;\n                </div>\n            </li>\n            <li class=\"nav-item dropdown pos-stc-xs\">\n                <a class=\"nav-link clear\" data-toggle=\"dropdown\">\n                    <i class=\"ion-android-notifications-none w-24\"></i>\n                    <span class=\"label up p-a-0 danger\"></span>\n                </a>\n                &lt;!&ndash; dropdown &ndash;&gt;\n                <div class=\"dropdown-menu pull-right w-xl animated fadeIn no-bg no-border no-shadow\">\n                    <div class=\"scrollable\" style=\"max-height: 220px\">\n                        <ul class=\"list-group list-group-gap m-a-0\">\n                            <li class=\"list-group-item dark-white box-shadow-z0 b\">\n                              <span class=\"pull-left m-r\">\n                                <img src=\"/back/images/a0.jpg\" alt=\"...\" class=\"w-40 img-circle\">\n                              </span>\n                                <span class=\"clear block\">\n                                Use awesome <a href=\"#\" class=\"text-primary\">animate.css</a><br>\n                                <small class=\"text-muted\">10 minutes ago</small>\n                              </span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n                &lt;!&ndash; / dropdown &ndash;&gt;\n            </li>\n            <li class=\"nav-item dropdown\">\n                <a class=\"nav-link clear\" data-toggle=\"dropdown\">\n                      <span class=\"avatar w-32\">\n                        <img src=\"/back/images/a3.jpg\" class=\"w-full rounded\" alt=\"...\">\n                      </span>\n                </a>\n                <div class=\"dropdown-menu w dropdown-menu-scale pull-right\">\n                    <router-link class=\"dropdown-item\" to=\"/user/free/courses\">\n                        <span>Бесплатные курсы</span>\n                    </router-link>\n                    <router-link class=\"dropdown-item\" to=\"/user/profile\">\n                        <span>Профиль</span>\n                    </router-link>\n                    <router-link class=\"dropdown-item\" to=\"/user/settings\">\n                        <span>Настройки</span>\n                    </router-link>\n\n                    &lt;!&ndash;<a class=\"dropdown-item\" href=\"app.inbox.html\">\n                        <span>Inbox</span>\n                    </a>\n                    <a class=\"dropdown-item\" href=\"app.message.html\">\n                        <span>Message</span>\n                    </a>\n                    <div class=\"dropdown-divider\"></div>\n                    <a class=\"dropdown-item\" href=\"docs.html\">\n                        Need help?\n                    </a>&ndash;&gt;\n                    <a class=\"dropdown-item\" href=\"/logout\" onclick=\"event.preventDefault();\n                                                     document.getElementById('logout-form').submit();\">Выйти</a>\n                    <form id=\"logout-form\" action=\"/logout\" method=\"POST\" class=\"d-none\">\n                        <input type=\"hidden\" :value=\"csrf\" name=\"_token\">\n                    </form>\n                </div>\n            </li>\n        </ul>\n        &lt;!&ndash; / navbar right &ndash;&gt;\n    </div>")], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Left navbar links "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/user",
+    "class": "nav-link"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Home")];
+    }),
+    _: 1 /* STABLE */
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<li class=\"nav-item d-none d-sm-inline-block\">\n                <a href=\"#\" class=\"nav-link\">Contact</a>\n            </li>")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" SEARCH FORM "), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right navbar links "), _hoisted_6]);
 }
 
 /***/ }),
@@ -21803,8 +21833,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"content-header\"><div class=\"container-fluid\"><div class=\"row mb-2\"><div class=\"col-sm-6\"><h1 class=\"m-0\">Dashboard</h1></div><!-- /.col --><div class=\"col-sm-6\"><ol class=\"breadcrumb float-sm-right\"><li class=\"breadcrumb-item\"><a href=\"#\">Home</a></li><li class=\"breadcrumb-item active\">Dashboard v1</li></ol></div><!-- /.col --></div><!-- /.row --></div><!-- /.container-fluid --></div>", 1);
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
   "class": "content"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "container-fluid"
@@ -22522,7 +22551,8 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card-body ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" right col ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.row (main row) ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.container-fluid ")], -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Header (Page header) "), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main content "), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content ")], 64 /* STABLE_FRAGMENT */);
+  var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main content "), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content ")], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -22540,28 +22570,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+var _hoisted_1 = {
   "class": "main-sidebar sidebar-dark-primary elevation-4"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Brand Logo "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "index3.html",
-  "class": "brand-link"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "dist/img/AdminLTELogo.png",
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "/back/img/AdminLTELogo.png",
   alt: "AdminLTE Logo",
   "class": "brand-image img-circle elevation-3",
   style: {
     "opacity": ".8"
   }
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+}, null, -1 /* HOISTED */);
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "brand-text font-weight-light"
-}, "MaterialAdminLTE")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Sidebar "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, "MaterialAdminLTE", -1 /* HOISTED */);
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "sidebar"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Sidebar user panel (optional) "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "user-panel mt-3 pb-3 mb-3 d-flex"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "image"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "dist/img/user2-160x160.jpg",
+  src: "/back/img/user2-160x160.jpg",
   "class": "img-circle elevation-2",
   alt: "User Image"
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -23287,10 +23317,19 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "nav-link"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "nav-icon far fa-circle text-info"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Informational")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar-menu ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar ")], -1 /* HOISTED */);
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Informational")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar-menu ")], -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"navbar no-radius\">\n        &lt;!&ndash; brand &ndash;&gt;\n        <router-link to=\"/user\" class=\"navbar-brand\">\n            <div data-ui-include=\"'images/logo.svg'\"></div>\n            <img src=\"/back/images/logo.png\" alt=\".\" class=\"hide\">\n            <span class=\"hidden-folded inline\">aside</span>\n        </router-link>\n        &lt;!&ndash; / brand &ndash;&gt;\n    </div>\n    <div data-flex class=\"hide-scroll\">\n        <nav class=\"scroll nav-stacked nav-stacked-rounded nav-color\">\n\n            <ul class=\"nav\" data-ui-nav>\n                <li class=\"nav-header hidden-folded\">\n                    <span class=\"text-xs\">Main</span>\n                </li>\n                <li>\n                    <router-link to=\"/user\" class=\"b-danger\">\n          <span class=\"nav-icon text-white no-fade\">\n            <i class=\"ion-filing\"></i>\n          </span>\n                        <span class=\"nav-text\">Dashboard</span>\n                    </router-link>\n                </li>\n                <li>\n                    <router-link to=\"/user/free/courses\" class=\"b-success\">\n          <span class=\"nav-icon text-white no-fade\">\n            <i class=\"ion-android-apps\"></i>\n          </span>\n                        <span class=\"nav-text\">Бесплатные курсы</span>\n                    </router-link>\n                </li>\n                <li>\n                    <a href=\"app.inbox.html\" class=\"b-info\">\n          <span class=\"nav-icon text-white no-fade\">\n            <i class=\"ion-email\"></i>\n          </span>\n                        <span class=\"nav-text\">Inbox</span>\n                    </a>\n                </li>\n                <li>\n                    <a href=\"app.message.html\" class=\"b-default\">\n          <span class=\"nav-label\">\n            <b class=\"label label-xs rounded danger\"></b>\n          </span>\n                        <span class=\"nav-icon\">\n            <i class=\"ion-chatbubble-working\"></i>\n          </span>\n                        <span class=\"nav-text\">Messages</span>\n                    </a>\n                </li>\n                <li>\n                    <a href=\"app.contact.html\" class=\"b-default\">\n          <span class=\"nav-icon\">\n            <i class=\"ion-person\"></i>\n          </span>\n                        <span class=\"nav-text\">Contacts</span>\n                    </a>\n                </li>\n\n                <li class=\"nav-header hidden-folded m-t\">\n                    <span class=\"text-xs\">UI Elements</span>\n                </li>\n                <li>\n                    <a>\n          <span class=\"nav-caret\">\n            <i class=\"fa fa-caret-down\"></i>\n          </span>\n                        <span class=\"nav-icon\">\n            <i class=\"ion-plus-circled\"></i>\n          </span>\n                        <span class=\"nav-text\">UI kit</span>\n                    </a>\n                    <ul class=\"nav-sub nav-mega nav-mega-3\">\n                        <li>\n                            <a href=\"ui.arrow.html\" >\n                                <span class=\"nav-text\">Arrow</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.box.html\" >\n                                <span class=\"nav-text\">Box</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.button.html\" >\n                                <span class=\"nav-text\">Button</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.color.html\" >\n                                <span class=\"nav-text\">Color</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.dropdown.html\" >\n                                <span class=\"nav-text\">Dropdown</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.grid.html\" >\n                                <span class=\"nav-text\">Grid</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.icon.html\" >\n                                <span class=\"nav-text\">Icon</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.label.html\" >\n                                <span class=\"nav-text\">Label</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.list.html\" >\n                                <span class=\"nav-text\">List Group</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.modal.html\" >\n                                <span class=\"nav-text\">Modal</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.nav.html\" >\n                                <span class=\"nav-text\">Nav</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.progress.html\" >\n                                <span class=\"nav-text\">Progress</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.social.html\" >\n                                <span class=\"nav-text\">Social</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.sortable.html\" >\n                                <span class=\"nav-text\">Sortable</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.streamline.html\" >\n                                <span class=\"nav-text\">Streamline</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.timeline.html\" >\n                                <span class=\"nav-text\">Timeline</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"map.vector.html\" >\n                                <span class=\"nav-text\">Vector Map</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"ui.widget.html\" >\n                                <span class=\"nav-text\">Widget</span>\n                            </a>\n                        </li>\n                    </ul>\n                </li>\n\n                <li>\n                    <a>\n          <span class=\"nav-caret\">\n            <i class=\"fa fa-caret-down\"></i>\n          </span>\n                        <span class=\"nav-icon\">\n            <i class=\"ion-ios-photos\"></i>\n          </span>\n                        <span class=\"nav-text\">Pages</span>\n                    </a>\n                    <ul class=\"nav-sub nav-mega\">\n                        <li>\n                            <a href=\"profile.html\" >\n                                <span class=\"nav-text\">Profile</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"setting.html\" >\n                                <span class=\"nav-text\">Setting</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"search.html\" >\n                                <span class=\"nav-text\">Search</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"faq.html\" >\n                                <span class=\"nav-text\">FAQ</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"gallery.html\" >\n                                <span class=\"nav-text\">Gallery</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"invoice.html\" >\n                                <span class=\"nav-text\">Invoice</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"price.html\" >\n                                <span class=\"nav-text\">Price</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"blank.html\" >\n                                <span class=\"nav-text\">Blank</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"signin.html\" >\n                                <span class=\"nav-text\">Sign In</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"signup.html\" >\n                                <span class=\"nav-text\">Sign Up</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"forgot-password.html\" >\n                                <span class=\"nav-text\">Forgot Password</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"lockme.html\" >\n                                <span class=\"nav-text\">Lockme Screen</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"404.html\" >\n                                <span class=\"nav-text\">Error 404</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"505.html\" >\n                                <span class=\"nav-text\">Error 505</span>\n                            </a>\n                        </li>\n                    </ul>\n                </li>\n\n                <li>\n                    <a>\n          <span class=\"nav-caret\">\n            <i class=\"fa fa-caret-down\"></i>\n          </span>\n                        <span class=\"nav-icon\">\n            <i class=\"ion-checkmark-circled\"></i>\n          </span>\n                        <span class=\"nav-text\">Form</span>\n                    </a>\n                    <ul class=\"nav-sub\">\n                        <li>\n                            <a href=\"form.layout.html\" >\n                                <span class=\"nav-text\">Form Layout</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"form.element.html\" >\n                                <span class=\"nav-text\">Form Element</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"form.validation.html\" >\n                                <span class=\"nav-text\">Form Validation</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"form.select.html\" >\n                                <span class=\"nav-text\">Select</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"form.editor.html\" >\n                                <span class=\"nav-text\">Editor</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"form.picker.html\">\n                                <span class=\"nav-text\">Picker</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"form.wizard.html\">\n                                <span class=\"nav-text\">Wizard</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"form.dropzone.html\" class=\"no-ajax\" >\n                                <span class=\"nav-text\">File Upload</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"form.calendar.html\">\n                                <span class=\"nav-text\">Calendar</span>\n                            </a>\n                        </li>\n                    </ul>\n                </li>\n\n                <li>\n                    <a>\n          <span class=\"nav-caret\">\n            <i class=\"fa fa-caret-down\"></i>\n          </span>\n                        <span class=\"nav-icon\">\n            <i class=\"ion-ios-grid-view\"></i>\n          </span>\n                        <span class=\"nav-text\">Tables</span>\n                    </a>\n                    <ul class=\"nav-sub\">\n                        <li>\n                            <a href=\"static.html\" >\n                                <span class=\"nav-text\">Static table</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"datatable.html\" >\n                                <span class=\"nav-text\">Datatable</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"footable.html\" >\n                                <span class=\"nav-text\">Footable</span>\n                            </a>\n                        </li>\n                    </ul>\n                </li>\n                <li>\n                    <a>\n          <span class=\"nav-caret\">\n            <i class=\"fa fa-caret-down\"></i>\n          </span>\n                        <span class=\"nav-icon\">\n            <i class=\"ion-pie-graph\"></i>\n          </span>\n                        <span class=\"nav-text\">Charts</span>\n                    </a>\n                    <ul class=\"nav-sub\">\n                        <li>\n                            <a href=\"chart.html\" >\n                                <span class=\"nav-text\">Chart</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a href=\"chartjs.html\" >\n                                <span class=\"nav-text\">Chartjs</span>\n                            </a>\n                        </li>\n                        <li>\n                            <a>\n              <span class=\"nav-caret\">\n                <i class=\"fa fa-caret-down\"></i>\n              </span>\n                                <span class=\"nav-text\">Echarts</span>\n                            </a>\n                            <ul class=\"nav-sub\">\n                                <li>\n                                    <a href=\"echarts-line.html\" >\n                                        <span class=\"nav-text\">line</span>\n                                    </a>\n                                </li>\n                                <li>\n                                    <a href=\"echarts-bar.html\" >\n                                        <span class=\"nav-text\">Bar</span>\n                                    </a>\n                                </li>\n                                <li>\n                                    <a href=\"echarts-pie.html\" >\n                                        <span class=\"nav-text\">Pie</span>\n                                    </a>\n                                </li>\n                                <li>\n                                    <a href=\"echarts-scatter.html\" >\n                                        <span class=\"nav-text\">Scatter</span>\n                                    </a>\n                                </li>\n                                <li>\n                                    <a href=\"echarts-radar-chord.html\" >\n                                        <span class=\"nav-text\">Radar &amp; Chord</span>\n                                    </a>\n                                </li>\n                                <li>\n                                    <a href=\"echarts-gauge-funnel.html\" >\n                                        <span class=\"nav-text\">Gauges &amp; Funnel</span>\n                                    </a>\n                                </li>\n                                <li>\n                                    <a href=\"echarts-map.html\" >\n                                        <span class=\"nav-text\">Map</span>\n                                    </a>\n                                </li>\n                            </ul>\n                        </li>\n                    </ul>\n                </li>\n            </ul>\n        </nav>\n    </div>\n    <div data-flex-no-shrink>\n        <div class=\"nav-fold dropup\">\n            <a data-toggle=\"dropdown\">\n                <div class=\"pull-left\">\n                    <div class=\"inline\"><span class=\"avatar w-40 grey\">JR</span></div>\n                    <img src=\"/back/images/a0.jpg\" alt=\"...\" class=\"w-40 img-circle hide\">\n                </div>\n                <div class=\"clear hidden-folded p-x\">\n                    <span class=\"block _500 text-muted\">Jean Reyes</span>\n                    <div class=\"progress-xxs m-y-sm lt progress\">\n                        <div class=\"progress-bar info\" style=\"width: 15%;\">\n                        </div>\n                    </div>\n                </div>\n            </a>\n            <div class=\"dropdown-menu w dropdown-menu-scale \">\n                <router-link class=\"dropdown-item\" to=\"/user/free/courses\">\n                    <span>Бесплатные курсы</span>\n                </router-link>\n                <div class=\"dropdown-divider\"></div>\n                <router-link class=\"dropdown-item\" to=\"/user/profile\">\n                    <span>Профиль</span>\n                </router-link>\n                <router-link class=\"dropdown-item\" to=\"/user/settings\">\n                    <span>Настройки</span>\n                </router-link>\n                &lt;!&ndash;<a class=\"dropdown-item\" href=\"app.inbox.html\">\n                    <span>Inbox</span>\n                </a>\n                <a class=\"dropdown-item\" href=\"docs.html\">\n                    Need help?\n                </a>&ndash;&gt;\n                <a class=\"dropdown-item\" href=\"/logout\" onclick=\"event.preventDefault();\n                                                     document.getElementById('logout-form').submit();\">Выйти</a>\n                <form id=\"logout-form\" action=\"/logout\" method=\"POST\" class=\"d-none\">\n                    <input type=\"hidden\" :value=\"csrf\" name=\"_token\">\n                </form>\n            </div>\n        </div>\n    </div>")], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("aside", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Brand Logo "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/user",
+    "class": "brand-link"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_2, _hoisted_3];
+    }),
+    _: 1 /* STABLE */
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Sidebar "), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar ")]);
 }
 
 /***/ }),
@@ -48144,6 +48183,34 @@ exports["default"] = (sfc, props) => {
 
 /***/ }),
 
+/***/ "./resources/js/components/back/BreadCrumbComponent.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/back/BreadCrumbComponent.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _BreadCrumbComponent_vue_vue_type_template_id_3a44fd5d__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BreadCrumbComponent.vue?vue&type=template&id=3a44fd5d */ "./resources/js/components/back/BreadCrumbComponent.vue?vue&type=template&id=3a44fd5d");
+/* harmony import */ var _BreadCrumbComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BreadCrumbComponent.vue?vue&type=script&lang=js */ "./resources/js/components/back/BreadCrumbComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OSPanel_domains_mysait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OSPanel_domains_mysait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_BreadCrumbComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_BreadCrumbComponent_vue_vue_type_template_id_3a44fd5d__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/back/BreadCrumbComponent.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/back/FooterComponent.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/components/back/FooterComponent.vue ***!
@@ -48368,6 +48435,22 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/back/BreadCrumbComponent.vue?vue&type=script&lang=js":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/back/BreadCrumbComponent.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BreadCrumbComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BreadCrumbComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BreadCrumbComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/BreadCrumbComponent.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/back/FooterComponent.vue?vue&type=script&lang=js":
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/back/FooterComponent.vue?vue&type=script&lang=js ***!
@@ -48493,6 +48576,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_SettingsComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./SettingsComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/SettingsComponent.vue?vue&type=script&lang=js");
  
+
+/***/ }),
+
+/***/ "./resources/js/components/back/BreadCrumbComponent.vue?vue&type=template&id=3a44fd5d":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/back/BreadCrumbComponent.vue?vue&type=template&id=3a44fd5d ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BreadCrumbComponent_vue_vue_type_template_id_3a44fd5d__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BreadCrumbComponent_vue_vue_type_template_id_3a44fd5d__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BreadCrumbComponent.vue?vue&type=template&id=3a44fd5d */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/BreadCrumbComponent.vue?vue&type=template&id=3a44fd5d");
+
 
 /***/ }),
 
@@ -56618,7 +56717,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 /* harmony import */ var _components_back_HeaderComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/back/HeaderComponent */ "./resources/js/components/back/HeaderComponent.vue");
 /* harmony import */ var _components_back_ProfileComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/back/ProfileComponent */ "./resources/js/components/back/ProfileComponent.vue");
 /* harmony import */ var _components_back_FreeCoursesComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/back/FreeCoursesComponent */ "./resources/js/components/back/FreeCoursesComponent.vue");
@@ -56627,6 +56726,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_back_LeftBarComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/back/LeftBarComponent */ "./resources/js/components/back/LeftBarComponent.vue");
 /* harmony import */ var _components_back_HomeComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/back/HomeComponent */ "./resources/js/components/back/HomeComponent.vue");
 /* harmony import */ var _components_back_FooterComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/back/FooterComponent */ "./resources/js/components/back/FooterComponent.vue");
+/* harmony import */ var _components_back_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/back/BreadCrumbComponent */ "./resources/js/components/back/BreadCrumbComponent.vue");
+
 
 
 
@@ -56654,13 +56755,14 @@ var routes = [{
   path: '/user/free/course/:id',
   component: _components_back_FreeCourseComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
 }];
-var router = vue_router__WEBPACK_IMPORTED_MODULE_10__.createRouter({
-  history: vue_router__WEBPACK_IMPORTED_MODULE_10__.createWebHistory(''),
+var router = vue_router__WEBPACK_IMPORTED_MODULE_11__.createRouter({
+  history: vue_router__WEBPACK_IMPORTED_MODULE_11__.createWebHistory(''),
   routes: routes
 });
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
 app.use(router);
 app.component('back-header-component', _components_back_HeaderComponent__WEBPACK_IMPORTED_MODULE_2__["default"]);
+app.component('bread-crumb-component', _components_back_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_10__["default"]);
 app.component('settings-component', _components_back_SettingsComponent__WEBPACK_IMPORTED_MODULE_6__["default"]);
 app.component('profile-component', _components_back_ProfileComponent__WEBPACK_IMPORTED_MODULE_3__["default"]);
 app.component('free-courses-component', _components_back_FreeCoursesComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
