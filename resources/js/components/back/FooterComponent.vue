@@ -1,6 +1,11 @@
 <template>
-    <div class="pull-right text-sm text-muted">Version 1.0.3</div>
-    <span class="text-sm text-muted">&copy; Copyright. 2020 - {{ date_now }} </span>
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2020 - {{ date_now }} <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 3.1.0-pre
+        </div>
+    </footer>
 </template>
 <script>
     export default {

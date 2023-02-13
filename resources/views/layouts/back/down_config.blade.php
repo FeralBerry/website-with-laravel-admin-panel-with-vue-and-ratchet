@@ -1,31 +1,41 @@
-<!-- build:js scripts/app.min.js -->
 <!-- jQuery -->
-<script src="{{ asset('back/libs/jquery/dist/jquery.js') }}"></script>
-<!-- Bootstrap -->
-<script src="{{ asset('back/libs/tether/dist/js/tether.min.js') }}"></script>
-<script src="{{ asset('back/libs/bootstrap/dist/js/bootstrap.js') }}"></script>
-<!-- core -->
-<script src="{{ asset('back/libs/jQuery-Storage-API/jquery.storageapi.min.js') }}"></script>
-<script src="{{ asset('back/libs/PACE/pace.min.js') }}"></script>
-<script src="{{ asset('back/libs/jquery-pjax/jquery.pjax.js') }}"></script>
-<script src="{{ asset('back/libs/blockUI/jquery.blockUI.js') }}"></script>
-<script src="{{ asset('back/libs/jscroll/jquery.jscroll.min.js') }}"></script>
-
-<script src="{{ asset('back/scripts/config.lazyload.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-load.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-jp.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-include.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-device.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-form.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-modal.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-nav.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-list.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-screenfull.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-scroll-to.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-toggle-class.js') }}"></script>
-<script src="{{ asset('back/scripts/ui-taburl.js') }}"></script>
-<script src="{{ asset('back/scripts/app.js') }}"></script>
-<script src="{{ asset('back/scripts/ajax.js') }}"></script>
+<script src="{{ asset('back/plugins/jquery/jquery.min.js') }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ asset('back/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('back/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- ChartJS -->
+<script src="{{ asset('back/plugins/chart.js/Chart.min.js') }}"></script>
+<!-- Sparkline -->
+<script src="{{ asset('back/plugins/sparklines/sparkline.js') }}"></script>
+<!-- JQVMap -->
+<script src="{{ asset('back/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
+<script src="{{ asset('back/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{ asset('back/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+<!-- daterangepicker -->
+<script src="{{ asset('back/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('back/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{ asset('back/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+<!-- Summernote -->
+<script src="{{ asset('back/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ asset('back/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('back/dist/js/adminlte.js') }}"></script>
+<!-- Bootstrap Material Design -->
+<script src="{{ asset('back/js/popper.min.js') }}"></script>
+<script src="{{ asset('back/js/bootstrap-material-design.min.js') }}"></script>
+<script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('back/js/demo.js') }}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{ asset('back/js/pages/dashboard.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -131,33 +141,39 @@
         });
     });
     @if(isset($data['free_courses_navigate']) && $data['free_courses_navigate'] !== NULL)
-        @for($i = 0;$i < count($data['free_courses_navigate']);$i++)
-            $('body').on('click', '#{{ $i+1 }}', function() {
-                let course_article_page = document.getElementById('course_article_page');
-                let free_courses_navigate = {!! $data['free_courses_navigate'] !!};
-                let course_id = null;
-                free_courses_navigate.map((item) => {
-                    course_id = item.free_courses_name_id;
-                });
-                $.ajax({
-                    type: "POST",
-                    url: '/user/free/course/'+course_id+'/'+{{ $i+1 }},
-                    data: {
+    @for($i = 0;$i < count($data['free_courses_navigate']);$i++)
+    $('body').on('click', '#{{ $i+1 }}', function() {
+        let course_article_page = document.getElementById('course_article_page');
+        let free_courses_navigate = {!! $data['free_courses_navigate'] !!};
+        let course_id = null;
+        free_courses_navigate.map((item) => {
+            course_id = item.free_courses_name_id;
+        });
+        $.ajax({
+            type: "POST",
+            url: '/user/free/course/'+course_id+'/'+{{ $i+1 }},
+            data: {
 
-                    },
-                    success: function (data) {
-                        data.all_free_courses_id.map((item) => {
-                            let last_open_free_course_id = document.getElementById(item.id);
-                            last_open_free_course_id.classList.remove('active');
-                        });
-                        data.free_course.map((item) => {
-                            course_article_page.innerHTML = item.description;
-                            let id = document.getElementById(item.id);
-                            id.classList.add('active')
-                        });
-                    }
+            },
+            success: function (data) {
+                data.all_free_courses_id.map((item) => {
+                    let last_open_free_course_id = document.getElementById(item.id);
+                    last_open_free_course_id.classList.remove('active');
                 });
-            });
-        @endfor
+                data.free_course.map((item) => {
+                    course_article_page.innerHTML = '';
+                    if(item.type === 0){
+                        course_article_page.innerHTML = item.description;
+                    } else if(item.type === 1){
+                        course_article_page.innerHTML = ''+item.description+'<div>'+item.task+'</div>';
+                    }
+
+                    let id = document.getElementById(item.id);
+                    id.classList.add('active')
+                });
+            }
+        });
+    });
+    @endfor
     @endif
 </script>

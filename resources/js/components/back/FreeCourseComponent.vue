@@ -3,7 +3,18 @@
         <div class="row">
             <div class="col-sm-8" id="course_article_page">
                 <template v-for="courses in this.data.free_courses">
-                    {{ courses.description }}
+                    <template v-if="courses.type === 0">
+                        {{ courses.description }}
+                    </template>
+                    <template v-if="courses.type === 1">
+                        {{ courses.description }}
+                        <div>
+                            <textarea placeholder="Enter HTML Source Code" id="editing" spellcheck="false" oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);" onkeydown="check_tab(this, event);"></textarea>
+                            <pre id="highlighting" aria-hidden="true">
+                            </pre>
+                            {{ courses.task }}
+                        </div>
+                    </template>
                 </template>
             </div>
             <div class="col-sm-4">
