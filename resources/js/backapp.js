@@ -3,10 +3,10 @@ import { createApp } from 'vue';
 import * as VueRouter from 'vue-router';
 
 import HeaderBackComponent from "./components/back/HeaderComponent";
-import ProfileComponent from "./components/back/ProfileComponent";
-import FreeCoursesComponent from "./components/back/FreeCoursesComponent";
-import FreeCourseComponent from "./components/back/FreeCourseComponent";
-import SettingsComponent from "./components/back/SettingsComponent";
+import ProfileComponent from "./components/back/user/pages/ProfileComponent";
+import FreeCoursesComponent from "./components/back/user/pages/FreeCoursesComponent";
+import FreeCourseComponent from "./components/back/user/pages/FreeCourseComponent";
+import SettingsComponent from "./components/back/user/pages/SettingsComponent";
 import LeftBarComponent from "./components/back/LeftBarComponent";
 import HomeComponent from "./components/back/HomeComponent";
 import FooterComponent from "./components/back/FooterComponent";

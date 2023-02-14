@@ -1,5 +1,5 @@
 <template>
-    <bread-crumb-component></bread-crumb-component>
+    <bread-crumb-component :data="breadcrumb"></bread-crumb-component>
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -587,6 +587,19 @@
     export default {
         name: "MainComponent",
         props: ['data'],
+        data(){
+            return {
+                breadcrumb:{
+                    'title':'Home',
+                    'crumbs':{
+                        'first':{
+                            'title':'Home',
+                            'link':'/user'
+                        }
+                    }
+                }
+            }
+        },
         mounted() {
 
         },

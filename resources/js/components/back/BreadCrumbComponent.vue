@@ -4,12 +4,22 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">{{ data.title }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
+                        <template v-if="data.crumbs.first && data.crumbs.second && data.crumbs.third">
+                            <li class="breadcrumb-item"><router-link :to="data.crumbs.first.link">{{ data.crumbs.first.title }}</router-link></li>
+                            <li class="breadcrumb-item"><router-link :to="data.crumbs.second.link">{{ data.crumbs.second.title }}</router-link></li>
+                            <li class="breadcrumb-item active"><router-link :to="data.crumbs.third.link">{{ data.crumbs.third.title }}</router-link></li>
+                        </template>
+                        <template v-if="data.crumbs.first && data.crumbs.second && !data.crumbs.third">
+                            <li class="breadcrumb-item"><router-link :to="data.crumbs.first.link">{{ data.crumbs.first.title }}</router-link></li>
+                            <li class="breadcrumb-item active"><router-link :to="data.crumbs.second.link">{{ data.crumbs.second.title }}</router-link></li>
+                        </template>
+                        <template v-if="data.crumbs.first && !data.crumbs.second && !data.crumbs.third">
+                            <li class="breadcrumb-item active"><router-link :to="data.crumbs.first.link">{{ data.crumbs.first.title }}</router-link></li>
+                        </template>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->

@@ -36,7 +36,7 @@
 <script src="{{ asset('back/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('back/js/pages/dashboard.js') }}"></script>
-<script>
+{{--<script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -176,4 +176,4 @@
     });
     @endfor
     @endif
-</script>
+</script>--}}
