@@ -1,12 +1,12 @@
 <template>
     <div>
         <bread-crumb-component :data="data"></bread-crumb-component>
-        Блог
+        Магазин
     </div>
 </template>
 <script>
     export default {
-        name: "BlogComponent",
+        name: "ShopScriptsComponent",
         props: ['data'],
         mounted() {
 

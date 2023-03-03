@@ -36,7 +36,7 @@
 <script src="{{ asset('back/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('back/js/pages/dashboard.js') }}"></script>
-{{--<script>
+<script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -176,4 +176,36 @@
     });
     @endfor
     @endif
-</script>--}}
+    $("body").on('keypress', "#example", function(e) {
+        let example = document.getElementById('example').innerHTML + e.key;
+        let task = document.getElementById('task');
+        $.ajax({
+            type: "POST",
+            url: '/free/course/task',
+            data: {
+                example: example
+            },
+            success: function (data) {
+                task.innerHTML = ''+data+'';
+            }
+        });
+
+    });
+</script>
+<!-- CodeMirror -->
+<script src="{{ asset('plugins/codemirror/codemirror.js') }}"></script>
+<script src="{{ asset('plugins/codemirror/mode/css/css.js') }}"></script>
+<script src="{{ asset('plugins/codemirror/mode/xml/xml.js') }}"></script>
+<script src="{{ asset('plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
+<script>
+    $(function () {
+        // Summernote
+        $('#summernote').summernote()
+
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    })
+</script>

@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('seo', function (Blueprint $table) {
+        Schema::create('free_courses_name', function (Blueprint $table) {
             $table->id();
             $table->string('title',100)->nullable();
             $table->text('brief')->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seo');
+        Schema::dropIfExists('free_courses_name');
     }
 };

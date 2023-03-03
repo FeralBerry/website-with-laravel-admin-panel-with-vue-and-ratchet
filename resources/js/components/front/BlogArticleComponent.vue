@@ -6,7 +6,7 @@
 </template>
 <script>
     export default {
-        name: "BlogComponent",
+        name: "BlogArticleComponent",
         props: ['data'],
         mounted() {
 

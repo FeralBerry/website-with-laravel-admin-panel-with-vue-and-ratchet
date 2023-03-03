@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar',255)->nullable();
             $table->integer('connection_id')->nullable();
+            $table->integer('last_open_free_course_id')->nullable();
             $table->rememberToken();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

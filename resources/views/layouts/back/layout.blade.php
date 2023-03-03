@@ -16,7 +16,7 @@
     <back-header-component></back-header-component>
     <!-- /.navbar -->
     <!-- Main Sidebar Container -->
-    <left-bar-component></left-bar-component>
+    <left-bar-component :data='{!! json_encode($data) !!}'></left-bar-component>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <router-view :data='{!! json_encode($data) !!}'></router-view>

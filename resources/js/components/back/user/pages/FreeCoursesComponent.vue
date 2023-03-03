@@ -1,59 +1,10 @@
 <template>
-    <div class="padding">
-        <div class="row">
-            <div class="col-sm-12 col-md-12">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4" id="courses" v-for="item in this.courses_name">
-                        <div class="box text-center" style="background-color: rgba(255, 255, 255, 0.9)">
-                            <!--<div class="box-tool">
-                                <ul class="nav">
-                                    <li class="nav-item inline dropdown">
-                                        <a class="nav-link text-muted" data-toggle="dropdown">
-                                            <i class="material-icons md-18">menu</i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-scale pull-right dark">
-                                            <a class="dropdown-item" href="#">Activities</a>
-                                            <a class="dropdown-item" href="#">Feed</a>
-                                            <a class="dropdown-item" href="#">Photo</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item">Follow</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>-->
-                            <div class="p-a-md">
-                                <img :src="item.img" style="position: absolute;width: 100%;z-index: -1;margin-left: -50%;">
-                                <router-link :to="item.link" class="text-md block">{{ item.title }}</router-link>
-                                <p><small>{{ item.brief }}</small></p>
-                                <router-link :to="item.link" class="btn btn-sm btn-outline rounded b-accent">Начать</router-link>
-                            </div>
-                            <div class="row row-col no-gutter b-t warn">
-                                <div class="col-xs-4 b-r">
-                                    <router-link :to="item.link" class="p-y block text-center" data-ui-toggle-class="">
-                                        <strong class="block">{{ item.count_article }}</strong>
-                                        <span class="block">Тем</span>
-                                    </router-link>
-                                </div>
-                                <div class="col-xs-4 b-r">
-                                    <router-link :to="item.link" class="p-y block text-center" data-ui-toggle-class="">
-                                        <strong class="block">{{ item.count_tasks }}</strong>
-                                        <span class="block">Заданий</span>
-                                    </router-link>
-                                </div>
-                                <div class="col-xs-4">
-                                    <router-link :to="item.link" class="p-y block text-center" data-ui-toggle-class="">
-                                        <strong class="block">{{ item.count_lessons }}</strong>
-                                        <span class="block">Уроков</span>
-                                    </router-link>
-                                </div>
-                            </div>
+    <bread-crumb-component :data="this.breadcrumb"></bread-crumb-component>
+        <div class="col-md-12">
+            <div class="row" id="app-body">
 
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
 </template>
 <script>
     export default {
@@ -63,6 +14,20 @@
             return {
                 connection:null,
                 courses_name:[],
+                breadcrumb:{
+                    'title':'FreeLessons',
+                    'crumbs':{
+                        'first':{
+                            'title':'Home',
+                            'link':'/user'
+                        },
+                        'second':{
+                            'title':'FreeLessons',
+                            'link':'/user/free/courses'
+                        },
+                        'third':null
+                    }
+                }
             }
         },
         mounted() {
@@ -78,30 +43,39 @@
             connection.onmessage = function(event){
                 let data = JSON.parse(event.data);
                 if(data.message === 'open_free_courses'){
-                    let app_body = document.getElementById('app-body');
-                    app_body.innerHTML = '<div class="padding">' +
-                        '        <div class="row">' +
-                        '            <div class="col-sm-12 col-md-12">' +
-                        '                <div class="row" id="courses">' +
-                        '</div></div></div></div>';
                     data.free_courses_name.map((item) => {
-                        let courses = document.getElementById('courses');
-                        courses.innerHTML += '<div class="col-xs-12 col-sm-6 col-md-4"><div class="box text-center" style="background-color: rgba(255, 255, 255, 0.9)">' +
-                            '<div class="p-a-md" style="min-height: 250px;">' +
-                            '<img src="'+item.img+'" style="position: absolute;width: 100%;z-index: -1;margin-left: -50%;">' +
-                            '<a href="'+item.link+'" class="text-md block">'+item.title+'</a>' +
-                            '<p><small>'+item.brief+'</small></p>' +
-                            '<a href="'+item.link+'" class="btn btn-sm btn-outline rounded b-accent">Начать</a>' +
-                            '</div><div class="row row-col no-gutter b-t warn"><div class="col-xs-4 b-r">' +
-                            '<a href="'+item.link+'" class="p-y block text-center" data-ui-toggle-class="">' +
-                            '<strong class="block">'+item.count_article+'</strong>' +
-                            '<span class="block">Тем</span></a></div><div class="col-xs-4 b-r">' +
-                            '<a href="'+item.link+'" class="p-y block text-center" data-ui-toggle-class="">' +
-                            '<strong class="block">'+item.count_tasks+'</strong><span class="block">Заданий</span></a>' +
-                            '</div><div class="col-xs-4">' +
-                            '<a href="'+item.link+'" class="p-y block text-center" data-ui-toggle-class="">' +
-                            '<strong class="block">'+item.count_lessons+'</strong><span class="block">Уроков</span></a>' +
-                            '</div></div></div></div>';
+                        let courses = document.getElementById('app-body');
+                        courses.innerHTML += '<div class="col-md-4">' +
+                            '            <div class="card card-widget widget-user">' +
+                            '                <div class="widget-user-header text-white" style="background: url('+item.img+') center center;background-size: cover">' +
+                            '                    <h3 class="widget-user-username text-right">'+item.title+'</h3>' +
+                            '                    <h5 class="widget-user-desc text-right">'+item.brief+'</h5>' +
+                            '                </div>' +
+                            '                <div class="card-footer">' +
+                            '<a href="'+item.link+'" style="margin-top: -20px" class="btn btn-block btn-outline-info btn-sm">Начать</a>'+
+                            '                    <div class="row">' +
+                            '                        <div class="col-sm-4 border-right">' +
+                            '                            <div class="description-block">' +
+                            '                                <h5 class="description-header">'+item.count_lessons+'</h5>' +
+                            '                                <span class="description-text">Уроков</span>' +
+                            '                            </div>' +
+                            '                        </div>' +
+                            '                        <div class="col-sm-4 border-right">' +
+                            '                            <div class="description-block">' +
+                            '                                <h5 class="description-header">'+item.count_article+'</h5>' +
+                            '                                <span class="description-text">Статей</span>' +
+                            '                            </div>' +
+                            '                        </div>' +
+                            '                        <div class="col-sm-4">' +
+                            '                            <div class="description-block">' +
+                            '                                <h5 class="description-header">'+item.count_tasks+'</h5>' +
+                            '                                <span class="description-text">Заданий</span>' +
+                            '                            </div>' +
+                            '                        </div>' +
+                            '                    </div>' +
+                            '                </div>' +
+                            '            </div>' +
+                            '        </div>';
                     });
                 }
             }

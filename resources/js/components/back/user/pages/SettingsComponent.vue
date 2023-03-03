@@ -6,19 +6,25 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3">
-
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
-                                     src="/back/img/user4-128x128.jpg"
-                                     alt="User profile picture">
+                                <input id="profile_avatar">
+                                    <template v-if="data.auth.avatar">
+                                        <img class="profile-user-img img-fluid img-circle"
+                                             :src="'/back/img/avatar/'+data.auth.avatar"
+                                             :alt="data.user_name">
+                                    </template>
+                                    <template v-else>
+                                        <img class="profile-user-img img-fluid img-circle"
+                                             src="/back/img/avatar/no-img.png"
+                                             :alt="data.user_name">
+                                    </template>
                             </div>
+                            <h3 class="profile-username text-center">{{ data.user_name }}</h3>
 
-                            <h3 class="profile-username text-center">Nina Mcintire</h3>
-
-                            <p class="text-muted text-center">Software Engineer</p>
+                            <p class="text-muted text-center">{{ data.auth.slogan }}</p>
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
@@ -31,8 +37,8 @@
                                     <b>Friends</b> <a class="float-right">13,287</a>
                                 </li>
                             </ul>
-
-                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+<!--
+                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -362,7 +368,7 @@
 
         },
         created() {
-            /*let connection = new WebSocket("ws://127.0.0.1:4710");
+            let connection = new WebSocket("ws://127.0.0.1:4710");
             let csrf = document.querySelector('meta[name="csrf-token"]').content;
             let user_id = document.querySelector('meta[name="user_id"]').content;
             connection.onopen = function(event){
@@ -395,7 +401,7 @@
                         },
                     });
                 });
-            });*/
+            });
         }
     }
 </script>

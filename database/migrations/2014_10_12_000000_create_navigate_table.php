@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('title',100)->nullable();
             $table->string('href',255)->nullable();
-            $table->integer('menu')->nullable();
+            $table->integer('menu')->default(0);
             $table->integer('submenu')->nullable();
             $table->integer('menuType')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seo');
+        Schema::dropIfExists('navigate');
     }
 };
