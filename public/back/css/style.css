@@ -1,0 +1,13 @@
+#example{
+    width:100%;
+    background-color: #00000096;
+    color:#fff;
+    border-radius: 5px;
+    border: solid 1px #0a0e14;
+}
+#task{
+    width: 100%;
+}
+.statement {
+    color: orange;
+}

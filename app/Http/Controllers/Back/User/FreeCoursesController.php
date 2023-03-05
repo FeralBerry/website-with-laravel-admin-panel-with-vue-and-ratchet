@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Back\User;
 
 use App\Http\Controllers\Back\BackController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -42,5 +43,17 @@ class FreeCoursesController extends BackController
             'all_free_courses_id' => $all_free_courses_id,
         ];
         return $data;
+    }
+    public function task(Request $request){
+        $free_courses = DB::table('free_courses')
+            ->where('id',$request['task_number'])
+            ->get();
+        foreach ($free_courses as $courses){
+            if($courses->example == $request['example']){
+                return 'Правильно';
+            } else {
+                return 'Не верно';
+            }
+        }
     }
 }

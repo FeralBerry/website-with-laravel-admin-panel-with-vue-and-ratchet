@@ -163,11 +163,20 @@
                 data.free_course.map((item) => {
                     course_article_page.innerHTML = '';
                     if(item.type === 0){
-                        course_article_page.innerHTML = item.description;
+                        let video;
+                        if(item.link != null){
+                            video = '<video src="'+item.link+'" controls width="600" height="400"></video>';
+                        }
+                        if(item.youtube != null){
+                            video = '<iframe width="600" height="400" src="'+item.youtube+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                        }
+                        course_article_page.innerHTML = video + '<br>'+ item.description;
                     } else if(item.type === 1){
-                        course_article_page.innerHTML = ''+item.description+'<div>'+item.task+'</div>';
+                        course_article_page.innerHTML = ''+item.description+'<div contenteditable="true" id="example" class="p-3"></div><div id="task"></div>' +
+                            '<div id="check_task" class="btn btn-success">Проверить</div>';
+                        let example = document.getElementById('example');
+                        example.innerText = item.task;
                     }
-
                     let id = document.getElementById(item.id);
                     id.classList.add('active')
                 });
@@ -177,35 +186,25 @@
     @endfor
     @endif
     $("body").on('keypress', "#example", function(e) {
-        let example = document.getElementById('example').innerHTML + e.key;
+        let example = (document.getElementById('example').innerHTML + e.key).replace(/&lt;/gi,'<').replace(/&gt;/gi,'>');
         let task = document.getElementById('task');
+        task.innerHTML = example;
+    });
+    $("body").on('click',"#check_task", function() {
+        let example = (document.getElementById('example').innerHTML).replace(/&lt;/gi,'<').replace(/&gt;/gi,'>');
+        let task_number = document.getElementById('task_number').innerHTML;
         $.ajax({
             type: "POST",
-            url: '/free/course/task',
+            url: 'task',
             data: {
-                example: example
+                example: example,
+                task_number: task_number
             },
             success: function (data) {
-                task.innerHTML = ''+data+'';
+                alert(data)
             }
         });
-
     });
-</script>
-<!-- CodeMirror -->
-<script src="{{ asset('plugins/codemirror/codemirror.js') }}"></script>
-<script src="{{ asset('plugins/codemirror/mode/css/css.js') }}"></script>
-<script src="{{ asset('plugins/codemirror/mode/xml/xml.js') }}"></script>
-<script src="{{ asset('plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
-<script>
-    $(function () {
-        // Summernote
-        $('#summernote').summernote()
 
-        // CodeMirror
-        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-            mode: "htmlmixed",
-            theme: "monokai"
-        });
-    })
 </script>
+

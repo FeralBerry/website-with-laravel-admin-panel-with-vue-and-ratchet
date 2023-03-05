@@ -8,6 +8,12 @@
                         <div class="row">
                             <template v-for="courses in this.data.free_courses">
                                 <template v-if="courses.type === 0">
+                                    <template v-if="courses.link != null">
+                                        <video :src="courses.link" controls width="600" height="400"></video>
+                                    </template>
+                                    <template v-if="courses.youtube != null">
+                                        <iframe width="600" height="400" :src="courses.youtube" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    </template>
                                     {{ courses.description }}
                                 </template>
                                 <template v-if="courses.type === 1">
@@ -16,7 +22,10 @@
                                     <div id="task">
 
                                     </div>
+
+                                    <div id="check_task" class="btn btn-success">Проверить</div>
                                 </template>
+                                <div style="display: none" id="task_number">{{ courses.id }}</div>
                             </template>
                         </div>
                     </div>

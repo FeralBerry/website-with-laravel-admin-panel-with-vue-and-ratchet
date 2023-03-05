@@ -23,3 +23,4 @@
 <!-- CodeMirror -->
 <link rel="stylesheet" href="{{ asset('plugins/codemirror/codemirror.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/codemirror/theme/monokai.css') }}">
+<link rel="stylesheet" href="{{ asset('back/css/style.css') }}">
