@@ -21214,6 +21214,63 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "FreeCourseComponent",
+  props: ['data'],
+  data: function data() {
+    return {
+      courses_navigate: [],
+      free_course: [],
+      breadcrumb: {}
+    };
+  },
+  created: function created() {
+    var _this = this;
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+    };
+    var i = 0;
+    this.data.free_courses_navigate.map(function (item) {
+      _this.courses_navigate[i] = item;
+      _this.breadcrumb = {
+        'title': 'Бесплатный урок №' + i + '',
+        'crumbs': {
+          'first': {
+            'title': 'Home',
+            'link': '/user'
+          },
+          'second': {
+            'title': 'Все бесплатные курсы',
+            'link': '/user/free/courses'
+          },
+          'third': {
+            'title': 'Урок ' + i + '',
+            'link': '/user/free/course/' + i + ''
+          }
+        }
+      };
+      i++;
+    });
+  },
+  mounted: function mounted() {},
+  methods: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/FreeCourseComponent.vue?vue&type=script&lang=js":
 /*!*****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/FreeCourseComponent.vue?vue&type=script&lang=js ***!
@@ -21275,6 +21332,119 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/FreeCoursesComponent.vue?vue&type=script&lang=js ***!
   \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "FreeCoursesComponent",
+  props: ['data'],
+  data: function data() {
+    return {
+      connection: null,
+      courses_name: [],
+      breadcrumb: {
+        'title': 'FreeLessons',
+        'crumbs': {
+          'first': {
+            'title': 'Home',
+            'link': '/user'
+          },
+          'second': {
+            'title': 'FreeLessons',
+            'link': '/user/free/courses'
+          },
+          'third': null
+        }
+      }
+    };
+  },
+  mounted: function mounted() {},
+  created: function created() {
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+      connection.send('{"command":"open_free_courses"}');
+    };
+    connection.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      if (data.message === 'open_free_courses') {
+        data.free_courses_name.map(function (item) {
+          var courses = document.getElementById('app-body');
+          courses.innerHTML += '<div class="col-md-4">' + '            <div class="card card-widget widget-user">' + '                <div class="widget-user-header text-white" style="background: url(' + item.img + ') center center;background-size: cover">' + '                    <h3 class="widget-user-username text-right">' + item.title + '</h3>' + '                    <h5 class="widget-user-desc text-right">' + item.brief + '</h5>' + '                </div>' + '                <div class="card-footer">' + '<a href="' + item.link + '" style="margin-top: -20px" class="btn btn-block btn-outline-info btn-sm">Начать</a>' + '                    <div class="row">' + '                        <div class="col-sm-4 border-right">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + item.count_lessons + '</h5>' + '                                <span class="description-text">Уроков</span>' + '                            </div>' + '                        </div>' + '                        <div class="col-sm-4 border-right">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + item.count_article + '</h5>' + '                                <span class="description-text">Статей</span>' + '                            </div>' + '                        </div>' + '                        <div class="col-sm-4">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + item.count_tasks + '</h5>' + '                                <span class="description-text">Заданий</span>' + '                            </div>' + '                        </div>' + '                    </div>' + '                </div>' + '            </div>' + '        </div>';
+        });
+      }
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "FreeCourseComponent",
+  props: ['data'],
+  data: function data() {
+    return {
+      courses_navigate: [],
+      free_course: [],
+      breadcrumb: {}
+    };
+  },
+  created: function created() {
+    var _this = this;
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    var user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function (event) {
+      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+    };
+    var i = 0;
+    this.data.free_courses_navigate.map(function (item) {
+      _this.courses_navigate[i] = item;
+      _this.breadcrumb = {
+        'title': 'Бесплатный урок №' + i + '',
+        'crumbs': {
+          'first': {
+            'title': 'Home',
+            'link': '/user'
+          },
+          'second': {
+            'title': 'Все бесплатные курсы',
+            'link': '/user/free/courses'
+          },
+          'third': {
+            'title': 'Урок ' + i + '',
+            'link': '/user/free/course/' + i + ''
+          }
+        }
+      };
+      i++;
+    });
+  },
+  mounted: function mounted() {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22564,23 +22734,33 @@ var _hoisted_11 = {
   "data-accordion": "false"
 };
 var _hoisted_12 = {
-  "class": "nav-item menu-open"
+  "class": "nav-item"
 };
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "nav-icon fas fa-tachometer-alt"
 }, null, -1 /* HOISTED */);
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Главная "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "right fas fa-angle-left"
-})], -1 /* HOISTED */);
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, " Главная ", -1 /* HOISTED */);
 var _hoisted_15 = {
   "class": "nav-item"
 };
 var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "nav-icon fas fa-copy"
 }, null, -1 /* HOISTED */);
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Бесплатные курсы "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fas fa-angle-left right"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"badge badge-info right\">6</span>")], -1 /* HOISTED */);
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Бесплатные курсы "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"badge badge-info right\">6</span>")], -1 /* HOISTED */);
+var _hoisted_18 = {
+  "class": "nav-item"
+};
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "nav-icon fas fa-copy"
+}, null, -1 /* HOISTED */);
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Платные курсы "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"badge badge-info right\">6</span>")], -1 /* HOISTED */);
+var _hoisted_21 = {
+  "class": "nav-item"
+};
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "nav-icon fas fa-copy"
+}, null, -1 /* HOISTED */);
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Купить курсы "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"badge badge-info right\">6</span>")], -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
@@ -22607,13 +22787,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1 /* STABLE */
   })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" SidebarSearch Form "), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Sidebar Menu "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Add icons to the links using the .nav-icon class\n                         with font-awesome or any other icon font library "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/user",
-    "class": "nav-link active"
+    "class": "nav-link"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_13, _hoisted_14];
     }),
     _: 1 /* STABLE */
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"./index.html\" class=\"nav-link active\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Dashboard v1</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"./index2.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Dashboard v2</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"./index3.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Dashboard v3</p>\n                                </a>\n                            </li>\n                        </ul>")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/user/free/courses",
     "class": "nav-link"
   }, {
@@ -22621,7 +22801,127 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_16, _hoisted_17];
     }),
     _: 1 /* STABLE */
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/user/pay/courses",
+    "class": "nav-link"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_19, _hoisted_20];
+    }),
+    _: 1 /* STABLE */
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/user/buy/courses",
+    "class": "nav-link"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_22, _hoisted_23];
+    }),
+    _: 1 /* STABLE */
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-chart-pie\"></i>\n                            <p>\n                                Charts\n                                <i class=\"right fas fa-angle-left\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/charts/chartjs.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>ChartJS</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/charts/flot.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Flot</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/charts/inline.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Inline</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-tree\"></i>\n                            <p>\n                                UI Elements\n                                <i class=\"fas fa-angle-left right\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/UI/general.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>General</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/UI/icons.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Icons</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/UI/buttons.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Buttons</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/UI/sliders.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Sliders</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/UI/modals.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Modals & Alerts</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/UI/navbar.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Navbar & Tabs</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/UI/timeline.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Timeline</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/UI/ribbons.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Ribbons</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-edit\"></i>\n                            <p>\n                                Forms\n                                <i class=\"fas fa-angle-left right\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/forms/general.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>General Elements</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/forms/advanced.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Advanced Elements</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/forms/editors.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Editors</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/forms/validation.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Validation</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-table\"></i>\n                            <p>\n                                Tables\n                                <i class=\"fas fa-angle-left right\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/tables/simple.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Simple Tables</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/tables/data.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>DataTables</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/tables/jsgrid.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>jsGrid</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-header\">EXAMPLES</li>\n                    <li class=\"nav-item\">\n                        <a href=\"user/pages/calendar.html\" class=\"nav-link\">\n                            <i class=\"nav-icon far fa-calendar-alt\"></i>\n                            <p>\n                                Calendar\n                                <span class=\"badge badge-info right\">2</span>\n                            </p>\n                        </a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"user/pages/gallery.html\" class=\"nav-link\">\n                            <i class=\"nav-icon far fa-image\"></i>\n                            <p>\n                                Gallery\n                            </p>\n                        </a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"user/pages/kanban.html\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-columns\"></i>\n                            <p>\n                                Kanban Board\n                            </p>\n                        </a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon far fa-envelope\"></i>\n                            <p>\n                                Mailbox\n                                <i class=\"fas fa-angle-left right\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/mailbox/mailbox.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Inbox</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/mailbox/compose.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Compose</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/mailbox/read-mail.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Read</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-book\"></i>\n                            <p>\n                                Pages\n                                <i class=\"fas fa-angle-left right\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/invoice.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Invoice</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/profile.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Profile</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/e-commerce.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>E-commerce</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/projects.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Projects</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/project-add.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Project Add</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/project-edit.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Project Edit</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/project-detail.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Project Detail</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/contacts.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Contacts</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/faq.html\" class=\"nav-link active\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>FAQ</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/contact-us.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Contact us</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon far fa-plus-square\"></i>\n                            <p>\n                                Extras\n                                <i class=\"fas fa-angle-left right\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"#\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>\n                                        Login & Register v1\n                                        <i class=\"fas fa-angle-left right\"></i>\n                                    </p>\n                                </a>\n                                <ul class=\"nav nav-treeview\">\n                                    <li class=\"nav-item\">\n                                        <a href=\"user/pages/examples/login.html\" class=\"nav-link\">\n                                            <i class=\"far fa-circle nav-icon\"></i>\n                                            <p>Login v1</p>\n                                        </a>\n                                    </li>\n                                    <li class=\"nav-item\">\n                                        <a href=\"user/pages/examples/register.html\" class=\"nav-link\">\n                                            <i class=\"far fa-circle nav-icon\"></i>\n                                            <p>Register v1</p>\n                                        </a>\n                                    </li>\n                                    <li class=\"nav-item\">\n                                        <a href=\"user/pages/examples/forgot-password.html\" class=\"nav-link\">\n                                            <i class=\"far fa-circle nav-icon\"></i>\n                                            <p>Forgot Password v1</p>\n                                        </a>\n                                    </li>\n                                    <li class=\"nav-item\">\n                                        <a href=\"user/pages/examples/recover-password.html\" class=\"nav-link\">\n                                            <i class=\"far fa-circle nav-icon\"></i>\n                                            <p>Recover Password v1</p>\n                                        </a>\n                                    </li>\n                                </ul>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"#\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>\n                                        Login & Register v2\n                                        <i class=\"fas fa-angle-left right\"></i>\n                                    </p>\n                                </a>\n                                <ul class=\"nav nav-treeview\">\n                                    <li class=\"nav-item\">\n                                        <a href=\"user/pages/examples/login-v2.html\" class=\"nav-link\">\n                                            <i class=\"far fa-circle nav-icon\"></i>\n                                            <p>Login v2</p>\n                                        </a>\n                                    </li>\n                                    <li class=\"nav-item\">\n                                        <a href=\"user/pages/examples/register-v2.html\" class=\"nav-link\">\n                                            <i class=\"far fa-circle nav-icon\"></i>\n                                            <p>Register v2</p>\n                                        </a>\n                                    </li>\n                                    <li class=\"nav-item\">\n                                        <a href=\"user/pages/examples/forgot-password-v2.html\" class=\"nav-link\">\n                                            <i class=\"far fa-circle nav-icon\"></i>\n                                            <p>Forgot Password v2</p>\n                                        </a>\n                                    </li>\n                                    <li class=\"nav-item\">\n                                        <a href=\"user/pages/examples/recover-password-v2.html\" class=\"nav-link\">\n                                            <i class=\"far fa-circle nav-icon\"></i>\n                                            <p>Recover Password v2</p>\n                                        </a>\n                                    </li>\n                                </ul>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/lockscreen.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Lockscreen</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/legacy-user-menu.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Legacy User Menu</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/language-menu.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Language Menu</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/404.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Error 404</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/500.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Error 500</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/pace.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Pace</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/examples/blank.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Blank Page</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"starter.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Starter Page</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-search\"></i>\n                            <p>\n                                Search\n                                <i class=\"fas fa-angle-left right\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/search/simple.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Simple Search</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"user/pages/search/enhanced.html\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Enhanced</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-header\">MISCELLANEOUS</li>\n                    <li class=\"nav-item\">\n                        <a href=\"https://adminlte.io/docs/3.0/\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-file\"></i>\n                            <p>Documentation</p>\n                        </a>\n                    </li>\n                    <li class=\"nav-header\">MULTI LEVEL EXAMPLE</li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"fas fa-circle nav-icon\"></i>\n                            <p>Level 1</p>\n                        </a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon fas fa-circle\"></i>\n                            <p>\n                                Level 1\n                                <i class=\"right fas fa-angle-left\"></i>\n                            </p>\n                        </a>\n                        <ul class=\"nav nav-treeview\">\n                            <li class=\"nav-item\">\n                                <a href=\"#\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Level 2</p>\n                                </a>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"#\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>\n                                        Level 2\n                                        <i class=\"right fas fa-angle-left\"></i>\n                                    </p>\n                                </a>\n                                <ul class=\"nav nav-treeview\">\n                                    <li class=\"nav-item\">\n                                        <a href=\"#\" class=\"nav-link\">\n                                            <i class=\"far fa-dot-circle nav-icon\"></i>\n                                            <p>Level 3</p>\n                                        </a>\n                                    </li>\n                                    <li class=\"nav-item\">\n                                        <a href=\"#\" class=\"nav-link\">\n                                            <i class=\"far fa-dot-circle nav-icon\"></i>\n                                            <p>Level 3</p>\n                                        </a>\n                                    </li>\n                                    <li class=\"nav-item\">\n                                        <a href=\"#\" class=\"nav-link\">\n                                            <i class=\"far fa-dot-circle nav-icon\"></i>\n                                            <p>Level 3</p>\n                                        </a>\n                                    </li>\n                                </ul>\n                            </li>\n                            <li class=\"nav-item\">\n                                <a href=\"#\" class=\"nav-link\">\n                                    <i class=\"far fa-circle nav-icon\"></i>\n                                    <p>Level 2</p>\n                                </a>\n                            </li>\n                        </ul>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"fas fa-circle nav-icon\"></i>\n                            <p>Level 1</p>\n                        </a>\n                    </li>\n                    <li class=\"nav-header\">LABELS</li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon far fa-circle text-danger\"></i>\n                            <p class=\"text\">Important</p>\n                        </a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon far fa-circle text-warning\"></i>\n                            <p>Warning</p>\n                        </a>\n                    </li>\n                    <li class=\"nav-item\">\n                        <a href=\"#\" class=\"nav-link\">\n                            <i class=\"nav-icon far fa-circle text-info\"></i>\n                            <p>Informational</p>\n                        </a>\n                    </li>")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar-menu ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.sidebar ")]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=template&id=5ad5eac9":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=template&id=5ad5eac9 ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "content"
+};
+var _hoisted_2 = {
+  "class": "card"
+};
+var _hoisted_3 = {
+  "class": "card-body"
+};
+var _hoisted_4 = {
+  "class": "row"
+};
+var _hoisted_5 = {
+  "class": "col-12 col-md-12 col-lg-8 order-2 order-md-1",
+  id: "course_article_page"
+};
+var _hoisted_6 = {
+  "class": "row"
+};
+var _hoisted_7 = ["src"];
+var _hoisted_8 = ["src"];
+var _hoisted_9 = {
+  contenteditable: "true",
+  id: "example",
+  "class": "p-3"
+};
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  id: "task"
+}, null, -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  id: "check_task",
+  "class": "btn btn-success"
+}, "Проверить", -1 /* HOISTED */);
+var _hoisted_12 = {
+  style: {
+    "display": "none"
+  },
+  id: "task_number"
+};
+var _hoisted_13 = {
+  "class": "col-12 col-md-12 col-lg-4 order-1 order-md-2"
+};
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "text-primary"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-paint-brush"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Заголовки уроков")], -1 /* HOISTED */);
+var _hoisted_15 = ["id"];
+var _hoisted_16 = ["id"];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
+    data: this.breadcrumb
+  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.free_courses, function (courses) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [courses.type === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      key: 0
+    }, [courses.link != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("video", {
+      key: 0,
+      src: courses.link,
+      controls: "",
+      width: "600",
+      height: "400"
+    }, null, 8 /* PROPS */, _hoisted_7)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), courses.youtube != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("iframe", {
+      key: 1,
+      width: "600",
+      height: "400",
+      src: courses.youtube,
+      title: "YouTube video player",
+      frameborder: "0",
+      allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+      allowfullscreen: ""
+    }, null, 8 /* PROPS */, _hoisted_8)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.description), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), courses.type === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      key: 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.description) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.task), 1 /* TEXT */), _hoisted_10, _hoisted_11], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.id), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */);
+  }), 256 /* UNKEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.courses_navigate, function (item) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [item.id === $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+      key: 0,
+      href: "#",
+      id: item.id,
+      "class": "active list-group-item"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), item.id != $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+      key: 1,
+      href: "#",
+      id: item.id,
+      "class": "list-group-item"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_16)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+  }), 256 /* UNKEYED_FRAGMENT */))])])])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -22734,6 +23034,139 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/FreeCoursesComponent.vue?vue&type=template&id=09de7aba ***!
   \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-12"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row",
+  id: "app-body"
+})], -1 /* HOISTED */);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
+    data: this.breadcrumb
+  }, null, 8 /* PROPS */, ["data"]), _hoisted_1], 64 /* STABLE_FRAGMENT */);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=template&id=730c174c":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=template&id=730c174c ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "content"
+};
+var _hoisted_2 = {
+  "class": "card"
+};
+var _hoisted_3 = {
+  "class": "card-body"
+};
+var _hoisted_4 = {
+  "class": "row"
+};
+var _hoisted_5 = {
+  "class": "col-12 col-md-12 col-lg-8 order-2 order-md-1",
+  id: "course_article_page"
+};
+var _hoisted_6 = {
+  "class": "row"
+};
+var _hoisted_7 = ["src"];
+var _hoisted_8 = ["src"];
+var _hoisted_9 = {
+  contenteditable: "true",
+  id: "example",
+  "class": "p-3"
+};
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  id: "task"
+}, null, -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  id: "check_task",
+  "class": "btn btn-success"
+}, "Проверить", -1 /* HOISTED */);
+var _hoisted_12 = {
+  style: {
+    "display": "none"
+  },
+  id: "task_number"
+};
+var _hoisted_13 = {
+  "class": "col-12 col-md-12 col-lg-4 order-1 order-md-2"
+};
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "text-primary"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-paint-brush"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Заголовки уроков")], -1 /* HOISTED */);
+var _hoisted_15 = ["id"];
+var _hoisted_16 = ["id"];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
+    data: this.breadcrumb
+  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.free_courses, function (courses) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [courses.type === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      key: 0
+    }, [courses.link != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("video", {
+      key: 0,
+      src: courses.link,
+      controls: "",
+      width: "600",
+      height: "400"
+    }, null, 8 /* PROPS */, _hoisted_7)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), courses.youtube != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("iframe", {
+      key: 1,
+      width: "600",
+      height: "400",
+      src: courses.youtube,
+      title: "YouTube video player",
+      frameborder: "0",
+      allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+      allowfullscreen: ""
+    }, null, 8 /* PROPS */, _hoisted_8)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.description), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), courses.type === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      key: 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.description) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.task), 1 /* TEXT */), _hoisted_10, _hoisted_11], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.id), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */);
+  }), 256 /* UNKEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.courses_navigate, function (item) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [item.id === $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+      key: 0,
+      href: "#",
+      id: item.id,
+      "class": "active list-group-item"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), item.id != $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+      key: 1,
+      href: "#",
+      id: item.id,
+      "class": "list-group-item"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_16)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+  }), 256 /* UNKEYED_FRAGMENT */))])])])])])], 64 /* STABLE_FRAGMENT */);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=template&id=31cc902a":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=template&id=31cc902a ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -47581,6 +48014,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/back/user/pages/BuyCoursesComponent.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/BuyCoursesComponent.vue ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _BuyCoursesComponent_vue_vue_type_template_id_5ad5eac9__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BuyCoursesComponent.vue?vue&type=template&id=5ad5eac9 */ "./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=template&id=5ad5eac9");
+/* harmony import */ var _BuyCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BuyCoursesComponent.vue?vue&type=script&lang=js */ "./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_BuyCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_BuyCoursesComponent_vue_vue_type_template_id_5ad5eac9__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/back/user/pages/BuyCoursesComponent.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/back/user/pages/FreeCourseComponent.vue":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/back/user/pages/FreeCourseComponent.vue ***!
@@ -47629,6 +48090,62 @@ __webpack_require__.r(__webpack_exports__);
 
 ;
 const __exports__ = /*#__PURE__*/(0,C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_FreeCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_FreeCoursesComponent_vue_vue_type_template_id_09de7aba__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/back/user/pages/FreeCoursesComponent.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/components/back/user/pages/PayCourseComponent.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/PayCourseComponent.vue ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PayCourseComponent_vue_vue_type_template_id_730c174c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayCourseComponent.vue?vue&type=template&id=730c174c */ "./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=template&id=730c174c");
+/* harmony import */ var _PayCourseComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PayCourseComponent.vue?vue&type=script&lang=js */ "./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_PayCourseComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_PayCourseComponent_vue_vue_type_template_id_730c174c__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/back/user/pages/PayCourseComponent.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/components/back/user/pages/PayCoursesComponent.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/PayCoursesComponent.vue ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PayCoursesComponent_vue_vue_type_template_id_31cc902a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayCoursesComponent.vue?vue&type=template&id=31cc902a */ "./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=template&id=31cc902a");
+/* harmony import */ var _PayCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PayCoursesComponent.vue?vue&type=script&lang=js */ "./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_PayCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_PayCoursesComponent_vue_vue_type_template_id_31cc902a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/back/user/pages/PayCoursesComponent.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -47773,6 +48290,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BuyCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BuyCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BuyCoursesComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/back/user/pages/FreeCourseComponent.vue?vue&type=script&lang=js":
 /*!*************************************************************************************************!*\
   !*** ./resources/js/components/back/user/pages/FreeCourseComponent.vue?vue&type=script&lang=js ***!
@@ -47801,6 +48334,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FreeCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FreeCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FreeCoursesComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/FreeCoursesComponent.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=script&lang=js":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PayCourseComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PayCourseComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PayCourseComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PayCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PayCoursesComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PayCoursesComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -47917,6 +48482,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=template&id=5ad5eac9":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=template&id=5ad5eac9 ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BuyCoursesComponent_vue_vue_type_template_id_5ad5eac9__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BuyCoursesComponent_vue_vue_type_template_id_5ad5eac9__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BuyCoursesComponent.vue?vue&type=template&id=5ad5eac9 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/BuyCoursesComponent.vue?vue&type=template&id=5ad5eac9");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/back/user/pages/FreeCourseComponent.vue?vue&type=template&id=632cd594":
 /*!*******************************************************************************************************!*\
   !*** ./resources/js/components/back/user/pages/FreeCourseComponent.vue?vue&type=template&id=632cd594 ***!
@@ -47945,6 +48526,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FreeCoursesComponent_vue_vue_type_template_id_09de7aba__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_FreeCoursesComponent_vue_vue_type_template_id_09de7aba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./FreeCoursesComponent.vue?vue&type=template&id=09de7aba */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/FreeCoursesComponent.vue?vue&type=template&id=09de7aba");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=template&id=730c174c":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=template&id=730c174c ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PayCourseComponent_vue_vue_type_template_id_730c174c__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PayCourseComponent_vue_vue_type_template_id_730c174c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PayCourseComponent.vue?vue&type=template&id=730c174c */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCourseComponent.vue?vue&type=template&id=730c174c");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=template&id=31cc902a":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=template&id=31cc902a ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PayCoursesComponent_vue_vue_type_template_id_31cc902a__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PayCoursesComponent_vue_vue_type_template_id_31cc902a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PayCoursesComponent.vue?vue&type=template&id=31cc902a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/back/user/pages/PayCoursesComponent.vue?vue&type=template&id=31cc902a");
 
 
 /***/ }),
@@ -55975,16 +56588,22 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 /* harmony import */ var _components_back_HeaderComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/back/HeaderComponent */ "./resources/js/components/back/HeaderComponent.vue");
 /* harmony import */ var _components_back_user_pages_ProfileComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/back/user/pages/ProfileComponent */ "./resources/js/components/back/user/pages/ProfileComponent.vue");
 /* harmony import */ var _components_back_user_pages_FreeCoursesComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/back/user/pages/FreeCoursesComponent */ "./resources/js/components/back/user/pages/FreeCoursesComponent.vue");
 /* harmony import */ var _components_back_user_pages_FreeCourseComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/back/user/pages/FreeCourseComponent */ "./resources/js/components/back/user/pages/FreeCourseComponent.vue");
-/* harmony import */ var _components_back_user_pages_SettingsComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/back/user/pages/SettingsComponent */ "./resources/js/components/back/user/pages/SettingsComponent.vue");
-/* harmony import */ var _components_back_LeftBarComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/back/LeftBarComponent */ "./resources/js/components/back/LeftBarComponent.vue");
-/* harmony import */ var _components_back_HomeComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/back/HomeComponent */ "./resources/js/components/back/HomeComponent.vue");
-/* harmony import */ var _components_back_FooterComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/back/FooterComponent */ "./resources/js/components/back/FooterComponent.vue");
-/* harmony import */ var _components_back_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/back/BreadCrumbComponent */ "./resources/js/components/back/BreadCrumbComponent.vue");
+/* harmony import */ var _components_back_user_pages_PayCoursesComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/back/user/pages/PayCoursesComponent */ "./resources/js/components/back/user/pages/PayCoursesComponent.vue");
+/* harmony import */ var _components_back_user_pages_PayCourseComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/back/user/pages/PayCourseComponent */ "./resources/js/components/back/user/pages/PayCourseComponent.vue");
+/* harmony import */ var _components_back_user_pages_BuyCoursesComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/back/user/pages/BuyCoursesComponent */ "./resources/js/components/back/user/pages/BuyCoursesComponent.vue");
+/* harmony import */ var _components_back_user_pages_SettingsComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/back/user/pages/SettingsComponent */ "./resources/js/components/back/user/pages/SettingsComponent.vue");
+/* harmony import */ var _components_back_LeftBarComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/back/LeftBarComponent */ "./resources/js/components/back/LeftBarComponent.vue");
+/* harmony import */ var _components_back_HomeComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/back/HomeComponent */ "./resources/js/components/back/HomeComponent.vue");
+/* harmony import */ var _components_back_FooterComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/back/FooterComponent */ "./resources/js/components/back/FooterComponent.vue");
+/* harmony import */ var _components_back_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/back/BreadCrumbComponent */ "./resources/js/components/back/BreadCrumbComponent.vue");
+
+
+
 
 
 
@@ -55999,35 +56618,47 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/user',
-  component: _components_back_HomeComponent__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_back_HomeComponent__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   path: '/user/profile',
   component: _components_back_user_pages_ProfileComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
   path: '/user/settings',
-  component: _components_back_user_pages_SettingsComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _components_back_user_pages_SettingsComponent__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   path: '/user/free/courses',
   component: _components_back_user_pages_FreeCoursesComponent__WEBPACK_IMPORTED_MODULE_4__["default"]
 }, {
   path: '/user/free/course/:id',
   component: _components_back_user_pages_FreeCourseComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
+}, {
+  path: '/user/pay/courses',
+  component: _components_back_user_pages_PayCoursesComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
+}, {
+  path: '/user/pay/course/:id',
+  component: _components_back_user_pages_PayCourseComponent__WEBPACK_IMPORTED_MODULE_7__["default"]
+}, {
+  path: '/user/buy/courses',
+  component: _components_back_user_pages_BuyCoursesComponent__WEBPACK_IMPORTED_MODULE_8__["default"]
 }];
-var router = vue_router__WEBPACK_IMPORTED_MODULE_11__.createRouter({
-  history: vue_router__WEBPACK_IMPORTED_MODULE_11__.createWebHistory(''),
+var router = vue_router__WEBPACK_IMPORTED_MODULE_14__.createRouter({
+  history: vue_router__WEBPACK_IMPORTED_MODULE_14__.createWebHistory(''),
   routes: routes
 });
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
 app.use(router);
 app.component('back-header-component', _components_back_HeaderComponent__WEBPACK_IMPORTED_MODULE_2__["default"]);
-app.component('bread-crumb-component', _components_back_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_10__["default"]);
-app.component('settings-component', _components_back_user_pages_SettingsComponent__WEBPACK_IMPORTED_MODULE_6__["default"]);
+app.component('bread-crumb-component', _components_back_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_13__["default"]);
+app.component('settings-component', _components_back_user_pages_SettingsComponent__WEBPACK_IMPORTED_MODULE_9__["default"]);
 app.component('profile-component', _components_back_user_pages_ProfileComponent__WEBPACK_IMPORTED_MODULE_3__["default"]);
 app.component('free-courses-component', _components_back_user_pages_FreeCoursesComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
 app.component('free-course-component', _components_back_user_pages_FreeCourseComponent__WEBPACK_IMPORTED_MODULE_5__["default"]);
-app.component('left-bar-component', _components_back_LeftBarComponent__WEBPACK_IMPORTED_MODULE_7__["default"]);
-app.component('home-component', _components_back_HomeComponent__WEBPACK_IMPORTED_MODULE_8__["default"]);
-app.component('footer-component', _components_back_FooterComponent__WEBPACK_IMPORTED_MODULE_9__["default"]);
+app.component('pay-courses-component', _components_back_user_pages_PayCoursesComponent__WEBPACK_IMPORTED_MODULE_6__["default"]);
+app.component('pay-course-component', _components_back_user_pages_PayCourseComponent__WEBPACK_IMPORTED_MODULE_7__["default"]);
+app.component('buy-course-component', _components_back_user_pages_BuyCoursesComponent__WEBPACK_IMPORTED_MODULE_8__["default"]);
+app.component('left-bar-component', _components_back_LeftBarComponent__WEBPACK_IMPORTED_MODULE_10__["default"]);
+app.component('home-component', _components_back_HomeComponent__WEBPACK_IMPORTED_MODULE_11__["default"]);
+app.component('footer-component', _components_back_FooterComponent__WEBPACK_IMPORTED_MODULE_12__["default"]);
 // Object.entries(import.meta.glob('./!**!/!*.vue', { eager: true })).forEach(([path, definition]) => {
 //     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
 // });

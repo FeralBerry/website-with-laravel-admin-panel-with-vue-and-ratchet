@@ -32,41 +32,37 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
-                        <router-link to="/user" class="nav-link active">
+                    <li class="nav-item">
+                        <router-link to="/user" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Главная
-                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </router-link>
-                        <!--<ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="./index.html" class="nav-link active">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v1</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v2</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="./index3.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v3</p>
-                                </a>
-                            </li>
-                        </ul>-->
                     </li>
                     <li class="nav-item">
                         <router-link to="/user/free/courses" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
                                 Бесплатные курсы
-                                <i class="fas fa-angle-left right"></i>
+                                <!--<span class="badge badge-info right">6</span>-->
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/user/pay/courses" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Платные курсы
+                                <!--<span class="badge badge-info right">6</span>-->
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/user/buy/courses" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Купить курсы
                                 <!--<span class="badge badge-info right">6</span>-->
                             </p>
                         </router-link>

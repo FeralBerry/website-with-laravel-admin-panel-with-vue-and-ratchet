@@ -205,6 +205,8 @@
             }
         });
     });
-
+    $("body").on('click', ".nav-link", function() {
+        this.classList.add('active');
+    });
 </script>
 
