@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('youtube',255)->nullable();
             $table->integer('type')->default(0);
             $table->text('task')->nullable();
+            $table->text('example')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

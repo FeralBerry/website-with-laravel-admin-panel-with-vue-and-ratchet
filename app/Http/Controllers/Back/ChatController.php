@@ -116,6 +116,35 @@ class ChatController extends BackController
         ];
         return $data;
     }
+    public function open_buy_courses($command){
+        $buy_courses_name = DB::table('buy_courses')
+            ->get();
+        foreach ($buy_courses_name as $courses_name => $value){
+            $pay_courses = DB::table('pay_courses')
+                ->where('pay_courses_name_id',$value->pay_courses_name_id)
+                ->get();
+            $pay_courses_tasks = DB::table('pay_courses')
+                ->where('pay_courses_name_id',$value->pay_courses_name_id)
+                ->where('type',1)
+                ->get();
+            $pay_courses_lessons = DB::table('pay_courses')
+                ->where('pay_courses_name_id',$value->pay_courses_name_id)
+                ->where('type',0)
+                ->get();
+            $array = json_encode($value);
+            $array = json_decode(str_replace('"}','","count_article":"'.count($pay_courses).'"}',$array));
+            $array = json_encode($array);
+            $array = json_decode(str_replace('"}','","count_tasks":"'.count($pay_courses_tasks).'"}',$array));
+            $array = json_encode($array);
+            $array = json_decode(str_replace('"}','","count_lessons":"'.count($pay_courses_lessons).'"}',$array));
+            $buy_courses_name[$courses_name] = $array;
+        }
+        $data = [
+            'message' => 'open_buy_courses',
+            'buy_courses_name' => $buy_courses_name
+        ];
+        return $data;
+    }
     /*public function openChat($command){
         $chat = DB::table('chat')
             ->where('room_id',$command->room_id)

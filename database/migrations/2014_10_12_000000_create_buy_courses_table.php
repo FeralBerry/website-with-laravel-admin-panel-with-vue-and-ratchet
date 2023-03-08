@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title',255)->nullable();
             $table->integer('pay_courses_name_id')->nullable();
             $table->text('description')->nullable();
+            $table->text('img')->nullable();
             $table->integer('price')->nullable();
             $table->integer('sub_price')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
