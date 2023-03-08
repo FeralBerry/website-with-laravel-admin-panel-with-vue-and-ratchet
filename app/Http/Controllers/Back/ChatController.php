@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Back;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Collection\Collection;
 
 class ChatController extends BackController
 {
@@ -69,6 +70,49 @@ class ChatController extends BackController
         $data = [
             'message' => 'open_free_courses',
             'free_courses_name' => $free_courses_name
+        ];
+        return $data;
+    }
+    public function open_pay_courses($command){
+        $user = DB::table('users')
+            ->where('id',$command->user_id)
+            ->get();
+        foreach ($user as $item){
+            $bought_courses_id = $item->bought_courses_id;
+        }
+        $courses_id = explode(';',$bought_courses_id);
+        $pay_courses_name = [];
+        foreach ($courses_id as $id){
+            $array = DB::table('pay_courses_name')
+                ->where('id',$id)
+                ->get();
+            $pay_courses_name[] = $array;
+        }
+        foreach ($pay_courses_name as $courses_name => $value){
+            foreach ($value as $item){
+                $pay_courses = DB::table('pay_courses')
+                    ->where('pay_courses_name_id',$item->id)
+                    ->get();
+                $pay_courses_tasks = DB::table('pay_courses')
+                    ->where('pay_courses_name_id',$item->id)
+                    ->where('type',1)
+                    ->get();
+                $pay_courses_lessons = DB::table('pay_courses')
+                    ->where('pay_courses_name_id',$item->id)
+                    ->where('type',0)
+                    ->get();
+                $array = json_encode($value);
+                $array = json_decode(str_replace('"}','","count_article":"'.count($pay_courses).'"}',$array));
+                $array = json_encode($array);
+                $array = json_decode(str_replace('"}','","count_tasks":"'.count($pay_courses_tasks).'"}',$array));
+                $array = json_encode($array);
+                $array = json_decode(str_replace('"}','","count_lessons":"'.count($pay_courses_lessons).'"}',$array));
+                $pay_courses_name[$courses_name] = $array;
+            }
+        }
+        $data = [
+            'message' => 'open_pay_courses',
+            'pay_courses_name' => $pay_courses_name
         ];
         return $data;
     }

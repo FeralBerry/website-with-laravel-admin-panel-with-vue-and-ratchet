@@ -14,18 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('pay_courses_name', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('avatar',255)->nullable();
-            $table->integer('connection_id')->nullable();
-            $table->integer('last_open_free_course_id')->nullable();
-            $table->integer('last_open_pay_course_id')->nullable();
-            $table->string('bought_courses_id',255)->nullable();
-            $table->rememberToken();
+            $table->string('title',100)->nullable();
+            $table->text('brief')->nullable();
+            $table->text('img')->nullable();
+            $table->text('link')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -38,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('pay_courses_name');
     }
 };

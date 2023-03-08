@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1" id="course_article_page">
                         <div class="row">
-                            <template v-for="courses in this.data.free_courses">
+                            <template v-for="courses in this.data.pay_courses">
                                 <template v-if="courses.type === 0">
                                     <template v-if="courses.link != null">
                                         <video :src="courses.link" controls width="600" height="400"></video>
@@ -32,13 +32,13 @@
                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                         <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Заголовки уроков</h3>
                         <template v-for="item in this.courses_navigate">
-                            <template v-if="item.id === data.last_open_free_course_id">
+                            <template v-if="item.id === data.last_open_pay_course_id">
                                 <a href="#" :id="item.id" class="active list-group-item">
                                     <!--<span class="pull-right label info">12</span>-->
                                     {{ item.title }}
                                 </a>
                             </template>
-                            <template v-if="item.id != data.last_open_free_course_id">
+                            <template v-if="item.id != data.last_open_pay_course_id">
                                 <a href="#" :id="item.id" class="list-group-item">
                                     <!--<span class="pull-right label info">12</span>-->
                                     {{ item.title }}
@@ -55,12 +55,12 @@
 </template>
 <script>
     export default {
-        name: "FreeCourseComponent",
+        name: "PayCourseComponent",
         props: ['data'],
         data(){
             return {
                 courses_navigate:[],
-                free_course:[],
+                pay_course:[],
                 breadcrumb:{
                 }
             }
@@ -74,7 +74,7 @@
             };
             let i = 0;
 
-            this.data.free_courses_navigate.map((item) => {
+            this.data.pay_courses_navigate.map((item) => {
                 this.courses_navigate[i] = item;
                 this.breadcrumb = {
                     'title':'Бесплатный урок №'+i+'',

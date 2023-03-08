@@ -185,6 +185,51 @@
     });
     @endfor
     @endif
+    @if(isset($data['pay_courses_navigate']) && $data['pay_courses_navigate'] !== NULL)
+    @for($i = 0;$i < count($data['pay_courses_navigate']);$i++)
+    $('body').on('click', '#{{ $i+1 }}', function() {
+        let course_article_page = document.getElementById('course_article_page');
+        let pay_courses_navigate = {!! $data['pay_courses_navigate'] !!};
+        let course_id = null;
+        pay_courses_navigate.map((item) => {
+            course_id = item.pay_courses_name_id;
+        });
+        $.ajax({
+            type: "POST",
+            url: '/user/pay/course/'+course_id+'/'+{{ $i+1 }},
+            data: {
+
+            },
+            success: function (data) {
+                data.all_pay_courses_id.map((item) => {
+                    let last_open_pay_course_id = document.getElementById(item.id);
+                    last_open_pay_course_id.classList.remove('active');
+                });
+                data.pay_course.map((item) => {
+                    course_article_page.innerHTML = '';
+                    if(item.type === 0){
+                        let video;
+                        if(item.link != null){
+                            video = '<video src="'+item.link+'" controls width="600" height="400"></video>';
+                        }
+                        if(item.youtube != null){
+                            video = '<iframe width="600" height="400" src="'+item.youtube+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                        }
+                        course_article_page.innerHTML = video + '<br>'+ item.description;
+                    } else if(item.type === 1){
+                        course_article_page.innerHTML = ''+item.description+'<div contenteditable="true" id="example" class="p-3"></div><div id="task"></div>' +
+                            '<div id="check_task" class="btn btn-success">Проверить</div>';
+                        let example = document.getElementById('example');
+                        example.innerText = item.task;
+                    }
+                    let id = document.getElementById(item.id);
+                    id.classList.add('active')
+                });
+            }
+        });
+    });
+    @endfor
+    @endif
     $("body").on('keypress', "#example", function(e) {
         let example = (document.getElementById('example').innerHTML + e.key).replace(/&lt;/gi,'<').replace(/&gt;/gi,'>');
         let task = document.getElementById('task');

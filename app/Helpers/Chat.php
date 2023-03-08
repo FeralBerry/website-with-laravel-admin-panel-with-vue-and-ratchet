@@ -57,6 +57,14 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif ($command->command == 'open_pay_courses'){
+            $data = $this->chatController->open_pay_courses($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         /*elseif($command->command == 'reconnect'){
             $data = [
                 'message' =>'reconnect'

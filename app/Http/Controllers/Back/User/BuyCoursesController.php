@@ -13,7 +13,7 @@ class BuyCoursesController extends BackController
     }
     public function index(){
         $data = array_merge($this->mainData(),[
-            'free_courses_name' => $this->freeCoursesName(),
+
         ]);
         return view('back.user.index',['data' => $data]);
     }

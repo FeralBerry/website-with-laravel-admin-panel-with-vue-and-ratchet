@@ -21226,44 +21226,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "FreeCourseComponent",
+  name: "BuyCoursesComponent",
   props: ['data'],
   data: function data() {
     return {
-      courses_navigate: [],
-      free_course: [],
       breadcrumb: {}
     };
   },
   created: function created() {
-    var _this = this;
-    var connection = new WebSocket("ws://127.0.0.1:4710");
-    var user_id = document.querySelector('meta[name="user_id"]').content;
-    connection.onopen = function (event) {
-      connection.send('{"command":"connect","user_id":"' + user_id + '"}');
+    /*let connection = new WebSocket("ws://127.0.0.1:4710");
+    let user_id = document.querySelector('meta[name="user_id"]').content;
+    connection.onopen = function(event){
+        connection.send('{"command":"connect","user_id":"'+user_id+'"}');
     };
-    var i = 0;
-    this.data.free_courses_navigate.map(function (item) {
-      _this.courses_navigate[i] = item;
-      _this.breadcrumb = {
-        'title': 'Бесплатный урок №' + i + '',
-        'crumbs': {
-          'first': {
-            'title': 'Home',
-            'link': '/user'
-          },
-          'second': {
-            'title': 'Все бесплатные курсы',
-            'link': '/user/free/courses'
-          },
-          'third': {
-            'title': 'Урок ' + i + '',
-            'link': '/user/free/course/' + i + ''
-          }
+    let i = 0;*/
+
+    /*this.data.free_courses_navigate.map((item) => {
+        this.courses_navigate[i] = item;
+        this.breadcrumb = {
+            'title':'Бесплатный урок №'+i+'',
+            'crumbs':{
+                'first':{
+                    'title':'Home',
+                    'link':'/user'
+                },
+                'second':{
+                    'title':'Все бесплатные курсы',
+                    'link':'/user/free/courses'
+                },
+                'third':{
+                    'title':'Урок '+i+'',
+                    'link':'/user/free/course/'+i+''
+                }
+            }
         }
-      };
-      i++;
-    });
+        i++;
+    });*/
   },
   mounted: function mounted() {},
   methods: {}
@@ -21396,12 +21394,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "FreeCourseComponent",
+  name: "PayCourseComponent",
   props: ['data'],
   data: function data() {
     return {
       courses_navigate: [],
-      free_course: [],
+      pay_course: [],
       breadcrumb: {}
     };
   },
@@ -21413,7 +21411,7 @@ __webpack_require__.r(__webpack_exports__);
       connection.send('{"command":"connect","user_id":"' + user_id + '"}');
     };
     var i = 0;
-    this.data.free_courses_navigate.map(function (item) {
+    this.data.pay_courses_navigate.map(function (item) {
       _this.courses_navigate[i] = item;
       _this.breadcrumb = {
         'title': 'Бесплатный урок №' + i + '',
@@ -21453,22 +21451,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "FreeCoursesComponent",
+  name: "PayCoursesComponent",
   props: ['data'],
   data: function data() {
     return {
       connection: null,
       courses_name: [],
       breadcrumb: {
-        'title': 'FreeLessons',
+        'title': 'PayLessons',
         'crumbs': {
           'first': {
             'title': 'Home',
             'link': '/user'
           },
           'second': {
-            'title': 'FreeLessons',
-            'link': '/user/free/courses'
+            'title': 'PayLessons',
+            'link': '/user/pay/courses'
           },
           'third': null
         }
@@ -21481,14 +21479,16 @@ __webpack_require__.r(__webpack_exports__);
     var user_id = document.querySelector('meta[name="user_id"]').content;
     connection.onopen = function (event) {
       connection.send('{"command":"connect","user_id":"' + user_id + '"}');
-      connection.send('{"command":"open_free_courses"}');
+      connection.send('{"command":"open_pay_courses","user_id":"' + user_id + '"}');
     };
     connection.onmessage = function (event) {
       var data = JSON.parse(event.data);
-      if (data.message === 'open_free_courses') {
-        data.free_courses_name.map(function (item) {
-          var courses = document.getElementById('app-body');
-          courses.innerHTML += '<div class="col-md-4">' + '            <div class="card card-widget widget-user">' + '                <div class="widget-user-header text-white" style="background: url(' + item.img + ') center center;background-size: cover">' + '                    <h3 class="widget-user-username text-right">' + item.title + '</h3>' + '                    <h5 class="widget-user-desc text-right">' + item.brief + '</h5>' + '                </div>' + '                <div class="card-footer">' + '<a href="' + item.link + '" style="margin-top: -20px" class="btn btn-block btn-outline-info btn-sm">Начать</a>' + '                    <div class="row">' + '                        <div class="col-sm-4 border-right">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + item.count_lessons + '</h5>' + '                                <span class="description-text">Уроков</span>' + '                            </div>' + '                        </div>' + '                        <div class="col-sm-4 border-right">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + item.count_article + '</h5>' + '                                <span class="description-text">Статей</span>' + '                            </div>' + '                        </div>' + '                        <div class="col-sm-4">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + item.count_tasks + '</h5>' + '                                <span class="description-text">Заданий</span>' + '                            </div>' + '                        </div>' + '                    </div>' + '                </div>' + '            </div>' + '        </div>';
+      if (data.message === 'open_pay_courses') {
+        data.pay_courses_name.map(function (item) {
+          item.map(function (items) {
+            var courses = document.getElementById('app-body');
+            courses.innerHTML += '<div class="col-md-4">' + '            <div class="card card-widget widget-user">' + '                <div class="widget-user-header text-white" style="background: url(' + items.img + ') center center;background-size: cover">' + '                    <h3 class="widget-user-username text-right">' + items.title + '</h3>' + '                    <h5 class="widget-user-desc text-right">' + items.brief + '</h5>' + '                </div>' + '                <div class="card-footer">' + '<a href="' + items.link + '" style="margin-top: -20px" class="btn btn-block btn-outline-info btn-sm">Начать</a>' + '                    <div class="row">' + '                        <div class="col-sm-4 border-right">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + items.count_lessons + '</h5>' + '                                <span class="description-text">Уроков</span>' + '                            </div>' + '                        </div>' + '                        <div class="col-sm-4 border-right">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + items.count_article + '</h5>' + '                                <span class="description-text">Статей</span>' + '                            </div>' + '                        </div>' + '                        <div class="col-sm-4">' + '                            <div class="description-block">' + '                                <h5 class="description-header">' + items.count_tasks + '</h5>' + '                                <span class="description-text">Заданий</span>' + '                            </div>' + '                        </div>' + '                    </div>' + '                </div>' + '            </div>' + '        </div>';
+          });
         });
       }
     };
@@ -22835,93 +22835,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = {
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
   "class": "content"
-};
-var _hoisted_2 = {
-  "class": "card"
-};
-var _hoisted_3 = {
-  "class": "card-body"
-};
-var _hoisted_4 = {
-  "class": "row"
-};
-var _hoisted_5 = {
-  "class": "col-12 col-md-12 col-lg-8 order-2 order-md-1",
-  id: "course_article_page"
-};
-var _hoisted_6 = {
-  "class": "row"
-};
-var _hoisted_7 = ["src"];
-var _hoisted_8 = ["src"];
-var _hoisted_9 = {
-  contenteditable: "true",
-  id: "example",
-  "class": "p-3"
-};
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  id: "task"
 }, null, -1 /* HOISTED */);
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  id: "check_task",
-  "class": "btn btn-success"
-}, "Проверить", -1 /* HOISTED */);
-var _hoisted_12 = {
-  style: {
-    "display": "none"
-  },
-  id: "task_number"
-};
-var _hoisted_13 = {
-  "class": "col-12 col-md-12 col-lg-4 order-1 order-md-2"
-};
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
-  "class": "text-primary"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fas fa-paint-brush"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Заголовки уроков")], -1 /* HOISTED */);
-var _hoisted_15 = ["id"];
-var _hoisted_16 = ["id"];
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
-    data: this.breadcrumb
-  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.free_courses, function (courses) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [courses.type === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: 0
-    }, [courses.link != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("video", {
-      key: 0,
-      src: courses.link,
-      controls: "",
-      width: "600",
-      height: "400"
-    }, null, 8 /* PROPS */, _hoisted_7)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), courses.youtube != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("iframe", {
-      key: 1,
-      width: "600",
-      height: "400",
-      src: courses.youtube,
-      title: "YouTube video player",
-      frameborder: "0",
-      allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
-      allowfullscreen: ""
-    }, null, 8 /* PROPS */, _hoisted_8)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.description), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), courses.type === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: 1
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.description) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.task), 1 /* TEXT */), _hoisted_10, _hoisted_11], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.id), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */);
-  }), 256 /* UNKEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.courses_navigate, function (item) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [item.id === $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
-      key: 0,
-      href: "#",
-      id: item.id,
-      "class": "active list-group-item"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), item.id != $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
-      key: 1,
-      href: "#",
-      id: item.id,
-      "class": "list-group-item"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_16)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
-  }), 256 /* UNKEYED_FRAGMENT */))])])])])])], 64 /* STABLE_FRAGMENT */);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<bread-crumb-component :data=\"this.breadcrumb\"></bread-crumb-component>"), _hoisted_1], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }
 
 /***/ }),
@@ -23125,7 +23044,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
     data: this.breadcrumb
-  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.free_courses, function (courses) {
+  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.pay_courses, function (courses) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [courses.type === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: 0
     }, [courses.link != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("video", {
@@ -23147,12 +23066,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: 1
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.description) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.task), 1 /* TEXT */), _hoisted_10, _hoisted_11], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(courses.id), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */);
   }), 256 /* UNKEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.courses_navigate, function (item) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [item.id === $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [item.id === $props.data.last_open_pay_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
       key: 0,
       href: "#",
       id: item.id,
       "class": "active list-group-item"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), item.id != $props.data.last_open_free_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"pull-right label info\">12</span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), item.id != $props.data.last_open_pay_course_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
       key: 1,
       href: "#",
       id: item.id,
