@@ -60,7 +60,7 @@
                             '                        </ul>' +
                             '                        <div class="col-md-12" style="text-align: center">' +
                             '<div class="col-md-12"><h3>'+item.price+'.'+item.sub_price+' &#8381;</h3></div>'+
-                            '                            <a href="#" id="courses'+item.id+'" class="animated-button4">' +
+                            '                            <a href="#" onclick="buy_courses('+item.id+')" class="animated-button4">' +
                             '                                <span></span>' +
                             '                                <span></span>' +
                             '                                <span></span>' +

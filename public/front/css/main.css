@@ -6136,6 +6136,14 @@ p.form-row.form-row-wide.select-arrow:before {
 .service-icon:hover {
 	background-color: #18bb7c;
 }
+
+.active.service-icon i{
+    color: #ffffff;
+}
+.active.service-icon{
+    background-color: #18bb7c;
+
+}
 @media screen and (max-width: 767px) {
 	.service-icon {
 		width: 60px;

@@ -253,5 +253,8 @@
     $("body").on('click', ".nav-link", function() {
         this.classList.add('active');
     });
+    function buy_courses(id){
+
+    }
 </script>
 

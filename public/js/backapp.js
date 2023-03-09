@@ -21259,7 +21259,7 @@ __webpack_require__.r(__webpack_exports__);
       if (data.message === 'open_buy_courses') {
         data.buy_courses_name.map(function (item) {
           var courses = document.getElementById('app-body');
-          courses.innerHTML += '<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">' + '                <div class="card card-widget widget-user">' + '                    <div class="widget-user-header text-white" style="background: url(' + item.img + ') center center;background-size: cover">' + '                        <h3 class="widget-user-username text-right">' + item.title + '</h3>' + '                        <h5 class="widget-user-desc text-right">' + item.description + '</h5>' + '                    </div>' + '                    <div class="card-footer p-0">' + '                        <ul class="border">' + '                            <li>Уроков <span class="float-right badge bg-primary">' + item.count_article + '</span></li>' + '                            <li>Статей <span class="float-right badge bg-info">' + item.count_lessons + '</span></li>' + '                            <li>Практических заданий <span class="float-right badge bg-success">' + item.count_tasks + '</span></li>' + '                            <li>Готовых кодов <span class="float-right badge bg-danger">842</span></li>' + '                            <li>Получили сертификаты <span class="float-right badge bg-danger">842</span></li>' + '                        </ul>' + '                        <div class="col-md-12" style="text-align: center">' + '<div class="col-md-12"><h3>' + item.price + '.' + item.sub_price + ' &#8381;</h3></div>' + '                            <a href="#" id="courses' + item.id + '" class="animated-button4">' + '                                <span></span>' + '                                <span></span>' + '                                <span></span>' + '                                <span></span>' + '                                Купить' + '                            </a>' + '                        </div>' + '                    </div>' + '                </div>' + '            </div>';
+          courses.innerHTML += '<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">' + '                <div class="card card-widget widget-user">' + '                    <div class="widget-user-header text-white" style="background: url(' + item.img + ') center center;background-size: cover">' + '                        <h3 class="widget-user-username text-right">' + item.title + '</h3>' + '                        <h5 class="widget-user-desc text-right">' + item.description + '</h5>' + '                    </div>' + '                    <div class="card-footer p-0">' + '                        <ul class="border">' + '                            <li>Уроков <span class="float-right badge bg-primary">' + item.count_article + '</span></li>' + '                            <li>Статей <span class="float-right badge bg-info">' + item.count_lessons + '</span></li>' + '                            <li>Практических заданий <span class="float-right badge bg-success">' + item.count_tasks + '</span></li>' + '                            <li>Готовых кодов <span class="float-right badge bg-danger">842</span></li>' + '                            <li>Получили сертификаты <span class="float-right badge bg-danger">842</span></li>' + '                        </ul>' + '                        <div class="col-md-12" style="text-align: center">' + '<div class="col-md-12"><h3>' + item.price + '.' + item.sub_price + ' &#8381;</h3></div>' + '                            <a href="#" onclick="buy_courses(' + item.id + ')" class="animated-button4">' + '                                <span></span>' + '                                <span></span>' + '                                <span></span>' + '                                <span></span>' + '                                Купить' + '                            </a>' + '                        </div>' + '                    </div>' + '                </div>' + '            </div>';
         });
       }
     };
@@ -22745,21 +22745,21 @@ var _hoisted_15 = {
   "class": "nav-item"
 };
 var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "nav-icon fas fa-copy"
+  "class": "nav-icon fa fa-book"
 }, null, -1 /* HOISTED */);
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Бесплатные курсы "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"badge badge-info right\">6</span>")], -1 /* HOISTED */);
 var _hoisted_18 = {
   "class": "nav-item"
 };
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "nav-icon fas fa-copy"
+  "class": "nav-icon fa fa-bolt"
 }, null, -1 /* HOISTED */);
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Платные курсы "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"badge badge-info right\">6</span>")], -1 /* HOISTED */);
 var _hoisted_21 = {
   "class": "nav-item"
 };
 var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "nav-icon fas fa-copy"
+  "class": "nav-icon fa fa-balance-scale"
 }, null, -1 /* HOISTED */);
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Купить курсы "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<span class=\"badge badge-info right\">6</span>")], -1 /* HOISTED */);
 

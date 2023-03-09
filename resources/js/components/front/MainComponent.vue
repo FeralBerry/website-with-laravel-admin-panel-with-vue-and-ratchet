@@ -1,8 +1,29 @@
 <template>
     <slider-component></slider-component>
-    <div>
-        Home
-    </div>
+    <section class="fullwidth-background padding-section">
+        <div class="grid-row clear-fix">
+            <div class="grid-col-row">
+                <div class="grid-col grid-col-6 service-icon-menu">
+                    <a id="icon-wrench" onclick="service_menu(1)" class="service-icon active"><i class="fa fa-wrench"></i></a>
+                    <a id="icon-tachometer" onclick="service_menu(2)" class="service-icon"><i class="fa fa-tachometer"></i></a>
+                    <a id="icon-website" onclick="service_menu(3)" class="service-icon"><i class="flaticon-website"></i></a>
+                    <a id="icon-programming" onclick="service_menu(4)" class="service-icon"><i class="flaticon-web-programming"></i></a>
+                    <a id="icon-camera" onclick="service_menu(5)" class="service-icon"><i class="flaticon-camera"></i></a>
+                    <a id="icon-speech" onclick="service_menu(6)" class="service-icon"><i class="flaticon-speech"></i></a>
+                    <a id="icon-sitemap" onclick="service_menu(7)" class="service-icon"><i class="fa fa-sitemap"></i></a>
+                    <a id="icon-terminal" onclick="service_menu(8)" class="service-icon"><i class="fa fa-terminal"></i></a>
+                </div>
+                <div class="grid-col grid-col-6 clear-fix" id="about">
+                    <h2>О сервисе</h2>
+                    <p>Сервис предназначен для обучения программирования, есть как платные, так и бесплатные курсы.
+                        Во время обучения вы сможите изучить интересующий Вас курс, создать набор скриптов и создать
+                        первый свой сайт с применением современных технологий.</p>
+                    <a class="cws-button bt-color-3 border-radius alt icon-right float-right">
+                        Зарегистрироваться<i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
     <!--<div id="home" class="page-content padding-none">
         &lt;!&ndash; section &ndash;&gt;
         <section class="padding-section">

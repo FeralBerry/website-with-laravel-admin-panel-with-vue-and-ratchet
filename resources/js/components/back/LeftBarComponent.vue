@@ -42,7 +42,7 @@
                     </li>
                     <li class="nav-item">
                         <router-link to="/user/free/courses" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-book"></i>
                             <p>
                                 Бесплатные курсы
                                 <!--<span class="badge badge-info right">6</span>-->
@@ -51,7 +51,7 @@
                     </li>
                     <li class="nav-item">
                         <router-link to="/user/pay/courses" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-bolt"></i>
                             <p>
                                 Платные курсы
                                 <!--<span class="badge badge-info right">6</span>-->
@@ -60,7 +60,7 @@
                     </li>
                     <li class="nav-item">
                         <router-link to="/user/buy/courses" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-balance-scale"></i>
                             <p>
                                 Купить курсы
                                 <!--<span class="badge badge-info right">6</span>-->
