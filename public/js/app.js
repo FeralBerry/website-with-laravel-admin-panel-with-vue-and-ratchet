@@ -21120,90 +21120,105 @@ __webpack_require__.r(__webpack_exports__);
   props: ['data'],
   data: function data() {
     return {
-      blog_items: '',
       paginate_item: ''
     };
   },
   mounted: function mounted() {},
   created: function created() {
-    var _this = this;
-    var data = this.data.seo;
-    data.map(function (item) {
-      if ('/public' + item.url === window.location.pathname) {
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    connection.onopen = function (event) {
+      connection.send('{"command":"front_blog","url":"' + window.location.pathname + '"}');
+    };
+    connection.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      data.seo.map(function (item) {
         document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
         document.querySelector('head title').textContent = item.title;
+      });
+      var blog_items = document.getElementById('blog_items');
+      data.blog.data.map(function (item) {
+        var date = new Date(item.created_at);
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var mounth = date.getMonth();
+        if (mounth === 1) {
+          mounth = 'Января';
+        }
+        if (mounth === 2) {
+          mounth = 'Февраля';
+        }
+        if (mounth === 3) {
+          mounth = 'Марта';
+        }
+        if (mounth === 4) {
+          mounth = 'Апреля';
+        }
+        if (mounth === 5) {
+          mounth = 'Мая';
+        }
+        if (mounth === 6) {
+          mounth = 'Июнь';
+        }
+        if (mounth === 7) {
+          mounth = 'Июля';
+        }
+        if (mounth === 8) {
+          mounth = 'Августа';
+        }
+        if (mounth === 9) {
+          mounth = 'Сентября';
+        }
+        if (mounth === 10) {
+          mounth = 'Октября';
+        }
+        if (mounth === 11) {
+          mounth = 'Ноября';
+        }
+        if (mounth === 12) {
+          mounth = 'Декабря';
+        }
+        var day = date.getDate();
+        var brief = '';
+        var div = document.createElement('div');
+        if (item.description != null) {
+          div.innerText = item.description;
+          brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
+          brief = brief.substr(0, 100);
+        }
+        blog_items.innerHTML += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
+      });
+      var paginate_item = document.getElementById('paginate_item');
+      data.blog.path = window.location.protocol + '//' + window.location.hostname;
+      data.blog.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
+      data.blog.last_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + data.blog.last_page;
+      data.blog.next_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + (data.blog.from + 1);
+      if (data.blog.links.length > 3) {
+        data.blog.links.map(function (items) {
+          var link = items.label;
+          var active = '';
+          var url = items.url;
+          if (items.active) {
+            active = 'class="active"';
+          }
+          if (url === null) {
+            url = '/blog';
+          } else {
+            if (items.label === 'Next &raquo;') {
+              url = data.blog.last_page_url;
+            } else {
+              url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + items.label;
+            }
+          }
+          if (items.label === '&laquo; Previous') {
+            link = '<i class="fa fa-angle-double-left"></i>';
+          }
+          if (items.label === 'Next &raquo;') {
+            link = '<i class="fa fa-angle-double-right"></i>';
+          }
+          paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
+        });
       }
-    });
-    var blog = this.data.blog;
-    blog.data.map(function (item) {
-      var date = new Date(item.created_at);
-      var hour = date.getHours();
-      var minute = date.getMinutes();
-      var mounth = date.getMonth();
-      if (mounth === 1) {
-        mounth = 'Января';
-      }
-      if (mounth === 2) {
-        mounth = 'Февраля';
-      }
-      if (mounth === 3) {
-        mounth = 'Марта';
-      }
-      if (mounth === 4) {
-        mounth = 'Апреля';
-      }
-      if (mounth === 5) {
-        mounth = 'Мая';
-      }
-      if (mounth === 6) {
-        mounth = 'Июнь';
-      }
-      if (mounth === 7) {
-        mounth = 'Июля';
-      }
-      if (mounth === 8) {
-        mounth = 'Августа';
-      }
-      if (mounth === 9) {
-        mounth = 'Сентября';
-      }
-      if (mounth === 10) {
-        mounth = 'Октября';
-      }
-      if (mounth === 11) {
-        mounth = 'Ноября';
-      }
-      if (mounth === 12) {
-        mounth = 'Декабря';
-      }
-      var day = date.getDate();
-      var brief = '';
-      var div = document.createElement('div');
-      if (item.description != null) {
-        div.innerText = item.description;
-        brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
-        brief = brief.substr(0, 100);
-      }
-      _this.blog_items += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
-    });
-    blog.links.map(function (items) {
-      var link = items.label;
-      var active = '';
-      var url = items.url;
-      if (items.active) {
-        active = 'class="active"';
-      }
-      if (url === null) {
-        url = 'blog';
-      }
-      if (items.label === '« Previous') {
-        link = '<i class="fa fa-angle-double-left"></i>';
-      }
-      if (items.label === 'Next »') {
-        link = '<i class="fa fa-angle-double-right"></i>';
-      }
-      _this.paginate_item += '<a href="' + url + '" ' + active + '>' + link + '</a>';
-    });
+    };
   }
 });
 
@@ -21737,28 +21752,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = {
-  "class": "page-content"
-};
-var _hoisted_2 = {
-  "class": "container"
-};
-var _hoisted_3 = {
-  "class": "clear-fix"
-};
-var _hoisted_4 = ["innerHTML"];
-var _hoisted_5 = ["innerHTML"];
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"page-content\"><div class=\"container\"><!-- main content --><main><section><div class=\"clear-fix\"><div class=\"grid-col-row\" id=\"blog_items\"></div><div class=\"page-pagination clear-fix margin-none\" id=\"paginate_item\"></div></div></section></main><!-- / main content --></div></div>", 1);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
     data: $props.data
-  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" main content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "grid-col-row",
-    innerHTML: this.blog_items
-  }, null, 8 /* PROPS */, _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "page-pagination clear-fix margin-none",
-    innerHTML: this.paginate_item
-  }, null, 8 /* PROPS */, _hoisted_5)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / main content ")])])]);
+  }, null, 8 /* PROPS */, ["data"]), _hoisted_1]);
 }
 
 /***/ }),
@@ -21887,7 +21886,7 @@ var _hoisted_22 = {
 };
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "copyright"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("uniLearn"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 2015 . All Rights Reserved")], -1 /* HOISTED */);
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Easy-Script.pro"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 2015 . All Rights Reserved")], -1 /* HOISTED */);
 var _hoisted_24 = {
   "class": "footer-nav"
 };
@@ -21963,11 +21962,11 @@ var _hoisted_5 = {
   "class": "grid-row clear-fix"
 };
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/logo.png",
-  "data-at2x": "img/logo@2x.png",
+  src: "logo.png",
+  "data-at2x": "logo.png",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "uniLearn", -1 /* HOISTED */);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "Easy-Script", -1 /* HOISTED */);
 var _hoisted_8 = {
   "class": "main-nav"
 };
@@ -22158,12 +22157,12 @@ var _hoisted_4 = {
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "logo"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/logo@2x.png",
-  "data-at2x": "img/logo@2x.png",
+  src: "/logo.png",
+  "data-at2x": "/logo.png",
   alt: "",
   width: "82",
   height: "72"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "uniLearn")], -1 /* HOISTED */);
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Easy-Script")], -1 /* HOISTED */);
 var _hoisted_6 = {
   "class": "login-form",
   method: "POST",

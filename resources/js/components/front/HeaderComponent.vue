@@ -36,8 +36,8 @@
                 <div class="grid-row clear-fix">
                     <!-- logo -->
                     <router-link to="/" class="logo">
-                        <img src="img/logo.png" data-at2x="img/logo@2x.png" alt>
-                        <h1>uniLearn</h1>
+                        <img src="logo.png" data-at2x="logo.png" alt>
+                        <h1>Easy-Script</h1>
                     </router-link>
                     <!-- / logo -->
                     <nav class="main-nav">

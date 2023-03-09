@@ -2,15 +2,20 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <router-link to="/user" class="brand-link">
-            <img src="/back/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">MaterialAdminLTE</span>
+            <img src="/logo.png" alt="Easy-Script" class="brand-image img-circle">
+            <span class="brand-text font-weight-light">Easy-Script</span>
         </router-link>
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="/back/img/user2-160x160.jpg" class="img-circle elevation-2" :alt="data.user_name">
+                    <template v-if="data.auth_user_avatar === '' || data.auth_user_avatar === null">
+                        <img src="/back/img/avatar/no-img45x45.png" class="img-circle elevation-2" :alt="data.user_name">
+                    </template>
+                    <template v-else>
+                        <img :src="'/back/img/avatar/'+data.auth_user_avatar+''" class="img-circle elevation-2" :alt="data.user_name">
+                    </template>
                 </div>
                 <div class="info">
                     <router-link to="/user/settings" class="d-block">{{ data.user_name }}</router-link>

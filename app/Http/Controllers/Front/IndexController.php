@@ -67,7 +67,7 @@ class IndexController extends FrontController
     }
     public function blog(){
         $blog = DB::table('blog')
-            ->paginate(1);
+            ->paginate(12);
         $data = array_merge($this->data(),[
             'blog' => $blog
         ]);

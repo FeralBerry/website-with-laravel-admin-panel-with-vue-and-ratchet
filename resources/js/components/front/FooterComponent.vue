@@ -45,7 +45,7 @@
         </div>
         <div class="footer-bottom">
             <div class="grid-row clear-fix">
-                <div class="copyright">uniLearn<span></span> 2015 . All Rights Reserved</div>
+                <div class="copyright">Easy-Script.pro<span></span> 2015 . All Rights Reserved</div>
                 <nav class="footer-nav">
                     <ul class="clear-fix">
                         <li>

@@ -171,6 +171,18 @@ class ChatController extends BackController
         }
         return $data;
     }
+    public function front_blog($command){
+        $seo = DB::table('seo')
+            ->where('url',$command->url)
+            ->get();
+        $blog = DB::table('blog')
+            ->paginate(1);
+        $data = [
+            'seo' => $seo,
+            'blog' => $blog
+        ];
+        return $data;
+    }
     /*public function openChat($command){
         $chat = DB::table('chat')
             ->where('room_id',$command->room_id)

@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>MaterialAdminLTE 3 | Dashboard</title>
+    <title>Easy-Script</title>
     <meta name="description" content="Responsive, Bootstrap, BS4" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{{ asset('front/img/favicon.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="user_id" content="{{ Auth::id() }}">
     @include('layouts.back.up_config')
