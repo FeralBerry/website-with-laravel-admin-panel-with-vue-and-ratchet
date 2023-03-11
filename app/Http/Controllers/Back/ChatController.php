@@ -145,6 +145,32 @@ class ChatController extends BackController
         ];
         return $data;
     }
+    public function front_footer_message($command){
+        if (strlen($command->footer_name)>255 || strlen($command->footer_name)<3) {
+            $data = [
+                'message' => 'footer_name_error',
+            ];
+        }elseif (strlen($command->footer_phone)>50 || strlen($command->footer_phone)<3) {
+            $data = [
+                'message' => 'footer_phone_error',
+            ];
+        }elseif (strlen($command->footer_message)<3) {
+            $data = [
+                'message' => 'footer_message_error',
+            ];
+        } else {
+            DB::table('footer_message')
+                ->insert([
+                    'name' => $command->footer_name,
+                    'phone' => $command->footer_phone,
+                    'message' => $command->footer_message,
+                ]);
+            $data = [
+                'message' => 'footer_success',
+            ];
+        }
+        return $data;
+    }
     /*public function openChat($command){
         $chat = DB::table('chat')
             ->where('room_id',$command->room_id)

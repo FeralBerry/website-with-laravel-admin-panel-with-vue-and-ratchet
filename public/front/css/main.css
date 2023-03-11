@@ -6424,8 +6424,8 @@ p.form-row.form-row-wide.select-arrow:before {
 	position: relative;
 	z-index: 2;
 	background-color: #f27c66;
-	margin-left: 66px;
-	padding: 40px;
+	margin-left: 20px;
+	padding: 25px;
 	text-align: left;
 }
 .action .action-block:before {
@@ -6456,7 +6456,7 @@ p.form-row.form-row-wide.select-arrow:before {
 	margin-left: 0;
 }
 .action:last-child .action-block .text {
-	margin: 0 66px 0 0;
+	margin: 0 20px 0 0;
 }
 .action:last-child .action-block:before {
 	left: -32px;
@@ -9141,4 +9141,7 @@ hr {
 
 .main-nav>ul>li>ul.user-menu  {
     left: -160px;
+}
+.footer_blog:hover{
+    color:#f9cb8f;
 }
