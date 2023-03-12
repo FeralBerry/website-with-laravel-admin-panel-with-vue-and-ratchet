@@ -21118,14 +21118,91 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "BlogComponent",
   props: ['data'],
+  data: function data() {
+    return {
+      blog_items: '',
+      paginate_item: ''
+    };
+  },
   mounted: function mounted() {},
   created: function created() {
+    var _this = this;
     var data = this.data.seo;
     data.map(function (item) {
       if ('/public' + item.url === window.location.pathname) {
         document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
         document.querySelector('head title').textContent = item.title;
       }
+    });
+    var blog = this.data.blog;
+    blog.data.map(function (item) {
+      var date = new Date(item.created_at);
+      var hour = date.getHours();
+      var minute = date.getMinutes();
+      var mounth = date.getMonth();
+      if (mounth === 1) {
+        mounth = 'Января';
+      }
+      if (mounth === 2) {
+        mounth = 'Февраля';
+      }
+      if (mounth === 3) {
+        mounth = 'Марта';
+      }
+      if (mounth === 4) {
+        mounth = 'Апреля';
+      }
+      if (mounth === 5) {
+        mounth = 'Мая';
+      }
+      if (mounth === 6) {
+        mounth = 'Июнь';
+      }
+      if (mounth === 7) {
+        mounth = 'Июля';
+      }
+      if (mounth === 8) {
+        mounth = 'Августа';
+      }
+      if (mounth === 9) {
+        mounth = 'Сентября';
+      }
+      if (mounth === 10) {
+        mounth = 'Октября';
+      }
+      if (mounth === 11) {
+        mounth = 'Ноября';
+      }
+      if (mounth === 12) {
+        mounth = 'Декабря';
+      }
+      var day = date.getDate();
+      var brief = '';
+      var div = document.createElement('div');
+      if (item.description != null) {
+        div.innerText = item.description;
+        brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
+        brief = brief.substr(0, 100);
+      }
+      _this.blog_items += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
+    });
+    blog.links.map(function (items) {
+      var link = items.label;
+      var active = '';
+      var url = items.url;
+      if (items.active) {
+        active = 'class="active"';
+      }
+      if (url === null) {
+        url = 'blog';
+      }
+      if (items.label === '« Previous') {
+        link = '<i class="fa fa-angle-double-left"></i>';
+      }
+      if (items.label === 'Next »') {
+        link = '<i class="fa fa-angle-double-right"></i>';
+      }
+      _this.paginate_item += '<a href="' + url + '" ' + active + '>' + link + '</a>';
     });
   }
 });
@@ -21660,11 +21737,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _hoisted_1 = {
+  "class": "page-content"
+};
+var _hoisted_2 = {
+  "class": "container"
+};
+var _hoisted_3 = {
+  "class": "clear-fix"
+};
+var _hoisted_4 = ["innerHTML"];
+var _hoisted_5 = ["innerHTML"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
     data: $props.data
-  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Блог ")]);
+  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" main content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "grid-col-row",
+    innerHTML: this.blog_items
+  }, null, 8 /* PROPS */, _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "page-pagination clear-fix margin-none",
+    innerHTML: this.paginate_item
+  }, null, 8 /* PROPS */, _hoisted_5)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / main content ")])])]);
 }
 
 /***/ }),

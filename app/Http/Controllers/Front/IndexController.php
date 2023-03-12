@@ -66,8 +66,10 @@ class IndexController extends FrontController
         return view('front.index',['data' => $data]);
     }
     public function blog(){
+        $blog = DB::table('blog')
+            ->paginate(1);
         $data = array_merge($this->data(),[
-
+            'blog' => $blog
         ]);
         return view('front.index',['data' => $data]);
     }
