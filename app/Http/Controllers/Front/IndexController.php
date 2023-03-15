@@ -73,4 +73,12 @@ class IndexController extends FrontController
         ]);
         return view('front.index',['data' => $data]);
     }
+    public function blogArticle($id){
+        $blog = DB::table('blog')
+            ->where('id',$id);
+        $data = array_merge($this->data(),[
+            'blog' => $blog
+        ]);
+        return view('front.index',['data' => $data]);
+    }
 }

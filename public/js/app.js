@@ -21090,16 +21090,133 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "BlogArticleComponent",
   props: ['data'],
+  data: function data() {
+    return {
+      connection: new WebSocket("ws://127.0.0.1:4710"),
+      blog_art: '',
+      breadcrumb: {
+        title: ''
+      }
+    };
+  },
   mounted: function mounted() {},
   created: function created() {
-    var data = this.data.seo;
-    data.map(function (item) {
-      if ('/public' + item.url === window.location.pathname) {
-        document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
-        document.querySelector('head title').textContent = item.title;
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    connection.onopen = function (event) {
+      connection.send('{"command":"front_blog_article","url":"' + window.location.pathname + '"}');
+    };
+    connection.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      if (data.message === 'front_blog_article') {
+        document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
+        document.querySelector('head title').textContent = data.seo.title;
+        var blog_article = document.getElementById('blog_article');
+        var comments = document.getElementById('comments');
+        comments.innerHTML = '<div class="comment-title">Комментариев <span>(' + data.count_comments + ')</span></div><ol class="commentlist">';
+        data.comments.data.map(function (item) {
+          var avatar = 'http://placehold.it/70x70';
+          if (item.avatar) {
+            avatar = item.avatar;
+          }
+          var date = new Date(item.created_at);
+          var hour = date.getHours();
+          var year = date.getFullYear();
+          var minute = date.getMinutes();
+          var mounth = date.getMonth();
+          var day = date.getDate();
+          comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + /*'<a class="button reply" href="#"><i class="fa fa-rotate-left"></i> Reply</a>' +*/
+          '</div>' + '</div>' + '</li>';
+        });
+        comments.innerHTML += '</ol>';
+        data.blog.map(function (item) {
+          document.getElementById('blog_id').value = item.id;
+          var date = new Date(item.created_at);
+          var mounth = date.getMonth();
+          if (mounth === 1) {
+            mounth = 'Янв';
+          }
+          if (mounth === 2) {
+            mounth = 'Фев';
+          }
+          if (mounth === 3) {
+            mounth = 'Мар';
+          }
+          if (mounth === 4) {
+            mounth = 'Апр';
+          }
+          if (mounth === 5) {
+            mounth = 'Мая';
+          }
+          if (mounth === 6) {
+            mounth = 'Июн';
+          }
+          if (mounth === 7) {
+            mounth = 'Июл';
+          }
+          if (mounth === 8) {
+            mounth = 'Авг';
+          }
+          if (mounth === 9) {
+            mounth = 'Сен';
+          }
+          if (mounth === 10) {
+            mounth = 'Окт';
+          }
+          if (mounth === 11) {
+            mounth = 'Ноя';
+          }
+          if (mounth === 12) {
+            mounth = 'Дек';
+          }
+          var day = date.getDate();
+          var tags_post = document.getElementById('tags-post');
+          var tags = item.tags.split(';');
+          var k = 0;
+          data.blog_tags.map(function (i) {
+            if (i.id == tags[k]) {
+              tags_post.innerHTML += '<a href="#"><i class="' + i.icon + '"></i>' + i.name + '</a>';
+            }
+            k++;
+          });
+          blog_article.innerHTML = '<div class="post-info">' + '<div class="date-post">' + '<div class="day">' + day + '</div>' + '<div class="month">' + mounth + '</div>' + '</div>' + '<div class="post-info-main">' + '<div class="author-post">' + item.title + '</div>' + '</div>' + '<div class="comments-post" id="comments-post"><i class="fa fa-comment"></i> ' + data.count_comments + '</div>' + '</div>' + +item.description;
+        });
+      } else if (data.message === 'blog_comment_add') {
+        var _comments = document.getElementById('comments');
+        _comments.innerHTML = '<div class="comment-title">Комментариев <span>(' + data.count_comments + ')</span></div><ol class="commentlist">';
+        data.comments.data.map(function (item) {
+          var avatar = 'http://placehold.it/70x70';
+          if (item.avatar) {
+            avatar = item.avatar;
+          }
+          var date = new Date(item.created_at);
+          var hour = date.getHours();
+          var year = date.getFullYear();
+          var minute = date.getMinutes();
+          var mounth = date.getMonth();
+          var day = date.getDate();
+          _comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + /*'<a class="button reply" href="#"><i class="fa fa-rotate-left"></i> Reply</a>' +*/
+          '</div>' + '</div>' + '</li>';
+        });
+        _comments.innerHTML += '</ol>';
+        document.getElementById('comments-post').innerHTML = '<i class="fa fa-comment"></i> ' + data.count_comments + '</div>';
+        document.getElementById('comment_success').style.display = 'block';
+        setTimeout(function () {
+          $('#comment_success').fadeOut('fast');
+        }, 5000);
+      }
+    };
+    $('body').on('click', '#send_comment', function () {
+      if ($('meta[name=user_id]').attr('content')) {
+        var user_id = $('meta[name=user_id]').attr('content');
+        var blog_id = document.getElementById('blog_id').value;
+        var message = document.getElementById('message').value;
+        connection.send('{"command":"blog_comment_add","user_id":"' + user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
+      } else {
+        alert('Для добавления комментария нужно авторизоваться!');
       }
     });
-  }
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -21131,92 +21248,94 @@ __webpack_require__.r(__webpack_exports__);
     };
     connection.onmessage = function (event) {
       var data = JSON.parse(event.data);
-      data.seo.map(function (item) {
-        document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
-        document.querySelector('head title').textContent = item.title;
-      });
-      var blog_items = document.getElementById('blog_items');
-      data.blog.data.map(function (item) {
-        var date = new Date(item.created_at);
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        var mounth = date.getMonth();
-        if (mounth === 1) {
-          mounth = 'Января';
-        }
-        if (mounth === 2) {
-          mounth = 'Февраля';
-        }
-        if (mounth === 3) {
-          mounth = 'Марта';
-        }
-        if (mounth === 4) {
-          mounth = 'Апреля';
-        }
-        if (mounth === 5) {
-          mounth = 'Мая';
-        }
-        if (mounth === 6) {
-          mounth = 'Июнь';
-        }
-        if (mounth === 7) {
-          mounth = 'Июля';
-        }
-        if (mounth === 8) {
-          mounth = 'Августа';
-        }
-        if (mounth === 9) {
-          mounth = 'Сентября';
-        }
-        if (mounth === 10) {
-          mounth = 'Октября';
-        }
-        if (mounth === 11) {
-          mounth = 'Ноября';
-        }
-        if (mounth === 12) {
-          mounth = 'Декабря';
-        }
-        var day = date.getDate();
-        var brief = '';
-        var div = document.createElement('div');
-        if (item.description != null) {
-          div.innerText = item.description;
-          brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
-          brief = brief.substr(0, 100);
-        }
-        blog_items.innerHTML += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
-      });
-      var paginate_item = document.getElementById('paginate_item');
-      data.blog.path = window.location.protocol + '//' + window.location.hostname;
-      data.blog.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
-      data.blog.last_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + data.blog.last_page;
-      data.blog.next_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + (data.blog.from + 1);
-      if (data.blog.links.length > 3) {
-        data.blog.links.map(function (items) {
-          var link = items.label;
-          var active = '';
-          var url = items.url;
-          if (items.active) {
-            active = 'class="active"';
-          }
-          if (url === null) {
-            url = '/blog';
-          } else {
-            if (items.label === 'Next &raquo;') {
-              url = data.blog.last_page_url;
-            } else {
-              url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + items.label;
-            }
-          }
-          if (items.label === '&laquo; Previous') {
-            link = '<i class="fa fa-angle-double-left"></i>';
-          }
-          if (items.label === 'Next &raquo;') {
-            link = '<i class="fa fa-angle-double-right"></i>';
-          }
-          paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
+      if (data.message === 'front_blog') {
+        data.seo.map(function (item) {
+          document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
+          document.querySelector('head title').textContent = item.title;
         });
+        var blog_items = document.getElementById('blog_items');
+        data.blog.data.map(function (item) {
+          var date = new Date(item.created_at);
+          var hour = date.getHours();
+          var minute = date.getMinutes();
+          var mounth = date.getMonth();
+          if (mounth === 1) {
+            mounth = 'Января';
+          }
+          if (mounth === 2) {
+            mounth = 'Февраля';
+          }
+          if (mounth === 3) {
+            mounth = 'Марта';
+          }
+          if (mounth === 4) {
+            mounth = 'Апреля';
+          }
+          if (mounth === 5) {
+            mounth = 'Мая';
+          }
+          if (mounth === 6) {
+            mounth = 'Июнь';
+          }
+          if (mounth === 7) {
+            mounth = 'Июля';
+          }
+          if (mounth === 8) {
+            mounth = 'Августа';
+          }
+          if (mounth === 9) {
+            mounth = 'Сентября';
+          }
+          if (mounth === 10) {
+            mounth = 'Октября';
+          }
+          if (mounth === 11) {
+            mounth = 'Ноября';
+          }
+          if (mounth === 12) {
+            mounth = 'Декабря';
+          }
+          var day = date.getDate();
+          var brief = '';
+          var div = document.createElement('div');
+          if (item.description != null) {
+            div.innerText = item.description;
+            brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
+            brief = brief.substr(0, 100);
+          }
+          blog_items.innerHTML += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/blog/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/blog/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
+        });
+        var paginate_item = document.getElementById('paginate_item');
+        data.blog.path = window.location.protocol + '//' + window.location.hostname;
+        data.blog.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
+        data.blog.last_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + data.blog.last_page;
+        data.blog.next_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + (data.blog.from + 1);
+        if (data.blog.links.length > 3) {
+          data.blog.links.map(function (items) {
+            var link = items.label;
+            var active = '';
+            var url = items.url;
+            if (items.active) {
+              active = 'class="active"';
+            }
+            if (url === null) {
+              url = '/blog';
+            } else {
+              if (items.label === 'Next &raquo;') {
+                url = data.blog.last_page_url;
+              } else {
+                url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + items.label;
+              }
+            }
+            if (items.label === '&laquo; Previous') {
+              link = '<i class="fa fa-angle-double-left"></i>';
+            }
+            if (items.label === 'Next &raquo;') {
+              link = '<i class="fa fa-angle-double-right"></i>';
+            }
+            paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
+          });
+        }
       }
     };
   }
@@ -21730,11 +21849,258 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "grid-row"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "page-content grid-col-row clear-fix"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "grid-col grid-col-9"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" main content "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" blog post "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "blog-post"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
+  id: "blog_article"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "tags-post",
+  id: "tags-post"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" blog post "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "divider-color"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" comments for post "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "comments"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  id: "comments"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / comments for post "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "divider-color"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "leave-reply"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "title"
+}, "Добавить комментарий"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  id: "comment_success",
+  style: {
+    "display": "none"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", {
+  style: {
+    "color": "#18bb7c"
+  }
+}, "Комментарий успешно добавлен!!")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  "class": "message-form clear-fix"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<p class=\"message-form-author\">\n                                    <input id=\"author\" name=\"author\" type=\"hidden\" value=\"\" size=\"30\" aria-required=\"true\" placeholder=\"Your name\">\n                                </p>"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "message-form-subject"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  id: "blog_id",
+  name: "blog_id",
+  type: "hidden",
+  value: "",
+  size: "30",
+  "aria-required": "true",
+  placeholder: "Subject"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "message-form-message"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  id: "message",
+  name: "message",
+  cols: "45",
+  rows: "8",
+  "aria-required": "true",
+  placeholder: "Description"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "form-submit rectangle-button green medium"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  id: "send_comment",
+  "class": "cws-button border-radius alt"
+}, "Добавить")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / main content ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "grid-col grid-col-3 sidebar"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget search "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+  "class": "widget-search"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  method: "get",
+  "class": "search-form",
+  action: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "screen-reader-text"
+}, "Search for:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "search",
+  "class": "search-field",
+  placeholder: "Search",
+  value: "",
+  name: "s",
+  title: "Search for:"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "submit",
+  "class": "search-submit",
+  value: "GO"
+})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget search "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+  "class": "widget-categories"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Categories"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "divider-big"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "cat-item cat-item-1 current-cat"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Software Training"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (2) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "cat-item cat-item-1 current-cat"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Developing Mobile Apps"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (6) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "cat-item cat-item-1 current-cat"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Arvchitecture and Built "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (12) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "cat-item cat-item-1 current-cat"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Management and Business "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (14) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "cat-item cat-item-1 current-cat"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Basic Cooking Techniq ues "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (7) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "cat-item cat-item-1 current-cat"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Starting a Startup"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (51) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "cat-item cat-item-1 current-cat"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Information Technology "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (34) ")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget recent post "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+  "class": "widget-post"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Recent Posts"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "carousel-nav"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "carousel-button"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "prev"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fa fa-angle-left"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n\t\t\t\t\t\t "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "next"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fa fa-angle-right"
+})])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "divider-big"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "owl-carousel widget-carousel"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
+  "class": "clear-fix"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "http://placehold.it/60x60",
+  "data-at2x": "http://placehold.it/60x60",
+  alt: ""
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Lorem ipsum dolor"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Sed pharetra lorem ut dolor dignissim, sit amet pretium tortor mattis...")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
+  "class": "clear-fix"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "http://placehold.it/60x60",
+  "data-at2x": "http://placehold.it/60x60",
+  alt: ""
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Lorem ipsum dolor"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Sed pharetra lorem ut dolor dignissim, sit amet pretium tortor mattis...")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
+  "class": "clear-fix"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "http://placehold.it/60x60",
+  "data-at2x": "http://placehold.it/60x60",
+  alt: ""
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Lorem ipsum dolor"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Sed pharetra lorem ut dolor dignissim, sit amet pretium tortor mattis...")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
+  "class": "clear-fix"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "http://placehold.it/60x60",
+  "data-at2x": "http://placehold.it/60x60",
+  alt: ""
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Lorem ipsum dolor"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Sed pharetra lorem ut dolor dignissim, sit amet pretium tortor mattis...")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget recent post "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget recent comments "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+  "class": "widget-comments"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Recent Comments"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "divider-big"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "comments"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "comment"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "header-comments"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "date"
+}, "22.04.14 /"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "author"
+}, "Michael Lawson")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Donec ut velit varius, sodales velit ac, aliquet purus. Fusce nec nisl")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "comment"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "header-comments"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "date"
+}, "19.04.14 /"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "author"
+}, "Steven Granger")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Donec ut velit varius, sodales velit ac, aliquet purus. Fusce nec nisl")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "comment"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "header-comments"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "date"
+}, "14.04.14 /"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "author"
+}, "Mark Blackwood")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Donec ut velit varius, sodales velit ac, aliquet purus. Fusce nec nisl")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget recent comments "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget tag cloud "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+  "class": "widget-tag"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Tag Cloud"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "divider-big margin-bottom"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "tag-cloud"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Daily"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Design"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Illustration"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Label"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Photo"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Pofessional"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Show"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Sound"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Sounds"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Tv"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  rel: "tag"
+}, "Video")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "margin-top"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget tag cloud "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget subscribe "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+  "class": "widget-subscribe"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Follow & Subscribe"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "divider-big margin-bottom"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  "class": "fa fa-twitter"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "",
+  "class": "fa fa-skype"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "",
+  "class": "fa fa-google-plus"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "",
+  "class": "fa fa-rss"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "",
+  "class": "fa fa-youtube"
+})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget subscribe ")])])], -1 /* HOISTED */);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
-    data: $props.data
-  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Блог ")]);
+    data: this.breadcrumb
+  }, null, 8 /* PROPS */, ["data"]), _hoisted_1]);
 }
 
 /***/ }),
@@ -21962,8 +22328,8 @@ var _hoisted_5 = {
   "class": "grid-row clear-fix"
 };
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "logo.png",
-  "data-at2x": "logo.png",
+  src: "/logo.png",
+  "data-at2x": "/logo.png",
   alt: ""
 }, null, -1 /* HOISTED */);
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "Easy-Script", -1 /* HOISTED */);

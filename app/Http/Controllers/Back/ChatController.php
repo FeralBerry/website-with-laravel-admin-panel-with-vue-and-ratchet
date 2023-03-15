@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Back;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Ramsey\Collection\Collection;
 
 class ChatController extends BackController
@@ -176,10 +177,74 @@ class ChatController extends BackController
             ->where('url',$command->url)
             ->get();
         $blog = DB::table('blog')
-            ->paginate(1);
+            ->paginate(12);
         $data = [
             'seo' => $seo,
-            'blog' => $blog
+            'blog' => $blog,
+            'message' => 'front_blog'
+        ];
+        return $data;
+    }
+    public function front_blog_article($command){
+        $url = explode('?',$command->url);
+        $url = explode('/',$url[0]);
+        $seo = [];
+        $blog = DB::table('blog')
+            ->where('id',$url[2])
+            ->get();
+        foreach ($blog as $item){
+            $seo['title'] = $item->title;
+            $seo['description'] = Str::limit(strip_tags($item->description),150,'...');
+        }
+        $comments = DB::table('blog_comments')
+            ->where('blog_id',$url[2])
+            ->join('users','blog_comments.user_id','=','users.id')
+            ->select(
+                'name',
+                'avatar',
+                'description',
+                'blog_comments.created_at'
+            )
+            ->paginate(20);
+        $count_comments = count($comments);
+        $blog_tags = DB::table('blog_tags')
+            ->get();
+        $data = [
+            'seo' => $seo,
+            'blog' => $blog,
+            'comments' => $comments,
+            'count_comments' => $count_comments,
+            'blog_tags' => $blog_tags,
+            'message' => 'front_blog_article'
+        ];
+        return $data;
+    }
+    public function blog_comment_add($command){
+        $message = strip_tags($command->message);
+        DB::table('blog_comments')
+            ->insert([
+                'user_id' => $command->user_id,
+                'description' => $message,
+                'blog_id' => $command->blog_id,
+            ]);
+        $comments = DB::table('blog_comments')
+            ->where('blog_id',$command->blog_id)
+            ->join('users','blog_comments.user_id','=','users.id')
+            ->select(
+                'name',
+                'avatar',
+                'description',
+                'blog_comments.created_at'
+            )
+            ->paginate(20);
+        $count_comments = count($comments);
+        $blog_tags = DB::table('blog_tags')
+            ->get();
+        $data = [
+            'message' => 'blog_comment_add',
+            'comments' => $comments,
+            'count_comments' => $count_comments,
+            'blog_tags' => $blog_tags,
         ];
         return $data;
     }

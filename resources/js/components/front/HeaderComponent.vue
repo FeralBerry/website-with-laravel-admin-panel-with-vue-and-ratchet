@@ -36,7 +36,7 @@
                 <div class="grid-row clear-fix">
                     <!-- logo -->
                     <router-link to="/" class="logo">
-                        <img src="logo.png" data-at2x="logo.png" alt>
+                        <img src="/logo.png" data-at2x="/logo.png" alt>
                         <h1>Easy-Script</h1>
                     </router-link>
                     <!-- / logo -->

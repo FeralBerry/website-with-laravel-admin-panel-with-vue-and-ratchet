@@ -21,6 +21,11 @@
     <meta name="description" content="{{ $seo_description }}">
     <title>{{ $title }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(Auth::user())
+        <meta name="user_id" content="{{ Auth::id() }}">
+    @else
+        <meta name="user_id" content="">
+    @endif
     <link rel="shortcut icon" href="{{ asset('front/img/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('front/fonts/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('front/fi/flaticon.css') }}">

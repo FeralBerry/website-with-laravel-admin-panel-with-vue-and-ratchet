@@ -89,6 +89,25 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif($command->command == 'front_blog_article'){
+            $data = $this->chatController->front_blog_article($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif ($command->command == 'blog_comment_add'){
+            $data = $this->chatController->blog_comment_add($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+                if($from !== $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         /*elseif($command->command == 'reconnect'){
             $data = [
                 'message' =>'reconnect'

@@ -3301,9 +3301,7 @@ article p a {
 	font-family: "Arial";
 	text-decoration: none;
 }
-.blog-post p a:before {
-	content: "\2192";
-}
+
 .grid-col-4 .blog-post {
 	margin-bottom: 30px;
 }
@@ -3325,6 +3323,7 @@ article p a {
 }
 .blog-post .tags-post a + a {
 	margin-left: 10px;
+	padding-left: 10px;
 	border-left: 1px solid #f27c66;
 }
 .blog-post h3 {
@@ -3381,21 +3380,12 @@ article p a {
 }
 .author-post:before,
 .tags-post a:before{
-	content: "\f007";
 	font-family: "FontAwesome";
 	padding-right: 5px;
 	font-size: 18px;
+    padding-left:5px;
 }
-.tags-post a:before{
-	content: "\f02b";
-	padding-left: 10px;
-	font-size: 16px;
-	vertical-align: middle;
-}
-.tags-post a:first-child:before {
-	padding-left: 0;
-	content: "\f02e";
-}
+
 .blog-post + hr {
 	margin-top: 20px;
 	margin-bottom: 40px;
