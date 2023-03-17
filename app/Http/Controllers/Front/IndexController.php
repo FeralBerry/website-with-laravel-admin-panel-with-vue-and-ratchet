@@ -81,4 +81,13 @@ class IndexController extends FrontController
         ]);
         return view('front.index',['data' => $data]);
     }
+    public function blogSearch($search){
+        $blog = DB::table('blog')
+            ->where('title','LIKE',"%".$search."%")
+            ->paginate(12);
+        $data = [
+            'blog_search' => $blog
+        ];
+        return $data;
+    }
 }

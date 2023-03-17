@@ -5,7 +5,7 @@
             <div class="page-content grid-col-row clear-fix">
                 <div class="grid-col grid-col-9">
                     <!-- main content -->
-                    <main>
+                    <main id="main_blog_article">
                         <!-- blog post -->
                         <div class="blog-post">
                             <article id="blog_article">
@@ -17,6 +17,9 @@
                             </div>
                         </div>
                         <!-- blog post -->
+                        <div id="paginate_item">
+
+                    </div>
                         <hr class="divider-color" />
                         <!-- comments for post -->
                         <div class="comments">
@@ -50,10 +53,10 @@
                 <div class="grid-col grid-col-3 sidebar">
                     <!-- widget search -->
                     <aside class="widget-search">
-                        <form method="get" class="search-form" action="#">
+                        <form onsubmit="event.preventDefault();blog_search()" class="search-form">
                             <label>
-                                <span class="screen-reader-text">Search for:</span>
-                                <input type="search" class="search-field" placeholder="Search" value="" name="s" title="Search for:">
+                                <span class="screen-reader-text">Поиск:</span>
+                                <input type="search" id="search" class="search-field" placeholder="Search" value="" name="s" title="Search for:">
                             </label>
                             <input type="submit" class="search-submit" value="GO">
                         </form>
@@ -61,111 +64,34 @@
                     <!--/ widget search -->
                     <!-- widget categories -->
                     <aside class="widget-categories">
-                        <h2>Categories</h2>
+                        <h2>Последние новости:</h2>
                         <hr class="divider-big" />
-                        <ul>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Software Training<span> (2) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Developing Mobile Apps<span> (6) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Arvchitecture and Built <span> (12) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Management and Business <span> (14) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Basic Cooking Techniq ues <span> (7) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Starting a Startup<span> (51) </span></a></li>
-                            <li class="cat-item cat-item-1 current-cat"><a href="#">Information Technology <span> (34) </span></a></li>
+                        <ul id="last_news">
+
                         </ul>
                     </aside>
                     <!-- widget categories -->
-                    <!-- widget recent post -->
-                    <aside class="widget-post">
-                        <h2>Recent Posts</h2>
-                        <div class="carousel-nav">
-                            <div class="carousel-button">
-                                <div class="prev"><i class="fa fa-angle-left"></i></div><!--
-						 --><div class="next"><i class="fa fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                        <hr class="divider-big" />
-                        <div class="owl-carousel widget-carousel">
-                            <div>
-                                <article class="clear-fix">
-                                    <img src="http://placehold.it/60x60" data-at2x="http://placehold.it/60x60" alt>
-                                    <h4>Lorem ipsum dolor</h4>
-                                    <p>Sed pharetra lorem ut dolor dignissim, sit amet pretium tortor mattis...</p>
-                                </article>
-                                <article class="clear-fix">
-                                    <img src="http://placehold.it/60x60" data-at2x="http://placehold.it/60x60" alt>
-                                    <h4>Lorem ipsum dolor</h4>
-                                    <p>Sed pharetra lorem ut dolor dignissim, sit amet pretium tortor mattis...</p>
-                                </article>
-                            </div>
-                            <div>
-                                <article class="clear-fix">
-                                    <img src="http://placehold.it/60x60" data-at2x="http://placehold.it/60x60" alt>
-                                    <h4>Lorem ipsum dolor</h4>
-                                    <p>Sed pharetra lorem ut dolor dignissim, sit amet pretium tortor mattis...</p>
-                                </article>
-                                <article class="clear-fix">
-                                    <img src="http://placehold.it/60x60" data-at2x="http://placehold.it/60x60" alt>
-                                    <h4>Lorem ipsum dolor</h4>
-                                    <p>Sed pharetra lorem ut dolor dignissim, sit amet pretium tortor mattis...</p>
-                                </article>
-                            </div>
-                        </div>
-                    </aside>
-                    <!-- widget recent post -->
-                    <!-- widget recent comments -->
-                    <aside class="widget-comments">
-                        <h2>Recent Comments</h2>
-                        <hr class="divider-big" />
-                        <div class="comments">
-                            <div class="comment">
-                                <div class="header-comments">
-                                    <div class="date">22.04.14 /</div>
-                                    <div class="author">Michael Lawson</div>
-                                </div>
-                                <p>Donec ut velit varius, sodales velit ac, aliquet purus. Fusce nec nisl</p>
-                            </div>
-                            <div class="comment">
-                                <div class="header-comments">
-                                    <div class="date">19.04.14 /</div>
-                                    <div class="author">Steven Granger</div>
-                                </div>
-                                <p>Donec ut velit varius, sodales velit ac, aliquet purus. Fusce nec nisl</p>
-                            </div>
-                            <div class="comment">
-                                <div class="header-comments">
-                                    <div class="date">14.04.14 /</div>
-                                    <div class="author">Mark Blackwood</div>
-                                </div>
-                                <p>Donec ut velit varius, sodales velit ac, aliquet purus. Fusce nec nisl</p>
-                            </div>
-                        </div>
-                    </aside>
-                    <!--/ widget recent comments -->
+
                     <!-- widget tag cloud -->
                     <aside class="widget-tag">
-                        <h2>Tag Cloud</h2>
+                        <h2>Поиск по тегам</h2>
                         <hr class="divider-big margin-bottom" />
-                        <div class="tag-cloud">
-                            <a href="#" rel="tag">Daily</a>,
-                            <a href="#" rel="tag">Design</a>,
-                            <a href="#" rel="tag">Illustration</a>,
-                            <a href="#" rel="tag">Label</a>,
-                            <a href="#" rel="tag">Photo</a>,
-                            <a href="#" rel="tag">Pofessional</a>,
-                            <a href="#" rel="tag">Show</a>,
-                            <a href="#" rel="tag">Sound</a>,
-                            <a href="#" rel="tag">Sounds</a>,
-                            <a href="#" rel="tag">Tv</a>,
-                            <a href="#" rel="tag">Video</a>
+                        <div class="tag-cloud" id="blog_tags">
+
                         </div>
                         <hr class="margin-top" />
                     </aside>
                     <!-- / widget tag cloud -->
                     <!-- widget subscribe -->
                     <aside class="widget-subscribe">
-                        <h2>Follow & Subscribe</h2>
+                        <h2>Связаться:</h2>
                         <hr class="divider-big margin-bottom" />
-                        <div><a href="#" class="fa fa-twitter"></a><a href="" class="fa fa-skype"></a><a href="" class="fa fa-google-plus"></a><a href="" class="fa fa-rss"></a><a href="" class="fa fa-youtube"></a></div>
+                        <div>
+                            <a href="https://wa.me/79687106270" class="fa fa-phone"></a>
+                            <a href="https://github.com/FeralBerry" class="fa fa-github"></a>
+                            <a href="mailto:pusiket90@yandex.ru" class="fa fa-envelope-o"></a>
+                            <a href="" class="fa fa-youtube"></a>
+                        </div>
                     </aside>
                     <!-- / widget subscribe -->
                 </div>
@@ -268,6 +194,14 @@
                             '</div>' +
                             +item.description;
                     });
+                    let last_news = document.getElementById('last_news');
+                    data.last_news.map((item) => {
+                        last_news.innerHTML += '<li class="cat-item cat-item-1 current-cat"><a href="/blog/'+item.id+'">'+item.title+'</a></li>';
+                    });
+                    let blog_tags = document.getElementById('blog_tags');
+                    data.blog_tags.map((item) => {
+                        blog_tags.innerHTML += '<a href="#" rel="tag">'+item.name+'</a> ';
+                    });
                 } else if(data.message === 'blog_comment_add'){
                     let comments = document.getElementById('comments');
                     comments.innerHTML = '<div class="comment-title">Комментариев <span>('+data.count_comments+')</span></div><ol class="commentlist">';
@@ -304,6 +238,8 @@
                     setTimeout(function() {
                         $('#comment_success').fadeOut('fast');
                     }, 5000);
+                } else if('message' === "search_blog"){
+
                 }
             }
             $('body').on('click', '#send_comment', function() {

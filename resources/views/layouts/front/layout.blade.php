@@ -146,6 +146,106 @@
                 '<a href="/register" class="cws-button bt-color-3 border-radius alt icon-right float-right">Зарегистрироваться<i class="fa fa-angle-right"></i></a>';
         }
     }
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    function blog_search(){
+        let search = document.getElementById('search').value;
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: '/blog/search/'+search,
+            data: {
+            },
+            contentType: false,
+            cache : false,
+            processData: false,
+            success: function(data){
+                let main_blog_article = document.getElementById('main_blog_article');
+                main_blog_article.innerHTML = '';
+                if(main_blog_article.length == 0){
+                    main_blog_article.innerHTML = 'Ничего не найдено!';
+                } else {
+                    data.blog_search.data.map((item) => {
+                        let date = new Date(item.created_at);
+                        let hour = date.getHours();
+                        let minute = date.getMinutes();
+                        let mounth = date.getMonth();
+                        if(mounth === 1){mounth = 'Января'}
+                        if(mounth === 2){mounth = 'Февраля'}
+                        if(mounth === 3){mounth = 'Марта'}
+                        if(mounth === 4){mounth = 'Апреля'}
+                        if(mounth === 5){mounth = 'Мая'}
+                        if(mounth === 6){mounth = 'Июнь'}
+                        if(mounth === 7){mounth = 'Июля'}
+                        if(mounth === 8){mounth = 'Августа'}
+                        if(mounth === 9){mounth = 'Сентября'}
+                        if(mounth === 10){mounth = 'Октября'}
+                        if(mounth === 11){mounth = 'Ноября'}
+                        if(mounth === 12){mounth = 'Декабря'}
+                        let day = date.getDate();
+                        let brief = '';
+                        let div = document.createElement('div');
+                        if(item.description != null){
+                            div.innerText = item.description;
+                            brief = div.innerText.replace( /(<([^>]+)>)/ig, '');
+                            brief = brief.substr(0,100);
+                        }
+                        main_blog_article.innerHTML += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' +
+                            '<div class="course-item">' +
+                            '<div class="course-hover">' +
+                            '<img src="'+item.img+'" alt>' +
+                            '<div class="hover-bg bg-color-1"></div>' +
+                            '<a href="/blog/' + item.id + '">Читать подробнее</a>' +
+                            '</div>' +
+                            '<div class="course-name clear-fix">' +
+                            '<h3><a href="/blog/' + item.id + '">'+item.title+'</a></h3>' +
+                            '</div>' +
+                            '<div class="course-date bg-color-1 clear-fix">' +
+                            '<div class="day"><i class="fa fa-calendar"></i>'+day+' '+mounth+'</div><div class="time"><i class="fa fa-clock-o"></i>В '+hour+':'+minute+'</div>' +
+                            '<div class="divider"></div>' +
+                            '<div class="description">'+brief+'...</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    let paginate_item = document.getElementById('paginate_item');
+                    data.blog_search.path = window.location.protocol +'//'+window.location.hostname;
+                    data.blog_search.first_page_url = window.location.protocol +'//'+window.location.hostname+'/blog?page=1';
+                    data.blog_search.last_page_url = window.location.protocol +'//'+window.location.hostname+'/blog?page='+data.blog_search.last_page;
+                    data.blog_search.next_page_url = window.location.protocol +'//'+window.location.hostname+'/blog?page='+(data.blog_search.from+1);
+                    if(data.blog_search.links.length >3){
+                        data.blog_search.links.map((items) => {
+                            let link = items.label;
+                            let active = '';
+                            let url = items.url;
+                            if(items.active){
+                                active = 'class="active"';
+                            }
+                            if(url === null){
+                                url = '/blog';
+                            } else {
+                                if(items.label === 'Next &raquo;'){
+                                    url = data.blog_search.last_page_url;
+                                } else {
+                                    url = window.location.protocol +'//'+window.location.hostname+'/blog?page='+items.label;
+                                }
+                            }
+                            if(items.label === '&laquo; Previous'){
+                                link = '<i class="fa fa-angle-double-left"></i>'
+                            }
+                            if(items.label === 'Next &raquo;'){
+                                link = '<i class="fa fa-angle-double-right"></i>'
+                            }
+                            paginate_item.innerHTML += '<a href="'+url+'" '+active+'>'+link+'</a>'
+                        });
+                    }
+                }
+            }
+        });
+    }
 </script>
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

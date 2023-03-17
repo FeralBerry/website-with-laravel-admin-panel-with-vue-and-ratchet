@@ -209,12 +209,17 @@ class ChatController extends BackController
         $count_comments = count($comments);
         $blog_tags = DB::table('blog_tags')
             ->get();
+        $last_news = DB::table('blog')
+            ->orderByDesc('created_at')
+            ->take(10)
+            ->get();
         $data = [
             'seo' => $seo,
             'blog' => $blog,
             'comments' => $comments,
             'count_comments' => $count_comments,
             'blog_tags' => $blog_tags,
+            'last_news' => $last_news,
             'message' => 'front_blog_article'
         ];
         return $data;
@@ -240,6 +245,7 @@ class ChatController extends BackController
         $count_comments = count($comments);
         $blog_tags = DB::table('blog_tags')
             ->get();
+
         $data = [
             'message' => 'blog_comment_add',
             'comments' => $comments,
