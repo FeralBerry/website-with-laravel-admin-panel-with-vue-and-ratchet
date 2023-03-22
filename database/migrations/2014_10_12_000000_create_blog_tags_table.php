@@ -14,12 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('blog', function (Blueprint $table) {
+        Schema::create('blog_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('title',255);
-            $table->text('description');
-            $table->text('img');
-            $table->text('tags');
+            $table->string('name',255);
+            $table->string('icon',100);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog');
+        Schema::dropIfExists('blog_tags');
     }
 };

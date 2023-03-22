@@ -11,9 +11,10 @@ Route::group([], function() {
         Route::post('/footer/message',['uses' => 'IndexController@footerMessage','as' => 'front-footer-message']);
         Route::get('/contact',['uses' => 'IndexController@contact','as' => 'front-contact']);
         Route::get('/shop',['uses' => 'IndexController@shop','as' => 'front-shop']);
+        Route::get('/shop/{id?}',['uses' => 'IndexController@shopProducts','as' => 'front-shop-products']);
         Route::get('/shop/product/{id}',['uses' => 'IndexController@shopProduct','as' => 'front-shop-product']);
         Route::get('/blog',['uses' => 'IndexController@blog','as' => 'front-blog']);
-        Route::get('/blog/{id}',['uses' => 'IndexController@blogArticle','as' => 'front-blog-article']);
+        Route::get('/blog/article/{id}',['uses' => 'IndexController@blogArticle','as' => 'front-blog-article']);
         Route::post('/blog/search/{search}',['uses' => 'IndexController@blogSearch','as' => 'front-blog-search']);
     });
 });

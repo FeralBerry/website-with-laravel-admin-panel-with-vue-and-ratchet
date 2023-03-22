@@ -190,14 +190,14 @@ class ChatController extends BackController
         $url = explode('/',$url[0]);
         $seo = [];
         $blog = DB::table('blog')
-            ->where('id',$url[2])
+            ->where('id',$url[3])
             ->get();
         foreach ($blog as $item){
             $seo['title'] = $item->title;
             $seo['description'] = Str::limit(strip_tags($item->description),150,'...');
         }
         $comments = DB::table('blog_comments')
-            ->where('blog_id',$url[2])
+            ->where('blog_id',$url[3])
             ->join('users','blog_comments.user_id','=','users.id')
             ->select(
                 'name',
@@ -245,12 +245,42 @@ class ChatController extends BackController
         $count_comments = count($comments);
         $blog_tags = DB::table('blog_tags')
             ->get();
-
         $data = [
             'message' => 'blog_comment_add',
             'comments' => $comments,
             'count_comments' => $count_comments,
             'blog_tags' => $blog_tags,
+        ];
+        return $data;
+    }
+    public function front_shop($command){
+        if($command->url == '/shop'){
+            $shop = DB::table('shop')
+                ->paginate(18);
+            $seo = DB::table('seo')
+                ->where('url','/shop')
+                ->get();
+            foreach ($seo as $item){
+                $seo['title'] = $item->title;
+                $seo['description'] = Str::limit(strip_tags($item->description),150,'...');
+            }
+        } else {
+            $url = preg_replace('/[^0-9]/', '', $command->url);
+            $shop = DB::table('shop')
+                ->where('category', $url)
+                ->paginate(18);
+            $seo = DB::table('seo')
+                ->where('url','/shop/'.$url)
+                ->get();
+            foreach ($seo as $item){
+                $seo['title'] = $item->title;
+                $seo['description'] = Str::limit(strip_tags($item->description),150,'...');
+            }
+        }
+        $data = [
+            'message' => 'front_shop',
+            'shop' => $shop,
+            'seo' => $seo,
         ];
         return $data;
     }

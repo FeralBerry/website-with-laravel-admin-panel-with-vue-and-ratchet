@@ -5810,18 +5810,7 @@ ol.commentlist  {
     top: 13px;
     width: 71px;
 }
-.ribbon .banner::after, .ribbon .banner::before {
-	content: '';
-	display: block;
-	height: 6px;
-	position: absolute;
-	width: 27px;
-	background-color: #f27c66;
-	-webkit-box-shadow: inset 0px 0px 0px 38px rgba(0,0,0,0.1);
-	-moz-box-shadow: inset 0px 0px 0px 38px rgba(0,0,0,0.1);
-	box-shadow: inset 0px 0px 0px 38px rgba(0,0,0,0.1);
-	backface-visibility: hidden;
-}
+
 .ribbon .banner::before {
 	-webkit-transform: skewY(-45deg) translate(50%, 15px);
 	-moz-transform: skewY(-45deg) translate(50%, 15px);
@@ -5875,6 +5864,7 @@ ol.commentlist  {
 	-webkit-box-sizing: border-box;
 	border: 1px solid rgba(0, 0, 0, 0.15);
 }
+
 .ribbon .text::before {
 	left: 0;
 	-webkit-transform: translateX(-15%) skewX(-45deg);
@@ -5898,6 +5888,43 @@ ol.commentlist  {
 	box-shadow: inset -1px 0px 0px 1px rgba(255,255,255,0.31);
 }
 
+.ribbon .sale::before, .ribbon .sale::after {
+    content: '';
+    display: block;
+    height: 27px;
+    position: absolute;
+    top: 0;
+    width: 85%;
+    z-index: -1;
+    background-color: #18bb7c;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.ribbon .sale::before {
+    left: 0;
+    -webkit-transform: translateX(-15%) skewX(-45deg);
+    -moz-transform: translateX(-15%) skewX(-45deg);
+    -ms-transform: translateX(-15%) skewX(-45deg);
+    -o-transform: translateX(-15%) skewX(-45deg);
+    border-right: 0;
+    -webkit-box-shadow: inset 1px 0px 0px 1px rgba(255,255,255,0.31);
+    -moz-box-shadow: inset 1px 0px 0px 1px rgba(255,255,255,0.31);
+    box-shadow: inset 1px 0px 0px 1px rgba(255,255,255,0.31);
+}
+.ribbon .sale::after {
+    right: 0;
+    -webkit-transform: translateX(15%) skewX(45deg);
+    -moz-transform: translateX(15%) skewX(45deg);
+    -ms-transform: translateX(15%) skewX(45deg);
+    -o-transform: translateX(15%) skewX(45deg);
+    border-left: 0;
+    -webkit-box-shadow: inset -1px 0px 0px 1px rgba(255,255,255,0.31);
+    -moz-box-shadow: inset -1px 0px 0px 1px rgba(255,255,255,0.31);
+    box-shadow: inset -1px 0px 0px 1px rgba(255,255,255,0.31);
+}
 /**/
 /* star rating */
 /**/

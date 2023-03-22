@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class IndexController extends FrontController
 {
@@ -53,7 +54,13 @@ class IndexController extends FrontController
         ]);
         return view('front.index',['data' => $data]);
     }
-    public function shop(){
+    public function shop($id = null){
+        $data = array_merge($this->data(),[
+
+        ]);
+        return view('front.index',['data' => $data]);
+    }
+    public function shopProducts(){
         $data = array_merge($this->data(),[
 
         ]);
