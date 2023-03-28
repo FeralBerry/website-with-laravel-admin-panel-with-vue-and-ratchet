@@ -314,16 +314,6 @@ ol li span {
 li>ul {
 	margin-bottom: 0;
 }
-ul li:before{
-	content: "\f111";
-	font-family: "FontAwesome";
-	font-size: 8px;
-	position: absolute;
-	left: 0px;
-	color: #f27c66;
-	font-weight: 800;
-	line-height: 35px;
-}
 ul.check-list li:before{
 	content: "\f00c";
 	font-family: "FontAwesome";

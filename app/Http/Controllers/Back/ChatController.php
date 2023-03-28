@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Controllers\Back;
 
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Ramsey\Collection\Collection;
 
 class ChatController extends BackController
 {
@@ -22,11 +22,26 @@ class ChatController extends BackController
         ];
         return $data;*/
     }
-    public function connect($command){
+    public function cart(){
+        $users_cart = DB::table('users_cart')
+            ->where('cookie_id',$_COOKIE['cookie_id'])
+            ->join('shop','shop.id','=','users_cart.shop_id')
+            ->get();
+        $cart_price = 0;
+        foreach ($users_cart as $item){
+            $cart_price += $item->count * ($item->price + $item->sub_price/100) - ($item->percent / 100) * $item->count * ($item->price + $item->sub_price/100);
+        }
         $data = [
+            'users_cart' => $users_cart->take(5),
+            'cart_price' => $cart_price
+        ];
+        return $data;
+    }
+    public function connect($command){
+        $data = array_merge($this->cart(),[
             'message' => 'new_connect',
             'user_id' => $command->user_id,
-        ];
+        ]);
         return $data;
     }
     public function open_course($command){
@@ -39,10 +54,10 @@ class ChatController extends BackController
             ->update([
                 'last_open_free_course_id' => $command->course_id
             ]);
-        $data = [
+        $data = array_merge($this->cart(),[
             'message' => 'open_course',
             'free_courses' => $free_courses,
-        ];
+        ]);
         return $data;
     }
     public function open_free_courses(){
@@ -68,10 +83,10 @@ class ChatController extends BackController
             $array = json_decode(str_replace('"}','","count_lessons":"'.count($free_courses_lessons).'"}',$array));
             $free_courses_name[$courses_name] = $array;
         }
-        $data = [
+        $data = array_merge($this->cart(),[
             'message' => 'open_free_courses',
             'free_courses_name' => $free_courses_name
-        ];
+        ]);
         return $data;
     }
     public function open_pay_courses($command){
@@ -111,10 +126,10 @@ class ChatController extends BackController
                 $pay_courses_name[$courses_name] = $array;
             }
         }
-        $data = [
+        $data = array_merge($this->cart(),[
             'message' => 'open_pay_courses',
             'pay_courses_name' => $pay_courses_name
-        ];
+        ]);
         return $data;
     }
     public function open_buy_courses($command){
@@ -140,10 +155,10 @@ class ChatController extends BackController
             $array = json_decode(str_replace('"}','","count_lessons":"'.count($pay_courses_lessons).'"}',$array));
             $buy_courses_name[$courses_name] = $array;
         }
-        $data = [
+        $data = array_merge($this->cart(),[
             'message' => 'open_buy_courses',
             'buy_courses_name' => $buy_courses_name
-        ];
+        ]);
         return $data;
     }
     public function front_footer_message($command){
@@ -178,11 +193,11 @@ class ChatController extends BackController
             ->get();
         $blog = DB::table('blog')
             ->paginate(12);
-        $data = [
+        $data = array_merge($this->cart(),[
             'seo' => $seo,
             'blog' => $blog,
             'message' => 'front_blog'
-        ];
+        ]);
         return $data;
     }
     public function front_blog_article($command){
@@ -213,7 +228,7 @@ class ChatController extends BackController
             ->orderByDesc('created_at')
             ->take(10)
             ->get();
-        $data = [
+        $data = array_merge($this->cart(),[
             'seo' => $seo,
             'blog' => $blog,
             'comments' => $comments,
@@ -221,7 +236,7 @@ class ChatController extends BackController
             'blog_tags' => $blog_tags,
             'last_news' => $last_news,
             'message' => 'front_blog_article'
-        ];
+        ]);
         return $data;
     }
     public function blog_comment_add($command){
@@ -277,11 +292,47 @@ class ChatController extends BackController
                 $seo['description'] = Str::limit(strip_tags($item->description),150,'...');
             }
         }
-        $data = [
+        $data = array_merge($this->cart(),[
             'message' => 'front_shop',
             'shop' => $shop,
             'seo' => $seo,
-        ];
+        ]);
+        return $data;
+    }
+    public function add_to_cart($command){
+        $product_id = str_replace('cart_','',$command->product_id);
+        $cart = DB::table('users_cart')
+            ->where('cookie_id',$_COOKIE['cookie_id'])
+            ->where('shop_id',$product_id)
+            ->get();
+        if($cart){
+            $count_items = 0;
+            foreach ($cart as $item){
+                $count_items = $item->count + 1;
+            }
+            if($count_items > 0){
+                DB::table('users_cart')
+                    ->where('cookie_id',$_COOKIE['cookie_id'])
+                    ->where('shop_id',$product_id)
+                    ->update([
+                        'cookie_id' => $_COOKIE['cookie_id'],
+                        'shop_id' => $product_id,
+                        'user_id' => $command->user_id,
+                        'count' => $count_items
+                    ]);
+            } else {
+                DB::table('users_cart')
+                    ->insert([
+                        'cookie_id' => $_COOKIE['cookie_id'],
+                        'shop_id' => $product_id,
+                        'user_id' => $command->user_id,
+                        'count' => 1
+                    ]);
+            }
+        }
+        $data = array_merge($this->cart(),[
+            'message' => 'add_to_cart',
+        ]);
         return $data;
     }
     /*public function openChat($command){

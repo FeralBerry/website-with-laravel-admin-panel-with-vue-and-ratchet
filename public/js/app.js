@@ -21327,7 +21327,6 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     '$route': function $route(to, from) {
       var connection = new WebSocket("ws://127.0.0.1:4710");
-      var products = document.getElementById('products');
       connection.onopen = function (event) {
         if (to.fullPath.indexOf('shop') > 0) {
           document.getElementById('products').innerHTML = "";
@@ -21340,6 +21339,20 @@ __webpack_require__.r(__webpack_exports__);
       };
       connection.onmessage = function (event) {
         var data = JSON.parse(event.data);
+        if (data.message) {
+          var cart = document.getElementById('cart');
+          if (data.users_cart != null) {
+            cart.innerHTML = '';
+            data.users_cart.map(function (item) {
+              var price = item.price + item.sub_price / 100 - item.percent / 100 * (item.price + item.sub_price / 100);
+              cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>\n' + '                                        <div class="col-md-8">\n' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>\n' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>\n' + '                                        </div>\n' + '                                        <div class="col-md-1">\n' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>\n' + '                                        </div></li>';
+            });
+            cart.innerHTML += '<li>\n' + '                            <a rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>\n' + '                        </li>';
+          }
+          if (data.users_cart === undefined || data.users_cart.length === 0) {
+            cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
+          }
+        }
         if (data.message === 'front_shop') {
           document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
           document.querySelector('head title').textContent = data.seo.title;
@@ -21363,8 +21376,14 @@ __webpack_require__.r(__webpack_exports__);
             } else {
               img = '/front/img/shop/' + item.img;
             }
+            var link = '<a id="cart_' + item.id + '" rel="nofollow" class="add_to_cart cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>';
             var sale_price = Math.round((item.price + item.sub_price / 100 - (item.price + item.sub_price / 100) * item.percent / 100) * 100) / 100;
-            document.getElementById('products').innerHTML += '<li class="product">' + '<div class="picture">' + new_sale + '<img src="' + img + '" data-at2x="' + img + '" alt="">' + '<span class="hover-effect"></span>' + '<div class="link-cont">' + '<a href="http://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' + '<a href="shop-single-product.html" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' + '</div>' + '</div>' + '<div class="product-name">' + '<a href="shop-single-product.html">' + item.name + '</a>' + '</div>' + '<div class="star-rating" title="Rated 4.00 out of 5">' + '<span style="width:60%"><strong class="rating">4.00</strong> out of 5</span>' + '</div>' + '<span class="price">' + '<span class="amount">' + sale_price + '&#32;<sup><del>' + item.price + '.' + item.sub_price + '</del></sup>&#8381;</span>' + '</span>' + '<div class="product-description">' + '<div class="short-description">' + '<p>' + description + '</p>' + '</div>' + '</div>' + '<a href="shop-cart.html" rel="nofollow" data-product_id="70" data-product_sku="" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' + '</li>';
+            data.users_cart.map(function (items) {
+              if (items.shop_id == item.id) {
+                link = '<a onclick="javascript: void(0)" rel="nofollow" class="add_to_cart cws-button border-radius icon-left bt-color-6"> <i class="fa fa-shopping-cart"></i> Добавлен</a>';
+              }
+            });
+            document.getElementById('products').innerHTML += '<li class="product">' + '<div class="picture">' + new_sale + '<img src="' + img + '" data-at2x="' + img + '" alt="">' + '<span class="hover-effect"></span>' + '<div class="link-cont">' + '<a href="http://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' + '<a href="shop-single-product.html" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' + '</div>' + '</div>' + '<div class="product-name">' + '<a href="shop-single-product.html">' + item.name + '</a>' + '</div>' + '<div class="star-rating" title="Rated 4.00 out of 5">' + '<span style="width:60%"><strong class="rating">4.00</strong> out of 5</span>' + '</div>' + '<span class="price">' + '<span class="amount">' + sale_price + '&#32;<sup><del>' + item.price + '.' + item.sub_price + '</del></sup>&#8381;</span>' + '</span>' + '<div class="product-description">' + '<div class="short-description">' + '<p>' + description + '</p>' + '</div>' + '</div>' + link + '</li>';
           });
           var paginate_item = document.getElementById('paginate_item');
           data.shop.path = window.location.protocol + '//' + window.location.hostname;
@@ -21594,7 +21613,7 @@ __webpack_require__.r(__webpack_exports__);
               _paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
             });
           }
-        } else if (false) {}
+        } else if (data.message === "search_blog") {}
       };
       $('body').on('click', '#send_comment', function () {
         if ($('meta[name=user_id]').attr('content')) {
@@ -21609,7 +21628,29 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {},
-  created: function created() {}
+  created: function created() {
+    var connection = new WebSocket("ws://127.0.0.1:4710");
+    $('body').on('click', '.add_to_cart', function () {
+      var user_id = $('meta[name=user_id]').attr('content');
+      this.href = 'javascript: void(0)';
+      this.classList.remove('alt');
+      this.classList.add('bt-color-6');
+      this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен';
+      connection.send('{"command":"add_to_cart","user_id":"' + user_id + '","product_id":"' + $(this).attr('id') + '"}');
+    });
+    connection.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      var cart = document.getElementById('cart');
+      if (data.message === 'add_to_cart') {
+        cart.innerHTML = '';
+        data.users_cart.map(function (item) {
+          var price = item.price + item.sub_price / 100 - item.percent / 100 * (item.price + item.sub_price / 100);
+          cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>\n' + '                                        <div class="col-md-8">\n' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>\n' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>\n' + '                                        </div>\n' + '                                        <div class="col-md-1">\n' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>\n' + '                                        </div></li>';
+        });
+        cart.innerHTML += '<li>\n' + '                            <a rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>\n' + '                        </li>';
+      }
+    };
+  }
 });
 
 /***/ }),
@@ -22187,7 +22228,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "only-color"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"page-header-top\"><div class=\"grid-row clear-fix\"><address><!--&lt;a href=&quot;tel:123-123456789&quot; class=&quot;phone-number&quot;&gt;&lt;i class=&quot;fa fa-phone&quot;&gt;&lt;/i&gt;123-123456789&lt;/a&gt;--><a href=\"mailto:uni@domain.com\" class=\"email\"><i class=\"fa fa-envelope-o\"></i>uni@domain.com</a></address><div class=\"header-top-panel\"><a href=\"\" class=\"fa fa-shopping-cart\"></a><div id=\"top_social_links_wrapper\"><div class=\"share-toggle-button\"><i class=\"share-icon fa fa-share-alt\"></i></div><div class=\"cws_social_links\"><a href=\"https://plus.google.com/\" class=\"cws_social_link\" title=\"Google +\"><i class=\"share-icon fa fa-google-plus\" style=\"transform:matrix(0, 0, 0, 0, 0, 0);\"></i></a><a href=\"http://twitter.com/\" class=\"cws_social_link\" title=\"Twitter\"><i class=\"share-icon fa fa-twitter\"></i></a><a href=\"http://facebook.com\" class=\"cws_social_link\" title=\"Facebook\"><i class=\"share-icon fa fa-facebook\"></i></a><a href=\"http://dribbble.com\" class=\"cws_social_link\" title=\"Dribbble\"><i class=\"share-icon fa fa-dribbble\"></i></a></div></div></div></div></div>", 1);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"page-header-top\"><div class=\"grid-row clear-fix\"><address><!--&lt;a href=&quot;tel:123-123456789&quot; class=&quot;phone-number&quot;&gt;&lt;i class=&quot;fa fa-phone&quot;&gt;&lt;/i&gt;123-123456789&lt;/a&gt;--><a href=\"mailto:uni@domain.com\" class=\"email\"><i class=\"fa fa-envelope-o\"></i>uni@domain.com</a></address><div class=\"header-top-panel\"><div id=\"top_social_links_wrapper\"><div class=\"share-toggle-button\"><i class=\"share-icon fa fa-share-alt\"></i></div><div class=\"cws_social_links\"><a href=\"https://plus.google.com/\" class=\"cws_social_link\" title=\"Google +\"><i class=\"share-icon fa fa-google-plus\" style=\"transform:matrix(0, 0, 0, 0, 0, 0);\"></i></a><a href=\"http://twitter.com/\" class=\"cws_social_link\" title=\"Twitter\"><i class=\"share-icon fa fa-twitter\"></i></a><a href=\"http://facebook.com\" class=\"cws_social_link\" title=\"Facebook\"><i class=\"share-icon fa fa-facebook\"></i></a><a href=\"http://dribbble.com\" class=\"cws_social_link\" title=\"Dribbble\"><i class=\"share-icon fa fa-dribbble\"></i></a></div></div></div></div></div>", 1);
 var _hoisted_3 = {
   "class": "sticky-wrapper"
 };
@@ -22266,6 +22307,24 @@ var _hoisted_24 = {
   "class": "d-none"
 };
 var _hoisted_25 = ["value"];
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  style: {
+    "padding": "25px 0 0 0",
+    "font-size": "40px",
+    "color": "#18bb7c"
+  },
+  href: "",
+  "class": "fa fa-shopping-cart"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+  "class": "clear-fix",
+  style: {
+    "padding": "10px",
+    "margin-left": "-360px",
+    "margin-top": "20px"
+  },
+  id: "cart"
+})], -1 /* HOISTED */);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("header", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" header top panel "), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / header top panel "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" sticky menu "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" logo "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
@@ -22362,7 +22421,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "hidden",
     value: $data.csrf,
     name: "_token"
-  }, null, 8 /* PROPS */, _hoisted_25)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" sticky menu ")]);
+  }, null, 8 /* PROPS */, _hoisted_25)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_26])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" sticky menu ")]);
 }
 
 /***/ }),
@@ -22699,9 +22758,9 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "container clear-fix"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "grid-col-row"
+  "class": "row"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "grid-col grid-col-9"
+  "class": "col-md-9"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Some category"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Shop "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   id: "page-meta",
   "class": "group"
@@ -22744,7 +22803,7 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "page-pagination clear-fix",
   id: "paginate_item"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ pagination ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "grid-col grid-col-3"
+  "class": "col-md-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget search "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget search "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
   "class": "widget-search"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {

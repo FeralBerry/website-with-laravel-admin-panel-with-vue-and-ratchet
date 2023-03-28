@@ -3,8 +3,8 @@
         <bread-crumb-component :data="data"></bread-crumb-component>
         <div class="page-content woocommerce">
             <div class="container clear-fix">
-                <div class="grid-col-row">
-                    <div class="grid-col grid-col-9">
+                <div class="row">
+                    <div class="col-md-9">
                         <h2>Some category</h2>
                         <!-- Shop -->
                         <div id="page-meta" class="group">
@@ -41,7 +41,7 @@
                         </div>
                         <!--/ pagination -->
                     </div>
-                    <div class="grid-col grid-col-3">
+                    <div class="col-md-3">
                         <!-- widget search -->
                         <!-- widget search -->
                         <aside class="widget-search">

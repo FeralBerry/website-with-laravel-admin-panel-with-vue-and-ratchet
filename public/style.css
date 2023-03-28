@@ -189,3 +189,17 @@ video {
     display: flex;
   }
 }
+.cart{
+    width:400px;
+    padding: 10px;
+}
+.cart_item_title{
+    font-size:20px;
+}
+.del_cart{
+    font-size:20px;
+    color:#f9cb8f;
+}
+.del_cart:hover{
+    color:#f27c66;
+}

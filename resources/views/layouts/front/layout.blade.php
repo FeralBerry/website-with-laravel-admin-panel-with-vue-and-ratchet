@@ -29,6 +29,7 @@
     <link rel="shortcut icon" href="{{ asset('front/img/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('front/fonts/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('front/fi/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('front/tuner/css/colorpicker.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('front/tuner/css/styles.css') }}" />
@@ -36,6 +37,7 @@
     <link rel="stylesheet" href="{{ asset('front/css/owl.carousel.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('front/rs-plugin/css/settings.css') }}" media="screen">
     <link rel="stylesheet" href="{{ asset('front/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
 </head>
 <body>
 <div id="app">

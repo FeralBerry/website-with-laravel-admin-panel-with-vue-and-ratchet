@@ -21,6 +21,11 @@ class Chat implements MessageComponentInterface {
 
     public function onOpen(ConnectionInterface $conn) {
         $this->clients->attach($conn);
+        if(!isset($_COOKIE['cookie_id'])){
+            srand((double) microtime() * 1000000);
+            $uniq_id = uniqid(rand());
+            $_COOKIE['cookie_id'] = $uniq_id;
+        }
         echo "New connection! ({$conn->resourceId})\n";
     }
 
@@ -33,12 +38,6 @@ class Chat implements MessageComponentInterface {
                     $client->send(json_encode($data));
                 }
             }
-            /*$data2 = $this->chatController->connection($from,$command);
-            foreach ($this->clients as $client) {
-                if ($from !== $client) {
-                    $client->send(json_encode($data2));
-                }
-            }*/
         }
         elseif ($command->command == 'open_course'){
             $data = $this->chatController->open_course($command);
@@ -110,6 +109,14 @@ class Chat implements MessageComponentInterface {
         }
         elseif($command->command == 'front_shop'){
             $data = $this->chatController->front_shop($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'add_to_cart'){
+            $data = $this->chatController->add_to_cart($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
