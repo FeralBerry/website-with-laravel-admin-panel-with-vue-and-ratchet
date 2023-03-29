@@ -16,6 +16,7 @@ Route::group([], function() {
         Route::get('/blog',['uses' => 'IndexController@blog','as' => 'front-blog']);
         Route::get('/blog/article/{id}',['uses' => 'IndexController@blogArticle','as' => 'front-blog-article']);
         Route::post('/blog/search/{search}',['uses' => 'IndexController@blogSearch','as' => 'front-blog-search']);
+        Route::post('/subscribe/{id}',['uses' => 'IndexController@subscribe','as' => 'front-subscribe']);
     });
 });
 Route::group(['middleware' => ['auth', 'web']], function() {

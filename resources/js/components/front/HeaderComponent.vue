@@ -98,7 +98,7 @@
                             </li>
                             <li>
                                 <a style="padding:25px 0 0 0;font-size:40px;color:#18bb7c" href="" class="fa fa-shopping-cart"></a>
-                                <ul class="clear-fix" style="padding:10px;margin-left: -360px;margin-top: 20px" id="cart">
+                                <ul class="clear-fix" style="display:none;padding:10px;margin-left: -360px;margin-top: 20px" id="cart">
 
                                 </ul>
                             </li>
@@ -131,13 +131,16 @@
                         connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
                     } else if(to.fullPath.indexOf('blog')>0){
                         connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
+                    } else if(window.location.origin + '/' === window.location.href){
+                        connection.send('{"command":"front_index"}')
                     }
                 }
                 connection.onmessage = function(event) {
                     let data = JSON.parse(event.data);
-                    if(data.message){
+                    if(data.message === 'cart'){
                         let cart = document.getElementById('cart');
                         if(data.users_cart != null){
+                            cart.style.display = 'block';
                             cart.innerHTML = '';
                             data.users_cart.map((item) => {
                                 let price = (item.price +item.sub_price/100) - (item.percent/100)*(item.price + item.sub_price/100);
@@ -457,6 +460,9 @@
                             });
                         }
                     }
+                    else if(data.message === 'front_index'){
+
+                    }
                     else if(data.message === "search_blog"){
 
                     }
@@ -492,6 +498,7 @@
                 let cart = document.getElementById('cart');
                 if(data.message === 'add_to_cart'){
                     cart.innerHTML = '';
+                    cart.style.display = 'block';
                     data.users_cart.map((item) => {
                         let price = (item.price +item.sub_price/100) - (item.percent/100)*(item.price + item.sub_price/100);
                         cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>\n' +

@@ -335,6 +335,9 @@ class ChatController extends BackController
         ]);
         return $data;
     }
+    public function front_index(){
+
+    }
     /*public function openChat($command){
         $chat = DB::table('chat')
             ->where('room_id',$command->room_id)

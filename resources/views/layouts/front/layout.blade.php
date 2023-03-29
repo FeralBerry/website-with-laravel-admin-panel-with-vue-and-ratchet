@@ -248,6 +248,20 @@
             }
         });
     }
+    function buy_subscribe(id){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: '/subscribe/' + id,
+            data: {},
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+
+            }
+        });
+    }
 </script>
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

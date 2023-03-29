@@ -123,6 +123,14 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif($command->command == 'front_index'){
+            $data = $this->chatController->front_index();
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         /*elseif($command->command == 'reconnect'){
             $data = [
                 'message' =>'reconnect'
