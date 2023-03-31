@@ -21156,6 +21156,53 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CartComponent.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CartComponent.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "CartComponent",
+  props: ['data'],
+  data: function data() {
+    return {
+      breadcrumb: {}
+    };
+  },
+  mounted: function mounted() {},
+  created: function created() {},
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CheckoutComponent.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CheckoutComponent.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "CartComponent",
+  props: ['data'],
+  mounted: function mounted() {},
+  created: function created() {},
+  methods: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/ContactComponent.vue?vue&type=script&lang=js":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/ContactComponent.vue?vue&type=script&lang=js ***!
@@ -21167,13 +21214,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BreadCrumbComponent */ "./resources/js/components/front/BreadCrumbComponent.vue");
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ContactComponent",
-  components: {
-    BreadCrumbComponent: _BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
   props: ['data'],
   mounted: function mounted() {},
   created: function created() {
@@ -21328,6 +21370,7 @@ __webpack_require__.r(__webpack_exports__);
     '$route': function $route(to, from) {
       var connection = new WebSocket("ws://127.0.0.1:4710");
       connection.onopen = function (event) {
+        connection.send('{"command":"cart"}');
         if (to.fullPath.indexOf('shop') > 0) {
           document.getElementById('products').innerHTML = "";
           connection.send('{"command":"front_shop","url":"' + window.location.pathname + '"}');
@@ -21341,282 +21384,284 @@ __webpack_require__.r(__webpack_exports__);
       };
       connection.onmessage = function (event) {
         var data = JSON.parse(event.data);
-        if (data.message === 'cart') {
-          var cart = document.getElementById('cart');
-          if (data.users_cart != null) {
-            cart.style.display = 'block';
-            cart.innerHTML = '';
-            data.users_cart.map(function (item) {
-              var price = item.price + item.sub_price / 100 - item.percent / 100 * (item.price + item.sub_price / 100);
-              cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>\n' + '                                        <div class="col-md-8">\n' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>\n' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>\n' + '                                        </div>\n' + '                                        <div class="col-md-1">\n' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>\n' + '                                        </div></li>';
-            });
-            cart.innerHTML += '<li>\n' + '                            <a rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>\n' + '                        </li>';
+        if (data) {
+          if (data.cart === 'cart') {
+            var cart = document.getElementById('cart');
+            if (data.users_cart != null) {
+              cart.style.display = 'block';
+              cart.innerHTML = '';
+              data.users_cart.map(function (item) {
+                var price = item.price + item.sub_price / 100 - item.percent / 100 * (item.price + item.sub_price / 100);
+                cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>\n' + '                                        <div class="col-md-8">\n' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>\n' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>\n' + '                                        </div>\n' + '                                        <div class="col-md-1">\n' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>\n' + '                                        </div></li>';
+              });
+              cart.innerHTML += '<li>\n' + '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>\n' + '                        </li>';
+            }
+            if (data.users_cart === undefined || data.users_cart.length === 0) {
+              cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
+            }
           }
-          if (data.users_cart === undefined || data.users_cart.length === 0) {
-            cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
-          }
-        }
-        if (data.message === 'front_shop') {
-          document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
-          document.querySelector('head title').textContent = data.seo.title;
-          data.shop.data.map(function (item) {
-            var new_sale = '<div class="ribbon ribbon-blue"></div>';
-            if (item["new"] === 1) {
-              new_sale = '<div class="ribbon ribbon-blue"><div class="banner">' + '<div class="text">New</div>' + '</div>' + '</div>';
-            }
-            if (item.sale === 1) {
-              new_sale = '<div class="ribbon ribbon-blue"><div class="banner" style="text-align: center">' + '<div class="sale" style="margin-top: -13px;font-size: 20px;">-' + item.percent + '%</div>' + '</div>' + '</div>';
-            }
-            var description;
-            if (item.description.length < 100) {
-              description = item.description;
-            } else {
-              description = item.description.substr(0, 100) + '...';
-            }
-            var img;
-            if (item.img == null) {
-              img = 'http://placehold.it/270x200';
-            } else {
-              img = '/front/img/shop/' + item.img;
-            }
-            var link = '<a id="cart_' + item.id + '" rel="nofollow" class="add_to_cart cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>';
-            var sale_price = Math.round((item.price + item.sub_price / 100 - (item.price + item.sub_price / 100) * item.percent / 100) * 100) / 100;
-            data.users_cart.map(function (items) {
-              if (items.shop_id == item.id) {
-                link = '<a onclick="javascript: void(0)" rel="nofollow" class="add_to_cart cws-button border-radius icon-left bt-color-6"> <i class="fa fa-shopping-cart"></i> Добавлен</a>';
+          if (data.message === 'front_shop') {
+            document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
+            document.querySelector('head title').textContent = data.seo.title;
+            data.shop.data.map(function (item) {
+              var new_sale = '<div class="ribbon ribbon-blue"></div>';
+              if (item["new"] === 1) {
+                new_sale = '<div class="ribbon ribbon-blue"><div class="banner">' + '<div class="text">New</div>' + '</div>' + '</div>';
               }
-            });
-            document.getElementById('products').innerHTML += '<li class="product">' + '<div class="picture">' + new_sale + '<img src="' + img + '" data-at2x="' + img + '" alt="">' + '<span class="hover-effect"></span>' + '<div class="link-cont">' + '<a href="http://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' + '<a href="shop-single-product.html" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' + '</div>' + '</div>' + '<div class="product-name">' + '<a href="shop-single-product.html">' + item.name + '</a>' + '</div>' + '<div class="star-rating" title="Rated 4.00 out of 5">' + '<span style="width:60%"><strong class="rating">4.00</strong> out of 5</span>' + '</div>' + '<span class="price">' + '<span class="amount">' + sale_price + '&#32;<sup><del>' + item.price + '.' + item.sub_price + '</del></sup>&#8381;</span>' + '</span>' + '<div class="product-description">' + '<div class="short-description">' + '<p>' + description + '</p>' + '</div>' + '</div>' + link + '</li>';
-          });
-          var paginate_item = document.getElementById('paginate_item');
-          data.shop.path = window.location.protocol + '//' + window.location.hostname;
-          data.shop.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
-          data.shop.last_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + data.shop.last_page;
-          data.shop.next_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + (data.shop.from + 1);
-          if (data.shop.links.length > 3) {
-            data.shop.links.map(function (items) {
-              var link = items.label;
-              var active = '';
-              var url = items.url;
-              if (items.active) {
-                active = 'class="active"';
+              if (item.sale === 1) {
+                new_sale = '<div class="ribbon ribbon-blue"><div class="banner" style="text-align: center">' + '<div class="sale" style="margin-top: -13px;font-size: 20px;">-' + item.percent + '%</div>' + '</div>' + '</div>';
               }
-              if (url === null) {
-                url = '/blog';
+              var description;
+              if (item.description.length < 100) {
+                description = item.description;
               } else {
-                if (items.label === 'Next &raquo;') {
-                  url = data.shop.last_page_url;
-                } else {
-                  url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + items.label;
+                description = item.description.substr(0, 100) + '...';
+              }
+              var img;
+              if (item.img == null) {
+                img = 'http://placehold.it/270x200';
+              } else {
+                img = '/front/img/shop/' + item.img;
+              }
+              var link = '<a id="cart_' + item.id + '" rel="nofollow" class="add_to_cart cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>';
+              var sale_price = Math.round((item.price + item.sub_price / 100 - (item.price + item.sub_price / 100) * item.percent / 100) * 100) / 100;
+              data.users_cart.map(function (items) {
+                if (items.shop_id == item.id) {
+                  link = '<a onclick="javascript: void(0)" rel="nofollow" class="add_to_cart cws-button border-radius icon-left bt-color-6"> <i class="fa fa-shopping-cart"></i> Добавлен</a>';
                 }
-              }
-              if (items.label === '&laquo; Previous') {
-                link = '<i class="fa fa-angle-double-left"></i>';
-              }
-              if (items.label === 'Next &raquo;') {
-                link = '<i class="fa fa-angle-double-right"></i>';
-              }
-              paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
+              });
+              document.getElementById('products').innerHTML += '<li class="product">' + '<div class="picture">' + new_sale + '<img src="' + img + '" data-at2x="' + img + '" alt="">' + '<span class="hover-effect"></span>' + '<div class="link-cont">' + '<a href="http://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' + '<a href="shop-single-product.html" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' + '</div>' + '</div>' + '<div class="product-name">' + '<a href="shop-single-product.html">' + item.name + '</a>' + '</div>' + '<div class="star-rating" title="Rated 4.00 out of 5">' + '<span style="width:60%"><strong class="rating">4.00</strong> out of 5</span>' + '</div>' + '<span class="price">' + '<span class="amount">' + sale_price + '&#32;<sup><del>' + item.price + '.' + item.sub_price + '</del></sup>&#8381;</span>' + '</span>' + '<div class="product-description">' + '<div class="short-description">' + '<p>' + description + '</p>' + '</div>' + '</div>' + link + '</li>';
             });
-          }
-        } else if (data.message === 'front_blog_article') {
-          document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
-          document.querySelector('head title').textContent = data.seo.title;
-          var blog_article = document.getElementById('blog_article');
-          var comments = document.getElementById('comments');
-          var last_news = document.getElementById('last_news');
-          comments.innerHTML = '<div class="comment-title">Комментариев <span>(' + data.count_comments + ')</span></div><ol class="commentlist">';
-          data.comments.data.map(function (item) {
-            var avatar = 'http://placehold.it/70x70';
-            if (item.avatar) {
-              avatar = item.avatar;
-            }
-            var date = new Date(item.created_at);
-            var hour = date.getHours();
-            var year = date.getFullYear();
-            var minute = date.getMinutes();
-            var mounth = date.getMonth();
-            var day = date.getDate();
-            comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + /*'<a class="button reply" href="#"><i class="fa fa-rotate-left"></i> Reply</a>' +*/
-            '</div>' + '</div>' + '</li>';
-          });
-          comments.innerHTML += '</ol>';
-          data.blog.map(function (item) {
-            document.getElementById('blog_id').value = item.id;
-            var date = new Date(item.created_at);
-            var mounth = date.getMonth();
-            if (mounth === 1) {
-              mounth = 'Янв';
-            }
-            if (mounth === 2) {
-              mounth = 'Фев';
-            }
-            if (mounth === 3) {
-              mounth = 'Мар';
-            }
-            if (mounth === 4) {
-              mounth = 'Апр';
-            }
-            if (mounth === 5) {
-              mounth = 'Мая';
-            }
-            if (mounth === 6) {
-              mounth = 'Июн';
-            }
-            if (mounth === 7) {
-              mounth = 'Июл';
-            }
-            if (mounth === 8) {
-              mounth = 'Авг';
-            }
-            if (mounth === 9) {
-              mounth = 'Сен';
-            }
-            if (mounth === 10) {
-              mounth = 'Окт';
-            }
-            if (mounth === 11) {
-              mounth = 'Ноя';
-            }
-            if (mounth === 12) {
-              mounth = 'Дек';
-            }
-            var day = date.getDate();
-            var tags_post = document.getElementById('tags-post');
-            var tags;
-            if (item.tags.length > 1) {
-              if (item.tags.indexOf(';') > 0) {
-                tags = item.tags.split(';');
-              }
-              var k = 0;
-              data.blog_tags.map(function (i) {
-                if (i.id == tags[k]) {
-                  tags_post.innerHTML += '<a href="#"><i class="' + i.icon + '"></i>' + i.name + '</a>';
+            var paginate_item = document.getElementById('paginate_item');
+            data.shop.path = window.location.protocol + '//' + window.location.hostname;
+            data.shop.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
+            data.shop.last_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + data.shop.last_page;
+            data.shop.next_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + (data.shop.from + 1);
+            if (data.shop.links.length > 3) {
+              data.shop.links.map(function (items) {
+                var link = items.label;
+                var active = '';
+                var url = items.url;
+                if (items.active) {
+                  active = 'class="active"';
                 }
-                k++;
+                if (url === null) {
+                  url = '/blog';
+                } else {
+                  if (items.label === 'Next &raquo;') {
+                    url = data.shop.last_page_url;
+                  } else {
+                    url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + items.label;
+                  }
+                }
+                if (items.label === '&laquo; Previous') {
+                  link = '<i class="fa fa-angle-double-left"></i>';
+                }
+                if (items.label === 'Next &raquo;') {
+                  link = '<i class="fa fa-angle-double-right"></i>';
+                }
+                paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
               });
             }
-            blog_article.innerHTML = '<div class="post-info">' + '<div class="date-post">' + '<div class="day">' + day + '</div>' + '<div class="month">' + mounth + '</div>' + '</div>' + '<div class="post-info-main">' + '<div class="author-post">' + item.title + '</div>' + '</div>' + '<div class="comments-post" id="comments-post"><i class="fa fa-comment"></i> ' + data.count_comments + '</div>' + '</div>' + +item.description;
-          });
-          data.last_news.map(function (item) {
-            last_news.innerHTML += '<li class="cat-item cat-item-1 current-cat"><a href="/blog/article/' + item.id + '">' + item.title + '</a></li>';
-          });
-          var blog_tags = document.getElementById('blog_tags');
-          data.blog_tags.map(function (item) {
-            blog_tags.innerHTML += '<a href="#" rel="tag">' + item.name + '</a> ';
-          });
-        } else if (data.message === 'blog_comment_add') {
-          var _comments = document.getElementById('comments');
-          _comments.innerHTML = '<div class="comment-title">Комментариев <span>(' + data.count_comments + ')</span></div><ol class="commentlist">';
-          data.comments.data.map(function (item) {
-            var avatar = 'http://placehold.it/70x70';
-            if (item.avatar) {
-              avatar = item.avatar;
-            }
-            var date = new Date(item.created_at);
-            var hour = date.getHours();
-            var year = date.getFullYear();
-            var minute = date.getMinutes();
-            var mounth = date.getMonth();
-            var day = date.getDate();
-            _comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + /*'<a class="button reply" href="#"><i class="fa fa-rotate-left"></i> Reply</a>' +*/
-            '</div>' + '</div>' + '</li>';
-          });
-          _comments.innerHTML += '</ol>';
-          document.getElementById('comments-post').innerHTML = '<i class="fa fa-comment"></i> ' + data.count_comments + '</div>';
-          document.getElementById('comment_success').style.display = 'block';
-          setTimeout(function () {
-            $('#comment_success').fadeOut('fast');
-          }, 5000);
-        } else if (data.message === 'front_blog') {
-          document.getElementById('blog_items').innerHTML = '';
-          data.seo.map(function (item) {
-            document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
-            document.querySelector('head title').textContent = item.title;
-          });
-          data.blog.data.map(function (item) {
-            var date = new Date(item.created_at);
-            var hour = date.getHours();
-            var minute = date.getMinutes();
-            var mounth = date.getMonth();
-            if (mounth === 1) {
-              mounth = 'Января';
-            }
-            if (mounth === 2) {
-              mounth = 'Февраля';
-            }
-            if (mounth === 3) {
-              mounth = 'Марта';
-            }
-            if (mounth === 4) {
-              mounth = 'Апреля';
-            }
-            if (mounth === 5) {
-              mounth = 'Мая';
-            }
-            if (mounth === 6) {
-              mounth = 'Июнь';
-            }
-            if (mounth === 7) {
-              mounth = 'Июля';
-            }
-            if (mounth === 8) {
-              mounth = 'Августа';
-            }
-            if (mounth === 9) {
-              mounth = 'Сентября';
-            }
-            if (mounth === 10) {
-              mounth = 'Октября';
-            }
-            if (mounth === 11) {
-              mounth = 'Ноября';
-            }
-            if (mounth === 12) {
-              mounth = 'Декабря';
-            }
-            var day = date.getDate();
-            var brief = '';
-            var div = document.createElement('div');
-            if (item.description != null) {
-              div.innerText = item.description;
-              brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
-              brief = brief.substr(0, 100);
-            }
-            document.getElementById('blog_items').innerHTML += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/blog/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/blog/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
-          });
-          var _paginate_item = document.getElementById('paginate_item');
-          data.blog.path = window.location.protocol + '//' + window.location.hostname;
-          data.blog.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
-          data.blog.last_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + data.blog.last_page;
-          data.blog.next_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + (data.blog.from + 1);
-          if (data.blog.links.length > 3) {
-            data.blog.links.map(function (items) {
-              var link = items.label;
-              var active = '';
-              var url = items.url;
-              if (items.active) {
-                active = 'class="active"';
+          } else if (data.message === 'front_blog_article') {
+            document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
+            document.querySelector('head title').textContent = data.seo.title;
+            var blog_article = document.getElementById('blog_article');
+            var comments = document.getElementById('comments');
+            var last_news = document.getElementById('last_news');
+            comments.innerHTML = '<div class="comment-title">Комментариев <span>(' + data.count_comments + ')</span></div><ol class="commentlist">';
+            data.comments.data.map(function (item) {
+              var avatar = 'http://placehold.it/70x70';
+              if (item.avatar) {
+                avatar = item.avatar;
               }
-              if (url === null) {
-                url = '/blog';
-              } else {
-                if (items.label === 'Next &raquo;') {
-                  url = data.blog.last_page_url;
-                } else {
-                  url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + items.label;
-                }
-              }
-              if (items.label === '&laquo; Previous') {
-                link = '<i class="fa fa-angle-double-left"></i>';
-              }
-              if (items.label === 'Next &raquo;') {
-                link = '<i class="fa fa-angle-double-right"></i>';
-              }
-              _paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
+              var date = new Date(item.created_at);
+              var hour = date.getHours();
+              var year = date.getFullYear();
+              var minute = date.getMinutes();
+              var mounth = date.getMonth();
+              var day = date.getDate();
+              comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + /*'<a class="button reply" href="#"><i class="fa fa-rotate-left"></i> Reply</a>' +*/
+              '</div>' + '</div>' + '</li>';
             });
-          }
-        } else if (data.message === 'front_index') {} else if (data.message === "search_blog") {}
+            comments.innerHTML += '</ol>';
+            data.blog.map(function (item) {
+              document.getElementById('blog_id').value = item.id;
+              var date = new Date(item.created_at);
+              var mounth = date.getMonth();
+              if (mounth === 1) {
+                mounth = 'Янв';
+              }
+              if (mounth === 2) {
+                mounth = 'Фев';
+              }
+              if (mounth === 3) {
+                mounth = 'Мар';
+              }
+              if (mounth === 4) {
+                mounth = 'Апр';
+              }
+              if (mounth === 5) {
+                mounth = 'Мая';
+              }
+              if (mounth === 6) {
+                mounth = 'Июн';
+              }
+              if (mounth === 7) {
+                mounth = 'Июл';
+              }
+              if (mounth === 8) {
+                mounth = 'Авг';
+              }
+              if (mounth === 9) {
+                mounth = 'Сен';
+              }
+              if (mounth === 10) {
+                mounth = 'Окт';
+              }
+              if (mounth === 11) {
+                mounth = 'Ноя';
+              }
+              if (mounth === 12) {
+                mounth = 'Дек';
+              }
+              var day = date.getDate();
+              var tags_post = document.getElementById('tags-post');
+              var tags;
+              if (item.tags.length > 1) {
+                if (item.tags.indexOf(';') > 0) {
+                  tags = item.tags.split(';');
+                }
+                var k = 0;
+                data.blog_tags.map(function (i) {
+                  if (i.id == tags[k]) {
+                    tags_post.innerHTML += '<a href="#"><i class="' + i.icon + '"></i>' + i.name + '</a>';
+                  }
+                  k++;
+                });
+              }
+              blog_article.innerHTML = '<div class="post-info">' + '<div class="date-post">' + '<div class="day">' + day + '</div>' + '<div class="month">' + mounth + '</div>' + '</div>' + '<div class="post-info-main">' + '<div class="author-post">' + item.title + '</div>' + '</div>' + '<div class="comments-post" id="comments-post"><i class="fa fa-comment"></i> ' + data.count_comments + '</div>' + '</div>' + +item.description;
+            });
+            data.last_news.map(function (item) {
+              last_news.innerHTML += '<li class="cat-item cat-item-1 current-cat"><a href="/blog/article/' + item.id + '">' + item.title + '</a></li>';
+            });
+            var blog_tags = document.getElementById('blog_tags');
+            data.blog_tags.map(function (item) {
+              blog_tags.innerHTML += '<a href="#" rel="tag">' + item.name + '</a> ';
+            });
+          } else if (data.message === 'blog_comment_add') {
+            var _comments = document.getElementById('comments');
+            _comments.innerHTML = '<div class="comment-title">Комментариев <span>(' + data.count_comments + ')</span></div><ol class="commentlist">';
+            data.comments.data.map(function (item) {
+              var avatar = 'http://placehold.it/70x70';
+              if (item.avatar) {
+                avatar = item.avatar;
+              }
+              var date = new Date(item.created_at);
+              var hour = date.getHours();
+              var year = date.getFullYear();
+              var minute = date.getMinutes();
+              var mounth = date.getMonth();
+              var day = date.getDate();
+              _comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + /*'<a class="button reply" href="#"><i class="fa fa-rotate-left"></i> Reply</a>' +*/
+              '</div>' + '</div>' + '</li>';
+            });
+            _comments.innerHTML += '</ol>';
+            document.getElementById('comments-post').innerHTML = '<i class="fa fa-comment"></i> ' + data.count_comments + '</div>';
+            document.getElementById('comment_success').style.display = 'block';
+            setTimeout(function () {
+              $('#comment_success').fadeOut('fast');
+            }, 5000);
+          } else if (data.message === 'front_blog') {
+            document.getElementById('blog_items').innerHTML = '';
+            data.seo.map(function (item) {
+              document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
+              document.querySelector('head title').textContent = item.title;
+            });
+            data.blog.data.map(function (item) {
+              var date = new Date(item.created_at);
+              var hour = date.getHours();
+              var minute = date.getMinutes();
+              var mounth = date.getMonth();
+              if (mounth === 1) {
+                mounth = 'Января';
+              }
+              if (mounth === 2) {
+                mounth = 'Февраля';
+              }
+              if (mounth === 3) {
+                mounth = 'Марта';
+              }
+              if (mounth === 4) {
+                mounth = 'Апреля';
+              }
+              if (mounth === 5) {
+                mounth = 'Мая';
+              }
+              if (mounth === 6) {
+                mounth = 'Июнь';
+              }
+              if (mounth === 7) {
+                mounth = 'Июля';
+              }
+              if (mounth === 8) {
+                mounth = 'Августа';
+              }
+              if (mounth === 9) {
+                mounth = 'Сентября';
+              }
+              if (mounth === 10) {
+                mounth = 'Октября';
+              }
+              if (mounth === 11) {
+                mounth = 'Ноября';
+              }
+              if (mounth === 12) {
+                mounth = 'Декабря';
+              }
+              var day = date.getDate();
+              var brief = '';
+              var div = document.createElement('div');
+              if (item.description != null) {
+                div.innerText = item.description;
+                brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
+                brief = brief.substr(0, 100);
+              }
+              document.getElementById('blog_items').innerHTML += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/blog/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/blog/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
+            });
+            var _paginate_item = document.getElementById('paginate_item');
+            data.blog.path = window.location.protocol + '//' + window.location.hostname;
+            data.blog.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
+            data.blog.last_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + data.blog.last_page;
+            data.blog.next_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + (data.blog.from + 1);
+            if (data.blog.links.length > 3) {
+              data.blog.links.map(function (items) {
+                var link = items.label;
+                var active = '';
+                var url = items.url;
+                if (items.active) {
+                  active = 'class="active"';
+                }
+                if (url === null) {
+                  url = '/blog';
+                } else {
+                  if (items.label === 'Next &raquo;') {
+                    url = data.blog.last_page_url;
+                  } else {
+                    url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + items.label;
+                  }
+                }
+                if (items.label === '&laquo; Previous') {
+                  link = '<i class="fa fa-angle-double-left"></i>';
+                }
+                if (items.label === 'Next &raquo;') {
+                  link = '<i class="fa fa-angle-double-right"></i>';
+                }
+                _paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
+              });
+            }
+          } else if (data.message === 'front_index') {} else if (data.message === "search_blog") {}
+        }
       };
       $('body').on('click', '#send_comment', function () {
         if ($('meta[name=user_id]').attr('content')) {
@@ -21730,7 +21775,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var data = this.data.seo;
     data.map(function (item) {
-      if (window.location.origin + '/' === window.location.href && item.url == '/') {
+      if (window.location.origin + '/' === window.location.href && item.url === '/') {
         document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
         document.querySelector('head title').textContent = item.title;
       }
@@ -21751,13 +21796,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BreadCrumbComponent */ "./resources/js/components/front/BreadCrumbComponent.vue");
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "ContactComponent",
-  components: {
-    BreadCrumbComponent: _BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
+  name: "ProductComponent",
   props: {
     data: 'data'
   },
@@ -22095,6 +22135,347 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / bread crumb ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
   }), 256 /* UNKEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" page title ")], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CartComponent.vue?vue&type=template&id=3fed2288":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CartComponent.vue?vue&type=template&id=3fed2288 ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "page-content woocommerce"
+};
+var _hoisted_2 = {
+  "class": "container clear-fix"
+};
+var _hoisted_3 = {
+  "class": "title clear-fix"
+};
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "title-main"
+}, "Корзина", -1 /* HOISTED */);
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fa fa-angle-double-right"
+}, null, -1 /* HOISTED */);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  id: "content",
+  role: "main"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-12 cart_table_head"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-1",
+  style: {
+    "padding": "10px",
+    "border": "1px solid rgb(24, 187, 124)"
+  }
+}, "#"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-8",
+  style: {
+    "padding": "10px",
+    "border": "1px solid rgb(24, 187, 124)"
+  }
+}, "Название"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-2",
+  style: {
+    "padding": "10px",
+    "border": "1px solid rgb(24, 187, 124)"
+  }
+}, "Цена"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-1",
+  style: {
+    "padding": "10px",
+    "border": "1px solid rgb(24, 187, 124)"
+  }
+})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-12",
+  id: "cart_products"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-1 cart_table_item"
+}, "#"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-8 cart_table_item",
+  style: {
+    "float": "left"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "shop-single-item.html"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "http://placehold.it/65x65",
+  "data-at2x": "http://placehold.it/65x65",
+  "class": "attachment-shop_thumbnail wp-post-image",
+  alt: ""
+})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-9"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "shop-single-item.html"
+}, "Donec ut velit varius Fusce nec nisl vulputate ")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-2 cart_table_item"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "amount"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("14500"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "$")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-1 cart_table_item"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fa fa-times",
+  "aria-hidden": "true"
+})])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-9"
+}, "Стоимоть:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, "111")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+  colspan: "6",
+  "class": "actions"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "coupon"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "coupon_code"
+}, "Coupon:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "text",
+  name: "coupon_code",
+  "class": "input-text corner-radius-top",
+  id: "coupon_code",
+  value: "",
+  placeholder: "Coupon code"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "submit",
+  "class": "cws-button corner-radius-bottom",
+  name: "apply_coupon",
+  value: "Apply Coupon"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "submit",
+  "class": "cws-button bt-color-5",
+  name: "update_cart",
+  value: "Update Cart"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "submit",
+  "class": "cws-button bt-color-3",
+  name: "proceed",
+  value: "Proceed to Checkout"
+})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "divider-color"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "cart-collaterals"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  "class": "shipping_calculator",
+  action: "#",
+  method: "post"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Calculate shipping"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "shipping-calculator-form"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "form-row form-row-wide"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  name: "calc_shipping_country",
+  id: "calc_shipping_country",
+  "class": "country_to_state",
+  rel: "calc_shipping_state"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: ""
+}, "Select a country..."), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AF"
+}, "Afghanistan"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AL"
+}, "Albania"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "DZ"
+}, "Algeria"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AD"
+}, "Andorra"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AO"
+}, "Angola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AI"
+}, "Anguilla"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AQ"
+}, "Antarctica"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AG"
+}, "Antigua and Barbuda"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AR"
+}, "Argentina"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AM"
+}, "Armenia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AW"
+}, "Aruba"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AU"
+}, "Australia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AT"
+}, "Austria"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "AZ"
+}, "Azerbaijan"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BS"
+}, "Bahamas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BH"
+}, "Bahrain"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BD"
+}, "Bangladesh"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BB"
+}, "Barbados"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BY"
+}, "Belarus"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "PW"
+}, "Belau"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BE"
+}, "Belgium"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BZ"
+}, "Belize"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BJ"
+}, "Benin"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BM"
+}, "Bermuda"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BT"
+}, "Bhutan"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BO"
+}, "Bolivia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BQ"
+}, "Bonaire, Saint Eustatius and Saba"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BA"
+}, "Bosnia and Herzegovina"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BW"
+}, "Botswana"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BV"
+}, "Bouvet Island"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BR"
+}, "Brazil"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "IO"
+}, "British Indian Ocean Territory"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "VG"
+}, "British Virgin Islands"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BN"
+}, "Brunei"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BG"
+}, "Bulgaria"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BF"
+}, "Burkina Faso"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "BI"
+}, "Burundi"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "KH"
+}, "Cambodia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CM"
+}, "Cameroon"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CA"
+}, "Canada"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CV"
+}, "Cape Verde"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "KY"
+}, "Cayman Islands"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CF"
+}, "Central African Republic"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "TD"
+}, "Chad"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CL"
+}, "Chile"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CN"
+}, "China"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CX"
+}, "Christmas Island"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CC"
+}, "Cocos (Keeling) Islands"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CO"
+}, "Colombia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "KM"
+}, "Comoros"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CG"
+}, "Congo (Brazzaville)"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CD"
+}, "Congo (Kinshasa)"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CK"
+}, "Cook Islands"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CR"
+}, "Costa Rica"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "HR"
+}, "Croatia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CU"
+}, "Cuba"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CW"
+}, "CuraÇao"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CY"
+}, "Cyprus"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "CZ"
+}, "Czech Republic")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "form-row form-row-wide"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "text",
+  "class": "input-text",
+  value: "",
+  placeholder: "State / county",
+  name: "calc_shipping_state",
+  id: "calc_shipping_state"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "form-row form-row-wide"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "text",
+  "class": "input-text",
+  value: "",
+  placeholder: "Postcode / Zip",
+  name: "calc_shipping_postcode",
+  id: "calc_shipping_postcode"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  name: "calc_shipping",
+  value: "1",
+  "class": "cws-button border-radius alt"
+}, "Update Totals")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "cart_totals"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Cart Totals"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
+  "class": "cart-subtotal"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Cart Subtotal"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "amount"
+}, "$12")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
+  "class": "shipping"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Shipping"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, " Free Shipping ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
+  "class": "order-total"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Order Total"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "amount"
+}, "$12")])])])])])])], -1 /* HOISTED */);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
+    data: $props.data
+  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Shop "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/shop",
+    "class": "button-back"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Вернуться к покупкам"), _hoisted_5];
+    }),
+    _: 1 /* STABLE */
+  })]), _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Shop ")])])], 64 /* STABLE_FRAGMENT */);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CheckoutComponent.vue?vue&type=template&id=9f120254":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CheckoutComponent.vue?vue&type=template&id=9f120254 ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return null;
 }
 
 /***/ }),
@@ -22644,62 +23025,7 @@ var _hoisted_25 = ["data-count"];
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "counter-name"
 }, "Видео уроков", -1 /* HOISTED */);
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<hr class=\"divider-color\"><section class=\"fullwidth-background padding-section\"><div class=\"grid-row\"><h2 class=\"center-text\">Как всё работает?</h2><!-- time line --><div class=\"time-line\"><div class=\"line-element\"><div class=\"action\"><div class=\"action-block\"><span><i class=\"flaticon-magnifier\"></i></span><div class=\"text\"><h3>Регистрируетесь на сайте</h3><p>Получаете доступ к бесплатным курсам по обучению. К нескольким бесплатным скриптам и бесплатным шаблонам сайта с которыми потом сможете работать.</p></div></div></div><div class=\"level\"><div class=\"level-block\">Этап 1</div></div></div><div class=\"line-element color-2\"><div class=\"level\"><div class=\"level-block\">Этап 2</div></div><div class=\"action\"><div class=\"action-block\"><span><i class=\"flaticon-computer\"></i></span><div class=\"text\"><h3>Выбираете понравившееся направление</h3><p>После изучения бесплатного материала и попробовав изучение на сайте, выбираете направление в ИТ разработке или дизайне. Оплачиваете и получаете доступ к определенному курсу и материалам.</p></div></div></div></div><div class=\"line-element color-3\"><div class=\"action\"><div class=\"action-block\"><span><i class=\"flaticon-shopping\"></i></span><div class=\"text\"><h3>Получение сертификата</h3><p>После изучения платного курса вы получаете сертификат и доступ ко всем изученым материалам.</p></div></div></div><div class=\"level\"><div class=\"level-block\">Этап 3</div></div></div></div><!-- / time line --></div></section><div class=\"parallaxed\"><div class=\"parallax-image\" data-parallax-left=\"0.5\" data-parallax-top=\"0.3\" data-parallax-scroll-speed=\"0.5\" style=\"transform:translateY(-24px) translateZ(0px);left:0px;\"><img src=\"/front/img/parallax.png\" alt=\"\" style=\"height:auto;width:917px;\"></div><div class=\"them-mask bg-color-2\"></div><div class=\"grid-row center-text\"><div class=\"font-style-1 margin-none\">Оставить заявку для связи</div><div class=\"divider-mini\"></div><p class=\"parallax-text\">Оставьте свой контакт для связи. По сотрудничеству или по вопросам связанным с курсами.</p><form class=\"subscribe\"><input type=\"text\" name=\"email\" value=\"\" size=\"40\" placeholder=\"Enter your email or phone\" aria-required=\"true\"><input type=\"submit\" value=\"Отправить\"></form></div></div>", 3);
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "page-content"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "container"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Подписка на платные курсы"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Вы можите получить подписку на "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "все"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" платные курсы на месяц.")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "row",
-  id: "course_price"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
-  "class": "pricing-table color-1"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "header-pt clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n\t\t\t\t\t\t\t\t "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Базовый")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price-pt"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "₽"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("250."), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "00")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "За месяц"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ на 30 дней"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Видео материалы"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Без готовых материалов"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Без практических заданий")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  onclick: "buy_subscribe(1)",
-  "class": "cws-button border-radius alt"
-}, "Купить")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
-  "class": "pricing-table color-2"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "header-pt clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n\t\t\t\t\t\t\t\t "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Продвинутый")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price-pt"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "₽"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("400"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "00")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "за месяц"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ на 30 дней"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Видео материалы"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Без готовых материалов"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ заданиям")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  onclick: "buy_subscribe(2)",
-  "class": "cws-button border-radius bt-color-2 alt"
-}, "Купить")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
-  "class": "pricing-table active color-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "header-pt clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n\t\t\t\t\t\t\t\t "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Премиум")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price-pt"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "₽"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("800"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "00")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "за месяц"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ на 30 дней"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Видео материалы"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ материалам"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ заданиям")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  onclick: "buy_subscribe(3)",
-  "class": "cws-button border-radius bt-color-3 alt"
-}, "Купить")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
-  "class": "pricing-table color-4"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "header-pt clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n\t\t\t\t\t\t\t\t "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Максимальный")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price-pt"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "₽"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("2500"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "00")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "за месяц"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ на 30 дней"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Видео материалы"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ к материалам"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Доступ к заданиям"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Поддержка в телеграмм")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  onclick: "buy_subscribe(4)",
-  "class": "cws-button border-radius bt-color-4 alt"
-}, "Купить")])])])])])])], -1 /* HOISTED */);
-
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<hr class=\"divider-color\"><section class=\"fullwidth-background padding-section\"><div class=\"grid-row\"><h2 class=\"center-text\">Как всё работает?</h2><!-- time line --><div class=\"time-line\"><div class=\"line-element\"><div class=\"action\"><div class=\"action-block\"><span><i class=\"flaticon-magnifier\"></i></span><div class=\"text\"><h3>Регистрируетесь на сайте</h3><p>Получаете доступ к бесплатным курсам по обучению. К нескольким бесплатным скриптам и бесплатным шаблонам сайта с которыми потом сможете работать.</p></div></div></div><div class=\"level\"><div class=\"level-block\">Этап 1</div></div></div><div class=\"line-element color-2\"><div class=\"level\"><div class=\"level-block\">Этап 2</div></div><div class=\"action\"><div class=\"action-block\"><span><i class=\"flaticon-computer\"></i></span><div class=\"text\"><h3>Выбираете понравившееся направление</h3><p>После изучения бесплатного материала и попробовав изучение на сайте, выбираете направление в ИТ разработке или дизайне. Оплачиваете и получаете доступ к определенному курсу и материалам.</p></div></div></div></div><div class=\"line-element color-3\"><div class=\"action\"><div class=\"action-block\"><span><i class=\"flaticon-shopping\"></i></span><div class=\"text\"><h3>Получение сертификата</h3><p>После изучения платного курса вы получаете сертификат и доступ ко всем изученым материалам.</p></div></div></div><div class=\"level\"><div class=\"level-block\">Этап 3</div></div></div></div><!-- / time line --></div></section><div class=\"parallaxed\"><div class=\"parallax-image\" data-parallax-left=\"0.5\" data-parallax-top=\"0.3\" data-parallax-scroll-speed=\"0.5\" style=\"transform:translateY(-24px) translateZ(0px);left:0px;\"><img src=\"/front/img/parallax.png\" alt=\"\" style=\"height:auto;width:917px;\"></div><div class=\"them-mask bg-color-2\"></div><div class=\"grid-row center-text\"><div class=\"font-style-1 margin-none\">Оставить заявку для связи</div><div class=\"divider-mini\"></div><p class=\"parallax-text\">Оставьте свой контакт для связи. По сотрудничеству или по вопросам связанным с курсами.</p><form class=\"subscribe\"><input type=\"text\" name=\"email\" value=\"\" size=\"40\" placeholder=\"Enter your email or phone\" aria-required=\"true\"><input type=\"submit\" value=\"Отправить\"></form></div></div><div class=\"page-content\"><div class=\"container\"><main><h2>Подписка на платные курсы</h2><p>Вы можите получить подписку на <b>все</b> платные курсы на месяц.</p><div class=\"clear-fix\"><div class=\"row\" id=\"course_price\"><div class=\"col-md-3\"><article class=\"pricing-table color-1\"><div class=\"header-pt clear-fix\"><!--\n\t\t\t\t\t\t\t\t --><h3>Базовый</h3></div><div class=\"price-pt\"><sup>₽</sup>250.<sup>00</sup></div><p>За месяц</p><ul><li>Доступ на 30 дней</li><li>Видео материалы</li><li>Без готовых материалов</li><li>Без практических заданий</li></ul><a class=\"cws-button border-radius alt\">Купить</a></article></div><div class=\"col-md-3\"><article class=\"pricing-table color-2\"><div class=\"header-pt clear-fix\"><!--\n\t\t\t\t\t\t\t\t --><h3>Продвинутый</h3></div><div class=\"price-pt\"><sup>₽</sup>400<sup>00</sup></div><p>за месяц</p><ul><li>Доступ на 30 дней</li><li>Видео материалы</li><li>Без готовых материалов</li><li>Доступ заданиям</li></ul><a class=\"cws-button border-radius bt-color-2 alt\">Купить</a></article></div><div class=\"col-md-3\"><article class=\"pricing-table active color-3\"><div class=\"header-pt clear-fix\"><!--\n\t\t\t\t\t\t\t\t --><h3>Премиум</h3></div><div class=\"price-pt\"><sup>₽</sup>800<sup>00</sup></div><p>за месяц</p><ul><li>Доступ на 30 дней</li><li>Видео материалы</li><li>Доступ материалам</li><li>Доступ заданиям</li></ul><a class=\"cws-button border-radius bt-color-3 alt\">Купить</a></article></div><div class=\"col-md-3\"><article class=\"pricing-table color-4\"><div class=\"header-pt clear-fix\"><!--\n\t\t\t\t\t\t\t\t --><h3>Максимальный</h3></div><div class=\"price-pt\"><sup>₽</sup>2500<sup>00</sup></div><p>за месяц</p><ul><li>Доступ на 30 дней</li><li>Видео материалы</li><li>Доступ к материалам</li><li>Доступ к заданиям</li><li>Поддержка в телеграмм</li></ul><a class=\"cws-button border-radius bt-color-4 alt\">Купить</a></article></div></div></div></main></div></div>", 4);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_slider_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("slider-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_slider_component), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -22714,7 +23040,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.count_task_all_courses), 9 /* TEXT, PROPS */, _hoisted_20), _hoisted_21])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "counter",
     "data-count": $props.data.count_video_all_courses
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.count_video_all_courses), 9 /* TEXT, PROPS */, _hoisted_25), _hoisted_26])])])])]), _hoisted_27, _hoisted_30], 64 /* STABLE_FRAGMENT */);
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.count_video_all_courses), 9 /* TEXT, PROPS */, _hoisted_25), _hoisted_26])])])])]), _hoisted_27], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -23145,19 +23471,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 /* harmony import */ var _components_front_MainComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/front/MainComponent */ "./resources/js/components/front/MainComponent.vue");
 /* harmony import */ var _components_front_HeaderComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/front/HeaderComponent */ "./resources/js/components/front/HeaderComponent.vue");
 /* harmony import */ var _components_front_SliderComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/front/SliderComponent */ "./resources/js/components/front/SliderComponent.vue");
 /* harmony import */ var _components_front_FooterComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/front/FooterComponent */ "./resources/js/components/front/FooterComponent.vue");
 /* harmony import */ var _components_front_ShopComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/front/ShopComponent */ "./resources/js/components/front/ShopComponent.vue");
-/* harmony import */ var _components_front_BlogComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/front/BlogComponent */ "./resources/js/components/front/BlogComponent.vue");
-/* harmony import */ var _components_front_BlogArticleComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/front/BlogArticleComponent */ "./resources/js/components/front/BlogArticleComponent.vue");
-/* harmony import */ var _components_front_ContactComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/front/ContactComponent */ "./resources/js/components/front/ContactComponent.vue");
-/* harmony import */ var _components_front_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/front/BreadCrumbComponent */ "./resources/js/components/front/BreadCrumbComponent.vue");
-/* harmony import */ var _components_front_ProductComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/front/ProductComponent */ "./resources/js/components/front/ProductComponent.vue");
-/* harmony import */ var _components_front_RegisterComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/front/RegisterComponent */ "./resources/js/components/front/RegisterComponent.vue");
-/* harmony import */ var _components_front_LoginComponent__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/front/LoginComponent */ "./resources/js/components/front/LoginComponent.vue");
+/* harmony import */ var _components_front_CartComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/front/CartComponent */ "./resources/js/components/front/CartComponent.vue");
+/* harmony import */ var _components_front_CheckoutComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/front/CheckoutComponent */ "./resources/js/components/front/CheckoutComponent.vue");
+/* harmony import */ var _components_front_BlogComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/front/BlogComponent */ "./resources/js/components/front/BlogComponent.vue");
+/* harmony import */ var _components_front_BlogArticleComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/front/BlogArticleComponent */ "./resources/js/components/front/BlogArticleComponent.vue");
+/* harmony import */ var _components_front_ContactComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/front/ContactComponent */ "./resources/js/components/front/ContactComponent.vue");
+/* harmony import */ var _components_front_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/front/BreadCrumbComponent */ "./resources/js/components/front/BreadCrumbComponent.vue");
+/* harmony import */ var _components_front_ProductComponent__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/front/ProductComponent */ "./resources/js/components/front/ProductComponent.vue");
+/* harmony import */ var _components_front_RegisterComponent__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/front/RegisterComponent */ "./resources/js/components/front/RegisterComponent.vue");
+/* harmony import */ var _components_front_LoginComponent__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/front/LoginComponent */ "./resources/js/components/front/LoginComponent.vue");
+
+
 
 
 
@@ -23178,7 +23508,7 @@ var routes = [{
   component: _components_front_MainComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/contact',
-  component: _components_front_ContactComponent__WEBPACK_IMPORTED_MODULE_9__["default"]
+  component: _components_front_ContactComponent__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   path: '/shop',
   component: _components_front_ShopComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
@@ -23187,22 +23517,28 @@ var routes = [{
   component: _components_front_ShopComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
   path: '/shop/product/:id',
-  component: _components_front_ProductComponent__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_front_ProductComponent__WEBPACK_IMPORTED_MODULE_13__["default"]
+}, {
+  path: '/cart',
+  component: _components_front_CartComponent__WEBPACK_IMPORTED_MODULE_7__["default"]
+}, {
+  path: '/checkout',
+  component: _components_front_CheckoutComponent__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   path: '/blog',
-  component: _components_front_BlogComponent__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _components_front_BlogComponent__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   path: '/blog/article/:id',
-  component: _components_front_BlogArticleComponent__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_front_BlogArticleComponent__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   path: '/login',
-  component: _components_front_LoginComponent__WEBPACK_IMPORTED_MODULE_13__["default"]
+  component: _components_front_LoginComponent__WEBPACK_IMPORTED_MODULE_15__["default"]
 }, {
   path: '/register',
-  component: _components_front_RegisterComponent__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_front_RegisterComponent__WEBPACK_IMPORTED_MODULE_14__["default"]
 }];
-var router = vue_router__WEBPACK_IMPORTED_MODULE_14__.createRouter({
-  history: vue_router__WEBPACK_IMPORTED_MODULE_14__.createWebHistory(''),
+var router = vue_router__WEBPACK_IMPORTED_MODULE_16__.createRouter({
+  history: vue_router__WEBPACK_IMPORTED_MODULE_16__.createWebHistory(''),
   routes: routes
 });
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
@@ -23211,15 +23547,17 @@ app.component('main-component', _components_front_MainComponent__WEBPACK_IMPORTE
 app.component('header-component', _components_front_HeaderComponent__WEBPACK_IMPORTED_MODULE_3__["default"]);
 app.component('slider-component', _components_front_SliderComponent__WEBPACK_IMPORTED_MODULE_4__["default"]);
 app.component('footer-component', _components_front_FooterComponent__WEBPACK_IMPORTED_MODULE_5__["default"]);
-app.component('contact-component', _components_front_ContactComponent__WEBPACK_IMPORTED_MODULE_9__["default"]);
+app.component('contact-component', _components_front_ContactComponent__WEBPACK_IMPORTED_MODULE_11__["default"]);
 app.component('shop-component', _components_front_ShopComponent__WEBPACK_IMPORTED_MODULE_6__["default"]);
-app.component('product-component', _components_front_ProductComponent__WEBPACK_IMPORTED_MODULE_11__["default"]);
-app.component('blog-component', _components_front_BlogComponent__WEBPACK_IMPORTED_MODULE_7__["default"]);
-app.component('blog-article-component', _components_front_BlogArticleComponent__WEBPACK_IMPORTED_MODULE_8__["default"]);
-app.component('register-component', _components_front_RegisterComponent__WEBPACK_IMPORTED_MODULE_12__["default"]);
-app.component('login-component', _components_front_LoginComponent__WEBPACK_IMPORTED_MODULE_13__["default"]);
-app.component('home-component', _components_front_LoginComponent__WEBPACK_IMPORTED_MODULE_13__["default"]);
-app.component('bread-crumb-component', _components_front_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_10__["default"]);
+app.component('cart-component', _components_front_CartComponent__WEBPACK_IMPORTED_MODULE_7__["default"]);
+app.component('checkout-component', _components_front_CheckoutComponent__WEBPACK_IMPORTED_MODULE_8__["default"]);
+app.component('product-component', _components_front_ProductComponent__WEBPACK_IMPORTED_MODULE_13__["default"]);
+app.component('blog-component', _components_front_BlogComponent__WEBPACK_IMPORTED_MODULE_9__["default"]);
+app.component('blog-article-component', _components_front_BlogArticleComponent__WEBPACK_IMPORTED_MODULE_10__["default"]);
+app.component('register-component', _components_front_RegisterComponent__WEBPACK_IMPORTED_MODULE_14__["default"]);
+app.component('login-component', _components_front_LoginComponent__WEBPACK_IMPORTED_MODULE_15__["default"]);
+app.component('home-component', _components_front_LoginComponent__WEBPACK_IMPORTED_MODULE_15__["default"]);
+app.component('bread-crumb-component', _components_front_BreadCrumbComponent__WEBPACK_IMPORTED_MODULE_12__["default"]);
 // Object.entries(import.meta.glob('./!**!/!*.vue', { eager: true })).forEach(([path, definition]) => {
 //     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
 // });
@@ -47920,6 +48258,62 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/front/CartComponent.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/front/CartComponent.vue ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CartComponent_vue_vue_type_template_id_3fed2288__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CartComponent.vue?vue&type=template&id=3fed2288 */ "./resources/js/components/front/CartComponent.vue?vue&type=template&id=3fed2288");
+/* harmony import */ var _CartComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CartComponent.vue?vue&type=script&lang=js */ "./resources/js/components/front/CartComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_CartComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CartComponent_vue_vue_type_template_id_3fed2288__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/front/CartComponent.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/components/front/CheckoutComponent.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/front/CheckoutComponent.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CheckoutComponent_vue_vue_type_template_id_9f120254__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CheckoutComponent.vue?vue&type=template&id=9f120254 */ "./resources/js/components/front/CheckoutComponent.vue?vue&type=template&id=9f120254");
+/* harmony import */ var _CheckoutComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CheckoutComponent.vue?vue&type=script&lang=js */ "./resources/js/components/front/CheckoutComponent.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OS_domains_newsait_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_CheckoutComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CheckoutComponent_vue_vue_type_template_id_9f120254__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/front/CheckoutComponent.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/front/ContactComponent.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/front/ContactComponent.vue ***!
@@ -48220,6 +48614,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/front/CartComponent.vue?vue&type=script&lang=js":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/front/CartComponent.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CartComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CartComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CartComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CartComponent.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/front/CheckoutComponent.vue?vue&type=script&lang=js":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/front/CheckoutComponent.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CheckoutComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CheckoutComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CheckoutComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CheckoutComponent.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/front/ContactComponent.vue?vue&type=script&lang=js":
 /*!************************************************************************************!*\
   !*** ./resources/js/components/front/ContactComponent.vue?vue&type=script&lang=js ***!
@@ -48408,6 +48834,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BreadCrumbComponent_vue_vue_type_template_id_16cd3599__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BreadCrumbComponent_vue_vue_type_template_id_16cd3599__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BreadCrumbComponent.vue?vue&type=template&id=16cd3599 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/BreadCrumbComponent.vue?vue&type=template&id=16cd3599");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/front/CartComponent.vue?vue&type=template&id=3fed2288":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/front/CartComponent.vue?vue&type=template&id=3fed2288 ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CartComponent_vue_vue_type_template_id_3fed2288__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CartComponent_vue_vue_type_template_id_3fed2288__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CartComponent.vue?vue&type=template&id=3fed2288 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CartComponent.vue?vue&type=template&id=3fed2288");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/front/CheckoutComponent.vue?vue&type=template&id=9f120254":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/front/CheckoutComponent.vue?vue&type=template&id=9f120254 ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CheckoutComponent_vue_vue_type_template_id_9f120254__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CheckoutComponent_vue_vue_type_template_id_9f120254__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CheckoutComponent.vue?vue&type=template&id=9f120254 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/CheckoutComponent.vue?vue&type=template&id=9f120254");
 
 
 /***/ }),

@@ -54,10 +54,8 @@
     <!-- / page content -->
 </template>
 <script>
-    import BreadCrumbComponent from "./BreadCrumbComponent";
     export default {
         name: "ContactComponent",
-        components: {BreadCrumbComponent},
         props: ['data'],
         mounted() {
 

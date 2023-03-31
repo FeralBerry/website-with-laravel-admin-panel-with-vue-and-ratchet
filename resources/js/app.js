@@ -7,6 +7,8 @@ import HeaderComponent from "./components/front/HeaderComponent";
 import SliderComponent from "./components/front/SliderComponent";
 import FooterComponent from "./components/front/FooterComponent";
 import ShopComponent from "./components/front/ShopComponent";
+import CartComponent from "./components/front/CartComponent";
+import CheckoutComponent from "./components/front/CheckoutComponent";
 import BlogComponent from "./components/front/BlogComponent";
 import BlogArticleComponent from "./components/front/BlogArticleComponent";
 import ContactComponent from "./components/front/ContactComponent";
@@ -21,6 +23,8 @@ const routes = [
     {path: '/shop', component: ShopComponent},
     {path: '/shop/:id', component: ShopComponent},
     {path: '/shop/product/:id', component: ProductComponent},
+    {path: '/cart', component: CartComponent},
+    {path: '/checkout', component: CheckoutComponent},
     {path: '/blog', component: BlogComponent},
     {path: '/blog/article/:id', component: BlogArticleComponent},
     {path: '/login', component: LoginComponent},
@@ -40,6 +44,8 @@ app.component('slider-component', SliderComponent);
 app.component('footer-component', FooterComponent);
 app.component('contact-component', ContactComponent);
 app.component('shop-component', ShopComponent);
+app.component('cart-component', CartComponent);
+app.component('checkout-component', CheckoutComponent);
 app.component('product-component', ProductComponent);
 app.component('blog-component', BlogComponent);
 app.component('blog-article-component', BlogArticleComponent);

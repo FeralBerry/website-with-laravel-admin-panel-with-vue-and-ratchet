@@ -72,6 +72,18 @@ class IndexController extends FrontController
         ]);
         return view('front.index',['data' => $data]);
     }
+    public function cart(){
+        $data = array_merge($this->data(),[
+
+        ]);
+        return view('front.index',['data' => $data]);
+    }
+    public function checkout(){
+        $data = array_merge($this->data(),[
+
+        ]);
+        return view('front.index',['data' => $data]);
+    }
     public function blog(){
         $blog = DB::table('blog')
             ->paginate(12);
@@ -97,4 +109,5 @@ class IndexController extends FrontController
         ];
         return $data;
     }
+
 }

@@ -203,3 +203,13 @@ video {
 .del_cart:hover{
     color:#f27c66;
 }
+.cart_table_head{
+    color: rgb(242, 124, 102);
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+.cart_table_item{
+    padding: 10px;
+    border:1px solid rgb(225, 225, 225);
+}

@@ -131,6 +131,14 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif ($command->command == 'cart'){
+            $data = array_merge($this->chatController->cart(),['cart' => 'cart']);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         /*elseif($command->command == 'reconnect'){
             $data = [
                 'message' =>'reconnect'

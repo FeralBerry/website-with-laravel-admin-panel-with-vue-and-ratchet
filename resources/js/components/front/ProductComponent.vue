@@ -53,10 +53,8 @@
     <!-- / page content -->
 </template>
 <script>
-    import BreadCrumbComponent from "./BreadCrumbComponent";
     export default {
-        name: "ContactComponent",
-        components: {BreadCrumbComponent},
+        name: "ProductComponent",
         props: {
             data:'data',
         },

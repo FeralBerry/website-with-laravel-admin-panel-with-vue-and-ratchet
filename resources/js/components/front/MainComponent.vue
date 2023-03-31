@@ -149,7 +149,7 @@
                                     <li>Без готовых материалов</li>
                                     <li>Без практических заданий</li>
                                 </ul>
-                                <a onclick="buy_subscribe(1)" class="cws-button border-radius alt">Купить</a>
+                                <a class="cws-button border-radius alt">Купить</a>
                             </article>
                         </div>
                         <div class="col-md-3">
@@ -165,7 +165,7 @@
                                     <li>Без готовых материалов</li>
                                     <li>Доступ заданиям</li>
                                 </ul>
-                                <a onclick="buy_subscribe(2)" class="cws-button border-radius bt-color-2 alt">Купить</a>
+                                <a class="cws-button border-radius bt-color-2 alt">Купить</a>
                             </article>
                         </div>
                         <div class="col-md-3">
@@ -181,7 +181,7 @@
                                     <li>Доступ материалам</li>
                                     <li>Доступ заданиям</li>
                                 </ul>
-                                <a onclick="buy_subscribe(3)" class="cws-button border-radius bt-color-3 alt">Купить</a>
+                                <a class="cws-button border-radius bt-color-3 alt">Купить</a>
                             </article>
                         </div>
                         <div class="col-md-3">
@@ -198,7 +198,7 @@
                                     <li>Доступ к заданиям</li>
                                     <li>Поддержка в телеграмм</li>
                                 </ul>
-                                <a onclick="buy_subscribe(4)" class="cws-button border-radius bt-color-4 alt">Купить</a>
+                                <a class="cws-button border-radius bt-color-4 alt">Купить</a>
                             </article>
                         </div>
                     </div>
@@ -217,7 +217,7 @@
         created() {
             let data = this.data.seo;
             data.map( (item) => {
-                if(window.location.origin + '/' === window.location.href && item.url == '/'){
+                if(window.location.origin + '/' === window.location.href && item.url === '/'){
                     document.querySelector('meta[name="description"]').setAttribute("content", ""+item.description+"");
                     document.querySelector('head title').textContent = item.title;
                 }
