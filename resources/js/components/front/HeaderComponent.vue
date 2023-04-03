@@ -134,6 +134,8 @@
                         connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
                     } else if(window.location.origin + '/' === window.location.href){
                         connection.send('{"command":"front_index"}')
+                    } else if(to.fullPath.indexOf('cart')>0){
+                        connection.send('{"command":"front_cart"}')
                     }
                 }
                 connection.onmessage = function(event) {
@@ -144,19 +146,29 @@
                             if(data.users_cart != null){
                                 cart.style.display = 'block';
                                 cart.innerHTML = '';
+                                let cart_price;
+                                let cart_price_with_percent;
+                                if(data.cart_price == 0){
+                                    cart_price = 0;
+                                    cart_price_with_percent = 0;
+                                } else {
+                                    cart_price = data.cart_price;
+                                    cart_price_with_percent = data.cart_price_with_percent;
+                                }
                                 data.users_cart.map((item) => {
-                                    let price = (item.price +item.sub_price/100) - (item.percent/100)*(item.price + item.sub_price/100);
-                                    cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>\n' +
-                                        '                                        <div class="col-md-8">\n' +
-                                        '                                            <p><span class="cart_item_title">'+item.name+'</span></p>\n' +
-                                        '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>\n' +
-                                        '                                        </div>\n' +
-                                        '                                        <div class="col-md-1">\n' +
-                                        '                                            <span class="del_cart" onclick="delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>\n' +
+                                    let price = Math.round(((item.price + (item.sub_price/100)) - (item.price + (item.sub_price/100)) *item.percent/100) * 100) / 100;
+                                    cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>' +
+                                        '                                        <div class="col-md-8">' +
+                                        '                                            <p><span class="cart_item_title">'+item.name+'</span></p>' +
+                                        '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
+                                        '                                        </div>' +
+                                        '                                        <div class="col-md-1">' +
+                                        '                                            <span class="del_cart" onclick="delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
                                         '                                        </div></li>';
                                 });
-                                cart.innerHTML += '<li>\n' +
-                                    '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>\n' +
+                                cart.innerHTML += '<li>Стоимость покупок: '+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</li>'+
+                                    '<li>' +
+                                    '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' +
                                     '                        </li>';
                             }
                             if(data.users_cart === undefined || data.users_cart.length === 0) {
@@ -468,6 +480,47 @@
                         else if(data.message === "search_blog"){
 
                         }
+                        else if(data.message === "front_cart"){
+                            let cart_produts = document.getElementById('cart_products');
+                            cart_produts.innerHTML = '';
+                            let i = 0;
+                            let cart_price = 0;
+                            let cart_price_with_percent = 0;
+                            if(data.users_cart.length > 0){
+                                data.users_cart.map((item) => {
+                                    i++;
+                                    let price = Math.round(((item.price + (item.sub_price/100)) - (item.price + (item.sub_price/100)) *item.percent/100) * 100) / 100;
+                                    cart_produts.innerHTML += '<div class="col-md-1 cart_table_item">'+i+'</div>' +
+                                        '<div class="col-md-8 cart_table_item" style="float: left">' +
+                                            '<div class="row">' +
+                                                '<div class="col-md-3">' +
+                                                    '<a href="/product/'+item.id+'">' +
+                                                        '<img width="100%" src="/front/img/shop/'+item.img+'" data-at2x="/front/img/shop/'+item.img+'" class="attachment-shop_thumbnail wp-post-image" alt="">' +
+                                                    '</a>' +
+                                                '</div>' +
+                                                '<div class="col-md-9">' +
+                                                    '<a href="/product/'+item.id+'">'+item.name+' </a>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<div class="col-md-2 cart_table_item"><span class="amount">'+price+'<del><sup>'+item.price+'.'+item.sub_price+'</sup></del> <sup>&#8381;</sup></span></div>' +
+                                        '<div class="col-md-1 cart_table_item"><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></div>';
+
+                                });
+                            } else{
+                                cart_produts.innerHTML = '<div class="col-md-12 cart_table_item">Пока Ваша корзина пуста</div>';
+                            }
+                            if(data.cart_price_with_percent == 0){
+                                document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' +
+                                    '                            <div class="col-md-3">0&#8381;</div>'
+                            } else {
+                                cart_price = data.cart_price;
+                                cart_price_with_percent = data.cart_price_with_percent;
+                                document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' +
+                                    '                            <div class="col-md-3">'+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</div>'
+                            }
+
+                        }
                     }
                 }
                 $('body').on('click', '#send_comment', function() {
@@ -503,17 +556,17 @@
                     cart.style.display = 'block';
                     data.users_cart.map((item) => {
                         let price = (item.price +item.sub_price/100) - (item.percent/100)*(item.price + item.sub_price/100);
-                        cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>\n' +
-                            '                                        <div class="col-md-8">\n' +
-                            '                                            <p><span class="cart_item_title">'+item.name+'</span></p>\n' +
-                            '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>\n' +
-                            '                                        </div>\n' +
-                            '                                        <div class="col-md-1">\n' +
-                            '                                            <span class="del_cart" onclick="delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>\n' +
+                        cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>' +
+                            '                                        <div class="col-md-8">' +
+                            '                                            <p><span class="cart_item_title">'+item.name+'</span></p>' +
+                            '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
+                            '                                        </div>' +
+                            '                                        <div class="col-md-1">' +
+                            '                                            <span class="del_cart" onclick="delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
                             '                                        </div></li>';
                     });
-                    cart.innerHTML += '<li>\n' +
-                        '                            <a rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>\n' +
+                    cart.innerHTML += '<li>' +
+                        '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' +
                         '                        </li>'
                 }
             }

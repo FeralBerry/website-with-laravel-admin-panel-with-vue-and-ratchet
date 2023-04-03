@@ -5,10 +5,8 @@
             <div class="container clear-fix">
                 <div class="row">
                     <div class="col-md-9">
-                        <h2>Some category</h2>
                         <!-- Shop -->
                         <div id="page-meta" class="group">
-                            <p class="woocommerce-result-count">Showing 1-9 of 23 results </p>
                             <div id="list-or-grid">
                                 <div class="grid-view active" title="Switch to grid view">
                                     <i class="fa fa-th-large"></i>

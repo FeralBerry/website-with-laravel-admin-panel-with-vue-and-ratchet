@@ -27,13 +27,16 @@ class ChatController extends BackController
             ->where('cookie_id',$_COOKIE['cookie_id'])
             ->join('shop','shop.id','=','users_cart.shop_id')
             ->get();
+        $cart_price_with_percent = 0;
         $cart_price = 0;
         foreach ($users_cart as $item){
-            $cart_price += $item->count * ($item->price + $item->sub_price/100) - ($item->percent / 100) * $item->count * ($item->price + $item->sub_price/100);
+            $cart_price_with_percent += floor($item->count * (($item->price + $item->sub_price/100) - ($item->percent / 100) * $item->count * ($item->price + $item->sub_price/100))* 100) / 100;
+            $cart_price += $item->count * (($item->price + $item->sub_price/100));
         }
         $data = [
             'users_cart' => $users_cart->take(5),
-            'cart_price' => $cart_price
+            'cart_price' => $cart_price,
+            'cart_price_with_percent' => $cart_price_with_percent,
         ];
         return $data;
     }
@@ -337,6 +340,12 @@ class ChatController extends BackController
     }
     public function front_index(){
 
+    }
+    public function front_cart(){
+        $data = array_merge($this->cart(),[
+            'message' => 'front_cart',
+        ]);
+        return $data;
     }
     /*public function openChat($command){
         $chat = DB::table('chat')

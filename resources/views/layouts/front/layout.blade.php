@@ -248,6 +248,22 @@
             }
         });
     }
+    function delete_cart(id) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: '/cart/delete/'+id,
+            data: {
+
+            },
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+
+            }
+        });
+    }
 </script>
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

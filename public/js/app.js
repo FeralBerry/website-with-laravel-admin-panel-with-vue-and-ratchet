@@ -21380,6 +21380,8 @@ __webpack_require__.r(__webpack_exports__);
           connection.send('{"command":"front_blog","url":"' + window.location.pathname + '"}');
         } else if (window.location.origin + '/' === window.location.href) {
           connection.send('{"command":"front_index"}');
+        } else if (to.fullPath.indexOf('cart') > 0) {
+          connection.send('{"command":"front_cart"}');
         }
       };
       connection.onmessage = function (event) {
@@ -21390,11 +21392,20 @@ __webpack_require__.r(__webpack_exports__);
             if (data.users_cart != null) {
               cart.style.display = 'block';
               cart.innerHTML = '';
+              var cart_price;
+              var cart_price_with_percent;
+              if (data.cart_price == 0) {
+                cart_price = 0;
+                cart_price_with_percent = 0;
+              } else {
+                cart_price = data.cart_price;
+                cart_price_with_percent = data.cart_price_with_percent;
+              }
               data.users_cart.map(function (item) {
-                var price = item.price + item.sub_price / 100 - item.percent / 100 * (item.price + item.sub_price / 100);
-                cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>\n' + '                                        <div class="col-md-8">\n' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>\n' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>\n' + '                                        </div>\n' + '                                        <div class="col-md-1">\n' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>\n' + '                                        </div></li>';
+                var price = Math.round((item.price + item.sub_price / 100 - (item.price + item.sub_price / 100) * item.percent / 100) * 100) / 100;
+                cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>' + '                                        <div class="col-md-8">' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>' + '                                        </div>' + '                                        <div class="col-md-1">' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>' + '                                        </div></li>';
               });
-              cart.innerHTML += '<li>\n' + '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>\n' + '                        </li>';
+              cart.innerHTML += '<li>Стоимость покупок: ' + cart_price_with_percent + '<del><sup>' + cart_price + '</sup></del>&#8381;</li>' + '<li>' + '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' + '                        </li>';
             }
             if (data.users_cart === undefined || data.users_cart.length === 0) {
               cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
@@ -21660,7 +21671,29 @@ __webpack_require__.r(__webpack_exports__);
                 _paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
               });
             }
-          } else if (data.message === 'front_index') {} else if (data.message === "search_blog") {}
+          } else if (data.message === 'front_index') {} else if (data.message === "search_blog") {} else if (data.message === "front_cart") {
+            var cart_produts = document.getElementById('cart_products');
+            cart_produts.innerHTML = '';
+            var i = 0;
+            var _cart_price = 0;
+            var _cart_price_with_percent = 0;
+            if (data.users_cart.length > 0) {
+              data.users_cart.map(function (item) {
+                i++;
+                var price = Math.round((item.price + item.sub_price / 100 - (item.price + item.sub_price / 100) * item.percent / 100) * 100) / 100;
+                cart_produts.innerHTML += '<div class="col-md-1 cart_table_item">' + i + '</div>' + '<div class="col-md-8 cart_table_item" style="float: left">' + '<div class="row">' + '<div class="col-md-3">' + '<a href="/product/' + item.id + '">' + '<img width="100%" src="/front/img/shop/' + item.img + '" data-at2x="/front/img/shop/' + item.img + '" class="attachment-shop_thumbnail wp-post-image" alt="">' + '</a>' + '</div>' + '<div class="col-md-9">' + '<a href="/product/' + item.id + '">' + item.name + ' </a>' + '</div>' + '</div>' + '</div>' + '<div class="col-md-2 cart_table_item"><span class="amount">' + price + '<del><sup>' + item.price + '.' + item.sub_price + '</sup></del> <sup>&#8381;</sup></span></div>' + '<div class="col-md-1 cart_table_item"><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></div>';
+              });
+            } else {
+              cart_produts.innerHTML = '<div class="col-md-12 cart_table_item">Пока Ваша корзина пуста</div>';
+            }
+            if (data.cart_price_with_percent == 0) {
+              document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' + '                            <div class="col-md-3">0&#8381;</div>';
+            } else {
+              _cart_price = data.cart_price;
+              _cart_price_with_percent = data.cart_price_with_percent;
+              document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' + '                            <div class="col-md-3">' + _cart_price_with_percent + '<del><sup>' + _cart_price + '</sup></del>&#8381;</div>';
+            }
+          }
         }
       };
       $('body').on('click', '#send_comment', function () {
@@ -21694,9 +21727,9 @@ __webpack_require__.r(__webpack_exports__);
         cart.style.display = 'block';
         data.users_cart.map(function (item) {
           var price = item.price + item.sub_price / 100 - item.percent / 100 * (item.price + item.sub_price / 100);
-          cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>\n' + '                                        <div class="col-md-8">\n' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>\n' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>\n' + '                                        </div>\n' + '                                        <div class="col-md-1">\n' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>\n' + '                                        </div></li>';
+          cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>' + '                                        <div class="col-md-8">' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>' + '                                        </div>' + '                                        <div class="col-md-1">' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>' + '                                        </div></li>';
         });
-        cart.innerHTML += '<li>\n' + '                            <a rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>\n' + '                        </li>';
+        cart.innerHTML += '<li>' + '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' + '                        </li>';
       }
     };
   }
@@ -22201,249 +22234,16 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
     "border": "1px solid rgb(24, 187, 124)"
   }
 })])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-12",
+  "class": "col-md-12"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row",
   id: "cart_products"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-12"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "row"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-1 cart_table_item"
-}, "#"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-8 cart_table_item",
-  style: {
-    "float": "left"
-  }
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "row"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "shop-single-item.html"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "http://placehold.it/65x65",
-  "data-at2x": "http://placehold.it/65x65",
-  "class": "attachment-shop_thumbnail wp-post-image",
-  alt: ""
-})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-9"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "shop-single-item.html"
-}, "Donec ut velit varius Fusce nec nisl vulputate ")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-2 cart_table_item"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "amount"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("14500"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "$")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-1 cart_table_item"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fa fa-times",
-  "aria-hidden": "true"
-})])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-9"
-}, "Стоимоть:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-3"
-}, "111")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
-  colspan: "6",
-  "class": "actions"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "coupon"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "coupon_code"
-}, "Coupon:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "coupon_code",
-  "class": "input-text corner-radius-top",
-  id: "coupon_code",
-  value: "",
-  placeholder: "Coupon code"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "submit",
-  "class": "cws-button corner-radius-bottom",
-  name: "apply_coupon",
-  value: "Apply Coupon"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "submit",
-  "class": "cws-button bt-color-5",
-  name: "update_cart",
-  value: "Update Cart"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "submit",
-  "class": "cws-button bt-color-3",
-  name: "proceed",
-  value: "Proceed to Checkout"
-})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
-  "class": "divider-color"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "cart-collaterals"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  "class": "shipping_calculator",
-  action: "#",
-  method: "post"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Calculate shipping"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "shipping-calculator-form"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "form-row form-row-wide"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-  name: "calc_shipping_country",
-  id: "calc_shipping_country",
-  "class": "country_to_state",
-  rel: "calc_shipping_state"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: ""
-}, "Select a country..."), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AF"
-}, "Afghanistan"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AL"
-}, "Albania"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "DZ"
-}, "Algeria"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AD"
-}, "Andorra"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AO"
-}, "Angola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AI"
-}, "Anguilla"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AQ"
-}, "Antarctica"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AG"
-}, "Antigua and Barbuda"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AR"
-}, "Argentina"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AM"
-}, "Armenia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AW"
-}, "Aruba"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AU"
-}, "Australia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AT"
-}, "Austria"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "AZ"
-}, "Azerbaijan"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BS"
-}, "Bahamas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BH"
-}, "Bahrain"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BD"
-}, "Bangladesh"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BB"
-}, "Barbados"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BY"
-}, "Belarus"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "PW"
-}, "Belau"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BE"
-}, "Belgium"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BZ"
-}, "Belize"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BJ"
-}, "Benin"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BM"
-}, "Bermuda"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BT"
-}, "Bhutan"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BO"
-}, "Bolivia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BQ"
-}, "Bonaire, Saint Eustatius and Saba"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BA"
-}, "Bosnia and Herzegovina"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BW"
-}, "Botswana"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BV"
-}, "Bouvet Island"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BR"
-}, "Brazil"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "IO"
-}, "British Indian Ocean Territory"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "VG"
-}, "British Virgin Islands"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BN"
-}, "Brunei"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BG"
-}, "Bulgaria"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BF"
-}, "Burkina Faso"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "BI"
-}, "Burundi"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "KH"
-}, "Cambodia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CM"
-}, "Cameroon"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CA"
-}, "Canada"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CV"
-}, "Cape Verde"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "KY"
-}, "Cayman Islands"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CF"
-}, "Central African Republic"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "TD"
-}, "Chad"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CL"
-}, "Chile"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CN"
-}, "China"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CX"
-}, "Christmas Island"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CC"
-}, "Cocos (Keeling) Islands"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CO"
-}, "Colombia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "KM"
-}, "Comoros"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CG"
-}, "Congo (Brazzaville)"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CD"
-}, "Congo (Kinshasa)"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CK"
-}, "Cook Islands"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CR"
-}, "Costa Rica"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "HR"
-}, "Croatia"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CU"
-}, "Cuba"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CW"
-}, "CuraÇao"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CY"
-}, "Cyprus"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "CZ"
-}, "Czech Republic")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "form-row form-row-wide"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "input-text",
-  value: "",
-  placeholder: "State / county",
-  name: "calc_shipping_state",
-  id: "calc_shipping_state"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "form-row form-row-wide"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "input-text",
-  value: "",
-  placeholder: "Postcode / Zip",
-  name: "calc_shipping_postcode",
-  id: "calc_shipping_postcode"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "submit",
-  name: "calc_shipping",
-  value: "1",
-  "class": "cws-button border-radius alt"
-}, "Update Totals")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "cart_totals"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "Cart Totals"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
-  "class": "cart-subtotal"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Cart Subtotal"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "amount"
-}, "$12")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
-  "class": "shipping"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Shipping"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, " Free Shipping ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", {
-  "class": "order-total"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Order Total"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "amount"
-}, "$12")])])])])])])], -1 /* HOISTED */);
+  "class": "row",
+  id: "cart_price"
+})])])], -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
@@ -23147,12 +22947,10 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "row"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-md-9"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Some category"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Shop "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Shop "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   id: "page-meta",
   "class": "group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "woocommerce-result-count"
-}, "Showing 1-9 of 23 results "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   id: "list-or-grid"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "grid-view active",
