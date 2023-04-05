@@ -54,16 +54,10 @@
                         <!-- / widget search -->
                         <!-- widget categories -->
                         <aside class="widget-categories">
-                            <h2>Categories</h2>
+                            <h2>Категории</h2>
                             <hr class="divider-big" />
-                            <ul>
-                                <li class="cat-item cat-item-1 current-cat"><a href="#">Software Training<span> (2) </span></a></li>
-                                <li class="cat-item cat-item-1 current-cat"><a href="#">Developing Mobile Apps<span> (6) </span></a></li>
-                                <li class="cat-item cat-item-1 current-cat"><a href="#">Arvchitecture and Built <span> (12) </span></a></li>
-                                <li class="cat-item cat-item-1 current-cat"><a href="#">Management and Business <span> (14) </span></a></li>
-                                <li class="cat-item cat-item-1 current-cat"><a href="#">Basic Cooking Techniq ues <span> (7) </span></a></li>
-                                <li class="cat-item cat-item-1 current-cat"><a href="#">Starting a Startup<span> (51) </span></a></li>
-                                <li class="cat-item cat-item-1 current-cat"><a href="#">Information Technology <span> (34) </span></a></li>
+                            <ul id="shop_category_link">
+
                             </ul>
                         </aside>
                         <!-- widget categories -->
@@ -95,50 +89,50 @@
                         </aside>
                         <!--/ widget shop filter -->
                         <!-- widget shoping cart -->
-                        <aside class="widget">
+                        <!--<aside class="widget">
                             <h2>Shopping Cart</h2>
                             <hr class="divider-big">
                             <div class="widget_shopping_cart_content">
                                 <ul class="cart_list product_list_widget">
                                     <li>
-                                        <a href="#">
-                                            <img src="http://placehold.it/65x65" data-at2x="http://placehold.it/65x65" alt="Placeholder" width="90" class="woocommerce-placeholder wp-post-image" height="90">
+                                        &lt;!&ndash;<a href="#">
+                                            <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt="Placeholder" width="90" class="woocommerce-placeholder wp-post-image" height="90">
                                             Donec ut velit varius
                                         </a>
                                         <p>Fusce nec nisl vulputate</p>
                                         <span class="quantity">
 										1 x <span class="amount">1683.00<sup>$</sup></span>
-									</span>
+									</span>&ndash;&gt;
                                     </li>
                                 </ul>
-                                <!-- end product list -->
+                                &lt;!&ndash; end product list &ndash;&gt;
                                 <p class="total clear-fix">
                                     <strong>Subtotal: <span class="amount">4463.00<sup>$</sup></span></strong>
                                     <a href="shop-cart.html" class="cws-button alt border-radius small bt-color-3">View Cart</a>
                                 </p>
                             </div>
                         </aside>
-                        <!--/ widget shoping cart -->
-                        <!-- widget best seller -->
+                        &lt;!&ndash;/ widget shoping cart &ndash;&gt;
+                        &lt;!&ndash; widget best seller &ndash;&gt;
                         <aside class="widget-selers">
                             <h2>Best Selers</h2>
                             <div class="carousel-nav">
                                 <div class="carousel-button">
-                                    <div class="prev"><i class="fa fa-angle-double-left"></i></div><!--
-							 --><div class="next"><i class="fa fa-angle-double-right"></i></div>
+                                    <div class="prev"><i class="fa fa-angle-double-left"></i></div>&lt;!&ndash;
+							 &ndash;&gt;<div class="next"><i class="fa fa-angle-double-right"></i></div>
                                 </div>
                             </div>
                             <hr class="divider-big" />
                             <div class="owl-carousel widget-carousel">
                                 <div>
                                     <article class="clear-fix">
-                                        <img src="http://placehold.it/65x65" data-at2x="http://placehold.it/65x65" alt>
+                                        <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt>
                                         <a href="#"><h4>Mauris consequat nisi</h4></a>
                                         <p>Fusce nec nisl vulputate</p>
                                         <p>700<sup>$</sup></p>
                                     </article>
                                     <article class="clear-fix">
-                                        <img src="http://placehold.it/65x65" data-at2x="http://placehold.it/65x65" alt>
+                                        <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt>
                                         <a href="#"><h4>Proin sed turpis eu</h4></a>
                                         <p>Fusce nec nisl vulputate</p>
                                         <p>1200<sup>$</sup></p>
@@ -146,13 +140,13 @@
                                 </div>
                                 <div>
                                     <article class="clear-fix">
-                                        <img src="http://placehold.it/65x65" data-at2x="http://placehold.it/65x65" alt>
+                                        <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt>
                                         <a href="#"><h4>Mauris consequat nisi</h4></a>
                                         <p>Fusce nec nisl vulputate</p>
                                         <p>700<sup>$</sup></p>
                                     </article>
                                     <article class="clear-fix">
-                                        <img src="http://placehold.it/65x65" data-at2x="http://placehold.it/65x65" alt>
+                                        <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt>
                                         <a href="#"><h4>Proin sed turpis eu</h4></a>
                                         <p>Fusce nec nisl vulputate</p>
                                         <p>1200<sup>$</sup></p>
@@ -160,8 +154,8 @@
                                 </div>
                             </div>
                         </aside>
-                        <!-- / widget best seller -->
-                        <!-- widget tag cloud -->
+                        &lt;!&ndash; / widget best seller &ndash;&gt;
+                        &lt;!&ndash; widget tag cloud &ndash;&gt;
                         <aside class="widget-tag">
                             <h2>Tag Cloud</h2>
                             <hr class="divider-big margin-bottom" />
@@ -180,7 +174,7 @@
                             </div>
                             <hr class="margin-top" />
                         </aside>
-                        <!-- / widget tag cloud -->
+                        &lt;!&ndash; / widget tag cloud &ndash;&gt;-->
                         <!-- widget follow -->
                         <aside class="widget-subscribe">
                             <h2>Связаться:</h2>

@@ -7502,6 +7502,7 @@ input[type=radio] {
 }
 .products.list-view .product .picture {
 	float: left;
+    width: 30%;
 	margin-right: 30px;
 }
 .products.list-view .product .star-rating {

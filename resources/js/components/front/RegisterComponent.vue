@@ -7,8 +7,8 @@
             <div class="grid-row">
                 <div class="login-block">
                     <div class="logo">
-                        <img src="img/logo@2x.png" data-at2x="img/logo@2x.png" alt="" width="82" height="72">
-                        <h2>uniLearn</h2>
+                        <img src="/logo.png" data-at2x="/logo.png" alt="" width="82" height="72">
+                        <h2>Easy-Script</h2>
                     </div>
                     <form class="login-form" action="/register" method="post">
                         <input type="hidden" :value="csrf" name="_token">

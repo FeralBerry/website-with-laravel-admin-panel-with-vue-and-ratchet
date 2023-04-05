@@ -21247,128 +21247,20 @@ __webpack_require__.r(__webpack_exports__);
   props: ['data'],
   data: function data() {
     return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       footer_blog: '',
-      connection: new WebSocket("ws://127.0.0.1:4710")
-    };
-  },
-  mounted: function mounted() {},
-  created: function created() {
-    var _this = this;
-    this.data.footer_blog.map(function (item) {
-      var brief = '';
-      var div = document.createElement('div');
-      if (item.description != null) {
-        div.innerText = item.description;
-        brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
-        brief = brief.substr(0, 100);
-      }
-      var date = new Date(item.created_at);
-      var hour = date.getHours();
-      var minute = date.getMinutes();
-      var year = date.getFullYear();
-      var mounth = date.getMonth();
-      if (mounth === 1) {
-        mounth = 'Января';
-      }
-      if (mounth === 2) {
-        mounth = 'Февраля';
-      }
-      if (mounth === 3) {
-        mounth = 'Марта';
-      }
-      if (mounth === 4) {
-        mounth = 'Апреля';
-      }
-      if (mounth === 5) {
-        mounth = 'Мая';
-      }
-      if (mounth === 6) {
-        mounth = 'Июнь';
-      }
-      if (mounth === 7) {
-        mounth = 'Июля';
-      }
-      if (mounth === 8) {
-        mounth = 'Августа';
-      }
-      if (mounth === 9) {
-        mounth = 'Сентября';
-      }
-      if (mounth === 10) {
-        mounth = 'Октября';
-      }
-      if (mounth === 11) {
-        mounth = 'Ноября';
-      }
-      if (mounth === 12) {
-        mounth = 'Декабря';
-      }
-      var day = date.getDate();
-      _this.footer_blog += '<article><h3><a class="footer_blog" href="/blog/' + item.id + '">' + item.title + '</a></h3>' + '<div class="course-date">' + '   <div>' + hour + '<sup>' + minute + '</sup></div>' + '   <div>' + day + ' ' + mounth + ' ' + year + '</div>' + '</div>' + '<p>' + brief + '...</p>' + '</article>';
-    });
-    this.connection.onmessage = function (event) {
-      var data = JSON.parse(event.data);
-      if (data.message === 'footer_name_error') {
-        var footer_name_error = document.getElementById('footer_name_error');
-        footer_name_error.style.display = 'block';
-        setTimeout(function () {
-          $('#footer_name_error').fadeOut('fast');
-        }, 3000);
-      } else if (data.message === 'footer_phone_error') {
-        var footer_phone_error = document.getElementById('footer_phone_error');
-        footer_phone_error.style.display = 'block';
-        setTimeout(function () {
-          $('#footer_phone_error').fadeOut('fast');
-        }, 3000);
-      } else if (data.message === 'footer_message_error') {
-        var footer_message_error = document.getElementById('footer_message_error');
-        footer_message_error.style.display = 'block';
-        setTimeout(function () {
-          $('#footer_message_error').fadeOut('fast');
-        }, 3000);
-      } else if (data.message === 'footer_success') {
-        var footer_success = document.getElementById('footer_success');
-        footer_success.style.display = 'block';
-        setTimeout(function () {
-          $('#footer_success').fadeOut('fast');
-        }, 5000);
-      }
-    };
-  },
-  methods: {
-    send_footer_contact: function send_footer_contact() {
-      var footer_name = document.getElementById('footer_name').value;
-      var footer_phone = document.getElementById('footer_phone').value;
-      var footer_message = document.getElementById('footer_message').value;
-      this.connection.send('{"command":"front_footer_message","footer_name":"' + footer_name + '","footer_phone":"' + footer_phone + '","footer_message":"' + footer_message + '"}');
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/HeaderComponent.vue?vue&type=script&lang=js":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/HeaderComponent.vue?vue&type=script&lang=js ***!
-  \***************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "HeaderComponent",
-  props: ['data'],
-  data: function data() {
-    return {
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      connection: new WebSocket('ws://' + "127.0.0.1:4710")
     };
   },
   watch: {
     '$route': function $route(to, from) {
-      var connection = new WebSocket("ws://127.0.0.1:4710");
+      var protocol = 'ws://';
+      if (window.location.protocol === 'https:') {
+        protocol = 'wss://';
+      }
+      var wsUri = protocol + "127.0.0.1:4710";
+      var connection = new WebSocket(wsUri);
+      this.connection = connection;
       connection.onopen = function (event) {
         connection.send('{"command":"cart"}');
         if (to.fullPath.indexOf('shop') > 0) {
@@ -21387,6 +21279,7 @@ __webpack_require__.r(__webpack_exports__);
       connection.onmessage = function (event) {
         var data = JSON.parse(event.data);
         if (data) {
+          if (data.navigate === 'front_navigate') {}
           if (data.cart === 'cart') {
             var cart = document.getElementById('cart');
             if (data.users_cart != null) {
@@ -21443,6 +21336,13 @@ __webpack_require__.r(__webpack_exports__);
               });
               document.getElementById('products').innerHTML += '<li class="product">' + '<div class="picture">' + new_sale + '<img src="' + img + '" data-at2x="' + img + '" alt="">' + '<span class="hover-effect"></span>' + '<div class="link-cont">' + '<a href="http://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' + '<a href="shop-single-product.html" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' + '</div>' + '</div>' + '<div class="product-name">' + '<a href="shop-single-product.html">' + item.name + '</a>' + '</div>' + '<div class="star-rating" title="Rated 4.00 out of 5">' + '<span style="width:60%"><strong class="rating">4.00</strong> out of 5</span>' + '</div>' + '<span class="price">' + '<span class="amount">' + sale_price + '&#32;<sup><del>' + item.price + '.' + item.sub_price + '</del></sup>&#8381;</span>' + '</span>' + '<div class="product-description">' + '<div class="short-description">' + '<p>' + description + '</p>' + '</div>' + '</div>' + link + '</li>';
             });
+            var shop_category_link = document.getElementById('shop_category_link');
+            shop_category_link.innerHTML = '';
+            data.navigate.map(function (item) {
+              if (item.href.indexOf('/shop/') >= 0) {
+                shop_category_link.innerHTML += '<li class="cat-item cat-item-1 current-cat"><a href="' + item.href + '">' + item.title + '<span></span></a></li>';
+              }
+            });
             var paginate_item = document.getElementById('paginate_item');
             data.shop.path = window.location.protocol + '//' + window.location.hostname;
             data.shop.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
@@ -21492,8 +21392,7 @@ __webpack_require__.r(__webpack_exports__);
               var minute = date.getMinutes();
               var mounth = date.getMonth();
               var day = date.getDate();
-              comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + /*'<a class="button reply" href="#"><i class="fa fa-rotate-left"></i> Reply</a>' +*/
-              '</div>' + '</div>' + '</li>';
+              comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + '</div>' + '</div>' + '</li>';
             });
             comments.innerHTML += '</ol>';
             data.blog.map(function (item) {
@@ -21574,8 +21473,7 @@ __webpack_require__.r(__webpack_exports__);
               var minute = date.getMinutes();
               var mounth = date.getMonth();
               var day = date.getDate();
-              _comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + /*'<a class="button reply" href="#"><i class="fa fa-rotate-left"></i> Reply</a>' +*/
-              '</div>' + '</div>' + '</li>';
+              _comments.innerHTML += '<li class="comment">' + '<div class="comment_container clear">' + '<img src="' + avatar + '" data-at2x="' + avatar + '" alt="" class="avatar">' + '<div class="comment-text">' + '<p class="meta">' + '<strong>' + item.name + '</strong>' + '<time datetime="2016-06-07T12:14:53+00:00">/ ' + day + '.' + mounth + '.' + year + ' ' + hour + ':' + minute + '</time>' + '</p>' + '<div class="description">' + '<p>' + item.description + '</p>' + '</div>' + '</div>' + '</div>' + '</li>';
             });
             _comments.innerHTML += '</ol>';
             document.getElementById('comments-post').innerHTML = '<i class="fa fa-comment"></i> ' + data.count_comments + '</div>';
@@ -21710,7 +21608,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {},
   created: function created() {
-    var connection = new WebSocket("ws://127.0.0.1:4710");
+    var _this = this;
+    var protocol = 'ws://';
+    if (window.location.protocol === 'https:') {
+      protocol = 'wss://';
+    }
+    var wsUri = protocol + "127.0.0.1:4710";
+    var connection = new WebSocket(wsUri);
+    this.connection = connection;
     $('body').on('click', '.add_to_cart', function () {
       var user_id = $('meta[name=user_id]').attr('content');
       this.href = 'javascript: void(0)';
@@ -21718,6 +21623,58 @@ __webpack_require__.r(__webpack_exports__);
       this.classList.add('bt-color-6');
       this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен';
       connection.send('{"command":"add_to_cart","user_id":"' + user_id + '","product_id":"' + $(this).attr('id') + '"}');
+    });
+    this.data.footer_blog.map(function (item) {
+      var brief = '';
+      var div = document.createElement('div');
+      if (item.description != null) {
+        div.innerText = item.description;
+        brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
+        brief = brief.substr(0, 100);
+      }
+      var date = new Date(item.created_at);
+      var hour = date.getHours();
+      var minute = date.getMinutes();
+      var year = date.getFullYear();
+      var mounth = date.getMonth();
+      if (mounth === 1) {
+        mounth = 'Января';
+      }
+      if (mounth === 2) {
+        mounth = 'Февраля';
+      }
+      if (mounth === 3) {
+        mounth = 'Марта';
+      }
+      if (mounth === 4) {
+        mounth = 'Апреля';
+      }
+      if (mounth === 5) {
+        mounth = 'Мая';
+      }
+      if (mounth === 6) {
+        mounth = 'Июнь';
+      }
+      if (mounth === 7) {
+        mounth = 'Июля';
+      }
+      if (mounth === 8) {
+        mounth = 'Августа';
+      }
+      if (mounth === 9) {
+        mounth = 'Сентября';
+      }
+      if (mounth === 10) {
+        mounth = 'Октября';
+      }
+      if (mounth === 11) {
+        mounth = 'Ноября';
+      }
+      if (mounth === 12) {
+        mounth = 'Декабря';
+      }
+      var day = date.getDate();
+      _this.footer_blog += '<article><h3><a class="footer_blog" href="/blog/' + item.id + '">' + item.title + '</a></h3>' + '<div class="course-date">' + '   <div>' + hour + '<sup>' + minute + '</sup></div>' + '   <div>' + day + ' ' + mounth + ' ' + year + '</div>' + '</div>' + '<p>' + brief + '...</p>' + '</article>';
     });
     connection.onmessage = function (event) {
       var data = JSON.parse(event.data);
@@ -21730,9 +21687,66 @@ __webpack_require__.r(__webpack_exports__);
           cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/' + item.img + ');background-size: cover"></div>' + '                                        <div class="col-md-8">' + '                                            <p><span class="cart_item_title">' + item.name + '</span></p>' + '                                            <span class="price"><span class="amount">' + price + ' <sup><del>' + item.price + '.' + item.sub_price + '</del></sup>₽</span></span>' + '                                        </div>' + '                                        <div class="col-md-1">' + '                                            <span class="del_cart" onclick="delete_cart(' + item.id + ')"><i class="fa fa-times" aria-hidden="true"></i></span>' + '                                        </div></li>';
         });
         cart.innerHTML += '<li>' + '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' + '                        </li>';
+      } else if (data.message === 'footer_name_error') {
+        var footer_name_error = document.getElementById('footer_name_error');
+        footer_name_error.style.display = 'block';
+        setTimeout(function () {
+          $('#footer_name_error').fadeOut('fast');
+        }, 3000);
+      } else if (data.message === 'footer_phone_error') {
+        var footer_phone_error = document.getElementById('footer_phone_error');
+        footer_phone_error.style.display = 'block';
+        setTimeout(function () {
+          $('#footer_phone_error').fadeOut('fast');
+        }, 3000);
+      } else if (data.message === 'footer_message_error') {
+        var footer_message_error = document.getElementById('footer_message_error');
+        footer_message_error.style.display = 'block';
+        setTimeout(function () {
+          $('#footer_message_error').fadeOut('fast');
+        }, 3000);
+      } else if (data.message === 'footer_success') {
+        var footer_success = document.getElementById('footer_success');
+        footer_success.style.display = 'block';
+        setTimeout(function () {
+          $('#footer_success').fadeOut('fast');
+        }, 5000);
       }
     };
+  },
+  methods: {
+    send_footer_contact: function send_footer_contact() {
+      var footer_name = document.getElementById('footer_name').value;
+      var footer_phone = document.getElementById('footer_phone').value;
+      var footer_message = document.getElementById('footer_message').value;
+      this.connection.send('{"command":"front_footer_message","footer_name":"' + footer_name + '","footer_phone":"' + footer_phone + '","footer_message":"' + footer_message + '"}');
+    }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/HeaderComponent.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/front/HeaderComponent.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "HeaderComponent",
+  props: ['data'],
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    };
+  },
+  mounted: function mounted() {},
+  created: function created() {}
 });
 
 /***/ }),
@@ -22899,12 +22913,12 @@ var _hoisted_4 = {
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "logo"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/logo@2x.png",
-  "data-at2x": "img/logo@2x.png",
+  src: "/logo.png",
+  "data-at2x": "/logo.png",
   alt: "",
   width: "82",
   height: "72"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "uniLearn")], -1 /* HOISTED */);
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Easy-Script")], -1 /* HOISTED */);
 var _hoisted_6 = {
   "class": "login-form",
   action: "/register",
@@ -23009,37 +23023,11 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   value: "GO"
 })])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget search "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
   "class": "widget-categories"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Categories"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Категории"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
   "class": "divider-big"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "cat-item cat-item-1 current-cat"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Software Training"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (2) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "cat-item cat-item-1 current-cat"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Developing Mobile Apps"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (6) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "cat-item cat-item-1 current-cat"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Arvchitecture and Built "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (12) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "cat-item cat-item-1 current-cat"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Management and Business "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (14) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "cat-item cat-item-1 current-cat"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Basic Cooking Techniq ues "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (7) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "cat-item cat-item-1 current-cat"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Starting a Startup"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (51) ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "cat-item cat-item-1 current-cat"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Information Technology "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " (34) ")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget shop filter "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+  id: "shop_category_link"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget shop filter "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
   "class": "widget-filter"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Filter by price"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
   method: "get",
@@ -23089,126 +23077,7 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   value: "product"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "clear"
-})])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget shop filter "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget shoping cart "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
-  "class": "widget"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Shopping Cart"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
-  "class": "divider-big"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "widget_shopping_cart_content"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
-  "class": "cart_list product_list_widget"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "http://placehold.it/65x65",
-  "data-at2x": "http://placehold.it/65x65",
-  alt: "Placeholder",
-  width: "90",
-  "class": "woocommerce-placeholder wp-post-image",
-  height: "90"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Donec ut velit varius ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Fusce nec nisl vulputate"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "quantity"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 1 x "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "amount"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("1683.00"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "$")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" end product list "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "total clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Subtotal: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "amount"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("4463.00"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "$")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "shop-cart.html",
-  "class": "cws-button alt border-radius small bt-color-3"
-}, "View Cart")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget shoping cart "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget best seller "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
-  "class": "widget-selers"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Best Selers"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "carousel-nav"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "carousel-button"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "prev"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fa fa-angle-double-left"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n\t\t\t\t\t\t\t "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "next"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fa fa-angle-double-right"
-})])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
-  "class": "divider-big"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "owl-carousel widget-carousel"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
-  "class": "clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "http://placehold.it/65x65",
-  "data-at2x": "http://placehold.it/65x65",
-  alt: ""
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Mauris consequat nisi")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Fusce nec nisl vulputate"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("700"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "$")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
-  "class": "clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "http://placehold.it/65x65",
-  "data-at2x": "http://placehold.it/65x65",
-  alt: ""
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Proin sed turpis eu")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Fusce nec nisl vulputate"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("1200"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "$")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
-  "class": "clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "http://placehold.it/65x65",
-  "data-at2x": "http://placehold.it/65x65",
-  alt: ""
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Mauris consequat nisi")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Fusce nec nisl vulputate"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("700"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "$")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", {
-  "class": "clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "http://placehold.it/65x65",
-  "data-at2x": "http://placehold.it/65x65",
-  alt: ""
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Proin sed turpis eu")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Fusce nec nisl vulputate"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("1200"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("sup", null, "$")])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget best seller "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget tag cloud "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
-  "class": "widget-tag"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Tag Cloud"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
-  "class": "divider-big margin-bottom"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "tag-cloud"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Daily"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Design"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Illustration"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Label"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Photo"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Pofessional"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Show"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Sound"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Sounds"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Tv"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(", "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "#",
-  rel: "tag"
-}, "Video")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
-  "class": "margin-top"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget tag cloud "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget follow "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+})])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget shop filter "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget shoping cart "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<aside class=\"widget\">\n                            <h2>Shopping Cart</h2>\n                            <hr class=\"divider-big\">\n                            <div class=\"widget_shopping_cart_content\">\n                                <ul class=\"cart_list product_list_widget\">\n                                    <li>\n                                        &lt;!&ndash;<a href=\"#\">\n                                            <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt=\"Placeholder\" width=\"90\" class=\"woocommerce-placeholder wp-post-image\" height=\"90\">\n                                            Donec ut velit varius\n                                        </a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <span class=\"quantity\">\n\t\t\t\t\t\t\t\t\t\t1 x <span class=\"amount\">1683.00<sup>$</sup></span>\n\t\t\t\t\t\t\t\t\t</span>&ndash;&gt;\n                                    </li>\n                                </ul>\n                                &lt;!&ndash; end product list &ndash;&gt;\n                                <p class=\"total clear-fix\">\n                                    <strong>Subtotal: <span class=\"amount\">4463.00<sup>$</sup></span></strong>\n                                    <a href=\"shop-cart.html\" class=\"cws-button alt border-radius small bt-color-3\">View Cart</a>\n                                </p>\n                            </div>\n                        </aside>\n                        &lt;!&ndash;/ widget shoping cart &ndash;&gt;\n                        &lt;!&ndash; widget best seller &ndash;&gt;\n                        <aside class=\"widget-selers\">\n                            <h2>Best Selers</h2>\n                            <div class=\"carousel-nav\">\n                                <div class=\"carousel-button\">\n                                    <div class=\"prev\"><i class=\"fa fa-angle-double-left\"></i></div>&lt;!&ndash;\n\t\t\t\t\t\t\t &ndash;&gt;<div class=\"next\"><i class=\"fa fa-angle-double-right\"></i></div>\n                                </div>\n                            </div>\n                            <hr class=\"divider-big\" />\n                            <div class=\"owl-carousel widget-carousel\">\n                                <div>\n                                    <article class=\"clear-fix\">\n                                        <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt>\n                                        <a href=\"#\"><h4>Mauris consequat nisi</h4></a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <p>700<sup>$</sup></p>\n                                    </article>\n                                    <article class=\"clear-fix\">\n                                        <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt>\n                                        <a href=\"#\"><h4>Proin sed turpis eu</h4></a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <p>1200<sup>$</sup></p>\n                                    </article>\n                                </div>\n                                <div>\n                                    <article class=\"clear-fix\">\n                                        <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt>\n                                        <a href=\"#\"><h4>Mauris consequat nisi</h4></a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <p>700<sup>$</sup></p>\n                                    </article>\n                                    <article class=\"clear-fix\">\n                                        <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt>\n                                        <a href=\"#\"><h4>Proin sed turpis eu</h4></a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <p>1200<sup>$</sup></p>\n                                    </article>\n                                </div>\n                            </div>\n                        </aside>\n                        &lt;!&ndash; / widget best seller &ndash;&gt;\n                        &lt;!&ndash; widget tag cloud &ndash;&gt;\n                        <aside class=\"widget-tag\">\n                            <h2>Tag Cloud</h2>\n                            <hr class=\"divider-big margin-bottom\" />\n                            <div class=\"tag-cloud\">\n                                <a href=\"#\" rel=\"tag\">Daily</a>,\n                                <a href=\"#\" rel=\"tag\">Design</a>,\n                                <a href=\"#\" rel=\"tag\">Illustration</a>,\n                                <a href=\"#\" rel=\"tag\">Label</a>,\n                                <a href=\"#\" rel=\"tag\">Photo</a>,\n                                <a href=\"#\" rel=\"tag\">Pofessional</a>,\n                                <a href=\"#\" rel=\"tag\">Show</a>,\n                                <a href=\"#\" rel=\"tag\">Sound</a>,\n                                <a href=\"#\" rel=\"tag\">Sounds</a>,\n                                <a href=\"#\" rel=\"tag\">Tv</a>,\n                                <a href=\"#\" rel=\"tag\">Video</a>\n                            </div>\n                            <hr class=\"margin-top\" />\n                        </aside>\n                        &lt;!&ndash; / widget tag cloud &ndash;&gt;"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget follow "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
   "class": "widget-subscribe"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Связаться:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
   "class": "divider-big margin-bottom"
@@ -23339,6 +23208,12 @@ var router = vue_router__WEBPACK_IMPORTED_MODULE_16__.createRouter({
   history: vue_router__WEBPACK_IMPORTED_MODULE_16__.createWebHistory(''),
   routes: routes
 });
+var protocol = 'ws://';
+if (window.location.protocol === 'https:') {
+  protocol = 'wss://';
+}
+var wsUri = protocol + "127.0.0.1:4710";
+var connection = new WebSocket(wsUri);
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
 app.use(router);
 app.component('main-component', _components_front_MainComponent__WEBPACK_IMPORTED_MODULE_2__["default"]);

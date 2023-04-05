@@ -35,7 +35,16 @@ const router = VueRouter.createRouter({
     routes,
 });
 
-const app = createApp({});
+let protocol = 'ws://';
+if (window.location.protocol === 'https:') {
+    protocol = 'wss://';
+}
+let wsUri = protocol+ process.env.MIX_WSS_URL;
+let connection = new WebSocket(wsUri);
+
+const app = createApp({
+
+});
 app.use(router);
 
 app.component('main-component', MainComponent);

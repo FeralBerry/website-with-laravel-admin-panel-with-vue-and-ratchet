@@ -295,10 +295,13 @@ class ChatController extends BackController
                 $seo['description'] = Str::limit(strip_tags($item->description),150,'...');
             }
         }
+        $navigate = DB::table('navigate')
+            ->get();
         $data = array_merge($this->cart(),[
             'message' => 'front_shop',
             'shop' => $shop,
             'seo' => $seo,
+            'navigate' => $navigate,
         ]);
         return $data;
     }
@@ -347,6 +350,7 @@ class ChatController extends BackController
         ]);
         return $data;
     }
+
     /*public function openChat($command){
         $chat = DB::table('chat')
             ->where('room_id',$command->room_id)
