@@ -21249,7 +21249,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       footer_blog: '',
-      connection: new WebSocket('ws://' + "127.0.0.1:4710")
+      connection: new WebSocket('ws://' + "127.0.0.1:4710"),
+      user_id: $('meta[name=user_id]').attr('content')
     };
   },
   watch: {
@@ -21334,7 +21335,8 @@ __webpack_require__.r(__webpack_exports__);
                   link = '<a onclick="javascript: void(0)" rel="nofollow" class="add_to_cart cws-button border-radius icon-left bt-color-6"> <i class="fa fa-shopping-cart"></i> Добавлен</a>';
                 }
               });
-              document.getElementById('products').innerHTML += '<li class="product">' + '<div class="picture">' + new_sale + '<img src="' + img + '" data-at2x="' + img + '" alt="">' + '<span class="hover-effect"></span>' + '<div class="link-cont">' + '<a href="http://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' + '<a href="shop-single-product.html" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' + '</div>' + '</div>' + '<div class="product-name">' + '<a href="shop-single-product.html">' + item.name + '</a>' + '</div>' + '<div class="star-rating" title="Rated 4.00 out of 5">' + '<span style="width:60%"><strong class="rating">4.00</strong> out of 5</span>' + '</div>' + '<span class="price">' + '<span class="amount">' + sale_price + '&#32;<sup><del>' + item.price + '.' + item.sub_price + '</del></sup>&#8381;</span>' + '</span>' + '<div class="product-description">' + '<div class="short-description">' + '<p>' + description + '</p>' + '</div>' + '</div>' + link + '</li>';
+              var rating_width = item.rating * 100 / 5;
+              document.getElementById('products').innerHTML += '<li class="product">' + '<div class="picture">' + new_sale + '<img src="' + img + '" data-at2x="' + img + '" alt="">' + '<span class="hover-effect"></span>' + '<div class="link-cont">' + '<a href="https://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' + '<a href="/shop/product/' + item.id + '" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' + '</div>' + '</div>' + '<div class="product-name">' + '<a href="shop-single-product.html">' + item.name + '</a>' + '</div>' + '<div class="star-rating" >' + '<a class="shop_rating" data_rating="1" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' + '<a class="shop_rating" data_rating="2" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -76px;position:absolute;width: 22px;height: 24px"></a>' + '<a class="shop_rating" data_rating="3" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -57px;position:absolute;width: 20px;height: 24px"></a>' + '<a class="shop_rating" data_rating="4" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -39px;position:absolute;width: 20px;height: 24px"</a>' + '<a class="shop_rating" data_rating="5" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -20px;position:absolute;width: 24px;height: 24px"></a>' + '<span id="rating_width_' + item.id + '" style="width:' + rating_width + '%">' + '</div>' + '<span class="price">' + '<span class="amount">' + sale_price + '&#32;<sup><del>' + item.price + '.' + item.sub_price + '</del></sup>&#8381;</span>' + '</span>' + '<div class="product-description">' + '<div class="short-description">' + '<p>' + description + '</p>' + '</div>' + '</div>' + link + '</li>';
             });
             var shop_category_link = document.getElementById('shop_category_link');
             shop_category_link.innerHTML = '';
@@ -21569,7 +21571,66 @@ __webpack_require__.r(__webpack_exports__);
                 _paginate_item.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
               });
             }
-          } else if (data.message === 'front_index') {} else if (data.message === "search_blog") {} else if (data.message === "front_cart") {
+          } else if (data.message === 'front_index') {} else if (data.message === "search_blog") {} else if (data.message === 'shop_search') {
+            document.getElementById('products').innerHTML = '';
+            console.log(data.shop_search);
+            data.shop_search.data.map(function (item) {
+              var new_sale = '<div class="ribbon ribbon-blue"></div>';
+              if (item["new"] === 1) {
+                new_sale = '<div class="ribbon ribbon-blue"><div class="banner">' + '<div class="text">New</div>' + '</div>' + '</div>';
+              }
+              if (item.sale === 1) {
+                new_sale = '<div class="ribbon ribbon-blue"><div class="banner" style="text-align: center">' + '<div class="sale" style="margin-top: -13px;font-size: 20px;">-' + item.percent + '%</div>' + '</div>' + '</div>';
+              }
+              var description;
+              if (item.description.length < 100) {
+                description = item.description;
+              } else {
+                description = item.description.substr(0, 100) + '...';
+              }
+              var img;
+              if (item.img == null) {
+                img = 'http://placehold.it/270x200';
+              } else {
+                img = '/front/img/shop/' + item.img;
+              }
+              var link = '<a id="cart_' + item.id + '" rel="nofollow" class="add_to_cart cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>';
+              var sale_price = Math.round((item.price + item.sub_price / 100 - (item.price + item.sub_price / 100) * item.percent / 100) * 100) / 100;
+              var rating_width = item.rating * 100 / 5;
+              document.getElementById('products').innerHTML += '<li class="product">' + '<div class="picture">' + new_sale + '<img src="' + img + '" data-at2x="' + img + '" alt="">' + '<span class="hover-effect"></span>' + '<div class="link-cont">' + '<a href="https://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' + '<a href="/shop/product/' + item.id + '" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' + '</div>' + '</div>' + '<div class="product-name">' + '<a href="shop-single-product.html">' + item.name + '</a>' + '</div>' + '<div class="star-rating" >' + '<a class="shop_rating" data_rating="1" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' + '<a class="shop_rating" data_rating="2" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -76px;position:absolute;width: 22px;height: 24px"></a>' + '<a class="shop_rating" data_rating="3" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -57px;position:absolute;width: 20px;height: 24px"></a>' + '<a class="shop_rating" data_rating="4" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -39px;position:absolute;width: 20px;height: 24px"</a>' + '<a class="shop_rating" data_rating="5" data_shop_id="' + item.id + '" style="z-index:10;margin-left: -20px;position:absolute;width: 24px;height: 24px"></a>' + '<span id="rating_width_' + item.id + '" style="width:' + rating_width + '%">' + '</div>' + '<span class="price">' + '<span class="amount">' + sale_price + '&#32;<sup><del>' + item.price + '.' + item.sub_price + '</del></sup>&#8381;</span>' + '</span>' + '<div class="product-description">' + '<div class="short-description">' + '<p>' + description + '</p>' + '</div>' + '</div>' + link + '</li>';
+            });
+            var _paginate_item2 = document.getElementById('paginate_item');
+            data.shop_search.path = window.location.protocol + '//' + window.location.hostname;
+            data.shop_search.first_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=1';
+            data.shop_search.last_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + data.shop.last_page;
+            data.shop_search.next_page_url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + (data.shop.from + 1);
+            if (data.shop_search.links.length > 3) {
+              data.shop_search.links.map(function (items) {
+                var link = items.label;
+                var active = '';
+                var url = items.url;
+                if (items.active) {
+                  active = 'class="active"';
+                }
+                if (url === null) {
+                  url = '/blog';
+                } else {
+                  if (items.label === 'Next &raquo;') {
+                    url = data.shop.last_page_url;
+                  } else {
+                    url = window.location.protocol + '//' + window.location.hostname + '/blog?page=' + items.label;
+                  }
+                }
+                if (items.label === '&laquo; Previous') {
+                  link = '<i class="fa fa-angle-double-left"></i>';
+                }
+                if (items.label === 'Next &raquo;') {
+                  link = '<i class="fa fa-angle-double-right"></i>';
+                }
+                _paginate_item2.innerHTML += '<a href="' + url + '" ' + active + '>' + link + '</a>';
+              });
+            }
+          } else if (data.message === "front_cart") {
             var cart_produts = document.getElementById('cart_products');
             cart_produts.innerHTML = '';
             var i = 0;
@@ -21591,18 +21652,25 @@ __webpack_require__.r(__webpack_exports__);
               _cart_price_with_percent = data.cart_price_with_percent;
               document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' + '                            <div class="col-md-3">' + _cart_price_with_percent + '<del><sup>' + _cart_price + '</sup></del>&#8381;</div>';
             }
+          } else if (data.message === 'new_shop_rating') {
+            var rating_width = document.getElementById('rating_width_' + data.shop_id + '');
+            rating_width.setAttribute('style', 'width:' + data.rating + '%!important');
           }
         }
       };
       $('body').on('click', '#send_comment', function () {
         if ($('meta[name=user_id]').attr('content')) {
-          var user_id = $('meta[name=user_id]').attr('content');
           var blog_id = document.getElementById('blog_id').value;
           var message = document.getElementById('message').value;
-          connection.send('{"command":"blog_comment_add","user_id":"' + user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
+          connection.send('{"command":"blog_comment_add","user_id":"' + this.user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
         } else {
           alert('Для добавления комментария нужно авторизоваться!');
         }
+      });
+      $('body').on('submit', '#shop_search', function (event) {
+        event.preventDefault();
+        var shop_search_input = document.getElementById('shop_search_input').value;
+        connection.send('{"command":"shop_search","shop_search_input":"' + shop_search_input + '"}');
       });
     }
   },
@@ -21617,12 +21685,18 @@ __webpack_require__.r(__webpack_exports__);
     var connection = new WebSocket(wsUri);
     this.connection = connection;
     $('body').on('click', '.add_to_cart', function () {
-      var user_id = $('meta[name=user_id]').attr('content');
       this.href = 'javascript: void(0)';
       this.classList.remove('alt');
       this.classList.add('bt-color-6');
       this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен';
-      connection.send('{"command":"add_to_cart","user_id":"' + user_id + '","product_id":"' + $(this).attr('id') + '"}');
+      connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
+    });
+    $('body').on('click', '.shop_rating', function () {
+      if (this.user_id == null && this.user_id == '') {
+        alert('Для добавления голоса за товар нужно авторизоваться!');
+      } else {
+        connection.send('{"command":"shop_rating","shop_id":"' + $(this).attr('data_shop_id') + '","rating":"' + $(this).attr('data_rating') + '","user_id":"' + $('meta[name=user_id]').attr('content') + '"}');
+      }
     });
     this.data.footer_blog.map(function (item) {
       var brief = '';
@@ -21946,6 +22020,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ShopComponent",
   props: ['data'],
+  data: function data() {
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    };
+  },
   mounted: function mounted() {},
   created: function created() {}
 });
@@ -22953,153 +23032,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_1 = {
   "class": "page-content woocommerce"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_2 = {
   "class": "container clear-fix"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_3 = {
   "class": "row"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "col-md-9"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Shop "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  id: "page-meta",
-  "class": "group"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  id: "list-or-grid"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "grid-view active",
-  title: "Switch to grid view"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fa fa-th-large"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "list-view",
-  title: "Switch to list view"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fa fa-th-list"
-})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  "class": "woocommerce-ordering",
-  method: "get"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-  name: "orderby",
-  "class": "orderby"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "menu_order"
-}, "Default sorting"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "popularity"
-}, "Sort by popularity"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "rating"
-}, "Sort by average rating"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "date"
-}, "Sort by newness"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "price"
-}, "Sort by price: low to high"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "price-desc"
-}, "Sort by price: high to low")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
-  "class": "products",
-  id: "products"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" product "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" product ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Shop "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "page-pagination clear-fix",
-  id: "paginate_item"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ pagination ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-md-9\"><!-- Shop --><div id=\"page-meta\" class=\"group\"><div id=\"list-or-grid\"><div class=\"grid-view active\" title=\"Switch to grid view\"><i class=\"fa fa-th-large\"></i></div><div class=\"list-view\" title=\"Switch to list view\"><i class=\"fa fa-th-list\"></i></div></div><!--&lt;form class=&quot;woocommerce-ordering&quot; method=&quot;get&quot;&gt;\n                                &lt;select name=&quot;orderby&quot; class=&quot;orderby&quot;&gt;\n                                    &lt;option value=&quot;menu_order&quot;&gt;Default sorting&lt;/option&gt;\n                                    &lt;option value=&quot;popularity&quot;&gt;Sort by popularity&lt;/option&gt;\n                                    &lt;option value=&quot;rating&quot;&gt;Sort by average rating&lt;/option&gt;\n                                    &lt;option value=&quot;date&quot;&gt;Sort by newness&lt;/option&gt;\n                                    &lt;option value=&quot;price&quot;&gt;Sort by price: low to high&lt;/option&gt;\n                                    &lt;option value=&quot;price-desc&quot;&gt;Sort by price: high to low&lt;/option&gt;\n                                &lt;/select&gt;\n                            &lt;/form&gt;--></div><ul class=\"products\" id=\"products\"><!-- product --><!-- product --></ul><!--Shop --><!-- pagination --><div class=\"page-pagination clear-fix\" id=\"paginate_item\"></div><!--/ pagination --></div>", 1);
+var _hoisted_5 = {
   "class": "col-md-3"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget search "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget search "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+};
+var _hoisted_6 = {
   "class": "widget-search"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  method: "get",
-  "class": "search-form",
-  action: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+};
+var _hoisted_7 = {
+  id: "shop_search"
+};
+var _hoisted_8 = ["value"];
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "screen-reader-text"
-}, "Search for:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+}, "Поиск:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   type: "search",
   "class": "search-field",
-  placeholder: "Search",
+  placeholder: "Поиск",
   value: "",
-  name: "s",
-  title: "Search for:"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  id: "shop_search_input",
+  name: "shop_search_input",
+  title: "Поиск:"
+})], -1 /* HOISTED */);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   type: "submit",
   "class": "search-submit",
   value: "GO"
-})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget search "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
+}, null, -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
   "class": "widget-categories"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Категории"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
   "class": "divider-big"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
   id: "shop_category_link"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget shop filter "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
-  "class": "widget-filter"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Filter by price"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-  method: "get",
-  action: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price_slider_wrapper"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price_slider price_slider_amount ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all",
-  "aria-disabled": "false"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "ui-slider-range ui-widget-header ui-corner-all"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  "class": "ui-slider-handle ui-state-default ui-corner-all",
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price_label",
-  style: {}
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "from"
-})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  "class": "ui-slider-handle ui-state-default ui-corner-all",
-  href: "#"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price_label",
-  style: {}
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "to"
-})])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "price_slider_amount"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  id: "min_price",
-  name: "min_price",
-  value: "",
-  "data-min": "0",
-  placeholder: "Min price"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  id: "max_price",
-  name: "max_price",
-  value: "",
-  "data-max": "5000",
-  placeholder: "Max price"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"price_label\" style=\"\">\n                                            Price: <span class=\"from\"></span> - <span class=\"to\"></span>\n                                        </div> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "hidden",
-  name: "post_type",
-  value: "product"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "clear"
-})])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget shop filter "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget shoping cart "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<aside class=\"widget\">\n                            <h2>Shopping Cart</h2>\n                            <hr class=\"divider-big\">\n                            <div class=\"widget_shopping_cart_content\">\n                                <ul class=\"cart_list product_list_widget\">\n                                    <li>\n                                        &lt;!&ndash;<a href=\"#\">\n                                            <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt=\"Placeholder\" width=\"90\" class=\"woocommerce-placeholder wp-post-image\" height=\"90\">\n                                            Donec ut velit varius\n                                        </a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <span class=\"quantity\">\n\t\t\t\t\t\t\t\t\t\t1 x <span class=\"amount\">1683.00<sup>$</sup></span>\n\t\t\t\t\t\t\t\t\t</span>&ndash;&gt;\n                                    </li>\n                                </ul>\n                                &lt;!&ndash; end product list &ndash;&gt;\n                                <p class=\"total clear-fix\">\n                                    <strong>Subtotal: <span class=\"amount\">4463.00<sup>$</sup></span></strong>\n                                    <a href=\"shop-cart.html\" class=\"cws-button alt border-radius small bt-color-3\">View Cart</a>\n                                </p>\n                            </div>\n                        </aside>\n                        &lt;!&ndash;/ widget shoping cart &ndash;&gt;\n                        &lt;!&ndash; widget best seller &ndash;&gt;\n                        <aside class=\"widget-selers\">\n                            <h2>Best Selers</h2>\n                            <div class=\"carousel-nav\">\n                                <div class=\"carousel-button\">\n                                    <div class=\"prev\"><i class=\"fa fa-angle-double-left\"></i></div>&lt;!&ndash;\n\t\t\t\t\t\t\t &ndash;&gt;<div class=\"next\"><i class=\"fa fa-angle-double-right\"></i></div>\n                                </div>\n                            </div>\n                            <hr class=\"divider-big\" />\n                            <div class=\"owl-carousel widget-carousel\">\n                                <div>\n                                    <article class=\"clear-fix\">\n                                        <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt>\n                                        <a href=\"#\"><h4>Mauris consequat nisi</h4></a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <p>700<sup>$</sup></p>\n                                    </article>\n                                    <article class=\"clear-fix\">\n                                        <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt>\n                                        <a href=\"#\"><h4>Proin sed turpis eu</h4></a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <p>1200<sup>$</sup></p>\n                                    </article>\n                                </div>\n                                <div>\n                                    <article class=\"clear-fix\">\n                                        <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt>\n                                        <a href=\"#\"><h4>Mauris consequat nisi</h4></a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <p>700<sup>$</sup></p>\n                                    </article>\n                                    <article class=\"clear-fix\">\n                                        <img src=\"https://placehold.it/65x65\" data-at2x=\"https://placehold.it/65x65\" alt>\n                                        <a href=\"#\"><h4>Proin sed turpis eu</h4></a>\n                                        <p>Fusce nec nisl vulputate</p>\n                                        <p>1200<sup>$</sup></p>\n                                    </article>\n                                </div>\n                            </div>\n                        </aside>\n                        &lt;!&ndash; / widget best seller &ndash;&gt;\n                        &lt;!&ndash; widget tag cloud &ndash;&gt;\n                        <aside class=\"widget-tag\">\n                            <h2>Tag Cloud</h2>\n                            <hr class=\"divider-big margin-bottom\" />\n                            <div class=\"tag-cloud\">\n                                <a href=\"#\" rel=\"tag\">Daily</a>,\n                                <a href=\"#\" rel=\"tag\">Design</a>,\n                                <a href=\"#\" rel=\"tag\">Illustration</a>,\n                                <a href=\"#\" rel=\"tag\">Label</a>,\n                                <a href=\"#\" rel=\"tag\">Photo</a>,\n                                <a href=\"#\" rel=\"tag\">Pofessional</a>,\n                                <a href=\"#\" rel=\"tag\">Show</a>,\n                                <a href=\"#\" rel=\"tag\">Sound</a>,\n                                <a href=\"#\" rel=\"tag\">Sounds</a>,\n                                <a href=\"#\" rel=\"tag\">Tv</a>,\n                                <a href=\"#\" rel=\"tag\">Video</a>\n                            </div>\n                            <hr class=\"margin-top\" />\n                        </aside>\n                        &lt;!&ndash; / widget tag cloud &ndash;&gt;"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget follow "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", {
-  "class": "widget-subscribe"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Связаться:"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
-  "class": "divider-big margin-bottom"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "https://wa.me/79687106270",
-  "class": "fa fa-phone"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "https://github.com/FeralBerry",
-  "class": "fa fa-github"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "mailto:pusiket90@yandex.ru",
-  "class": "fa fa-envelope-o"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "",
-  "class": "fa fa-youtube"
-})])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget follow ")])])])], -1 /* HOISTED */);
-
+})], -1 /* HOISTED */);
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<aside class=\"widget-subscribe\"><h2>Связаться:</h2><hr class=\"divider-big margin-bottom\"><div><a href=\"https://wa.me/79687106270\" class=\"fa fa-phone\"></a><a href=\"https://github.com/FeralBerry\" class=\"fa fa-github\"></a><a href=\"mailto:pusiket90@yandex.ru\" class=\"fa fa-envelope-o\"></a><a href=\"\" class=\"fa fa-youtube\"></a></div></aside>", 1);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
     data: $props.data
-  }, null, 8 /* PROPS */, ["data"]), _hoisted_1]);
+  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget search "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget search "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "hidden",
+    value: $data.csrf,
+    name: "_token"
+  }, null, 8 /* PROPS */, _hoisted_8), _hoisted_9, _hoisted_10])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget search "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" widget categories "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/ widget shop filter "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<aside class=\"widget-filter\">\n                            <h2>Фильт по цене</h2>\n                            <form>\n                                <div class=\"price_slider_wrapper\">\n                                    <div class=\"price_slider price_slider_amount ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all\" aria-disabled=\"false\">\n                                        <div class=\"ui-slider-range ui-widget-header ui-corner-all\"></div>\n                                        <a class=\"ui-slider-handle ui-state-default ui-corner-all\" href=\"#\">\n                                            <div class=\"price_label\" style=\"\"><span class=\"from\"></span></div>\n                                        </a>\n                                        <a class=\"ui-slider-handle ui-state-default ui-corner-all\" href=\"#\">\n                                            <div class=\"price_label\" style=\"\"><span class=\"to\"></span></div>\n                                        </a>\n                                    </div>\n                                    <div class=\"price_slider_amount\">\n                                        <input type=\"text\" id=\"min_price\" name=\"min_price\" value=\"\" data-min=\"0\" placeholder=\"Min price\">\n                                        <input type=\"text\" id=\"max_price\" name=\"max_price\" value=\"\" data-max=\"5000\" placeholder=\"Max price\">\n                                        <input type=\"hidden\" name=\"post_type\" value=\"product\">\n                                        <div class=\"clear\"></div>\n                                    </div>\n                                </div>\n                            </form>\n                        </aside>"), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / widget follow ")])])])])]);
 }
 
 /***/ }),

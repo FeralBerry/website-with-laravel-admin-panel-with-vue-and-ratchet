@@ -15,7 +15,7 @@
                                     <i class="fa fa-th-list"></i>
                                 </div>
                             </div>
-                            <form class="woocommerce-ordering" method="get">
+                            <!--<form class="woocommerce-ordering" method="get">
                                 <select name="orderby" class="orderby">
                                     <option value="menu_order">Default sorting</option>
                                     <option value="popularity">Sort by popularity</option>
@@ -24,7 +24,7 @@
                                     <option value="price">Sort by price: low to high</option>
                                     <option value="price-desc">Sort by price: high to low</option>
                                 </select>
-                            </form>
+                            </form>-->
                         </div>
                         <ul class="products" id="products">
                             <!-- product -->
@@ -43,10 +43,11 @@
                         <!-- widget search -->
                         <!-- widget search -->
                         <aside class="widget-search">
-                            <form method="get" class="search-form" action="#">
+                            <form id="shop_search">
+                                <input type="hidden" :value="csrf" name="_token">
                                 <label>
-                                    <span class="screen-reader-text">Search for:</span>
-                                    <input type="search" class="search-field" placeholder="Search" value="" name="s" title="Search for:">
+                                    <span class="screen-reader-text">Поиск:</span>
+                                    <input type="search" class="search-field" placeholder="Поиск" value="" id="shop_search_input" name="shop_search_input" title="Поиск:">
                                 </label>
                                 <input type="submit" class="search-submit" value="GO">
                             </form>
@@ -62,9 +63,9 @@
                         </aside>
                         <!-- widget categories -->
                         <!--/ widget shop filter -->
-                        <aside class="widget-filter">
-                            <h2>Filter by price</h2>
-                            <form method="get" action="#">
+                        <!--<aside class="widget-filter">
+                            <h2>Фильт по цене</h2>
+                            <form>
                                 <div class="price_slider_wrapper">
                                     <div class="price_slider price_slider_amount ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
                                         <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
@@ -78,104 +79,12 @@
                                     <div class="price_slider_amount">
                                         <input type="text" id="min_price" name="min_price" value="" data-min="0" placeholder="Min price">
                                         <input type="text" id="max_price" name="max_price" value="" data-max="5000" placeholder="Max price">
-                                        <!-- <div class="price_label" style="">
-                                            Price: <span class="from"></span> - <span class="to"></span>
-                                        </div> -->
                                         <input type="hidden" name="post_type" value="product">
                                         <div class="clear"></div>
                                     </div>
                                 </div>
                             </form>
-                        </aside>
-                        <!--/ widget shop filter -->
-                        <!-- widget shoping cart -->
-                        <!--<aside class="widget">
-                            <h2>Shopping Cart</h2>
-                            <hr class="divider-big">
-                            <div class="widget_shopping_cart_content">
-                                <ul class="cart_list product_list_widget">
-                                    <li>
-                                        &lt;!&ndash;<a href="#">
-                                            <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt="Placeholder" width="90" class="woocommerce-placeholder wp-post-image" height="90">
-                                            Donec ut velit varius
-                                        </a>
-                                        <p>Fusce nec nisl vulputate</p>
-                                        <span class="quantity">
-										1 x <span class="amount">1683.00<sup>$</sup></span>
-									</span>&ndash;&gt;
-                                    </li>
-                                </ul>
-                                &lt;!&ndash; end product list &ndash;&gt;
-                                <p class="total clear-fix">
-                                    <strong>Subtotal: <span class="amount">4463.00<sup>$</sup></span></strong>
-                                    <a href="shop-cart.html" class="cws-button alt border-radius small bt-color-3">View Cart</a>
-                                </p>
-                            </div>
-                        </aside>
-                        &lt;!&ndash;/ widget shoping cart &ndash;&gt;
-                        &lt;!&ndash; widget best seller &ndash;&gt;
-                        <aside class="widget-selers">
-                            <h2>Best Selers</h2>
-                            <div class="carousel-nav">
-                                <div class="carousel-button">
-                                    <div class="prev"><i class="fa fa-angle-double-left"></i></div>&lt;!&ndash;
-							 &ndash;&gt;<div class="next"><i class="fa fa-angle-double-right"></i></div>
-                                </div>
-                            </div>
-                            <hr class="divider-big" />
-                            <div class="owl-carousel widget-carousel">
-                                <div>
-                                    <article class="clear-fix">
-                                        <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt>
-                                        <a href="#"><h4>Mauris consequat nisi</h4></a>
-                                        <p>Fusce nec nisl vulputate</p>
-                                        <p>700<sup>$</sup></p>
-                                    </article>
-                                    <article class="clear-fix">
-                                        <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt>
-                                        <a href="#"><h4>Proin sed turpis eu</h4></a>
-                                        <p>Fusce nec nisl vulputate</p>
-                                        <p>1200<sup>$</sup></p>
-                                    </article>
-                                </div>
-                                <div>
-                                    <article class="clear-fix">
-                                        <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt>
-                                        <a href="#"><h4>Mauris consequat nisi</h4></a>
-                                        <p>Fusce nec nisl vulputate</p>
-                                        <p>700<sup>$</sup></p>
-                                    </article>
-                                    <article class="clear-fix">
-                                        <img src="https://placehold.it/65x65" data-at2x="https://placehold.it/65x65" alt>
-                                        <a href="#"><h4>Proin sed turpis eu</h4></a>
-                                        <p>Fusce nec nisl vulputate</p>
-                                        <p>1200<sup>$</sup></p>
-                                    </article>
-                                </div>
-                            </div>
-                        </aside>
-                        &lt;!&ndash; / widget best seller &ndash;&gt;
-                        &lt;!&ndash; widget tag cloud &ndash;&gt;
-                        <aside class="widget-tag">
-                            <h2>Tag Cloud</h2>
-                            <hr class="divider-big margin-bottom" />
-                            <div class="tag-cloud">
-                                <a href="#" rel="tag">Daily</a>,
-                                <a href="#" rel="tag">Design</a>,
-                                <a href="#" rel="tag">Illustration</a>,
-                                <a href="#" rel="tag">Label</a>,
-                                <a href="#" rel="tag">Photo</a>,
-                                <a href="#" rel="tag">Pofessional</a>,
-                                <a href="#" rel="tag">Show</a>,
-                                <a href="#" rel="tag">Sound</a>,
-                                <a href="#" rel="tag">Sounds</a>,
-                                <a href="#" rel="tag">Tv</a>,
-                                <a href="#" rel="tag">Video</a>
-                            </div>
-                            <hr class="margin-top" />
-                        </aside>
-                        &lt;!&ndash; / widget tag cloud &ndash;&gt;-->
-                        <!-- widget follow -->
+                        </aside>-->
                         <aside class="widget-subscribe">
                             <h2>Связаться:</h2>
                             <hr class="divider-big margin-bottom" />
@@ -197,6 +106,11 @@
     export default {
         name: "ShopComponent",
         props: ['data'],
+        data(){
+            return{
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            }
+        },
         mounted() {
 
         },

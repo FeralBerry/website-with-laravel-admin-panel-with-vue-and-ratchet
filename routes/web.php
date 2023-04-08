@@ -12,6 +12,7 @@ Route::group([], function() {
         Route::get('/contact',['uses' => 'IndexController@contact','as' => 'front-contact']);
         Route::get('/shop',['uses' => 'IndexController@shop','as' => 'front-shop']);
         Route::get('/shop/{id?}',['uses' => 'IndexController@shopProducts','as' => 'front-shop-products']);
+        Route::post('/shop/search',['uses' => 'IndexController@shopSearch','as' => 'front-shop-search']);
         Route::get('/shop/product/{id}',['uses' => 'IndexController@shopProduct','as' => 'front-shop-product']);
         Route::get('/cart',['uses' => 'IndexController@cart','as' => 'front-shop-cart']);
         Route::get('/checkout',['uses' => 'IndexController@checkout','as' => 'front-shop-checkout']);

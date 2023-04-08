@@ -147,6 +147,20 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif ($command->command == 'shop_rating'){
+            $data = $this->chatController->shop_rating($command);
+            foreach ($this->clients as $client) {
+                $client->send(json_encode($data));
+            }
+        }
+        elseif($command->command == 'shop_search'){
+            $data = $this->chatController->shop_search($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         /*elseif($command->command == 'reconnect'){
             $data = [
                 'message' =>'reconnect'

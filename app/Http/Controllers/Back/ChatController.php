@@ -295,6 +295,7 @@ class ChatController extends BackController
                 $seo['description'] = Str::limit(strip_tags($item->description),150,'...');
             }
         }
+
         $navigate = DB::table('navigate')
             ->get();
         $data = array_merge($this->cart(),[
@@ -350,7 +351,72 @@ class ChatController extends BackController
         ]);
         return $data;
     }
-
+    public function shop_rating($command){
+        $user_id = $command->user_id;
+        $rate = $command->rating;
+        $shop_id = $command->shop_id;
+        $rating = DB::table('shop_rating')
+            ->where('user_id',$user_id)
+            ->where('shop_id',$shop_id)
+            ->get();
+        $next = 0;
+        foreach ($rating as $item){
+            $next++;
+        }
+        if($next > 0){
+            DB::table('shop_rating')
+                ->where('user_id',$user_id)
+                ->where('shop_id',$shop_id)
+                ->update([
+                    'count' => $rate
+                ]);
+        } else {
+            DB::table('shop_rating')
+                ->insert([
+                    'count' => $rate,
+                    'user_id' => $user_id,
+                    'shop_id' => $shop_id,
+                ]);
+        }
+        $shop_rating = DB::table('shop_rating')
+            ->where('shop_id',$shop_id)
+            ->select('count')
+            ->get();
+        $count_shop_rating = count($shop_rating);
+        $shop_count = 0;
+        $rating = 0;
+        if($shop_rating){
+            foreach ($shop_rating as $item){
+                $shop_count += $item->count;
+            }
+        }
+        if($count_shop_rating !== 0){
+            $rating = round($shop_count / $count_shop_rating,2);
+        }
+        DB::table('shop')
+            ->where('id', $shop_id)
+            ->update([
+                'rating' => $rating
+            ]);
+        $rating = $rating*100/5;
+        $data = [
+            'message' => 'new_shop_rating',
+            'rating' => $rating,
+            'shop_id' => $shop_id,
+        ];
+        return $data;
+    }
+    public function shop_search($command){
+        $shop_search = DB::table('shop')
+            ->where('name','LIKE',"%$command->shop_search_input%")
+            ->orWhere('description','LIKE',"%$command->shop_search_input%")
+            ->paginate(18);
+        $data = [
+            'message' => 'shop_search',
+            'shop_search' => $shop_search
+        ];
+        return $data;
+    }
     /*public function openChat($command){
         $chat = DB::table('chat')
             ->where('room_id',$command->room_id)

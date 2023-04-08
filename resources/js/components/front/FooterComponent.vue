@@ -81,6 +81,7 @@
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 footer_blog:'',
                 connection:new WebSocket('ws://' + process.env.MIX_WSS_URL),
+                user_id:$('meta[name=user_id]').attr('content'),
             }
         },
         watch: {
@@ -183,20 +184,26 @@
                                         link = '<a onclick="javascript: void(0)" rel="nofollow" class="add_to_cart cws-button border-radius icon-left bt-color-6"> <i class="fa fa-shopping-cart"></i> Добавлен</a>';
                                     }
                                 });
+                                let rating_width = item.rating * 100 / 5;
                                 document.getElementById('products').innerHTML += '<li class="product">' +
                                     '<div class="picture">' + new_sale +
                                     '<img src="'+img+'" data-at2x="'+img+'" alt="">' +
                                     '<span class="hover-effect"></span>' +
                                     '<div class="link-cont">' +
-                                    '<a href="http://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
-                                    '<a href="shop-single-product.html" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
+                                    '<a href="https://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
+                                    '<a href="/shop/product/'+item.id+'" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
                                     '</div>' +
                                     '</div>' +
                                     '<div class="product-name">' +
                                     '<a href="shop-single-product.html">'+item.name+'</a>' +
                                     '</div>' +
-                                    '<div class="star-rating" title="Rated 4.00 out of 5">' +
-                                    '<span style="width:60%"><strong class="rating">4.00</strong> out of 5</span>' +
+                                    '<div class="star-rating" >' +
+                                    '<a class="shop_rating" data_rating="1" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' +
+                                    '<a class="shop_rating" data_rating="2" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -76px;position:absolute;width: 22px;height: 24px"></a>' +
+                                    '<a class="shop_rating" data_rating="3" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -57px;position:absolute;width: 20px;height: 24px"></a>' +
+                                    '<a class="shop_rating" data_rating="4" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -39px;position:absolute;width: 20px;height: 24px"</a>' +
+                                    '<a class="shop_rating" data_rating="5" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -20px;position:absolute;width: 24px;height: 24px"></a>' +
+                                    '<span id="rating_width_'+item.id+'" style="width:'+rating_width+'%">' +
                                     '</div>' +
                                     '<span class="price">' +
                                     '<span class="amount">'+sale_price+'&#32;<sup><del>'+item.price+'.'+item.sub_price+'</del></sup>&#8381;</span>' +
@@ -458,6 +465,100 @@
                         else if(data.message === "search_blog"){
 
                         }
+                        else if(data.message === 'shop_search'){
+                            document.getElementById('products').innerHTML = '';
+                            console.log(data.shop_search)
+                            data.shop_search.data.map((item) => {
+                                let new_sale = '<div class="ribbon ribbon-blue"></div>';
+                                if (item.new === 1){
+                                    new_sale = '<div class="ribbon ribbon-blue"><div class="banner">' +
+                                        '<div class="text">New</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+                                if (item.sale === 1){
+                                    new_sale = '<div class="ribbon ribbon-blue"><div class="banner" style="text-align: center">' +
+                                        '<div class="sale" style="margin-top: -13px;font-size: 20px;">-'+item.percent+'%</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+                                let description;
+                                if(item.description.length < 100){
+                                    description = item.description;
+                                } else {
+                                    description = item.description.substr(0,100) + '...';
+                                }
+                                let img;
+                                if(item.img == null){
+                                    img = 'http://placehold.it/270x200'
+                                } else {
+                                    img = '/front/img/shop/'+item.img;
+                                }
+                                let link = '<a id="cart_'+item.id+'" rel="nofollow" class="add_to_cart cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>';
+                                let sale_price = Math.round(((item.price + (item.sub_price /100)) - ((item.price + (item.sub_price /100))*item.percent/100)) * 100) / 100;
+                                let rating_width = item.rating * 100 / 5;
+                                document.getElementById('products').innerHTML += '<li class="product">' +
+                                    '<div class="picture">' + new_sale +
+                                    '<img src="'+img+'" data-at2x="'+img+'" alt="">' +
+                                    '<span class="hover-effect"></span>' +
+                                    '<div class="link-cont">' +
+                                    '<a href="https://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
+                                    '<a href="/shop/product/'+item.id+'" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="product-name">' +
+                                    '<a href="shop-single-product.html">'+item.name+'</a>' +
+                                    '</div>' +
+                                    '<div class="star-rating" >' +
+                                    '<a class="shop_rating" data_rating="1" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' +
+                                    '<a class="shop_rating" data_rating="2" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -76px;position:absolute;width: 22px;height: 24px"></a>' +
+                                    '<a class="shop_rating" data_rating="3" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -57px;position:absolute;width: 20px;height: 24px"></a>' +
+                                    '<a class="shop_rating" data_rating="4" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -39px;position:absolute;width: 20px;height: 24px"</a>' +
+                                    '<a class="shop_rating" data_rating="5" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -20px;position:absolute;width: 24px;height: 24px"></a>' +
+                                    '<span id="rating_width_'+item.id+'" style="width:'+rating_width+'%">' +
+                                    '</div>' +
+                                    '<span class="price">' +
+                                    '<span class="amount">'+sale_price+'&#32;<sup><del>'+item.price+'.'+item.sub_price+'</del></sup>&#8381;</span>' +
+                                    '</span>' +
+                                    '<div class="product-description">' +
+                                    '<div class="short-description">' +
+                                    '<p>'+description+'</p>' +
+                                    '</div>' +
+                                    '</div>' + link +
+                                    '</li>';
+                            });
+                            let paginate_item = document.getElementById('paginate_item');
+                            data.shop_search.path = window.location.protocol +'//'+window.location.hostname;
+                            data.shop_search.first_page_url = window.location.protocol +'//'+window.location.hostname+'/blog?page=1';
+                            data.shop_search.last_page_url = window.location.protocol +'//'+window.location.hostname+'/blog?page='+data.shop.last_page;
+                            data.shop_search.next_page_url = window.location.protocol +'//'+window.location.hostname+'/blog?page='+(data.shop.from+1);
+                            if(data.shop_search.links.length >3){
+                                data.shop_search.links.map((items) => {
+                                    let link = items.label;
+                                    let active = '';
+                                    let url = items.url;
+                                    if(items.active){
+                                        active = 'class="active"';
+                                    }
+                                    if(url === null){
+                                        url = '/blog';
+                                    } else {
+                                        if(items.label === 'Next &raquo;'){
+                                            url = data.shop.last_page_url;
+                                        } else {
+                                            url = window.location.protocol +'//'+window.location.hostname+'/blog?page='+items.label;
+                                        }
+                                    }
+                                    if(items.label === '&laquo; Previous'){
+                                        link = '<i class="fa fa-angle-double-left"></i>'
+                                    }
+                                    if(items.label === 'Next &raquo;'){
+                                        link = '<i class="fa fa-angle-double-right"></i>'
+                                    }
+                                    paginate_item.innerHTML += '<a href="'+url+'" '+active+'>'+link+'</a>'
+                                });
+                            }
+                        }
                         else if(data.message === "front_cart"){
                             let cart_produts = document.getElementById('cart_products');
                             cart_produts.innerHTML = '';
@@ -499,17 +600,25 @@
                             }
 
                         }
+                        else if(data.message === 'new_shop_rating'){
+                            let rating_width = document.getElementById('rating_width_'+data.shop_id+'')
+                                rating_width.setAttribute('style','width:'+data.rating+'%!important');
+                        }
                     }
                 }
                 $('body').on('click', '#send_comment', function() {
                     if ($('meta[name=user_id]').attr('content')) {
-                        let user_id = $('meta[name=user_id]').attr('content');
                         let blog_id = document.getElementById('blog_id').value;
                         let message = document.getElementById('message').value;
-                        connection.send('{"command":"blog_comment_add","user_id":"' + user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
+                        connection.send('{"command":"blog_comment_add","user_id":"' + this.user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
                     } else {
                         alert('Для добавления комментария нужно авторизоваться!')
                     }
+                });
+                $('body').on('submit', '#shop_search', function(event) {
+                    event.preventDefault()
+                    let shop_search_input = document.getElementById('shop_search_input').value;
+                    connection.send('{"command":"shop_search","shop_search_input":"' + shop_search_input + '"}');
                 });
             }
         },
@@ -525,12 +634,18 @@
             let connection = new WebSocket(wsUri);
             this.connection = connection;
             $('body').on('click', '.add_to_cart',function(){
-                let user_id = $('meta[name=user_id]').attr('content');
                 this.href = 'javascript: void(0)';
                 this.classList.remove('alt');
                 this.classList.add('bt-color-6');
                 this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен'
-                connection.send('{"command":"add_to_cart","user_id":"' + user_id + '","product_id":"' + $(this).attr('id') + '"}');
+                connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
+            });
+            $('body').on('click','.shop_rating', function (){
+                if(this.user_id == null && this.user_id == ''){
+                    alert('Для добавления голоса за товар нужно авторизоваться!');
+                } else {
+                    connection.send('{"command":"shop_rating","shop_id":"'+$(this).attr('data_shop_id')+'","rating":"'+$(this).attr('data_rating')+'","user_id":"'+$('meta[name=user_id]').attr('content')+'"}');
+                }
             });
             this.data.footer_blog.map((item) => {
                 let brief = '';
@@ -619,7 +734,7 @@
                 let footer_phone = document.getElementById('footer_phone').value;
                 let footer_message = document.getElementById('footer_message').value;
                 this.connection.send('{"command":"front_footer_message","footer_name":"'+footer_name+'","footer_phone":"'+footer_phone+'","footer_message":"'+footer_message+'"}');
-            }
+            },
         },
     }
 </script>

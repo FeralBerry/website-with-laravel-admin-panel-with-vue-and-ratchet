@@ -109,5 +109,11 @@ class IndexController extends FrontController
         ];
         return $data;
     }
+    public function shopSearch(){
+        $data = array_merge($this->data(),[
+
+        ]);
+        return view('front.index',['data' => $data]);
+    }
 
 }
