@@ -38,6 +38,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('front/rs-plugin/css/settings.css') }}" media="screen">
     <link rel="stylesheet" href="{{ asset('front/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/itc-slider.min.css') }}">
 </head>
 <body>
 <div id="app">
@@ -70,7 +71,8 @@
 <script type="text/javascript" src="{{ asset('front/tuner/js/scripts.js') }}"></script>
 <script src="{{ asset('front/js/jquery.fancybox.pack.js') }}"></script>
 <script src="{{ asset('front/js/jquery.fancybox-media.js') }}"></script>
-<script src="{{ asset('front/js/retina.min.js') }}"></script>
+
+
 <script>
     let about = document.getElementById('about');
     function service_menu(id){
@@ -265,7 +267,9 @@
         });
     }
 
+
 </script>
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('front/js/itc-slider.min.js') }}"></script>
 </body>
 </html>

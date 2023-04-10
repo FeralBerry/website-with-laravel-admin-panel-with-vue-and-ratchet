@@ -1,6 +1,6 @@
 <template>
     <div>
-        <bread-crumb-component :data="this.breadcrumb"></bread-crumb-component>
+        <bread-crumb-component :data="data"></bread-crumb-component>
         <div class="grid-row">
             <div class="page-content grid-col-row clear-fix">
                 <div class="grid-col grid-col-9">
@@ -103,7 +103,8 @@
         data(){
             return {
                 breadcrumb:{
-                    title:''
+                    title:'Новости',
+                    href:'/blog'
                 }
             }
         },

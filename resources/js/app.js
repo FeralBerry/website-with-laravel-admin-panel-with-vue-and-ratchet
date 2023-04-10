@@ -1,6 +1,7 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import * as VueRouter from 'vue-router';
+import VueCarousel from '@chenfengyuan/vue-carousel';
 
 import MainComponent from "./components/front/MainComponent";
 import HeaderComponent from "./components/front/HeaderComponent";
@@ -35,18 +36,12 @@ const router = VueRouter.createRouter({
     routes,
 });
 
-let protocol = 'ws://';
-if (window.location.protocol === 'https:') {
-    protocol = 'wss://';
-}
-let wsUri = protocol+ process.env.MIX_WSS_URL;
-let connection = new WebSocket(wsUri);
-
 const app = createApp({
 
 });
 app.use(router);
 
+app.component('vue-carousel', VueCarousel);
 app.component('main-component', MainComponent);
 app.component('header-component', HeaderComponent);
 app.component('slider-component', SliderComponent);

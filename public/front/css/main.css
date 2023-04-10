@@ -9153,3 +9153,53 @@ hr {
 .footer_blog:hover{
     color:#f9cb8f;
 }
+.itc-slider__item{
+    min-height: 800px;
+}
+.slider-title{
+    margin-top: 200px;
+    color: #f27c66;
+    font-size: 4em;
+    line-height: 1;
+    padding: 0.24em 0.87em;
+    background: rgba(255,255,255,0.8);
+    margin-bottom: 0.2em;
+    border-radius: 10px 0 10px 0;
+}
+.slider-p{
+    color: #fff;
+    font-size: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.slider-content{
+    text-align: center;
+}
+.slider-btn{
+    padding: 0.56em 1.94em;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid #f27c66;
+    background-color: #f27c66;
+    line-height: 1.2;
+    font-size: 1.13em;
+    color: #ffffff;
+    font-weight: 300;
+    text-transform: uppercase;
+    min-width: 0;
+}
+.slider-btn:hover{
+    padding: 0.56em 1.94em;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid #ffffff;
+    background-color: #ffffff;
+    line-height: 1.2;
+    font-size: 1.13em;
+    color: #f27c66;
+    font-weight: 300;
+    text-transform: uppercase;
+    min-width: 0;
+}

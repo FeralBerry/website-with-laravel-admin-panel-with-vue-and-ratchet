@@ -343,7 +343,10 @@ class ChatController extends BackController
         return $data;
     }
     public function front_index(){
-
+        $data = [
+            'message' => 'front_index'
+        ];
+        return $data;
     }
     public function front_cart(){
         $data = array_merge($this->cart(),[
@@ -414,6 +417,16 @@ class ChatController extends BackController
         $data = [
             'message' => 'shop_search',
             'shop_search' => $shop_search
+        ];
+        return $data;
+    }
+    public function blog_search($command){
+        $blog_search = DB::table('blog')
+            ->where('title','LIKE',"%$command->blog_search_input%")
+            ->paginate(18);
+        $data = [
+            'message' => 'blog_search',
+            'blog_search' => $blog_search
         ];
         return $data;
     }
