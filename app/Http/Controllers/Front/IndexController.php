@@ -40,11 +40,14 @@ class IndexController extends FrontController
             ->select('id')
             ->get();
         $count_users = count($users);
+        $slider = DB::table('slider')
+            ->get();
         $data = array_merge($this->data(),[
             'count_all_courses' => $count_all_courses,
             'count_task_all_courses' => $count_task_all_courses,
             'count_video_all_courses' => $count_video_all_courses,
             'count_users' => $count_users,
+            'slider' => $slider,
         ]);
         return view('front.index',['data' => $data]);
     }

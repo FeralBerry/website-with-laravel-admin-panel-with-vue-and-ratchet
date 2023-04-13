@@ -1,73 +1,7 @@
 <template>
-    <div class="itc-slider" data-slider="itc-slider" data-loop="true" data-autoplay="true" data-interval="7000">
-        <div class="itc-slider__wrapper">
-            <div class="itc-slider__items">
-                <div class="itc-slider__item" style="background-image: url(/front/img/slider/1.jpg);background-size: cover;background-repeat: no-repeat">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-3">
+    <slider-component :data="{'data':data.slider}">
 
-                            </div>
-                            <div class="col-md-6 slider-content">
-                                <div class="slider-title">
-                                    Слайд 1
-                                </div>
-                                <p class="slider-p">Текст слайдера</p>
-                                <router-link to="/register" class="btn slider-btn">Зарегистрироваться</router-link>
-
-                            </div>
-                            <div class="col-md-3">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="itc-slider__item" style="background-image: url(/front/img/slider/2.png);background-size: cover;background-repeat: no-repeat">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-6 slider-content">
-                                <div class="slider-title">
-                                    Слайд 2
-                                </div>
-                                <p class="slider-p">Текст слайдера</p>
-                                <router-link to="/register" class="btn slider-btn">Зарегистрироваться</router-link>
-
-                            </div>
-                            <div class="col-md-3">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="itc-slider__item" style="background-image: url(/front/img/slider/3.jpg);background-size: cover;background-repeat: no-repeat">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-6 slider-content">
-                                <div class="slider-title ">
-                                    Слайд 3
-                                </div>
-                                <p class="slider-p">Текст слайдера</p>
-                                <router-link to="/register" class="btn slider-btn">Зарегистрироваться</router-link>
-                            </div>
-                            <div class="col-md-3">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Кнопки для перехода к предыдущему и следующему слайду -->
-        <button class="itc-slider__btn itc-slider__btn_prev"></button>
-        <button class="itc-slider__btn itc-slider__btn_next"></button>
-    </div>
-
+    </slider-component>
     <section class="fullwidth-background padding-section">
         <div class="grid-row clear-fix">
             <div class="grid-col-row">
@@ -279,6 +213,11 @@
     export default {
         name: "MainComponent",
         props: ['data'],
+        data(){
+            return{
+
+            }
+        },
         mounted() {
 
         },
@@ -290,9 +229,6 @@
                     document.querySelector('head title').textContent = item.title;
                 }
             });
-
-
-
-        }
+        },
     }
 </script>

@@ -21804,8 +21804,8 @@ var _hoisted_1 = {
   "class": "main-footer"
 };
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "https://easy-script.pro"
-}, "Easy-Script.pro", -1 /* HOISTED */);
+  href: "https://easy-script.io"
+}, "Easy-Script.io", -1 /* HOISTED */);
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "float-right d-none d-sm-inline-block"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Version"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 3.1.0 ")], -1 /* HOISTED */);

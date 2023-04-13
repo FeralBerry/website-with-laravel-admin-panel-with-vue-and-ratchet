@@ -269,7 +269,10 @@
 
 
 </script>
+
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('front/js/itc-slider.min.js') }}"></script>
+<script id="scripts" src="/front/js/itc-slider.min.js">
+
+</script>
 </body>
 </html>

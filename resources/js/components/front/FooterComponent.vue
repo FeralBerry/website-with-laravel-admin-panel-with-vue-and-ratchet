@@ -45,7 +45,7 @@
         </div>
         <div class="footer-bottom">
             <div class="grid-row clear-fix">
-                <div class="copyright">Easy-Script.pro<span></span> 2015 . All Rights Reserved</div>
+                <div class="copyright"><router-link to="https:\\easy-script.io">Easy-Script.io</router-link><span></span> 2020 . All Rights Reserved</div>
                 <nav class="footer-nav">
                     <ul class="clear-fix">
                         <li>
@@ -54,15 +54,9 @@
                         <li>
                             <router-link to="/blog">Блог</router-link>
                         </li>
-                        <!--<li>
-                            <a href="content-elements.html">Plans</a>
-                        </li>
                         <li>
-                            <a href="blog-default.html">News</a>
+                            <router-link to="/shop">Магазин</router-link>
                         </li>
-                        <li>
-                            <a href="page-about-us.html">Pages</a>
-                        </li>-->
                         <li>
                             <router-link to="/contact">Контакты</router-link>
                         </li>
@@ -460,7 +454,7 @@
                             }
                         }
                         else if(data.message === 'front_index'){
-                            
+
                         }
                         else if(data.message === "search_blog"){
                             document.getElementById('blog_items').innerHTML = '';

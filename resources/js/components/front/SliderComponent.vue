@@ -1,50 +1,81 @@
 <template>
-    <div class="tp-banner-container">
-        <div class="tp-banner-slider">
-            <ul>
-                <li data-masterspeed="700">
-                    <img src="/front/img/slider/1.jpg">
-                    <div class="tp-caption sl-content align-left" data-x="['left','center','center','center']" data-hoffset="20" data-y="center" data-voffset="0"  data-width="['720px','600px','500px','300px']" data-transform_in="opacity:0;s:1000;e:Power2.easeInOut;"
-                         data-transform_out="opacity:0;s:300;s:1000;" data-start="400">
-                        <div class="sl-title">Бесплатное обучение программированию</div>
-                        <p>На сайте при регистрации вы получаете доступ к бесплатным курсам<br/>По программированию и дизайну.</p>
-                        <router-link to="/register" class="cws-button border-radius">Зарегистрироваться <i class="fa fa-angle-double-right"></i></router-link>
-                    </div>
-                </li>
-                <li data-masterspeed="700">
-                    <img src="/front/rs-plugin/assets/loader.gif">
-                    <div class="tp-caption sl-content align-right" data-x="['right','center','center','center']" data-hoffset="20" data-y="center" data-voffset="0"  data-width="['720px','600px','500px','300px']" data-transform_in="opacity:0;s:1000;e:Power2.easeInOut;"
-                         data-transform_out="opacity:0;s:300;s:1000;" data-start="400">
-                        <div class="sl-title">Forward. Thinking.</div>
-                        <p>Aenean viverra lobortis purus, sed eleifend nisl egestas in<br/>Proin lacus augue, ornare quis nunc vel</p>
-                        <a href="" class="cws-button border-radius">Join us <i class="fa fa-angle-double-right"></i></a>
-                    </div>
-                </li>
-                <li data-masterspeed="700" data-transition="fade">
-                    <img src="/front/rs-plugin/assets/loader.gif">
-                    <div class="tp-caption sl-content align-center" data-x="center" data-hoffset="0" data-y="center" data-voffset="0"  data-width="['720px','600px','500px','300px']" data-transform_in="opacity:0;s:1000;e:Power2.easeInOut;"
-                         data-transform_out="opacity:0;s:300;s:1000;" data-start="400">
-                        <div class="sl-title">Knowledge for life</div>
-                        <p>Aenean viverra lobortis purus, sed eleifend nisl egestas in<br/>Proin lacus augue, ornare quis nunc vel</p>
-                        <a href="" class="cws-button border-radius">Join us <i class="fa fa-angle-double-right"></i></a>
-                    </div>
-                </li>
-                <li data-masterspeed="700" data-transition="fade">
-                    <img src="/front/rs-plugin/assets/loader.gif" data-bgposition="center right">
-                    <div class="tp-caption sl-content align-left" data-x="['left','center','center','center']" data-hoffset="20" data-y="center" data-voffset="40" data-width="['720px','600px','500px','300px']" data-transform_in="opacity:0;s:1000;e:Power2.easeInOut;"
-                         data-transform_out="opacity:0;s:300;s:1000;" data-start="400">
-                        <div class="sl-title">Your revolution starts</div>
-                        <p>Aenean viverra lobortis purus, sed eleifend nisl egestas in<br/>Proin lacus augue, ornare quis nunc vel</p>
-                        <a href="" class="cws-button border-radius">Join us <i class="fa fa-angle-double-right"></i></a>
-                    </div>
-                </li>
-            </ul>
+    <div class="banner">
+        <div class="slider" :style="{'margin-left':'-'+(100*currentSlideIndex)+'%'}">
+            <SlideItemComponent
+            v-for="item in this.data.data"
+            :key="item.id"
+            :item_data="item"
+            :currentSlideIndex="this.currentSlideIndex"
+            ></SlideItemComponent>
         </div>
+        <button class="slider_link" style="position:absolute;top:50%;left:10px" @click="prevSlide"><i class="fa fa-angle-double-left"></i></button>
+        <button class="slider_link" style="position:absolute;top:50%;right:10px" @click="nextSlide"><i class="fa fa-angle-double-right"></i></button>
     </div>
+
     <hr class="divider-color">
 </template>
 <script>
+    import SlideItemComponent from "./SlideItemComponent";
     export default {
         name: "SliderComponent",
+        components: {SlideItemComponent},
+        props:['data'],
+        data(){
+            return{
+                currentSlideIndex:0,
+                interval:5000
+            }
+        },
+        created() {
+
+        },
+        methods:{
+            nextSlide(){
+                if(this.currentSlideIndex+1 == this.data.data.length){
+                    this.currentSlideIndex = 0
+                } else {
+                    this.currentSlideIndex++
+                }
+            },
+            prevSlide(){
+                if(this.currentSlideIndex > 0){
+                    this.currentSlideIndex--
+                } else {
+                    this.currentSlideIndex = this.data.data.length - 1
+                }
+            }
+        },
+        mounted() {
+            if(this.interval > 0){
+                let wm = this;
+                setInterval(function(){
+                    wm.nextSlide()
+                },wm.interval);
+            }
+        }
     }
 </script>
+<style>
+    .banner{
+        min-height: 800px;
+        overflow: hidden;
+        min-width: 100%;
+    }
+    .slider{
+        width: 100%;
+        display: flex;
+        transition: all ease .5s;
+    }
+    .slider_link{
+        color:#000;
+        background: rgba(255, 255, 255, 0.60);
+        font-size: 60px;
+        height:80px;
+        width: 80px;
+        border-radius: 10px;
+    }
+    .slider_link:hover{
+        color:#444;
+        background: rgba(255, 255, 255);
+    }
+</style>

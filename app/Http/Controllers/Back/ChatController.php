@@ -35,8 +35,8 @@ class ChatController extends BackController
         }
         $data = [
             'users_cart' => $users_cart->take(5),
-            'cart_price' => $cart_price,
-            'cart_price_with_percent' => $cart_price_with_percent,
+            'cart_price' => round($cart_price,2),
+            'cart_price_with_percent' => round($cart_price_with_percent,2),
         ];
         return $data;
     }
