@@ -30,6 +30,8 @@ class FrontController extends Controller
             ->inRandomOrder()
             ->limit(1)
             ->get();
+        $slider = DB::table('slider')
+            ->get();
         $data = [
             'navigate' => $navigate,
             'seo' => $seo,
@@ -39,6 +41,7 @@ class FrontController extends Controller
             'auth_user_avatar' => $auth_user_avatar,
             'footer_blog' => $footer_blog,
             'quotes_footer' => $quotes_footer,
+            'slider' => $slider,
         ];
         return $data;
     }

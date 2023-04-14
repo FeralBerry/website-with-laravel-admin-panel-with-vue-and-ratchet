@@ -74,35 +74,29 @@
             return {
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 footer_blog:'',
-                connection:new WebSocket('ws://' + process.env.MIX_WSS_URL),
+                connection:[],
                 user_id:$('meta[name=user_id]').attr('content'),
             }
         },
         watch: {
             '$route' (to, from) {
-                let protocol = 'ws://';
-                if (window.location.protocol === 'https:') {
-                    protocol = 'wss://';
-                }
-                let wsUri = protocol+ process.env.MIX_WSS_URL;
-                let connection = new WebSocket(wsUri);
-                this.connection = connection;
-                connection.onopen = function(event){
-                    connection.send('{"command":"cart"}')
+                let con = this;
+                con.connection.onopen = function(event){
+                    con.connection.send('{"command":"cart"}')
                     if(to.fullPath.indexOf('shop')>0){
                         document.getElementById('products').innerHTML = "";
-                        connection.send('{"command":"front_shop","url":"'+window.location.pathname+'"}')
+                        con.connection.send('{"command":"front_shop","url":"'+window.location.pathname+'"}')
                     } else if(to.fullPath.indexOf('blog/article')>0){
-                        connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
+                        con.connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
                     } else if(to.fullPath.indexOf('blog')>0){
-                        connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
+                        con.connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
                     } else if(window.location.origin + '/' === window.location.href){
-                        connection.send('{"command":"front_index"}')
+                        con.connection.send('{"command":"front_index"}')
                     } else if(to.fullPath.indexOf('cart')>0){
-                        connection.send('{"command":"front_cart"}')
+                        con.connection.send('{"command":"front_cart"}')
                     }
                 }
-                connection.onmessage = function(event) {
+                con.connection.onmessage = function(event) {
                     let data = JSON.parse(event.data);
                     if (data) {
                         if(data.navigate === 'front_navigate'){
@@ -690,38 +684,37 @@
                 $('body').on('submit', '#shop_search', function(event) {
                     event.preventDefault()
                     let shop_search_input = document.getElementById('shop_search_input').value;
-                    connection.send('{"command":"shop_search","shop_search_input":"' + shop_search_input + '"}');
+                    con.connection.send('{"command":"shop_search","shop_search_input":"' + shop_search_input + '"}');
                 });
                 $('body').on('submit', '#blog_search', function(event) {
                     event.preventDefault()
                     let blog_search_input = document.getElementById('blog_search_input').value;
-                    connection.send('{"command":"blog_search","blog_search_input":"' + blog_search_input + '"}');
+                    con.connection.send('{"command":"blog_search","blog_search_input":"' + blog_search_input + '"}');
                 });
             }
         },
         mounted() {
-
-        },
-        created() {
             let protocol = 'ws://';
             if (window.location.protocol === 'https:') {
                 protocol = 'wss://';
             }
             let wsUri = protocol+ process.env.MIX_WSS_URL;
-            let connection = new WebSocket(wsUri);
-            this.connection = connection;
+            this.connection = new WebSocket(wsUri);
+        },
+        created() {
+            let con = this;
             $('body').on('click', '.add_to_cart',function(){
                 this.href = 'javascript: void(0)';
                 this.classList.remove('alt');
                 this.classList.add('bt-color-6');
                 this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен'
-                connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
+                con.connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
             });
             $('body').on('click','.shop_rating', function (){
                 if(this.user_id == null && this.user_id == ''){
                     alert('Для добавления голоса за товар нужно авторизоваться!');
                 } else {
-                    connection.send('{"command":"shop_rating","shop_id":"'+$(this).attr('data_shop_id')+'","rating":"'+$(this).attr('data_rating')+'","user_id":"'+$('meta[name=user_id]').attr('content')+'"}');
+                    con.connection.send('{"command":"shop_rating","shop_id":"'+$(this).attr('data_shop_id')+'","rating":"'+$(this).attr('data_rating')+'","user_id":"'+$('meta[name=user_id]').attr('content')+'"}');
                 }
             });
             this.data.footer_blog.map((item) => {
@@ -758,7 +751,7 @@
                     '<p>'+brief+'...</p>' +
                     '</article>';
             });
-            connection.onmessage = function(event) {
+            con.connection.onmessage = function(event) {
                 let data = JSON.parse(event.data);
                 let cart = document.getElementById('cart');
                 if(data.message === 'add_to_cart'){
@@ -807,10 +800,11 @@
         },
         methods:{
             send_footer_contact(){
+                let con = this;
                 let footer_name = document.getElementById('footer_name').value;
                 let footer_phone = document.getElementById('footer_phone').value;
                 let footer_message = document.getElementById('footer_message').value;
-                this.connection.send('{"command":"front_footer_message","footer_name":"'+footer_name+'","footer_phone":"'+footer_phone+'","footer_message":"'+footer_message+'"}');
+                con.connection.send('{"command":"front_footer_message","footer_name":"'+footer_name+'","footer_phone":"'+footer_phone+'","footer_message":"'+footer_message+'"}');
             },
         },
     }

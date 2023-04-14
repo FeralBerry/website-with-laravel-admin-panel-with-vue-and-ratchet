@@ -9,10 +9,12 @@
 
             </div>
             <div class="col-md-6">
-                <div class="slider-title">{{ this.item_data.title }}</div>
-                <p class="slider-p">{{ this.item_data.description }}</p>
+                <div :class="'slider-title ' +this.item_data.title_animate">{{ this.item_data.title }}</div>
+                <p :class="'slider-p '+this.item_data.description_animate">{{ this.item_data.description }}</p>
                 <template v-if="this.item_data.isbutton === 1">
-                    <router-link :to="this.item_data.button_href" class="slider-btn">{{ this.item_data.button_name }} <i class="fa fa-angle-double-right"></i></router-link>
+                    <div :class="this.item_data.button_animate">
+                        <router-link :to="this.item_data.button_href" class="slider-btn">{{ this.item_data.button_name }} <i class="fa fa-angle-double-right"></i></router-link>
+                    </div>
                 </template>
             </div>
             <div class="col-md-3">
@@ -81,4 +83,5 @@
         min-width: 0;
         font-size: 20px;
     }
+
 </style>

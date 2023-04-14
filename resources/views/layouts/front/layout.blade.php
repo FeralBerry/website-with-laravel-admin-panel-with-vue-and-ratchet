@@ -38,7 +38,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('front/rs-plugin/css/settings.css') }}" media="screen">
     <link rel="stylesheet" href="{{ asset('front/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('style.css') }}">
-    <link rel="stylesheet" href="{{ asset('front/css/itc-slider.min.css') }}">
 </head>
 <body>
 <div id="app">
@@ -271,8 +270,5 @@
 </script>
 
 <script src="{{ asset('js/app.js') }}"></script>
-<script id="scripts" src="/front/js/itc-slider.min.js">
-
-</script>
 </body>
 </html>
