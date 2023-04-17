@@ -21329,27 +21329,31 @@ __webpack_require__.r(__webpack_exports__);
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       footer_blog: '',
       connection: [],
+      url: '',
       user_id: $('meta[name=user_id]').attr('content')
     };
   },
   watch: {
-    '$route': function $route(to, from) {
+    $route: function $route(to, from) {
       var con = this;
-      con.connection.onopen = function (event) {
-        con.connection.send('{"command":"cart"}');
-        if (to.fullPath.indexOf('shop') > 0) {
-          document.getElementById('products').innerHTML = "";
-          con.connection.send('{"command":"front_shop","url":"' + window.location.pathname + '"}');
-        } else if (to.fullPath.indexOf('blog/article') > 0) {
-          con.connection.send('{"command":"front_blog_article","url":"' + window.location.pathname + '"}');
-        } else if (to.fullPath.indexOf('blog') > 0) {
-          con.connection.send('{"command":"front_blog","url":"' + window.location.pathname + '"}');
-        } else if (window.location.origin + '/' === window.location.href) {
-          con.connection.send('{"command":"front_index"}');
-        } else if (to.fullPath.indexOf('cart') > 0) {
-          con.connection.send('{"command":"front_cart"}');
-        }
-      };
+      if (con.connection.readyState === 0) {
+        setTimeout(function () {
+          if (to.fullPath.indexOf('shop') > 0) {
+            con.connection.send('{"command":"front_shop","url":"' + window.location.pathname + '"}');
+          } else if (to.fullPath.indexOf('blog/article') > 0) {
+            con.connection.send('{"command":"front_blog_article","url":"' + window.location.pathname + '"}');
+          } else if (to.fullPath.indexOf('blog') > 0) {
+            con.connection.send('{"command":"front_blog","url":"' + window.location.pathname + '"}');
+          } else if (window.location.origin + '/' === window.location.href) {
+            con.connection.send('{"command":"front_index"}');
+          } else if (to.fullPath.indexOf('cart') > 0) {
+            con.connection.send('{"command":"front_cart"}');
+          }
+          if (to.fullPath.indexOf('/') == 0) {
+            con.connection.send('{"command":"cart"}');
+          }
+        }, 200);
+      }
       con.connection.onmessage = function (event) {
         var data = JSON.parse(event.data);
         if (data) {
@@ -21379,6 +21383,7 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
           if (data.message === 'front_shop') {
+            document.getElementById('products').innerHTML = "";
             document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
             document.querySelector('head title').textContent = data.seo.title;
             data.shop.data.map(function (item) {
@@ -21611,7 +21616,7 @@ __webpack_require__.r(__webpack_exports__);
                 brief = div.innerText.replace(/(<([^>]+)>)/ig, '');
                 brief = brief.substr(0, 100);
               }
-              document.getElementById('blog_items').innerHTML += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/blog/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/blog/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
+              document.getElementById('blog_items').innerHTML += '<div class="grid-col grid-col-4" style="margin-bottom: 10px">' + '<div class="course-item">' + '<div class="course-hover">' + '<img src="' + item.img + '" alt>' + '<div class="hover-bg bg-color-1"></div>' + '<a href="/blog/article/' + item.id + '">Читать подробнее</a>' + '</div>' + '<div class="course-name clear-fix">' + '<h3><a href="/blog/article/' + item.id + '">' + item.title + '</a></h3>' + '</div>' + '<div class="course-date bg-color-1 clear-fix">' + '<div class="day"><i class="fa fa-calendar"></i>' + day + ' ' + mounth + '</div><div class="time"><i class="fa fa-clock-o"></i>В ' + hour + ':' + minute + '</div>' + '<div class="divider"></div>' + '<div class="description">' + brief + '...</div>' + '</div>' + '</div>' + '</div>';
             });
             var _paginate_item = document.getElementById('paginate_item');
             data.blog.path = window.location.protocol + '//' + window.location.hostname;
@@ -21731,7 +21736,6 @@ __webpack_require__.r(__webpack_exports__);
             }
           } else if (data.message === 'shop_search') {
             document.getElementById('products').innerHTML = '';
-            console.log(data.shop_search);
             data.shop_search.data.map(function (item) {
               var new_sale = '<div class="ribbon ribbon-blue"></div>';
               if (item["new"] === 1) {
@@ -21820,7 +21824,7 @@ __webpack_require__.r(__webpack_exports__);
         if ($('meta[name=user_id]').attr('content')) {
           var blog_id = document.getElementById('blog_id').value;
           var message = document.getElementById('message').value;
-          connection.send('{"command":"blog_comment_add","user_id":"' + this.user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
+          con.connection.send('{"command":"blog_comment_add","user_id":"' + this.user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
         } else {
           alert('Для добавления комментария нужно авторизоваться!');
         }
@@ -21848,15 +21852,38 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     var con = this;
+    if (con.connection.readyState === 0) {
+      setTimeout(function () {
+        if (window.location.href.indexOf('shop')) {
+          con.connection.send('{"command":"cart"}');
+          con.connection.send('{"command":"front_shop","url":"' + window.location.pathname + '"}');
+        } else if (window.location.href.indexOf('blog/article') > 0) {
+          con.connection.send('{"command":"cart"}');
+          con.connection.send('{"command":"front_blog_article","url":"' + window.location.pathname + '"}');
+        } else if (window.location.href.indexOf('blog') > 0) {
+          con.connection.send('{"command":"cart"}');
+          con.connection.send('{"command":"front_blog","url":"' + window.location.pathname + '"}');
+        } else if (window.location.origin + '/' === window.location.href) {
+          con.connection.send('{"command":"cart"}');
+          con.connection.send('{"command":"front_index"}');
+        } else if (window.location.href.indexOf('cart') > 0) {
+          con.connection.send('{"command":"cart"}');
+          con.connection.send('{"command":"front_cart"}');
+        }
+      }, 100);
+    }
+    if (con.connection.readyState === 0) {}
     $('body').on('click', '.add_to_cart', function () {
       this.href = 'javascript: void(0)';
       this.classList.remove('alt');
       this.classList.add('bt-color-6');
       this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен';
-      con.connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
+      if (this.innerHTML == ' <i class="fa fa-shopping-cart"></i> Добавлен') {} else {
+        con.connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
+      }
     });
     $('body').on('click', '.shop_rating', function () {
-      if (this.user_id == null && this.user_id == '') {
+      if ($('meta[name=user_id]').attr('content') == '') {
         alert('Для добавления голоса за товар нужно авторизоваться!');
       } else {
         con.connection.send('{"command":"shop_rating","shop_id":"' + $(this).attr('data_shop_id') + '","rating":"' + $(this).attr('data_rating') + '","user_id":"' + $('meta[name=user_id]').attr('content') + '"}');
@@ -21918,6 +21945,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = JSON.parse(event.data);
       var cart = document.getElementById('cart');
       if (data.message === 'add_to_cart') {
+        console.log('add_to_cart');
         cart.innerHTML = '';
         cart.style.display = 'block';
         data.users_cart.map(function (item) {
@@ -21954,11 +21982,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     send_footer_contact: function send_footer_contact() {
-      var con = this;
       var footer_name = document.getElementById('footer_name').value;
       var footer_phone = document.getElementById('footer_phone').value;
       var footer_message = document.getElementById('footer_message').value;
-      con.connection.send('{"command":"front_footer_message","footer_name":"' + footer_name + '","footer_phone":"' + footer_phone + '","footer_message":"' + footer_message + '"}');
+      this.connection.send('{"command":"front_footer_message","footer_name":"' + footer_name + '","footer_phone":"' + footer_phone + '","footer_message":"' + footer_message + '"}');
     }
   }
 });
@@ -22610,11 +22637,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _hoisted_1 = {
+  "class": "grid-row clear-fix"
+};
+var _hoisted_2 = {
+  "class": "grid-col-row"
+};
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "grid-col grid-col-8"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Оставить сообщение"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "widget-contact-form"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" contact-form "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "info-boxes error-message alert-boxes error-alert",
+  id: "feedback-form-errors"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Attention!"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "message"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "email_server_responce"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  method: "post",
+  "class": "contact-form alt clear-fix",
+  novalidate: "novalidate"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "text",
+  name: "name",
+  value: "",
+  size: "40",
+  placeholder: "Как к Вам обращаться",
+  "aria-invalid": "false",
+  "aria-required": "true"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "text",
+  name: "email",
+  value: "",
+  size: "40",
+  placeholder: "Email",
+  "aria-required": "true"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "text",
+  name: "subject",
+  value: "",
+  size: "40",
+  placeholder: "Тема обращения",
+  "aria-invalid": "false",
+  "aria-required": "true"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  name: "message",
+  cols: "40",
+  rows: "3",
+  placeholder: "Сообщение",
+  "aria-invalid": "false",
+  "aria-required": "true"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "submit",
+  value: "Send",
+  "class": "cws-button border-radius alt"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/contact-form ")])])], -1 /* HOISTED */);
+var _hoisted_4 = {
+  "class": "grid-col grid-col-4 widget-address"
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, "Контакты", -1 /* HOISTED */);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<p><strong class=\"fs-18\">Телефон:</strong><br><a href=\"https://wa.me/79687106270\"><i class=\"fa fa-whatsapp\" aria-hidden=\"true\"></i> +7(968)710-62-70</a><br><a href=\"https://t.me/+79687106270\"><i class=\"fa fa-telegram\" aria-hidden=\"true\"></i> +7(968)710-62-70</a></p><p><strong class=\"fs-18\">E-mail:</strong><br><a href=\"mailto:uni@domain.com\">uni@domain.com</a><br><a href=\"mailto:uni@domain.com\">sales@your-site.com</a></p>", 2);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
     data: $props.data
-  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Контакты ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" page content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"page-content woocommerce\">\n        &lt;!&ndash; contact form section &ndash;&gt;\n        <div class=\"grid-row clear-fix\">\n            <div class=\"grid-col-row\">\n                <div class=\"grid-col grid-col-8\">\n                    <section>\n                        <h2>Contact us</h2>\n                        <div class=\"widget-contact-form\">\n                            &lt;!&ndash; contact-form &ndash;&gt;\n                            <div class=\"info-boxes error-message alert-boxes error-alert\" id=\"feedback-form-errors\">\n                                <strong>Attention!</strong>\n                                <div class=\"message\"></div>\n                            </div>\n                            <div class=\"email_server_responce\"></div>\n                            <form action=\"php/contacts-process.php\" method=\"post\" class=\"contact-form alt clear-fix\">\n                                <input type=\"text\" name=\"name\" value=\"\" size=\"40\" placeholder=\"Your Name\" aria-invalid=\"false\" aria-required=\"true\">\n                                <input type=\"text\" name=\"email\" value=\"\" size=\"40\" placeholder=\"Your Email\" aria-required=\"true\">\n                                <input type=\"text\" name=\"subject\" value=\"\" size=\"40\" placeholder=\"Subject\" aria-invalid=\"false\" aria-required=\"true\">\n                                <textarea name=\"message\"  cols=\"40\" rows=\"3\" placeholder=\"Your Message\" aria-invalid=\"false\" aria-required=\"true\"></textarea>\n                                <input type=\"submit\" value=\"Send\" class=\"cws-button border-radius alt\">\n                            </form>\n                            &lt;!&ndash;/contact-form &ndash;&gt;\n                        </div>\n                    </section>\n                </div>\n                <div class=\"grid-col grid-col-4 widget-address\">\n                    <section>\n                        <h2>Our Offices</h2>\n                        <address>\n                            <p>Donec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis justo at suscipit. Etiam id faucibus augue, sit amet ultricies nisi.</p>\n                            <p><strong class=\"fs-18\">Address:</strong><br/>250 Biscayne Blvd. (North) 11st Floor<br/>New World Tower Miami, Florida 33148</p>\n                            <p><strong class=\"fs-18\">Phone number:</strong><br/>\n                                <a href=\"tel:305-333552\">(305)333-5522</a><br/>\n                                <a href=\"tel:305-333552\">(305)333-5522</a>\n                            </p>\n                            <p><strong class=\"fs-18\">E-mail:</strong><br/>\n                                <a href=\"mailto:uni@domain.com\">uni@domain.com</a><br/>\n                                <a href=\"mailto:uni@domain.com\">sales@your-site.com</a>\n                            </p>\n                        </address>\n                    </section>\n                </div>\n            </div>\n        </div>\n        &lt;!&ndash; / contact form section &ndash;&gt;\n    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / page content ")], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", null, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("address", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data.quotes_footer, function (item) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.author), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.quotes), 1 /* TEXT */)]);
+  }), 256 /* UNKEYED_FRAGMENT */)), _hoisted_6])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" page content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div class=\"page-content woocommerce\">\n        &lt;!&ndash; contact form section &ndash;&gt;\n        <div class=\"grid-row clear-fix\">\n            <div class=\"grid-col-row\">\n                <div class=\"grid-col grid-col-8\">\n                    <section>\n                        <h2>Contact us</h2>\n                        <div class=\"widget-contact-form\">\n                            &lt;!&ndash; contact-form &ndash;&gt;\n                            <div class=\"info-boxes error-message alert-boxes error-alert\" id=\"feedback-form-errors\">\n                                <strong>Attention!</strong>\n                                <div class=\"message\"></div>\n                            </div>\n                            <div class=\"email_server_responce\"></div>\n                            <form action=\"php/contacts-process.php\" method=\"post\" class=\"contact-form alt clear-fix\">\n                                <input type=\"text\" name=\"name\" value=\"\" size=\"40\" placeholder=\"Your Name\" aria-invalid=\"false\" aria-required=\"true\">\n                                <input type=\"text\" name=\"email\" value=\"\" size=\"40\" placeholder=\"Your Email\" aria-required=\"true\">\n                                <input type=\"text\" name=\"subject\" value=\"\" size=\"40\" placeholder=\"Subject\" aria-invalid=\"false\" aria-required=\"true\">\n                                <textarea name=\"message\"  cols=\"40\" rows=\"3\" placeholder=\"Your Message\" aria-invalid=\"false\" aria-required=\"true\"></textarea>\n                                <input type=\"submit\" value=\"Send\" class=\"cws-button border-radius alt\">\n                            </form>\n                            &lt;!&ndash;/contact-form &ndash;&gt;\n                        </div>\n                    </section>\n                </div>\n                <div class=\"grid-col grid-col-4 widget-address\">\n                    <section>\n                        <h2>Our Offices</h2>\n                        <address>\n                            <p>Donec sollicitudin lacus in felis luctus blandit. Ut hendrerit mattis justo at suscipit. Etiam id faucibus augue, sit amet ultricies nisi.</p>\n                            <p><strong class=\"fs-18\">Address:</strong><br/>250 Biscayne Blvd. (North) 11st Floor<br/>New World Tower Miami, Florida 33148</p>\n                            <p><strong class=\"fs-18\">Phone number:</strong><br/>\n                                <a href=\"tel:305-333552\">(305)333-5522</a><br/>\n                                <a href=\"tel:305-333552\">(305)333-5522</a>\n                            </p>\n                            <p><strong class=\"fs-18\">E-mail:</strong><br/>\n                                <a href=\"mailto:uni@domain.com\">uni@domain.com</a><br/>\n                                <a href=\"mailto:uni@domain.com\">sales@your-site.com</a>\n                            </p>\n                        </address>\n                    </section>\n                </div>\n            </div>\n        </div>\n        &lt;!&ndash; / contact form section &ndash;&gt;\n    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" / page content ")], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }
 
 /***/ }),
@@ -22690,7 +22780,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "color": "#fff"
     }
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Отправить "), _hoisted_20])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "https:\\\\easy-script.io"
+    to: "/"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Easy-Script.io")];

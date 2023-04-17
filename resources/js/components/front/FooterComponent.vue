@@ -45,7 +45,7 @@
         </div>
         <div class="footer-bottom">
             <div class="grid-row clear-fix">
-                <div class="copyright"><router-link to="https:\\easy-script.io">Easy-Script.io</router-link><span></span> 2020 . All Rights Reserved</div>
+                <div class="copyright"><router-link to="/">Easy-Script.io</router-link><span></span> 2020 . All Rights Reserved</div>
                 <nav class="footer-nav">
                     <ul class="clear-fix">
                         <li>
@@ -75,26 +75,30 @@
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 footer_blog:'',
                 connection:[],
+                url:'',
                 user_id:$('meta[name=user_id]').attr('content'),
             }
         },
         watch: {
-            '$route' (to, from) {
+            $route (to, from) {
                 let con = this;
-                con.connection.onopen = function(event){
-                    con.connection.send('{"command":"cart"}')
-                    if(to.fullPath.indexOf('shop')>0){
-                        document.getElementById('products').innerHTML = "";
-                        con.connection.send('{"command":"front_shop","url":"'+window.location.pathname+'"}')
-                    } else if(to.fullPath.indexOf('blog/article')>0){
-                        con.connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
-                    } else if(to.fullPath.indexOf('blog')>0){
-                        con.connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
-                    } else if(window.location.origin + '/' === window.location.href){
-                        con.connection.send('{"command":"front_index"}')
-                    } else if(to.fullPath.indexOf('cart')>0){
-                        con.connection.send('{"command":"front_cart"}')
-                    }
+                if(con.connection.readyState === 0){
+                    setTimeout(function (){
+                        if(to.fullPath.indexOf('shop')>0){
+                            con.connection.send('{"command":"front_shop","url":"'+window.location.pathname+'"}')
+                        } else if(to.fullPath.indexOf('blog/article')>0){
+                            con.connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
+                        } else if(to.fullPath.indexOf('blog')>0){
+                            con.connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
+                        } else if(window.location.origin + '/' === window.location.href){
+                            con.connection.send('{"command":"front_index"}')
+                        } else if(to.fullPath.indexOf('cart')>0){
+                            con.connection.send('{"command":"front_cart"}')
+                        }
+                        if(to.fullPath.indexOf('/') == 0){
+                            con.connection.send('{"command":"cart"}')
+                        }
+                    },200);
                 }
                 con.connection.onmessage = function(event) {
                     let data = JSON.parse(event.data);
@@ -137,6 +141,7 @@
                             }
                         }
                         if(data.message === 'front_shop') {
+                            document.getElementById('products').innerHTML = "";
                             document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
                             document.querySelector('head title').textContent = data.seo.title;
                             data.shop.data.map((item) => {
@@ -402,10 +407,10 @@
                                     '<div class="course-hover">' +
                                     '<img src="'+item.img+'" alt>' +
                                     '<div class="hover-bg bg-color-1"></div>' +
-                                    '<a href="/blog/' + item.id + '">Читать подробнее</a>' +
+                                    '<a href="/blog/article/' + item.id + '">Читать подробнее</a>' +
                                     '</div>' +
                                     '<div class="course-name clear-fix">' +
-                                    '<h3><a href="/blog/' + item.id + '">'+item.title+'</a></h3>' +
+                                    '<h3><a href="/blog/article/' + item.id + '">'+item.title+'</a></h3>' +
                                     '</div>' +
                                     '<div class="course-date bg-color-1 clear-fix">' +
                                     '<div class="day"><i class="fa fa-calendar"></i>'+day+' '+mounth+'</div><div class="time"><i class="fa fa-clock-o"></i>В '+hour+':'+minute+'</div>' +
@@ -530,7 +535,6 @@
                         }
                         else if(data.message === 'shop_search'){
                             document.getElementById('products').innerHTML = '';
-                            console.log(data.shop_search)
                             data.shop_search.data.map((item) => {
                                 let new_sale = '<div class="ribbon ribbon-blue"></div>';
                                 if (item.new === 1){
@@ -676,7 +680,7 @@
                     if ($('meta[name=user_id]').attr('content')) {
                         let blog_id = document.getElementById('blog_id').value;
                         let message = document.getElementById('message').value;
-                        connection.send('{"command":"blog_comment_add","user_id":"' + this.user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
+                        con.connection.send('{"command":"blog_comment_add","user_id":"' + this.user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
                     } else {
                         alert('Для добавления комментария нужно авторизоваться!')
                     }
@@ -703,15 +707,42 @@
         },
         created() {
             let con = this;
+            if(con.connection.readyState === 0){
+                setTimeout(function (){
+                    if(window.location.href.indexOf('shop')){
+                        con.connection.send('{"command":"cart"}')
+                        con.connection.send('{"command":"front_shop","url":"'+window.location.pathname+'"}')
+                    } else if(window.location.href.indexOf('blog/article')>0){
+                        con.connection.send('{"command":"cart"}')
+                        con.connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
+                    } else if(window.location.href.indexOf('blog')>0){
+                        con.connection.send('{"command":"cart"}')
+                        con.connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
+                    } else if(window.location.origin + '/' === window.location.href){
+                        con.connection.send('{"command":"cart"}')
+                        con.connection.send('{"command":"front_index"}')
+                    } else if(window.location.href.indexOf('cart')>0){
+                        con.connection.send('{"command":"cart"}')
+                        con.connection.send('{"command":"front_cart"}')
+                    }
+                },100);
+            }
+            if(con.connection.readyState === 0){
+
+            }
             $('body').on('click', '.add_to_cart',function(){
                 this.href = 'javascript: void(0)';
                 this.classList.remove('alt');
                 this.classList.add('bt-color-6');
-                this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен'
-                con.connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
+                this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен';
+                if(this.innerHTML == ' <i class="fa fa-shopping-cart"></i> Добавлен'){
+
+                } else {
+                    con.connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
+                }
             });
             $('body').on('click','.shop_rating', function (){
-                if(this.user_id == null && this.user_id == ''){
+                if($('meta[name=user_id]').attr('content') == ''){
                     alert('Для добавления голоса за товар нужно авторизоваться!');
                 } else {
                     con.connection.send('{"command":"shop_rating","shop_id":"'+$(this).attr('data_shop_id')+'","rating":"'+$(this).attr('data_rating')+'","user_id":"'+$('meta[name=user_id]').attr('content')+'"}');
@@ -751,10 +782,13 @@
                     '<p>'+brief+'...</p>' +
                     '</article>';
             });
+
+
             con.connection.onmessage = function(event) {
                 let data = JSON.parse(event.data);
                 let cart = document.getElementById('cart');
                 if(data.message === 'add_to_cart'){
+                    console.log('add_to_cart')
                     cart.innerHTML = '';
                     cart.style.display = 'block';
                     data.users_cart.map((item) => {
@@ -800,11 +834,10 @@
         },
         methods:{
             send_footer_contact(){
-                let con = this;
                 let footer_name = document.getElementById('footer_name').value;
                 let footer_phone = document.getElementById('footer_phone').value;
                 let footer_message = document.getElementById('footer_message').value;
-                con.connection.send('{"command":"front_footer_message","footer_name":"'+footer_name+'","footer_phone":"'+footer_phone+'","footer_message":"'+footer_message+'"}');
+                this.connection.send('{"command":"front_footer_message","footer_name":"'+footer_name+'","footer_phone":"'+footer_phone+'","footer_message":"'+footer_message+'"}');
             },
         },
     }
