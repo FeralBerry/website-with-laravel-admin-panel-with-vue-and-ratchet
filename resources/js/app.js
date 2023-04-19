@@ -4,6 +4,7 @@ import * as VueRouter from 'vue-router';
 
 import MainComponent from "./components/front/MainComponent";
 import HeaderComponent from "./components/front/HeaderComponent";
+import SliderFaqComponent from "./components/front/SliderFaqComponent";
 import SliderComponent from "./components/front/SliderComponent";
 import FooterComponent from "./components/front/FooterComponent";
 import ShopComponent from "./components/front/ShopComponent";
@@ -43,6 +44,7 @@ app.use(router);
 app.component('main-component', MainComponent);
 app.component('header-component', HeaderComponent);
 app.component('slider-component', SliderComponent);
+app.component('slider-faq-component', SliderFaqComponent);
 app.component('footer-component', FooterComponent);
 app.component('contact-component', ContactComponent);
 app.component('shop-component', ShopComponent);

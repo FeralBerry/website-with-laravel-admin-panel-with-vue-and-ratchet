@@ -131,83 +131,49 @@
             </form>
         </div>
     </div>
-    <div class="page-content">
-        <div class="container">
-            <main>
-                <h2>Подписка на платные курсы</h2>
-                <p>Вы можите получить подписку на <b>все</b> платные курсы на месяц.</p>
-                <div class="clear-fix">
-                    <div class="row" id="course_price">
-                        <div class="col-md-3" >
-                            <article class="pricing-table color-1">
-                                <div class="header-pt clear-fix"><!--
-								 --><h3>Базовый</h3>
-                                </div>
-                                <div class="price-pt"><sup>&#8381;</sup>250.<sup>00</sup></div>
-                                <p>За месяц</p>
-                                <ul>
-                                    <li>Доступ на 30 дней</li>
-                                    <li>Видео материалы</li>
-                                    <li>Без готовых материалов</li>
-                                    <li>Без практических заданий</li>
-                                </ul>
-                                <a class="cws-button border-radius alt">Купить</a>
-                            </article>
-                        </div>
-                        <div class="col-md-3">
-                            <article class="pricing-table color-2">
-                                <div class="header-pt clear-fix"><!--
-								 --><h3>Продвинутый</h3>
-                                </div>
-                                <div class="price-pt"><sup>&#8381;</sup>400<sup>00</sup></div>
-                                <p>за месяц</p>
-                                <ul>
-                                    <li>Доступ на 30 дней</li>
-                                    <li>Видео материалы</li>
-                                    <li>Без готовых материалов</li>
-                                    <li>Доступ заданиям</li>
-                                </ul>
-                                <a class="cws-button border-radius bt-color-2 alt">Купить</a>
-                            </article>
-                        </div>
-                        <div class="col-md-3">
-                            <article class="pricing-table active color-3">
-                                <div class="header-pt clear-fix"><!--
-								 --><h3>Премиум</h3>
-                                </div>
-                                <div class="price-pt"><sup>&#8381;</sup>800<sup>00</sup></div>
-                                <p>за месяц</p>
-                                <ul>
-                                    <li>Доступ на 30 дней</li>
-                                    <li>Видео материалы</li>
-                                    <li>Доступ материалам</li>
-                                    <li>Доступ заданиям</li>
-                                </ul>
-                                <a class="cws-button border-radius bt-color-3 alt">Купить</a>
-                            </article>
-                        </div>
-                        <div class="col-md-3">
-                            <article class="pricing-table color-4">
-                                <div class="header-pt clear-fix"><!--
-								 --><h3>Максимальный</h3>
-                                </div>
-                                <div class="price-pt"><sup>&#8381;</sup>2500<sup>00</sup></div>
-                                <p>за месяц</p>
-                                <ul>
-                                    <li>Доступ на 30 дней</li>
-                                    <li>Видео материалы</li>
-                                    <li>Доступ к материалам</li>
-                                    <li>Доступ к заданиям</li>
-                                    <li>Поддержка в телеграмм</li>
-                                </ul>
-                                <a class="cws-button border-radius bt-color-4 alt">Купить</a>
-                            </article>
-                        </div>
+    <section class="padding-section">
+        <div class="grid-row clear-fix">
+            <h2 class="center-text">Часто задаваемые вопросы</h2>
+            <div class="grid-col-row">
+                <div class="grid-col grid-col-6">
+                    <h3>Почему лучше выбрать сервис</h3>
+                    <p>Сервис сделан на новейших технология как программирования так и обучения.</p>
+                    <!-- accordions -->
+                    <div class="accordions" style="font-size:20px">
+                        <!-- content-title -->
+                        <div id="content_title_1" class="content-title">Большое количество бесплатным материалов</div>
+                        <!--/content-title -->
+                        <!-- accordions content -->
+                        <div id="accordion_content_1" class="content" style="display: none;">После регистрации уже сразу доступны бесплатные материалы для обучения с возможностями самопроверки.</div>
+                        <!--/accordions content -->
+                        <!-- content-title -->
+                        <div id="content_title_2" class="content-title">Интерактивные задания</div>
+                        <!--/content-title -->
+                        <!-- accordions content -->
+                        <div id="accordion_content_2" class="content" style="display: none;">В процессе обучения доступны интерактивные задания, при выполнении которых можно сразу видеть результат.</div>
+                        <!--/accordions content -->
+                        <!-- content-title -->
+                        <div id="content_title_3" class="content-title">Видео инструкции</div>
+                        <!--/content-title -->
+                        <!-- accordions content -->
+                        <div id="accordion_content_3" class="content" style="display: none;">Большая часть заданий сопровождается видео инструкциями, по которым можно разобраться с проблемами, которые не получилось решить самостоятельно.</div>
+                        <!--/accordions content -->
+                        <!-- content-title -->
+                        <div id="content_title_4" class="content-title">Написание скриптов</div>
+                        <!--/content-title -->
+                        <!-- accordions content -->
+                        <div id="accordion_content_4" class="content" style="display: none;">В процессе обучения пишутся и разбираются, как работают, скрипты, которые могут понадобится для дальнейшей работе.</div>
+                        <!--/accordions content -->
                     </div>
+                    <!--/accordions -->
+                    <router-link to="/register" class="cws-button bt-color-3 border-radius alt icon-right">Зарегистрироваться<i class="fa fa-angle-right"></i></router-link>
                 </div>
-            </main>
+                <slider-faq-component :data="{'data':data.faq_slider}">
+
+                </slider-faq-component>
+            </div>
         </div>
-    </div>
+    </section>
 </template>
 <script>
     export default {
@@ -219,7 +185,46 @@
             }
         },
         mounted() {
-
+            $('body').on('click','#content_title_1', function (){
+                this.classList.add('active');
+                document.getElementById('content_title_2').classList.remove('active')
+                document.getElementById('content_title_3').classList.remove('active')
+                document.getElementById('content_title_4').classList.remove('active')
+                document.getElementById('accordion_content_1').style.display = 'block';
+                document.getElementById('accordion_content_2').style.display = 'none';
+                document.getElementById('accordion_content_3').style.display = 'none';
+                document.getElementById('accordion_content_4').style.display = 'none';
+            });
+            $('body').on('click','#content_title_2', function (){
+                this.classList.add('active');
+                document.getElementById('content_title_1').classList.remove('active')
+                document.getElementById('content_title_3').classList.remove('active')
+                document.getElementById('content_title_4').classList.remove('active')
+                document.getElementById('accordion_content_1').style.display = 'none';
+                document.getElementById('accordion_content_2').style.display = 'block';
+                document.getElementById('accordion_content_3').style.display = 'none';
+                document.getElementById('accordion_content_4').style.display = 'none';
+            });
+            $('body').on('click','#content_title_3', function (){
+                this.classList.add('active');
+                document.getElementById('content_title_1').classList.remove('active')
+                document.getElementById('content_title_2').classList.remove('active')
+                document.getElementById('content_title_4').classList.remove('active')
+                document.getElementById('accordion_content_1').style.display = 'none';
+                document.getElementById('accordion_content_2').style.display = 'none';
+                document.getElementById('accordion_content_3').style.display = 'block';
+                document.getElementById('accordion_content_4').style.display = 'none';
+            });
+            $('body').on('click','#content_title_4', function (){
+                this.classList.add('active');
+                document.getElementById('content_title_1').classList.remove('active')
+                document.getElementById('content_title_2').classList.remove('active')
+                document.getElementById('content_title_3').classList.remove('active')
+                document.getElementById('accordion_content_1').style.display = 'none';
+                document.getElementById('accordion_content_2').style.display = 'none';
+                document.getElementById('accordion_content_3').style.display = 'none';
+                document.getElementById('accordion_content_4').style.display = 'block';
+            });
         },
         created() {
             let data = this.data.seo;
@@ -229,6 +234,25 @@
                     document.querySelector('head title').textContent = item.title;
                 }
             });
+
+
         },
     }
 </script>
+<style>
+    .faq {
+        display: none;
+    }
+    .faq-show {
+        display: block;
+        animation: showBlock 1s linear forwards;
+    }
+    @keyframes showBlock {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+</style>

@@ -14,17 +14,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('slider', function (Blueprint $table) {
+        Schema::create('version', function (Blueprint $table) {
             $table->id();
-            $table->string('title',255)->nullable();
-            $table->string('title_animate',100)->nullable();
-            $table->text('description')->nullable();
-            $table->string('description_animate')->nullable();
-            $table->boolean('isbutton')->nullable();
-            $table->string('button_name',50)->nullable();
-            $table->string('button_animate',100)->nullable();
-            $table->text('button_href')->nullable();
-            $table->text('img')->nullable();
+            $table->string('version',50)->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -37,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slider');
+        Schema::dropIfExists('version');
     }
 };

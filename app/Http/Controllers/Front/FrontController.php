@@ -32,6 +32,15 @@ class FrontController extends Controller
             ->get();
         $slider = DB::table('slider')
             ->get();
+        $contacts = DB::table('contact')
+            ->get();
+        $version = DB::table('version')
+            ->get();
+        foreach($version as $item){
+            $version = $item->version;
+        }
+        $faq_slider = DB::table('faq_slider')
+            ->get();
         $data = [
             'navigate' => $navigate,
             'seo' => $seo,
@@ -42,6 +51,9 @@ class FrontController extends Controller
             'footer_blog' => $footer_blog,
             'quotes_footer' => $quotes_footer,
             'slider' => $slider,
+            'faq_slider' => $faq_slider,
+            'contacts' => $contacts,
+            'version' => $version,
         ];
         return $data;
     }

@@ -8,19 +8,23 @@
                         <h3>{{ item.author }}</h3>
                         <p>{{ item.quotes }}</p>
                     </div>
-                    <address>
-                        <p></p>
-                        <a href="tel:+79687106270" class="phone-number">+79687106270</a>
-                        <br />
-                        <a href="mailto:uni@domain.com" class="email">uni@domain.com</a>
-                        <br />
-                        <a href="www.sample.com" class="site">www.sample.com</a>
+                    <address v-for="item in data.contacts">
+                            <p></p>
+                                <a :href="'tel:'+item.phone"><i class="fa fa-phone" aria-hidden="true"></i> {{ item.phone }}</a>
+                            <br />
+                                <a :href="'mailto:'+item.email">{{ item.email }}</a>
+                            <br />
+                                <a :href="'mailto:'+item.second_email">{{ item.second_email }}</a>
                     </address>
-                    <div class="footer-social">
-                        <a href="https://wa.me/79687106270" class="fa fa-phone"></a>
-                        <a href="https://github.com/FeralBerry" class="fa fa-github"></a>
-                        <a href="mailto:pusiket90@yandex.ru" class="fa fa-envelope-o"></a>
-                        <a href="" class="fa fa-youtube"></a>
+                    <div class="footer-social" v-for="item in data.contacts">
+                        <a :href="'https://wa.me/'+item.whatsapp" class="fa fa-whatsapp"></a>
+                        <a :href="'https://t.me/'+item.telegram" class="fa fa-telegram"></a>
+                        <a :href="item.vk" class="fa fa-vk"></a>
+                        <a :href="item.git" class="fa fa-github"></a>
+                        <a :href="item.fb" class="fa fa-facebook"></a>
+                        <a :href="item.instagram" class="fa fa-instagram"></a>
+                        <a :href="item.twitter" class="fa fa-twitter"></a>
+                        <a :href="item.youtube" class="fa fa-youtube"></a>
                     </div>
                 </section>
                 <section class="grid-col grid-col-4 footer-latest">
@@ -30,22 +34,26 @@
                 </section>
                 <section class="grid-col grid-col-4 footer-contact-form">
                     <h2 class="corner-radius">Написать предложение</h2>
-                    <div class="email_server_responce"></div>
+                    <form id="footer_contact">
+                        <div class="email_server_responce"></div>
                         <p><span class="your-name"><input type="text" name="name" id="footer_name" value="" size="40" placeholder="Name" aria-invalid="false" required></span>
                         </p>
                         <span style="display: none;color: red" id="footer_name_error">Имя не может быть меньше 3 и не больше 255 символов.</span>
                         <p><span class="your-email"><input type="text" name="phone" id="footer_phone" value="" size="40" placeholder="Phone" aria-invalid="false" required></span> </p>
-                    <span style="display: none;color: red" id="footer_phone_error">Телефон или Email не должны превышать 50 символов</span>
-                    <p><span class="your-message"><textarea name="message" id="footer_message" placeholder="Comments" cols="40" rows="5" aria-invalid="false" required></textarea></span> </p>
-                    <span style="display: none;color: red" id="footer_message_error">Сообщение должно быть не менее 3 символов</span>
-                    <span style="display: none;color: greenyellow" id="footer_success">Сообщение успешно отправленно</span>
-                    <a @click="send_footer_contact()" class="cws-button bt-color-3 border-radius alt icon-right" style="color:#fff">Отправить <i class="fa fa-angle-right"></i></a>
+                        <span style="display: none;color: red" id="footer_phone_error">Телефон или Email не должны превышать 50 символов</span>
+                        <p><span class="your-message"><textarea name="message" id="footer_message" placeholder="Comments" cols="40" rows="5" aria-invalid="false" required></textarea></span> </p>
+                        <span style="display: none;color: red" id="footer_message_error">Сообщение должно быть не менее 3 символов</span>
+                        <span style="display: none;color: greenyellow" id="footer_success">Сообщение успешно отправленно</span>
+                        <div id="footer_button">
+                            <button class="cws-button bt-color-3 border-radius alt icon-right" style="color:#fff">Отправить <i class="fa fa-angle-right"></i></button>
+                        </div>
+                    </form>
                 </section>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="grid-row clear-fix">
-                <div class="copyright"><router-link to="/">Easy-Script.io</router-link><span></span> 2020 . All Rights Reserved</div>
+                <div class="copyright"><router-link to="/">Easy-Script.io</router-link><span></span> 2020 . All Rights Reserved. Version {{ data.version }}</div>
                 <nav class="footer-nav">
                     <ul class="clear-fix">
                         <li>
@@ -727,17 +735,12 @@
                     }
                 },100);
             }
-            if(con.connection.readyState === 0){
-
-            }
             $('body').on('click', '.add_to_cart',function(){
                 this.href = 'javascript: void(0)';
                 this.classList.remove('alt');
                 this.classList.add('bt-color-6');
                 this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен';
-                if(this.innerHTML == ' <i class="fa fa-shopping-cart"></i> Добавлен'){
-
-                } else {
+                if(this.innerHTML !== ' <i class="fa fa-shopping-cart"></i> Добавлен'){
                     con.connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
                 }
             });
@@ -747,6 +750,15 @@
                 } else {
                     con.connection.send('{"command":"shop_rating","shop_id":"'+$(this).attr('data_shop_id')+'","rating":"'+$(this).attr('data_rating')+'","user_id":"'+$('meta[name=user_id]').attr('content')+'"}');
                 }
+            });
+            $('body').on('submit', '#footer_contact', function(event) {
+                event.preventDefault()
+                let footer_name = document.getElementById('footer_name').value;
+                let footer_phone = document.getElementById('footer_phone').value;
+                let footer_message = document.getElementById('footer_message').value;
+                con.connection.send('{"command":"front_footer_message","footer_name":"'+footer_name+'","footer_phone":"'+footer_phone+'","footer_message":"'+footer_message+'"}');
+                let footer_button = document.getElementById('footer_button');
+                footer_button.innerHTML = '<span style="color: #f9cb8f">Сообщение успешно отправлено</span>'
             });
             this.data.footer_blog.map((item) => {
                 let brief = '';
@@ -833,12 +845,7 @@
             }
         },
         methods:{
-            send_footer_contact(){
-                let footer_name = document.getElementById('footer_name').value;
-                let footer_phone = document.getElementById('footer_phone').value;
-                let footer_message = document.getElementById('footer_message').value;
-                this.connection.send('{"command":"front_footer_message","footer_name":"'+footer_name+'","footer_phone":"'+footer_phone+'","footer_message":"'+footer_message+'"}');
-            },
+
         },
     }
 </script>

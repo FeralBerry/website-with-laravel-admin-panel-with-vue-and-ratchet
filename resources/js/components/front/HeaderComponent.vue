@@ -2,26 +2,35 @@
     <header class="only-color">
         <!-- header top panel -->
         <div class="page-header-top">
-            <div class="grid-row clear-fix">
-                <address>
-                    <!--<a href="tel:123-123456789" class="phone-number"><i class="fa fa-phone"></i>123-123456789</a>-->
-                    <a href="mailto:uni@domain.com" class="email"><i class="fa fa-envelope-o"></i>uni@domain.com</a>
+            <div class="grid-row clear-fix" v-for="item in this.data.contacts">
+                <address v-if="item.phone || item.email">
+                    <a :href="'tel:'+item.phone" class="phone-number"><i class="fa fa-phone"></i>{{ item.phone }}</a>
+                    <a :href="'mailto:'+item.email" class="email"><i class="fa fa-envelope-o"></i>{{ item.email }}</a>
                 </address>
-                <div class="header-top-panel">
+                <div class="header-top-panel" v-if="item.twitter || item.second_email || item.whatsapp || item.telegram || item.vk || item.git || item.fb || item.youtube || item.instagram">
                     <div id="top_social_links_wrapper">
                         <div class="share-toggle-button"><i class="share-icon fa fa-share-alt"></i></div>
                         <div class="cws_social_links">
-                            <a href="https://plus.google.com/" class="cws_social_link" title="Google +">
+                            <a :href="'mailto:'+item.second_email" class="cws_social_link" title="Google +">
                                 <i class="share-icon fa fa-google-plus" style="transform: matrix(0, 0, 0, 0, 0, 0);"></i>
                             </a>
-                            <a href="http://twitter.com/" class="cws_social_link" title="Twitter">
+                            <a :href="item.twitter" class="cws_social_link" title="Twitter">
                                 <i class="share-icon fa fa-twitter"></i>
                             </a>
-                            <a href="http://facebook.com" class="cws_social_link" title="Facebook">
+                            <a :href="item.fb" class="cws_social_link" title="Facebook">
                                 <i class="share-icon fa fa-facebook"></i>
                             </a>
-                            <a href="http://dribbble.com" class="cws_social_link" title="Dribbble">
-                                <i class="share-icon fa fa-dribbble"></i>
+                            <a :href="item.instagram" class="cws_social_link" title="Instagram">
+                                <i class="share-icon fa fa-instagram"></i>
+                            </a>
+                            <a :href="item.youtube" class="cws_social_link" title="Youtube">
+                                <i class="share-icon fa fa-youtube"></i>
+                            </a>
+                            <a :href="'https://wa.me/'+item.whatsapp" class="cws_social_link" title="WhatsApp">
+                                <i class="share-icon fa fa-whatsapp"></i>
+                            </a>
+                            <a :href="'https://t.me/'+item.telegram" class="cws_social_link" title="Telegram">
+                                <i class="share-icon fa fa-telegram"></i>
                             </a>
                         </div>
                     </div>
