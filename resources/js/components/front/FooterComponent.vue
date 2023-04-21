@@ -17,14 +17,30 @@
                                 <a :href="'mailto:'+item.second_email">{{ item.second_email }}</a>
                     </address>
                     <div class="footer-social" v-for="item in data.contacts">
-                        <a :href="'https://wa.me/'+item.whatsapp" class="fa fa-whatsapp"></a>
-                        <a :href="'https://t.me/'+item.telegram" class="fa fa-telegram"></a>
-                        <a :href="item.vk" class="fa fa-vk"></a>
-                        <a :href="item.git" class="fa fa-github"></a>
-                        <a :href="item.fb" class="fa fa-facebook"></a>
-                        <a :href="item.instagram" class="fa fa-instagram"></a>
-                        <a :href="item.twitter" class="fa fa-twitter"></a>
-                        <a :href="item.youtube" class="fa fa-youtube"></a>
+                        <span v-if="item.whatsapp">
+                            <a :href="'https://wa.me/'+item.whatsapp" class="fa fa-whatsapp"></a>
+                        </span>
+                        <span v-if="item.telegram">
+                            <a :href="'https://t.me/'+item.telegram" class="fa fa-telegram"></a>
+                        </span>
+                        <span v-if="item.vk">
+                            <a :href="item.vk" class="fa fa-vk"></a>
+                        </span>
+                        <span v-if="item.git">
+                            <a :href="item.git" class="fa fa-github"></a>
+                        </span>
+                        <span v-if="item.fb">
+                            <a :href="item.fb" class="fa fa-facebook"></a>
+                        </span>
+                        <span v-if="item.instagram">
+                            <a :href="item.instagram" class="fa fa-instagram"></a>
+                        </span>
+                        <span v-if="item.twitter">
+                            <a :href="item.twitter" class="fa fa-twitter"></a>
+                        </span>
+                        <span v-if="item.youtube">
+                            <a :href="item.youtube" class="fa fa-youtube"></a>
+                        </span>
                     </div>
                 </section>
                 <section class="grid-col grid-col-4 footer-latest">
@@ -87,27 +103,28 @@
                 user_id:$('meta[name=user_id]').attr('content'),
             }
         },
+        methods:{
+
+        },
         watch: {
             $route (to, from) {
                 let con = this;
-                if(con.connection.readyState === 0){
-                    setTimeout(function (){
-                        if(to.fullPath.indexOf('shop')>0){
-                            con.connection.send('{"command":"front_shop","url":"'+window.location.pathname+'"}')
-                        } else if(to.fullPath.indexOf('blog/article')>0){
-                            con.connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
-                        } else if(to.fullPath.indexOf('blog')>0){
-                            con.connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
-                        } else if(window.location.origin + '/' === window.location.href){
-                            con.connection.send('{"command":"front_index"}')
-                        } else if(to.fullPath.indexOf('cart')>0){
-                            con.connection.send('{"command":"front_cart"}')
-                        }
-                        if(to.fullPath.indexOf('/') == 0){
-                            con.connection.send('{"command":"cart"}')
-                        }
-                    },200);
-                }
+                setTimeout(function (){
+                    if(to.fullPath.indexOf('shop')>0){
+                        con.connection.send('{"command":"front_shop","url":"'+window.location.pathname+'"}')
+                    } else if(to.fullPath.indexOf('blog/article')>0){
+                        con.connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
+                    } else if(to.fullPath.indexOf('blog')>0){
+                        con.connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
+                    } else if(window.location.origin + '/' === window.location.href){
+                        con.connection.send('{"command":"front_index"}')
+                    } else if(to.fullPath.indexOf('cart')>0){
+                        con.connection.send('{"command":"front_cart"}')
+                    }
+                    if(to.fullPath.indexOf('/') == 0){
+                        con.connection.send('{"command":"cart"}')
+                    }
+                },500);
                 con.connection.onmessage = function(event) {
                     let data = JSON.parse(event.data);
                     if (data) {
@@ -115,6 +132,7 @@
 
                         }
                         if(data.cart === 'cart'){
+                            document.querySelector('meta[name="cookie_id"]').setAttribute("content", data.cookie_id);
                             let cart = document.getElementById('cart');
                             if(data.users_cart != null){
                                 cart.style.display = 'block';
@@ -136,7 +154,7 @@
                                         '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
                                         '                                        </div>' +
                                         '                                        <div class="col-md-1">' +
-                                        '                                            <span class="del_cart" onclick="delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
+                                        '                                            <span class="del_cart" onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
                                         '                                        </div></li>';
                                 });
                                 cart.innerHTML += '<li>Стоимость покупок: '+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</li>'+
@@ -149,7 +167,7 @@
                             }
                         }
                         if(data.message === 'front_shop') {
-                            document.getElementById('products').innerHTML = "";
+                            $('#products').html('');
                             document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
                             document.querySelector('head title').textContent = data.seo.title;
                             data.shop.data.map((item) => {
@@ -188,15 +206,15 @@
                                 let rating_width = item.rating * 100 / 5;
                                 document.getElementById('products').innerHTML += '<li class="product">' +
                                     '<div class="picture">' + new_sale +
-                                    '<img src="'+img+'" data-at2x="'+img+'" alt="">' +
-                                    '<span class="hover-effect"></span>' +
+                                    '<a href="/shop/product/'+item.id+'"><img src="'+img+'" data-at2x="'+img+'" alt="">' +
+                                    '<span class="hover-effect"></span></a>' +
                                     '<div class="link-cont">' +
-                                    '<a href="https://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
+                                    '<a href="'+img+'" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
                                     '<a href="/shop/product/'+item.id+'" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
                                     '</div>' +
                                     '</div>' +
                                     '<div class="product-name">' +
-                                    '<a href="shop-single-product.html">'+item.name+'</a>' +
+                                    '<a href="/shop/product/'+item.id+'">'+item.name+'</a>' +
                                     '</div>' +
                                     '<div class="star-rating" >' +
                                     '<a class="shop_rating" data_rating="1" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' +
@@ -216,14 +234,7 @@
                                     '</div>' + link +
                                     '</li>';
                             });
-                            let shop_category_link = document.getElementById('shop_category_link');
-
-                            shop_category_link.innerHTML = '';
-                            data.navigate.map((item) => {
-                                if(item.href.indexOf('/shop/')>=0){
-                                    shop_category_link.innerHTML += '<li class="cat-item cat-item-1 current-cat"><a href="'+item.href+'">'+item.title+'<span></span></a></li>';
-                                }
-                            });
+                            $('#shop_category_link').html('')
                             let paginate_item = document.getElementById('paginate_item');
                             data.shop.path = window.location.protocol +'//'+window.location.hostname;
                             data.shop.first_page_url = window.location.protocol +'//'+window.location.hostname+'/blog?page=1';
@@ -380,7 +391,7 @@
                             }, 5000);
                         }
                         else if(data.message === 'front_blog'){
-                            document.getElementById('blog_items').innerHTML = '';
+                            $("#blog_items").html("");
                             data.seo.map((item) => {
                                 document.querySelector('meta[name="description"]').setAttribute("content", ""+item.description+"");
                                 document.querySelector('head title').textContent = item.title;
@@ -461,7 +472,35 @@
                             }
                         }
                         else if(data.message === 'front_index'){
-
+                            let count_informer = document.getElementById('count_informer');
+                            count_informer.innerHTML = '<div class="grid-col grid-col-3 alt">' +
+                                '                    <div class="counter-block">' +
+                                '                        <i class="flaticon-book1"></i>' +
+                                '                        <div class="counter" data-count="'+data.count_all_courses+'">'+data.count_all_courses+'</div>' +
+                                '                        <div class="counter-name">Уроков</div>\n' +
+                                '                    </div>' +
+                                '                </div>' +
+                                '                <div class="grid-col grid-col-3 alt">' +
+                                '                    <div class="counter-block">' +
+                                '                        <i class="flaticon-multiple"></i>' +
+                                '                        <div class="counter" data-count="'+data.count_users+'">'+data.count_users+'</div>' +
+                                '                        <div class="counter-name">Пользователей</div>' +
+                                '                    </div>' +
+                                '                </div>' +
+                                '                <div class="grid-col grid-col-3 alt">' +
+                                '                    <div class="counter-block">' +
+                                '                        <i class="flaticon-pencil"></i>' +
+                                '                        <div class="counter" data-count="'+data.count_task_all_courses+'">'+data.count_task_all_courses+'</div>' +
+                                '                        <div class="counter-name">Практических заданий</div>' +
+                                '                    </div>' +
+                                '                </div>' +
+                                '                <div class="grid-col grid-col-3 alt">' +
+                                '                    <div class="counter-block last">' +
+                                '                        <i class="fa fa-video-camera"></i>' +
+                                '                        <div class="counter" data-count="'+data.count_video_all_courses+'">'+data.count_video_all_courses+'</div>' +
+                                '                        <div class="counter-name">Видео уроков</div>' +
+                                '                    </div>' +
+                                '                </div>'
                         }
                         else if(data.message === "search_blog"){
                             document.getElementById('blog_items').innerHTML = '';
@@ -542,7 +581,7 @@
                             }
                         }
                         else if(data.message === 'shop_search'){
-                            document.getElementById('products').innerHTML = '';
+                            $('#products').html('');
                             data.shop_search.data.map((item) => {
                                 let new_sale = '<div class="ribbon ribbon-blue"></div>';
                                 if (item.new === 1){
@@ -575,14 +614,14 @@
                                 document.getElementById('products').innerHTML += '<li class="product">' +
                                     '<div class="picture">' + new_sale +
                                     '<img src="'+img+'" data-at2x="'+img+'" alt="">' +
-                                    '<span class="hover-effect"></span>' +
+                                    '<a href="/shop/product/'+item.id+'"><span class="hover-effect"></span></a>' +
                                     '<div class="link-cont">' +
-                                    '<a href="https://placehold.it/270x200" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
+                                    '<a href="'+img+'" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
                                     '<a href="/shop/product/'+item.id+'" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
                                     '</div>' +
                                     '</div>' +
                                     '<div class="product-name">' +
-                                    '<a href="shop-single-product.html">'+item.name+'</a>' +
+                                    '<a href="/shop/product/'+item.id+'">'+item.name+'</a>' +
                                     '</div>' +
                                     '<div class="star-rating" >' +
                                     '<a class="shop_rating" data_rating="1" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' +
@@ -634,12 +673,63 @@
                                 });
                             }
                         }
+                        else if(data.message === 'add_to_cart'){
+                            let cart = document.getElementById('cart');
+                            cart.innerHTML = '';
+                            cart.style.display = 'block';
+                            data.users_cart.map((item) => {
+                                let price = Math.round(((item.price + (item.sub_price/100)) - (item.price + (item.sub_price/100)) *item.percent/100) * 100) / 100;
+                                cart.innerHTML += '<li class="cart row" id="product_'+item.id+'" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>' +
+                                    '                                        <div class="col-md-8">' +
+                                    '                                            <p><span class="cart_item_title">'+item.name+'</span></p>' +
+                                    '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
+                                    '                                        </div>' +
+                                    '                                        <div class="col-md-1">' +
+                                    '                                            <span class="del_cart" onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
+                                    '                                        </div></li>';
+                            });
+                            cart.innerHTML += '<li>' +
+                                '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' +
+                                '                        </li>'
+                        }
                         else if(data.message === 'blog_search'){
 
                         }
+                        else if(data.message === 'new_shop_rating'){
+                            let rating_width = document.getElementById('rating_width_'+data.shop_id+'')
+                            rating_width.setAttribute('style','width:'+data.rating+'%!important');
+                        }
+                        else if(data.message === 'footer_name_error'){
+                            let footer_name_error = document.getElementById('footer_name_error');
+                            footer_name_error.style.display = 'block';
+                            setTimeout(function() {
+                                $('#footer_name_error').fadeOut('fast');
+                            }, 3000);
+                        }
+                        else if(data.message === 'footer_phone_error'){
+                            let footer_phone_error = document.getElementById('footer_phone_error');
+                            footer_phone_error.style.display = 'block';
+                            setTimeout(function() {
+                                $('#footer_phone_error').fadeOut('fast');
+                            }, 3000);
+                        }
+                        else if(data.message === 'footer_message_error'){
+                            let footer_message_error = document.getElementById('footer_message_error');
+                            footer_message_error.style.display = 'block';
+                            setTimeout(function() {
+                                $('#footer_message_error').fadeOut('fast');
+                            }, 3000);
+                        }
+                        else if(data.message === 'footer_success'){
+                            let footer_success = document.getElementById('footer_success');
+                            footer_success.style.display = 'block';
+                            setTimeout(function() {
+                                $('#footer_success').fadeOut('fast');
+                            }, 5000);
+                        }
                         else if(data.message === "front_cart"){
-                            let cart_produts = document.getElementById('cart_products');
-                            cart_produts.innerHTML = '';
+                            $('cart_products').html('');
+                            let cart_products = document.getElementById('cart_products');
                             let i = 0;
                             let cart_price = 0;
                             let cart_price_with_percent = 0;
@@ -647,7 +737,7 @@
                                 data.users_cart.map((item) => {
                                     i++;
                                     let price = Math.round(((item.price + (item.sub_price/100)) - (item.price + (item.sub_price/100)) *item.percent/100) * 100) / 100;
-                                    cart_produts.innerHTML += '<div class="col-md-1 cart_table_item">'+i+'</div>' +
+                                    cart_products.innerHTML += '<div id="cart_product_'+item.id+'" class="col-md-1 cart_table_item">'+i+'</div>' +
                                         '<div class="col-md-8 cart_table_item" style="float: left">' +
                                         '<div class="row">' +
                                         '<div class="col-md-3">' +
@@ -661,11 +751,11 @@
                                         '</div>' +
                                         '</div>' +
                                         '<div class="col-md-2 cart_table_item"><span class="amount">'+price+'<del><sup>'+item.price+'.'+item.sub_price+'</sup></del> <sup>&#8381;</sup></span></div>' +
-                                        '<div class="col-md-1 cart_table_item"><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></div>';
+                                        '<div class="col-md-1 cart_table_item"><a onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></a></div>';
 
                                 });
                             } else{
-                                cart_produts.innerHTML = '<div class="col-md-12 cart_table_item">Пока Ваша корзина пуста</div>';
+                                cart_products.innerHTML = '<div class="col-md-12 cart_table_item">Пока Ваша корзина пуста</div>';
                             }
                             if(data.cart_price_with_percent == 0){
                                 document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' +
@@ -676,33 +766,9 @@
                                 document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' +
                                     '                            <div class="col-md-3">'+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</div>'
                             }
-
-                        }
-                        else if(data.message === 'new_shop_rating'){
-                            let rating_width = document.getElementById('rating_width_'+data.shop_id+'')
-                                rating_width.setAttribute('style','width:'+data.rating+'%!important');
                         }
                     }
                 }
-                $('body').on('click', '#send_comment', function() {
-                    if ($('meta[name=user_id]').attr('content')) {
-                        let blog_id = document.getElementById('blog_id').value;
-                        let message = document.getElementById('message').value;
-                        con.connection.send('{"command":"blog_comment_add","user_id":"' + this.user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
-                    } else {
-                        alert('Для добавления комментария нужно авторизоваться!')
-                    }
-                });
-                $('body').on('submit', '#shop_search', function(event) {
-                    event.preventDefault()
-                    let shop_search_input = document.getElementById('shop_search_input').value;
-                    con.connection.send('{"command":"shop_search","shop_search_input":"' + shop_search_input + '"}');
-                });
-                $('body').on('submit', '#blog_search', function(event) {
-                    event.preventDefault()
-                    let blog_search_input = document.getElementById('blog_search_input').value;
-                    con.connection.send('{"command":"blog_search","blog_search_input":"' + blog_search_input + '"}');
-                });
             }
         },
         mounted() {
@@ -715,34 +781,34 @@
         },
         created() {
             let con = this;
-            if(con.connection.readyState === 0){
-                setTimeout(function (){
-                    if(window.location.href.indexOf('shop')){
-                        con.connection.send('{"command":"cart"}')
-                        con.connection.send('{"command":"front_shop","url":"'+window.location.pathname+'"}')
-                    } else if(window.location.href.indexOf('blog/article')>0){
-                        con.connection.send('{"command":"cart"}')
-                        con.connection.send('{"command":"front_blog_article","url":"'+window.location.pathname+'"}')
-                    } else if(window.location.href.indexOf('blog')>0){
-                        con.connection.send('{"command":"cart"}')
-                        con.connection.send('{"command":"front_blog","url":"'+window.location.pathname+'"}')
-                    } else if(window.location.origin + '/' === window.location.href){
-                        con.connection.send('{"command":"cart"}')
-                        con.connection.send('{"command":"front_index"}')
-                    } else if(window.location.href.indexOf('cart')>0){
-                        con.connection.send('{"command":"cart"}')
-                        con.connection.send('{"command":"front_cart"}')
-                    }
-                },100);
-            }
+            setTimeout(function () {
+                if (window.location.href.indexOf('shop')) {
+                    con.connection.send('{"command":"cart"}')
+                    con.connection.send('{"command":"front_shop","url":"' + window.location.pathname + '"}')
+                } else if (window.location.href.indexOf('blog/article') > 0) {
+                    con.connection.send('{"command":"cart"}')
+                    con.connection.send('{"command":"front_blog_article","url":"' + window.location.pathname + '"}')
+                } else if (window.location.href.indexOf('blog') > 0) {
+                    con.connection.send('{"command":"cart"}')
+                    con.connection.send('{"command":"front_blog","url":"' + window.location.pathname + '"}')
+                } else if (window.location.origin + '/' === window.location.href) {
+                    con.connection.send('{"command":"cart"}')
+                    con.connection.send('{"command":"front_index"}')
+                } else if (window.location.href.indexOf('cart') > 0) {
+                    con.connection.send('{"command":"cart"}')
+                    con.connection.send('{"command":"front_cart"}')
+                }
+            }, 500);
             $('body').on('click', '.add_to_cart',function(){
                 this.href = 'javascript: void(0)';
                 this.classList.remove('alt');
                 this.classList.add('bt-color-6');
-                this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен';
-                if(this.innerHTML !== ' <i class="fa fa-shopping-cart"></i> Добавлен'){
+                if(this.innerHTML === ' <i class="fa fa-shopping-cart"></i> Добавлен'){
+                    alert('Товар уже добавлен!')
+                } else {
                     con.connection.send('{"command":"add_to_cart","user_id":"' + this.user_id + '","product_id":"' + $(this).attr('id') + '"}');
                 }
+                this.innerHTML = ' <i class="fa fa-shopping-cart"></i> Добавлен';
             });
             $('body').on('click','.shop_rating', function (){
                 if($('meta[name=user_id]').attr('content') == ''){
@@ -759,6 +825,25 @@
                 con.connection.send('{"command":"front_footer_message","footer_name":"'+footer_name+'","footer_phone":"'+footer_phone+'","footer_message":"'+footer_message+'"}');
                 let footer_button = document.getElementById('footer_button');
                 footer_button.innerHTML = '<span style="color: #f9cb8f">Сообщение успешно отправлено</span>'
+            });
+            $('body').on('click', '#send_comment', function() {
+                if ($('meta[name=user_id]').attr('content')) {
+                    let blog_id = document.getElementById('blog_id').value;
+                    let message = document.getElementById('message').value;
+                    con.connection.send('{"command":"blog_comment_add","user_id":"' + this.user_id + '","blog_id":"' + blog_id + '","message":"' + message + '"}');
+                } else {
+                    alert('Для добавления комментария нужно авторизоваться!')
+                }
+            });
+            $('body').on('submit', '#shop_search', function(event) {
+                event.preventDefault()
+                let shop_search_input = document.getElementById('shop_search_input').value;
+                con.connection.send('{"command":"shop_search","shop_search_input":"' + shop_search_input + '"}');
+            });
+            $('body').on('submit', '#blog_search', function(event) {
+                event.preventDefault()
+                let blog_search_input = document.getElementById('blog_search_input').value;
+                con.connection.send('{"command":"blog_search","blog_search_input":"' + blog_search_input + '"}');
             });
             this.data.footer_blog.map((item) => {
                 let brief = '';
@@ -794,58 +879,7 @@
                     '<p>'+brief+'...</p>' +
                     '</article>';
             });
-
-
-            con.connection.onmessage = function(event) {
-                let data = JSON.parse(event.data);
-                let cart = document.getElementById('cart');
-                if(data.message === 'add_to_cart'){
-                    console.log('add_to_cart')
-                    cart.innerHTML = '';
-                    cart.style.display = 'block';
-                    data.users_cart.map((item) => {
-                        let price = (item.price +item.sub_price/100) - (item.percent/100)*(item.price + item.sub_price/100);
-                        cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>' +
-                            '                                        <div class="col-md-8">' +
-                            '                                            <p><span class="cart_item_title">'+item.name+'</span></p>' +
-                            '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
-                            '                                        </div>' +
-                            '                                        <div class="col-md-1">' +
-                            '                                            <span class="del_cart" onclick="delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
-                            '                                        </div></li>';
-                    });
-                    cart.innerHTML += '<li>' +
-                        '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' +
-                        '                        </li>'
-                } else if(data.message === 'footer_name_error'){
-                    let footer_name_error = document.getElementById('footer_name_error');
-                    footer_name_error.style.display = 'block';
-                    setTimeout(function() {
-                        $('#footer_name_error').fadeOut('fast');
-                    }, 3000);
-                } else if(data.message === 'footer_phone_error'){
-                    let footer_phone_error = document.getElementById('footer_phone_error');
-                    footer_phone_error.style.display = 'block';
-                    setTimeout(function() {
-                        $('#footer_phone_error').fadeOut('fast');
-                    }, 3000);
-                } else if(data.message === 'footer_message_error'){
-                    let footer_message_error = document.getElementById('footer_message_error');
-                    footer_message_error.style.display = 'block';
-                    setTimeout(function() {
-                        $('#footer_message_error').fadeOut('fast');
-                    }, 3000);
-                } else if(data.message === 'footer_success'){
-                    let footer_success = document.getElementById('footer_success');
-                    footer_success.style.display = 'block';
-                    setTimeout(function() {
-                        $('#footer_success').fadeOut('fast');
-                    }, 5000);
-                }
-            }
         },
-        methods:{
 
-        },
     }
 </script>

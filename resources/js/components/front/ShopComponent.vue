@@ -57,9 +57,7 @@
                         <aside class="widget-categories">
                             <h2>Категории</h2>
                             <hr class="divider-big" />
-                            <ul id="shop_category_link">
-
-                            </ul>
+                            <ShopCatLinkComponent :data="data.navigate"></ShopCatLinkComponent>
                         </aside>
                         <!-- widget categories -->
                         <!--/ widget shop filter -->
@@ -88,11 +86,31 @@
                         <aside class="widget-subscribe">
                             <h2>Связаться:</h2>
                             <hr class="divider-big margin-bottom" />
-                            <div>
-                                <a href="https://wa.me/79687106270" class="fa fa-phone"></a>
-                                <a href="https://github.com/FeralBerry" class="fa fa-github"></a>
-                                <a href="mailto:pusiket90@yandex.ru" class="fa fa-envelope-o"></a>
-                                <a href="" class="fa fa-youtube"></a>
+                            <div v-for="item in data.contacts">
+                                <span v-if="item.whatsapp">
+                                    <a :href="'https://wa.me/'+item.whatsapp" class="fa fa-whatsapp"></a>
+                                </span>
+                                <span v-if="item.telegram">
+                                    <a :href="'https://t.me/'+item.telegram" class="fa fa-telegram"></a>
+                                </span>
+                                <span v-if="item.vk">
+                                    <a :href="item.vk" class="fa fa-vk"></a>
+                                </span>
+                                <span v-if="item.git">
+                                    <a :href="item.git" class="fa fa-github"></a>
+                                </span>
+                                <span v-if="item.fb">
+                                    <a :href="item.fb" class="fa fa-facebook"></a>
+                                </span>
+                                <span v-if="item.instagram">
+                                    <a :href="item.instagram" class="fa fa-instagram"></a>
+                                </span>
+                                <span v-if="item.twitter">
+                                    <a :href="item.twitter" class="fa fa-twitter"></a>
+                                </span>
+                                <span v-if="item.youtube">
+                                    <a :href="item.youtube" class="fa fa-youtube"></a>
+                                </span>
                             </div>
                         </aside>
                         <!-- / widget follow -->
@@ -103,8 +121,10 @@
     </div>
 </template>
 <script>
+    import ShopCatLinkComponent from "./ShopCatLinkComponent";
     export default {
         name: "ShopComponent",
+        components: {ShopCatLinkComponent},
         props: ['data'],
         data(){
             return{

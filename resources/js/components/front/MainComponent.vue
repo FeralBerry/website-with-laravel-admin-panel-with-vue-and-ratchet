@@ -32,35 +32,8 @@
         </div>
         <div class="them-mask bg-color-1"></div>
         <div class="grid-row">
-            <div class="grid-col-row clear-fix">
-                <div class="grid-col grid-col-3 alt">
-                    <div class="counter-block">
-                        <i class="flaticon-book1"></i>
-                        <div class="counter" :data-count="data.count_all_courses">{{ data.count_all_courses }}</div>
-                        <div class="counter-name">Уроков</div>
-                    </div>
-                </div>
-                <div class="grid-col grid-col-3 alt">
-                    <div class="counter-block">
-                        <i class="flaticon-multiple"></i>
-                        <div class="counter" :data-count="data.count_users">{{ data.count_users }}</div>
-                        <div class="counter-name">Пользователей</div>
-                    </div>
-                </div>
-                <div class="grid-col grid-col-3 alt">
-                    <div class="counter-block">
-                        <i class="flaticon-pencil"></i>
-                        <div class="counter" :data-count="data.count_task_all_courses">{{ data.count_task_all_courses }}</div>
-                        <div class="counter-name">Практических заданий</div>
-                    </div>
-                </div>
-                <div class="grid-col grid-col-3 alt">
-                    <div class="counter-block last">
-                        <i class="fa fa-video-camera"></i>
-                        <div class="counter" :data-count="data.count_video_all_courses">{{ data.count_video_all_courses }}</div>
-                        <div class="counter-name">Видео уроков</div>
-                    </div>
-                </div>
+            <div class="grid-col-row clear-fix" id="count_informer">
+
             </div>
         </div>
     </div>

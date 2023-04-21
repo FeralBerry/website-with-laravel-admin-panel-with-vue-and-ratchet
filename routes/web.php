@@ -14,6 +14,7 @@ Route::group([], function() {
         Route::get('/shop/{id?}',['uses' => 'IndexController@shopProducts','as' => 'front-shop-products']);
         Route::post('/shop/search',['uses' => 'IndexController@shopSearch','as' => 'front-shop-search']);
         Route::get('/shop/product/{id}',['uses' => 'IndexController@shopProduct','as' => 'front-shop-product']);
+        Route::post('/shop/product/delete/{id}/{cookie_id?}',['uses' => 'IndexController@delete_cart_item','as' => 'front-shop-product-delete']);
         Route::get('/cart',['uses' => 'IndexController@cart','as' => 'front-shop-cart']);
         Route::get('/checkout',['uses' => 'IndexController@checkout','as' => 'front-shop-checkout']);
         Route::get('/blog',['uses' => 'IndexController@blog','as' => 'front-blog']);

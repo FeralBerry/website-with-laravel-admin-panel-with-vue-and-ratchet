@@ -9,44 +9,9 @@ use Illuminate\Support\Str;
 class IndexController extends FrontController
 {
     public function index(){
-        $free_courses = DB::table('free_courses')
-            ->select('id')
-            ->get();
-        $free_courses_type = DB::table('free_courses')
-            ->where('type',1)
-            ->select('type')
-            ->get();
-        $free_courses_video = DB::table('free_courses')
-            ->where('link','!=',NULL)
-            ->orWhere('youtube','!=',NULL)
-            ->select('id')
-            ->get();
-        $pay_courses = DB::table('pay_courses')
-            ->select('id')
-            ->get();
-        $pay_courses_type = DB::table('pay_courses')
-            ->where('type',1)
-            ->select('type')
-            ->get();
-        $pay_courses_video = DB::table('pay_courses')
-            ->where('link','!=',NULL)
-            ->orWhere('youtube','!=',NULL)
-            ->select('id')
-            ->get();
-        $count_all_courses = count($free_courses) + count($pay_courses);
-        $count_task_all_courses = count($free_courses_type) + count($pay_courses_type);
-        $count_video_all_courses = count($free_courses_video) + count($pay_courses_video);
-        $users = DB::table('users')
-            ->select('id')
-            ->get();
-        $count_users = count($users);
         $slider = DB::table('slider')
             ->get();
         $data = array_merge($this->data(),[
-            'count_all_courses' => $count_all_courses,
-            'count_task_all_courses' => $count_task_all_courses,
-            'count_video_all_courses' => $count_video_all_courses,
-            'count_users' => $count_users,
             'slider' => $slider,
         ]);
         return view('front.index',['data' => $data]);
@@ -118,5 +83,26 @@ class IndexController extends FrontController
         ]);
         return view('front.index',['data' => $data]);
     }
-
+    public function delete_cart_item(Request $request,$id,$cookie_id){
+        DB::table('users_cart')
+            ->where('shop_id',$id)
+            ->where('cookie_id',$cookie_id)
+            ->delete();
+        $users_cart = DB::table('users_cart')
+            ->where('cookie_id',$cookie_id)
+            ->join('shop','shop.id','=','users_cart.shop_id')
+            ->get();
+        $cart_price_with_percent = 0;
+        $cart_price = 0;
+        foreach ($users_cart as $item){
+            $cart_price_with_percent += floor($item->count * (($item->price + $item->sub_price/100) - ($item->percent / 100) * $item->count * ($item->price + $item->sub_price/100))* 100) / 100;
+            $cart_price += $item->count * (($item->price + $item->sub_price/100));
+        }
+        $data = [
+            'users_cart' => $users_cart->take(5),
+            'cart_price' => round($cart_price,2),
+            'cart_price_with_percent' => round($cart_price_with_percent,2),
+        ];
+        return $data;
+    }
 }

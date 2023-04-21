@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 class FrontController extends Controller
 {
     protected function data(){
+
         $auth = false;
         $auth_user_name = '';
         $auth_user_id = '';
