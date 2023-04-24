@@ -36,7 +36,7 @@ class ChatController extends Controller
             'users_cart' => $users_cart->take(5),
             'cart_price' => round($cart_price,2),
             'cart_price_with_percent' => round($cart_price_with_percent,2),
-            'cookie_id' => $_COOKIE['cookie_id']
+            'cookie_id' => $_COOKIE['cookie_id'],
         ];
         return $data;
     }
@@ -465,5 +465,11 @@ class ChatController extends Controller
         ];
         return $data;
     }
+    public function contact_form_message($command){
 
+        $data = [
+            'message' => 'contact_form_message',
+        ];
+        return $data;
+    }
 }

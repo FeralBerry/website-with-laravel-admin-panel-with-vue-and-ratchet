@@ -2,8 +2,8 @@
     <header class="only-color">
         <!-- header top panel -->
         <div class="page-header-top">
-            <div class="grid-row clear-fix" v-for="item in this.data.contacts">
-                <address>
+            <div class="grid-row clear-fix">
+                <address v-for="item in this.data.contacts">
                     <span v-if="item.phone">
                         <a :href="'tel:'+item.phone" class="phone-number"><i class="fa fa-phone"></i>{{ item.phone }}</a>
                     </span>
@@ -11,48 +11,7 @@
                         <a :href="'mailto:'+item.email" class="email"><i class="fa fa-envelope-o"></i>{{ item.email }}</a>
                     </span>
                 </address>
-                <div class="header-top-panel">
-                    <div id="top_social_links_wrapper">
-                        <div class="share-toggle-button"><i class="share-icon fa fa-share-alt"></i></div>
-                        <div class="cws_social_links">
-                            <span v-if="item.second_email">
-                                <a :href="'mailto:'+item.second_email" class="cws_social_link" title="Google +">
-                                    <i class="share-icon fa fa-google-plus" style="transform: matrix(0, 0, 0, 0, 0, 0);"></i>
-                                </a>
-                            </span>
-                            <span v-if="item.twitter">
-                                <a :href="item.twitter" class="cws_social_link" title="Twitter">
-                                    <i class="share-icon fa fa-twitter"></i>
-                                </a>
-                            </span>
-                            <span v-if="item.fb">
-                                <a :href="item.fb" class="cws_social_link" title="Facebook">
-                                    <i class="share-icon fa fa-facebook"></i>
-                                </a>
-                            </span>
-                            <span v-if="item.instagram">
-                                <a :href="item.instagram" class="cws_social_link" title="Instagram">
-                                    <i class="share-icon fa fa-instagram"></i>
-                                </a>
-                            </span>
-                            <span v-if="item.youtube">
-                                <a :href="item.youtube" class="cws_social_link" title="Youtube">
-                                    <i class="share-icon fa fa-youtube"></i>
-                                </a>
-                            </span>
-                            <span v-if="item.whatsapp">
-                                <a :href="'https://wa.me/'+item.whatsapp" class="cws_social_link" title="WhatsApp">
-                                    <i class="share-icon fa fa-whatsapp"></i>
-                                </a>
-                            </span>
-                            <span v-if="item.telegram">
-                                <a :href="'https://t.me/'+item.telegram" class="cws_social_link" title="Telegram">
-                                    <i class="share-icon fa fa-telegram"></i>
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                <HeaderSocialLinksComponent :data="this.data.contacts"></HeaderSocialLinksComponent>
             </div>
         </div>
         <!-- / header top panel -->
@@ -140,8 +99,10 @@
 </template>
 <script>
 
+    import HeaderSocialLinksComponent from "./HeaderSocialLinksComponent";
     export default {
         name: "HeaderComponent",
+        components: {HeaderSocialLinksComponent},
         props: ['data'],
         data(){
             return {

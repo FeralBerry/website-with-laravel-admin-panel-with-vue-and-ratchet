@@ -200,7 +200,7 @@
                                 let sale_price = Math.round(((item.price + (item.sub_price /100)) - ((item.price + (item.sub_price /100))*item.percent/100)) * 100) / 100;
                                 data.users_cart.map((items) => {
                                     if(items.shop_id == item.id){
-                                        link = '<a onclick="javascript: void(0)" rel="nofollow" class="add_to_cart cws-button border-radius icon-left bt-color-6"> <i class="fa fa-shopping-cart"></i> Добавлен</a>';
+                                        link = '<a onclick="javascript: void(0)" id="cart_'+item.id+'" rel="nofollow" class="add_to_cart cws-button border-radius icon-left bt-color-6"> <i class="fa fa-shopping-cart"></i> Добавлен</a>';
                                     }
                                 });
                                 let rating_width = item.rating * 100 / 5;
@@ -844,6 +844,16 @@
                 event.preventDefault()
                 let blog_search_input = document.getElementById('blog_search_input').value;
                 con.connection.send('{"command":"blog_search","blog_search_input":"' + blog_search_input + '"}');
+            });
+            $('body').on('submit', '#contact_form', function(event) {
+                event.preventDefault()
+                let contact_form_name = document.getElementById('contact_form_name').value;
+                let contact_form_email = document.getElementById('contact_form_email').value;
+                let contact_form_subject = document.getElementById('contact_form_subject').value;
+                let contact_form_message = document.getElementById('contact_form_message').value;
+                con.connection.send('{"command":"contact_form_message","contact_form_name":"'+contact_form_name+'","contact_form_email":"'+contact_form_email+'","contact_form_subject":"'+contact_form_subject+'","contact_form_message":"'+contact_form_message+'"}');
+                let contact_form_button = document.getElementById('contact_form_button');
+                contact_form_button.value = 'Сообщение успешно отправлено'
             });
             this.data.footer_blog.map((item) => {
                 let brief = '';

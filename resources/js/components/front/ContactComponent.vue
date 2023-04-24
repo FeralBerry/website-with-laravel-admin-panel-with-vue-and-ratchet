@@ -13,12 +13,12 @@
                                 <div class="message"></div>
                             </div>
                             <div class="email_server_responce"></div>
-                            <form method="post" class="contact-form alt clear-fix" novalidate="novalidate">
-                                <input type="text" name="name" value="" size="40" placeholder="Как к Вам обращаться" aria-invalid="false" aria-required="true">
-                                <input type="text" name="email" value="" size="40" placeholder="Email" aria-required="true">
-                                <input type="text" name="subject" value="" size="40" placeholder="Тема обращения" aria-invalid="false" aria-required="true">
-                                <textarea name="message" cols="40" rows="3" placeholder="Сообщение" aria-invalid="false" aria-required="true"></textarea>
-                                <input type="submit" value="Отправить" class="cws-button border-radius alt">
+                            <form method="post" id="contact_form">
+                                <input type="text" id="contact_form_name" name="name" value="" size="40" placeholder="Как к Вам обращаться" aria-invalid="false" aria-required="true">
+                                <input type="text" id="contact_form_email" name="email" value="" size="40" placeholder="Email" aria-required="true">
+                                <input type="text" id="contact_form_subject" name="subject" value="" size="40" placeholder="Тема обращения" aria-invalid="false" aria-required="true">
+                                <textarea id="contact_form_message" name="message" cols="40" rows="3" placeholder="Сообщение" aria-invalid="false" aria-required="true"></textarea>
+                                <input id="contact_form_button" type="submit" value="Отправить" class="cws-button border-radius alt">
                             </form>
                             <!--/contact-form -->
                         </div>
@@ -59,27 +59,12 @@
                                     </p>
                                 </div>
                             </div>
-                            <aside class="widget-subscribe" v-for="item in data.contacts">
-                                <div v-if="item.vk || item.git || item.fb || item.instagram || item.twitter || item.youtube">
-                                    <span v-if="item.vk">
-                                        <a :href="item.vk" class="fa fa-vk"></a>
-                                    </span>
-                                    <span v-if="item.git">
-                                        <a :href="item.git" class="fa fa-github"></a>
-                                    </span>
-                                    <span v-if="item.fb">
-                                        <a :href="item.fb" class="fa fa-facebook"></a>
-                                    </span>
-                                    <span v-if="item.instagram">
-                                        <a :href="item.instagram" class="fa fa-instagram"></a>
-                                    </span>
-                                    <span v-if="item.twitter">
-                                        <a :href="item.twitter" class="fa fa-twitter"></a>
-                                    </span>
-                                    <span v-if="item.youtube">
-                                        <a :href="item.youtube" class="fa fa-youtube"></a>
-                                    </span>
-                                </div>
+                            <aside class="widget-subscribe">
+                                <ContactLinksComponent
+                                    v-for="item in this.data.contacts"
+                                    :key="item.id"
+                                    :item_data="item">
+                                </ContactLinksComponent>
                             </aside>
                         </address>
                     </section>
@@ -89,9 +74,11 @@
     </div>
 </template>
 <script>
+    import ContactLinksComponent from "./ContactLinksComponent";
     export default {
         name: "ContactComponent",
         props: ['data'],
+        components: {ContactLinksComponent},
         mounted() {
 
         },

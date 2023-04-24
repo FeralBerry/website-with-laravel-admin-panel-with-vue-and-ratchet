@@ -298,11 +298,11 @@
                     cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
                 }
                 if('{{ Route::currentRouteName() }}' === 'front-shop') {
-                    let cart_button = document.getElementById('cart_' + id);
-                    cart_button.innerHTML = '<i class="fa fa-shopping-cart"></i> В корзину';
-                    cart_button.href = '#';
-                    cart_button.classList.add('alt');
-                    cart_button.classList.remove('bt-color-6');
+                    let cart_button = $('#cart_' + id);
+                    cart_button.html("<i class='fa fa-shopping-cart'></i> В корзину") ;
+                    cart_button.attr("href", "#");
+                    cart_button.addClass('alt');
+                    cart_button.removeClass('bt-color-6');
                 }
                 if('{{ Route::currentRouteName() }}' === 'front-shop-cart'){
                     $('#cart_products').html("");
