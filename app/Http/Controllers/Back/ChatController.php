@@ -8,18 +8,7 @@ use Illuminate\Support\Str;
 class ChatController extends Controller
 {
     public function connection($from,$command){
-        /*$users = DB::table('users')
-            ->where('connectionId',$from->resourceId)
-            ->get();
-        foreach ($users as $user){
-            $status = $user->status;
-        }
-        $data = [
-            'message' => 'new_connection',
-            'user_id' => $command->user_id,
-            'status' => $status,
-        ];
-        return $data;*/
+        
     }
     public function cart(){
         $users_cart = DB::table('users_cart')
@@ -466,10 +455,61 @@ class ChatController extends Controller
         return $data;
     }
     public function contact_form_message($command){
-
-        $data = [
-            'message' => 'contact_form_message',
-        ];
-        return $data;
+        if(mb_strlen(strip_tags($command->contact_form_name)) < 3){
+            $data = [
+                'message' => 'contact_form_message',
+                'error_msg' => 'Имя должно быть минимум 3 символа',
+            ];
+            return $data;
+        } elseif(mb_strlen(strip_tags($command->contact_form_name)) > 100){
+            $data = [
+                'message' => 'contact_form_message',
+                'error_msg' => 'Имя должно быть максимум 100 символов',
+            ];
+            return $data;
+        } elseif(mb_strlen(strip_tags($command->contact_form_email)) < 3) {
+            $data = [
+                'message' => 'contact_form_message',
+                'error_msg' => 'Email должно быть минимум 3 символа',
+            ];
+            return $data;
+        } elseif (mb_strlen(strip_tags($command->contact_form_email)) > 100){
+            $data = [
+                'message' => 'contact_form_message',
+                'error_msg' => 'Email должно быть максимум 100 символов',
+            ];
+            return $data;
+        } elseif (mb_strlen(strip_tags($command->contact_form_subject)) < 3){
+            $data = [
+                'message' => 'contact_form_message',
+                'error_msg' => 'Тема должно быть минимум 3 символа',
+            ];
+            return $data;
+        } elseif (mb_strlen(strip_tags($command->contact_form_subject)) > 255){
+            $data = [
+                'message' => 'contact_form_message',
+                'error_msg' => 'Тема должно быть максимум 255 символов',
+            ];
+            return $data;
+        } elseif (mb_strlen(strip_tags($command->contact_form_message)) < 3){
+            $data = [
+                'message' => 'contact_form_message',
+                'error_msg' => 'Сообщение должно быть минимум 3 символа',
+            ];
+            return $data;
+        } else {
+            DB::table('contact_form')
+                ->insert([
+                    'name' => strip_tags($command->contact_form_name),
+                    'email' => strip_tags($command->contact_form_email),
+                    'subject' => strip_tags($command->contact_form_subject),
+                    'message' => strip_tags($command->contact_form_message),
+                ]);
+            $data = [
+                'message' => 'contact_form_message',
+                'error_msg' => 'success',
+            ];
+            return $data;
+        }
     }
 }

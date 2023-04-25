@@ -34,7 +34,7 @@
 
 
 @include('layouts.back.down_config')
-<script src="{{ asset('js/backapp.js') }}"></script>
+<script src="{{ asset('js/adminbackapp.js') }}"></script>
 </body>
 </html>
 

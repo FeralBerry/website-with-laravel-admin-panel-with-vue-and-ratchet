@@ -133,37 +133,39 @@
                         }
                         if(data.cart === 'cart'){
                             document.querySelector('meta[name="cookie_id"]').setAttribute("content", data.cookie_id);
-                            let cart = document.getElementById('cart');
-                            if(data.users_cart != null){
-                                cart.style.display = 'block';
-                                cart.innerHTML = '';
-                                let cart_price;
-                                let cart_price_with_percent;
-                                if(data.cart_price == 0){
-                                    cart_price = 0;
-                                    cart_price_with_percent = 0;
-                                } else {
-                                    cart_price = data.cart_price;
-                                    cart_price_with_percent = data.cart_price_with_percent;
+                            if(window.screen.width > 800){
+                                let cart = document.getElementById('cart');
+                                if(data.users_cart != null){
+                                    cart.style.display = 'block';
+                                    cart.innerHTML = '';
+                                    let cart_price;
+                                    let cart_price_with_percent;
+                                    if(data.cart_price == 0){
+                                        cart_price = 0;
+                                        cart_price_with_percent = 0;
+                                    } else {
+                                        cart_price = data.cart_price;
+                                        cart_price_with_percent = data.cart_price_with_percent;
+                                    }
+                                    data.users_cart.map((item) => {
+                                        let price = Math.round(((item.price + (item.sub_price/100)) - (item.price + (item.sub_price/100)) *item.percent/100) * 100) / 100;
+                                        cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>' +
+                                            '                                        <div class="col-md-8">' +
+                                            '                                            <p><span class="cart_item_title">'+item.name+'</span></p>' +
+                                            '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
+                                            '                                        </div>' +
+                                            '                                        <div class="col-md-1">' +
+                                            '                                            <span class="del_cart" onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
+                                            '                                        </div></li>';
+                                    });
+                                    cart.innerHTML += '<li>Стоимость покупок: '+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</li>'+
+                                        '<li>' +
+                                        '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' +
+                                        '                        </li>';
                                 }
-                                data.users_cart.map((item) => {
-                                    let price = Math.round(((item.price + (item.sub_price/100)) - (item.price + (item.sub_price/100)) *item.percent/100) * 100) / 100;
-                                    cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>' +
-                                        '                                        <div class="col-md-8">' +
-                                        '                                            <p><span class="cart_item_title">'+item.name+'</span></p>' +
-                                        '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
-                                        '                                        </div>' +
-                                        '                                        <div class="col-md-1">' +
-                                        '                                            <span class="del_cart" onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
-                                        '                                        </div></li>';
-                                });
-                                cart.innerHTML += '<li>Стоимость покупок: '+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</li>'+
-                                    '<li>' +
-                                    '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' +
-                                    '                        </li>';
-                            }
-                            if(data.users_cart === undefined || data.users_cart.length === 0) {
-                                cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
+                                if(data.users_cart === undefined || data.users_cart.length === 0) {
+                                    cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
+                                }
                             }
                         }
                         if(data.message === 'front_shop') {
@@ -751,8 +753,7 @@
                                         '</div>' +
                                         '</div>' +
                                         '<div class="col-md-2 cart_table_item"><span class="amount">'+price+'<del><sup>'+item.price+'.'+item.sub_price+'</sup></del> <sup>&#8381;</sup></span></div>' +
-                                        '<div class="col-md-1 cart_table_item"><a onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></a></div>';
-
+                                        '<div class="col-md-1 cart_table_item"><span class="del_cart" onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span></div>';
                                 });
                             } else{
                                 cart_products.innerHTML = '<div class="col-md-12 cart_table_item">Пока Ваша корзина пуста</div>';
@@ -765,6 +766,31 @@
                                 cart_price_with_percent = data.cart_price_with_percent;
                                 document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' +
                                     '                            <div class="col-md-3">'+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</div>'
+                            }
+                        }
+                        else if(data.message === "contact_form_message"){
+                            let contact_form_error_message = document.getElementById('contact_form_error_message');
+                            if(data.error_msg === 'success'){
+                                let contact_form_button = document.getElementById('contact_form_button');
+                                setTimeout(function () {
+                                        $('#contact_form_button').value = 'Сообщение успешно отправлено'
+                                    }
+                                    ,5000);
+                                setTimeout(function () {
+                                        $('#contact_form_button').value = 'Отправить'
+                                    }
+                                    ,5000);
+                            }
+                            else  {
+                                contact_form_error_message.innerHTML = data.error_msg
+                                setTimeout(function () {
+                                        $('#contact_form_error_message').fadeOut('fast');
+                                    }
+                                    ,5000);
+                                setTimeout(function () {
+                                        $('#contact_form_error_message').html('');
+                                    }
+                                    ,5000);
                             }
                         }
                     }
@@ -852,8 +878,6 @@
                 let contact_form_subject = document.getElementById('contact_form_subject').value;
                 let contact_form_message = document.getElementById('contact_form_message').value;
                 con.connection.send('{"command":"contact_form_message","contact_form_name":"'+contact_form_name+'","contact_form_email":"'+contact_form_email+'","contact_form_subject":"'+contact_form_subject+'","contact_form_message":"'+contact_form_message+'"}');
-                let contact_form_button = document.getElementById('contact_form_button');
-                contact_form_button.value = 'Сообщение успешно отправлено'
             });
             this.data.footer_blog.map((item) => {
                 let brief = '';

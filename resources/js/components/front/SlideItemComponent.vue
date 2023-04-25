@@ -1,26 +1,15 @@
 <template>
-    <div class="col-md-12" :style="
+    <div class="slider-content" :style="
     'background-image:url(/front/img/slider/'+this.item_data.img+');' +
-    'width:100%;' +
-    'min-height:800px;' +
-    'background-size: cover;'">
-        <div class="row slider-content" >
-            <div class="col-md-3">
-
-            </div>
-            <div class="col-md-6">
-                <div :class="'slider-title ' +this.item_data.title_animate">{{ this.item_data.title }}</div>
+    'background-size: cover;'+
+    'width:100%'">
+                <span :class="'slider-title ' +this.item_data.title_animate">{{ this.item_data.title }}</span>
                 <p :class="'slider-p '+this.item_data.description_animate">{{ this.item_data.description }}</p>
                 <template v-if="this.item_data.isbutton === 1">
                     <div :class="this.item_data.button_animate">
                         <router-link :to="this.item_data.button_href" class="slider-btn">{{ this.item_data.button_name }} <i class="fa fa-angle-double-right"></i></router-link>
                     </div>
                 </template>
-            </div>
-            <div class="col-md-3">
-
-            </div>
-        </div>
     </div>
 </template>
 <script>
@@ -53,7 +42,11 @@
     }
     .slider-content{
         text-align: center;
+        width:100%;
+        padding-top:200px;
+        min-height:800px;
     }
+
     .slider-btn{
         padding: 0.56em 1.94em;
         box-sizing: border-box;
@@ -83,5 +76,48 @@
         min-width: 0;
         font-size: 20px;
     }
-
+    @media (max-device-width : 375px){
+        .slider-title{
+            font-size: 3em;
+            line-height: 2;
+            padding:10px;
+        }
+        .slider-content{
+            padding-top:100px;
+            min-height:600px!important;
+        }
+    }
+    @media (min-device-width : 376px) and (max-device-width : 393px){
+        .slider-title{
+            font-size: 3em;
+            line-height: 2;
+            padding:10px;
+        }
+        .slider-content{
+            padding-top:100px;
+            min-height:700px!important;
+        }
+    }
+    @media (min-device-width : 394px) and (max-device-width : 414px){
+        .slider-title{
+            font-size: 3em;
+            line-height: 2;
+            padding:10px;
+        }
+        .slider-content{
+            padding-top:100px;
+            min-height:700px!important;
+        }
+    }
+    @media (min-device-width : 414px) and (max-device-width : 820px){
+        .slider-title{
+            font-size: 3em;
+            line-height: 2;
+            padding:10px;
+        }
+        .slider-content{
+            padding-top:100px;
+            min-height:700px!important;
+        }
+    }
 </style>
