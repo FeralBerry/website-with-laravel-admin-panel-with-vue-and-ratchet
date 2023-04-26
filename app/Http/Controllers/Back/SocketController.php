@@ -5,10 +5,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class ChatController extends Controller
+class SocketController extends Controller
 {
     public function connection($from,$command){
-        
+
     }
     public function cart(){
         $users_cart = DB::table('users_cart')

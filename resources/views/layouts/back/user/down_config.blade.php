@@ -251,6 +251,7 @@
         });
     });
     $("body").on('click', ".nav-link", function() {
+        $(".nav-link").not(this).removeClass("active");
         this.classList.add('active');
     });
     function buy_courses(id){

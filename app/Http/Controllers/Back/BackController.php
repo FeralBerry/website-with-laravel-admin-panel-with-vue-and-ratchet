@@ -47,6 +47,11 @@ class BackController extends Controller
             $free_courses = $this->payCourses($url);
             $free_courses_navigate = $this->payCoursesNavigate($url);
         }
+        $version = DB::table('version')
+            ->get();
+        foreach($version as $item){
+            $version = $item->version;
+        }
         $data = [
             'auth' => $auth,
             'user_name' => $auth_user_name,
@@ -60,6 +65,7 @@ class BackController extends Controller
             'pay_courses_name' => $this->payCoursesName(),
             'pay_courses' => $pay_courses,
             'pay_courses_navigate' => $pay_courses_navigate,
+            'version' => $version,
         ];
         return $data;
     }

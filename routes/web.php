@@ -55,6 +55,20 @@ Route::group(['middleware' => ['auth', 'web']], function() {
         });
     });
 });
+Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
+    $back = [
+        'namespace' => 'App\Http\Controllers\Back',
+    ];
+    Route::group($back, function () {
+        $user = [
+            'namespace' => '\App\Http\Controllers\Back\Admin',
+            'prefix' => 'admin',
+        ];
+        Route::group($user, function () {
+            Route::get('/', ['uses' => 'IndexController@index', 'as' => 'back-admin-index']);
+        });
+    });
+});
 Auth::routes();
 
 

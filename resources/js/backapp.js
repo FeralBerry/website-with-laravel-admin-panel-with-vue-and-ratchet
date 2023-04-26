@@ -3,6 +3,10 @@ import { createApp } from 'vue';
 import * as VueRouter from 'vue-router';
 
 import HeaderBackComponent from "./components/back/HeaderComponent";
+import FooterComponent from "./components/back/FooterComponent";
+import BreadCrumbComponent from "./components/back/BreadCrumbComponent";
+import LeftBarComponent from "./components/back/LeftBarComponent";
+
 import ProfileComponent from "./components/back/user/pages/ProfileComponent";
 import FreeCoursesComponent from "./components/back/user/pages/FreeCoursesComponent";
 import FreeCourseComponent from "./components/back/user/pages/FreeCourseComponent";
@@ -10,10 +14,8 @@ import PayCoursesComponent from "./components/back/user/pages/PayCoursesComponen
 import PayCourseComponent from "./components/back/user/pages/PayCourseComponent";
 import BuyCoursesComponent from "./components/back/user/pages/BuyCoursesComponent";
 import SettingsComponent from "./components/back/user/pages/SettingsComponent";
-import LeftBarComponent from "./components/back/LeftBarComponent";
-import HomeComponent from "./components/back/HomeComponent";
-import FooterComponent from "./components/back/FooterComponent";
-import BreadCrumbComponent from "./components/back/BreadCrumbComponent";
+import HomeComponent from "./components/back/user/HomeComponent";
+
 
 const routes = [
     {path: '/user', component: HomeComponent},

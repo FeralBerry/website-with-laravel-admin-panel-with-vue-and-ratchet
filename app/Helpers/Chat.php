@@ -1,10 +1,9 @@
 <?php
 namespace App\Helpers;
-use App\Http\Controllers\Back\ChatController;
+use App\Http\Controllers\Back\SocketController;
 use Illuminate\Support\Facades\DB;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-use function Illuminate\Session\userId;
 
 
 class Chat implements MessageComponentInterface {
@@ -12,11 +11,11 @@ class Chat implements MessageComponentInterface {
     protected $rooms;
     protected $users_name;
     protected $user_id;
-    protected $chatController;
+    protected $socketController;
 
     public function __construct() {
         $this->clients = new \SplObjectStorage;
-        $this->chatController = new ChatController;
+        $this->socketController = new SocketController;
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -32,7 +31,7 @@ class Chat implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
         $command = json_decode($msg);
         if($command->command == 'connect'){
-            $data = $this->chatController->connect($command);
+            $data = $this->socketController->connect($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -40,7 +39,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'open_course'){
-            $data = $this->chatController->open_course($command);
+            $data = $this->socketController->open_course($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     dump($client->resourceId);
@@ -49,7 +48,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'open_free_courses'){
-            $data = $this->chatController->open_free_courses();
+            $data = $this->socketController->open_free_courses();
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -57,7 +56,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'open_pay_courses'){
-            $data = $this->chatController->open_pay_courses($command);
+            $data = $this->socketController->open_pay_courses($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -65,7 +64,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'open_buy_courses'){
-            $data = $this->chatController->open_buy_courses($command);
+            $data = $this->socketController->open_buy_courses($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -73,7 +72,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'front_footer_message'){
-            $data = $this->chatController->front_footer_message($command);
+            $data = $this->socketController->front_footer_message($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -81,7 +80,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'front_blog'){
-            $data = $this->chatController->front_blog($command);
+            $data = $this->socketController->front_blog($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -89,7 +88,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'front_blog_article'){
-            $data = $this->chatController->front_blog_article($command);
+            $data = $this->socketController->front_blog_article($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -97,7 +96,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'blog_comment_add'){
-            $data = $this->chatController->blog_comment_add($command);
+            $data = $this->socketController->blog_comment_add($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -108,7 +107,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'front_shop'){
-            $data = $this->chatController->front_shop($command);
+            $data = $this->socketController->front_shop($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -116,7 +115,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'add_to_cart'){
-            $data = $this->chatController->add_to_cart($command);
+            $data = $this->socketController->add_to_cart($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -124,7 +123,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'front_index'){
-            $data = $this->chatController->front_index();
+            $data = $this->socketController->front_index();
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -132,7 +131,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'cart'){
-            $data = array_merge($this->chatController->cart(),['cart' => 'cart']);
+            $data = array_merge($this->socketController->cart(),['cart' => 'cart']);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -140,7 +139,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'front_cart'){
-            $data = $this->chatController->front_cart();
+            $data = $this->socketController->front_cart();
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -148,13 +147,13 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif ($command->command == 'shop_rating'){
-            $data = $this->chatController->shop_rating($command);
+            $data = $this->socketController->shop_rating($command);
             foreach ($this->clients as $client) {
                 $client->send(json_encode($data));
             }
         }
         elseif($command->command == 'shop_search'){
-            $data = $this->chatController->shop_search($command);
+            $data = $this->socketController->shop_search($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -162,7 +161,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'blog_search'){
-            $data = $this->chatController->blog_search($command);
+            $data = $this->socketController->blog_search($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -170,7 +169,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'contact_form_message'){
-            $data = $this->chatController->contact_form_message($command);
+            $data = $this->socketController->contact_form_message($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
