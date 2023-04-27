@@ -5,10 +5,13 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <router-link to="/user" class="nav-link">Home</router-link>
+                <router-link to="/admin" class="nav-link">Главная</router-link>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
+                <router-link to="/admin/users" class="nav-link">Пользователи</router-link>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <router-link to="/admin/user_question" class="nav-link">Вопросы</router-link>
             </li>
         </ul>
         <form class="form-inline ml-3">

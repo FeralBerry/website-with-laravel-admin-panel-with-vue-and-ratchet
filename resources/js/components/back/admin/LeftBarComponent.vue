@@ -55,6 +55,22 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link to="/admin/contact" class="nav-link">
+                            <i class="nav-icon fa fa-bolt"></i>
+                            <p>
+                                Контакты
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/admin/navigate" class="nav-link">
+                            <i class="nav-icon fa fa-bolt"></i>
+                            <p>
+                                Навигация
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
@@ -88,6 +104,151 @@
                                 Вопросы
                             </p>
                         </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Блог
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <router-link to="/admin/blog" class="nav-link">
+                                    <i class="nav-icon fa fa-bolt"></i>
+                                    <p>
+                                        Просмотреть
+                                    </p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/admin/blog/add" class="nav-link">
+                                    <i class="nav-icon fa fa-bolt"></i>
+                                    <p>
+                                        Добавить
+                                    </p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/admin/blog/tags" class="nav-link">
+                                    <i class="nav-icon fa fa-bolt"></i>
+                                    <p>
+                                        Теги
+                                    </p>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Магазин
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <router-link to="/admin/shop" class="nav-link">
+                                    <i class="nav-icon fa fa-bolt"></i>
+                                    <p>
+                                        Просмотреть
+                                    </p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/admin/shop/add" class="nav-link">
+                                    <i class="nav-icon fa fa-bolt"></i>
+                                    <p>
+                                        Добавить товар
+                                    </p>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Курсы
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-chart-pie"></i>
+                                    <p>
+                                        Бесплатные
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <router-link to="/admin/free_courses" class="nav-link">
+                                            <i class="nav-icon fa fa-bolt"></i>
+                                            <p>
+                                                Просмотреть
+                                            </p>
+                                        </router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link to="/admin/free_courses/add" class="nav-link">
+                                            <i class="nav-icon fa fa-bolt"></i>
+                                            <p>
+                                                Добавить
+                                            </p>
+                                        </router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link to="/admin/free_courses/name" class="nav-link">
+                                            <i class="nav-icon fa fa-bolt"></i>
+                                            <p>
+                                                Названия
+                                            </p>
+                                        </router-link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-chart-pie"></i>
+                                    <p>
+                                        Платные
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <router-link to="/admin/pay_courses" class="nav-link">
+                                            <i class="nav-icon fa fa-bolt"></i>
+                                            <p>
+                                                Просмотреть
+                                            </p>
+                                        </router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link to="/admin/pay_courses/add" class="nav-link">
+                                            <i class="nav-icon fa fa-bolt"></i>
+                                            <p>
+                                                Добавить
+                                            </p>
+                                        </router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link to="/admin/pay_courses/name" class="nav-link">
+                                            <i class="nav-icon fa fa-bolt"></i>
+                                            <p>
+                                                Названия
+                                            </p>
+                                        </router-link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>

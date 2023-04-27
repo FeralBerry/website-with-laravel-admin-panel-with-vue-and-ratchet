@@ -66,6 +66,44 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
         ];
         Route::group($user, function () {
             Route::get('/', ['uses' => 'IndexController@index', 'as' => 'back-admin-index']);
+            //Просмотр и редактирование информации о пользователях и их ролях
+            Route::match(['GET','POST'],'/users', ['uses' => 'IndexController@users', 'as' => 'back-admin-users-index']);
+            //Просмотр и редактирование информации СЕО
+            Route::match(['GET','POST'],'/seo', ['uses' => 'IndexController@seo', 'as' => 'back-admin-seo-index']);
+            //Просмотр и редактирование контактной информации
+            Route::match(['GET','POST'],'/contact', ['uses' => 'IndexController@contact', 'as' => 'back-admin-contact-index']);
+            //Промотр и редактирование навигации на главной странице
+            Route::match(['GET','POST'],'/navigate', ['uses' => 'IndexController@navigate', 'as' => 'back-admin-navigate-index']);
+            //Просмотр и редактирование слайдеров на главной странице
+            Route::match(['GET','POST'],'/slider', ['uses' => 'SlidersController@slider', 'as' => 'back-admin-slider-index']);
+            Route::match(['GET','POST'],'/faq_slider', ['uses' => 'SlidersController@faq_slider', 'as' => 'back-admin-faq_slider-index']);
+            //Просмотр вопросов заданых от пользователей
+            Route::get('/user_question', ['uses' => 'IndexController@user_question', 'as' => 'back-admin-user_question-index']);
+            //Маршруты редактирования и просмотра блога
+            Route::get('/blog', ['uses' => 'BlogController@index', 'as' => 'back-admin-blog-index']);
+            Route::match(['GET','POST'],'/blog/add', ['uses' => 'BlogController@add', 'as' => 'back-admin-blog-add']);
+            Route::match(['GET','POST'],'/blog/edit/{id}', ['uses' => 'BlogController@edit', 'as' => 'back-admin-blog-edit']);
+            Route::post('/blog/delete/{id}', ['uses' => 'BlogController@delete', 'as' => 'back-admin-blog-delete']);
+            //Редактирование и просмотр тегов блога
+            Route::get('/blog/tags', ['uses' => 'BlogController@tags', 'as' => 'back-admin-blog-tags-index']);
+            Route::post('/blog/tags/add', ['uses' => 'BlogController@tagsAdd', 'as' => 'back-admin-blog-tags-add']);
+            Route::post('/blog/tags/edit/{id}', ['uses' => 'BlogController@tagsEdit', 'as' => 'back-admin-blog-tags-edit']);
+            Route::post('/blog/tags/delete/{id}', ['uses' => 'BlogController@tagsDelete', 'as' => 'back-admin-blog-tags-delete']);
+            //Просмотр и редактирование магазина
+            Route::get('/shop', ['uses' => 'ShopController@index', 'as' => 'back-admin-shop-index']);
+            Route::match(['GET','POST'],'/shop/add', ['uses' => 'ShopController@add', 'as' => 'back-admin-shop-add']);
+            Route::match(['GET','POST'],'/shop/edit/{id}', ['uses' => 'ShopController@edit', 'as' => 'back-admin-shop-edit']);
+            Route::post('/shop/delete/{id}', ['uses' => 'ShopController@delete', 'as' => 'back-admin-shop-delete']);
+            //Просмотр и редактирование бесплатных курсов
+            Route::get('/free_courses', ['uses' => 'FreeCoursesController@index', 'as' => 'back-admin-free-courses-index']);
+            Route::match(['GET','POST'],'/free_courses/add', ['uses' => 'FreeCoursesController@add', 'as' => 'back-admin-free-courses-add']);
+            Route::match(['GET','POST'],'/free_courses/edit/{id}', ['uses' => 'FreeCoursesController@edit', 'as' => 'back-admin-free-courses-edit']);
+            Route::post('/free_courses/delete/{id}', ['uses' => 'FreeCoursesController@delete', 'as' => 'back-admin-free-courses-delete']);
+            //Просмотр и редактирование платных курсов
+            Route::get('/pay_courses', ['uses' => 'PayCoursesController@index', 'as' => 'back-admin-pay-courses-index']);
+            Route::match(['GET','POST'],'/pay_courses/add', ['uses' => 'PayCoursesController@add', 'as' => 'back-admin-pay-courses-add']);
+            Route::match(['GET','POST'],'/pay_courses/edit/{id}', ['uses' => 'PayCoursesController@edit', 'as' => 'back-admin-pay-courses-edit']);
+            Route::post('/pay_courses/delete/{id}', ['uses' => 'PayCoursesController@delete', 'as' => 'back-admin-pay-courses-delete']);
         });
     });
 });
