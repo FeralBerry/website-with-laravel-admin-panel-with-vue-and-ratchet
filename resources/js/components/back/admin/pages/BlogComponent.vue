@@ -14,25 +14,19 @@
                                     <th>Название статьи</th>
                                     <th>Описание</th>
                                     <th>Картинка</th>
-                                    <th>Engine version</th>
+                                    <th>Теги</th>
                                     <th>Кнопки</th>
                                 </tr>
                                 </thead>
-                                <tbody v-for="item in this.data.blog">
-                                <tr>
-                                    <td>{{ item.title }}</td>
-                                    <td>{{ item.description }}</td>
-                                    <td><img style="width:200px" :src="item.img"></td>
-                                    <td> 4</td>
-                                    <td>X</td>
-                                </tr>
+                                <tbody id="blog_table">
+
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <th>Название статьи</th>
                                     <th>Описание</th>
                                     <th>Картинка</th>
-                                    <th>Engine version</th>
+                                    <th>Теги</th>
                                     <th>Кнопки</th>
                                 </tr>
                                 </tfoot>

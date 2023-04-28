@@ -21191,10 +21191,53 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       today: '',
-      date_now: ''
+      date_now: '',
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      connection: [],
+      user_id: $('meta[name=user_id]').attr('content')
     };
   },
-  mounted: function mounted() {},
+  watch: {
+    $route: function $route(to, from) {
+      //Подгрузка данных на страницу
+      var con = this;
+      console.log(this.connection);
+      setTimeout(function () {
+        //Проверка адреса страницы по имени роутера vue.js
+        if (to.name) {
+          //Отправка данных на Ratchet сокет для определения нужных данных для подгрузки
+          con.connection.send('{"command":"' + to.name + '"}');
+        }
+      }, 500);
+      //Получение ответа от Ratchet сокета
+      this.connection.onmessage = function (event) {
+        //Распарсивание данных полученых от сокета
+        var data = JSON.parse(event.data);
+        if (data.message === 'admin-blog-index') {
+          //проверка получаемых данных для отрисовки страницы блога
+          $('#blog_table').html('');
+          var tags = '';
+          data.blog.map(function (item) {
+            for (var i = 0; i < item.tags_icon.length; i++) {
+              tags += '<i class="' + item.tags_icon[i] + '"></i> ' + item.tags_name[i] + '<br>';
+            }
+            document.getElementById('blog_table').innerHTML += '<tr><td>' + item.title + '</td>' + '<td>' + item.description + '</td>' + '<td><img style="width:200px" src="' + item.img + '"></td>' + '<td><div class="row">' + '<div class="col-md-12">' + tags + '</div>' + '</td>' + '<td>' + '<a class="btn btn-success"><i class="fa fa-pencil"></i></a>' + '<a class="btn btn-danger"><i class="fa fa-trash"></i></a>' + '</td>' + '</tr>';
+          });
+        }
+      };
+    }
+  },
+  mounted: function mounted() {
+    //Определение протокола
+    var protocol = 'ws://';
+    if (window.location.protocol === 'https:') {
+      protocol = 'wss://';
+    }
+    //Соединение протокола и адреса приложения из настроек
+    var wsUri = protocol + "127.0.0.1:4710";
+    //Сохранение объекта данных для поддержания соединения с сокетом Ratchet
+    this.connection = new WebSocket(wsUri);
+  },
   created: function created() {
     this.today = new Date();
     this.date_now = this.today.getFullYear();
@@ -22415,46 +22458,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = {
-  "class": "content"
-};
-var _hoisted_2 = {
-  "class": "container-fluid"
-};
-var _hoisted_3 = {
-  "class": "row"
-};
-var _hoisted_4 = {
-  "class": "col-12"
-};
-var _hoisted_5 = {
-  "class": "card"
-};
-var _hoisted_6 = {
-  "class": "card-body"
-};
-var _hoisted_7 = {
-  id: "example1",
-  "class": "table table-bordered table-striped"
-};
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Название статьи"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Описание"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Картинка"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Engine version"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Кнопки")])], -1 /* HOISTED */);
-var _hoisted_9 = ["src"];
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, " 4", -1 /* HOISTED */);
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "X", -1 /* HOISTED */);
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tfoot", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Название статьи"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Описание"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Картинка"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Engine version"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Кнопки")])], -1 /* HOISTED */);
-
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"content\"><div class=\"container-fluid\"><div class=\"row\"><div class=\"col-12\"><div class=\"card\"><!-- /.card-header --><div class=\"card-body\"><table id=\"example1\" class=\"table table-bordered table-striped\"><thead><tr><th>Название статьи</th><th>Описание</th><th>Картинка</th><th>Теги</th><th>Кнопки</th></tr></thead><tbody id=\"blog_table\"></tbody><tfoot><tr><th>Название статьи</th><th>Описание</th><th>Картинка</th><th>Теги</th><th>Кнопки</th></tr></tfoot></table></div><!-- /.card-body --></div><!-- /.card --></div><!-- /.col --></div><!-- /.row --></div><!-- /.container-fluid --></section>", 1);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bread_crumb_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bread-crumb-component");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bread_crumb_component, {
     data: this.breadcrumb
-  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_7, [_hoisted_8, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.data.blog, function (item) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.description), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-      style: {
-        "width": "200px"
-      },
-      src: item.img
-    }, null, 8 /* PROPS */, _hoisted_9)]), _hoisted_10, _hoisted_11])]);
-  }), 256 /* UNKEYED_FRAGMENT */)), _hoisted_12])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card-body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.col ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.row ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.container-fluid ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content ")], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Main content "), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.content ")], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -56614,58 +56623,76 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/admin',
-  component: _components_back_admin_MainComponent__WEBPACK_IMPORTED_MODULE_4__["default"]
+  component: _components_back_admin_MainComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
+  name: 'admin-index'
 }, {
   path: '/admin/blog',
-  component: _components_back_admin_pages_BlogComponent__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _components_back_admin_pages_BlogComponent__WEBPACK_IMPORTED_MODULE_7__["default"],
+  name: 'admin-blog-index'
 }, {
   path: '/admin/blog/tags',
-  component: _components_back_admin_pages_BlogTagsComponent__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_back_admin_pages_BlogTagsComponent__WEBPACK_IMPORTED_MODULE_8__["default"],
+  name: 'admin-blog-tags-index'
 }, {
   path: '/admin/free_courses',
-  component: _components_back_admin_pages_FreeCoursesComponent__WEBPACK_IMPORTED_MODULE_9__["default"]
+  component: _components_back_admin_pages_FreeCoursesComponent__WEBPACK_IMPORTED_MODULE_9__["default"],
+  name: 'admin-free-courses-index'
 }, {
   path: '/admin/free_courses/add',
-  component: _components_back_admin_pages_FreeCoursesAddComponent__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_back_admin_pages_FreeCoursesAddComponent__WEBPACK_IMPORTED_MODULE_10__["default"],
+  name: 'admin-free-courses-add'
 }, {
   path: '/admin/free_courses/name',
-  component: _components_back_admin_pages_FreeCoursesNameComponent__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_back_admin_pages_FreeCoursesNameComponent__WEBPACK_IMPORTED_MODULE_11__["default"],
+  name: 'admin-free-courses-edit'
 }, {
   path: '/admin/pay_courses',
-  component: _components_back_admin_pages_PayCoursesComponent__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_back_admin_pages_PayCoursesComponent__WEBPACK_IMPORTED_MODULE_12__["default"],
+  name: 'admin-pay-courses-index'
 }, {
   path: '/admin/pay_courses/add',
-  component: _components_back_admin_pages_PayCoursesAddComponent__WEBPACK_IMPORTED_MODULE_13__["default"]
+  component: _components_back_admin_pages_PayCoursesAddComponent__WEBPACK_IMPORTED_MODULE_13__["default"],
+  name: 'admin-pay-courses-add'
 }, {
   path: '/admin/pay_courses/name',
-  component: _components_back_admin_pages_PayCoursesComponent__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_back_admin_pages_PayCoursesComponent__WEBPACK_IMPORTED_MODULE_12__["default"],
+  name: 'admin-pay-courses-edit'
 }, {
   path: '/admin/shop',
-  component: _components_back_admin_pages_ShopComponent__WEBPACK_IMPORTED_MODULE_14__["default"]
+  component: _components_back_admin_pages_ShopComponent__WEBPACK_IMPORTED_MODULE_14__["default"],
+  name: 'admin-shop-index'
 }, {
   path: '/admin/shop/add',
-  component: _components_back_admin_pages_ShopAddComponent__WEBPACK_IMPORTED_MODULE_15__["default"]
+  component: _components_back_admin_pages_ShopAddComponent__WEBPACK_IMPORTED_MODULE_15__["default"],
+  name: 'admin-shop-add'
 }, {
   path: '/admin/shop/edit',
-  component: _components_back_admin_pages_ShopEditComponent__WEBPACK_IMPORTED_MODULE_16__["default"]
+  component: _components_back_admin_pages_ShopEditComponent__WEBPACK_IMPORTED_MODULE_16__["default"],
+  name: 'admin-shop-edit'
 }, {
   path: '/admin/slider',
-  component: _components_back_admin_pages_SliderComponent__WEBPACK_IMPORTED_MODULE_17__["default"]
+  component: _components_back_admin_pages_SliderComponent__WEBPACK_IMPORTED_MODULE_17__["default"],
+  name: 'admin-slider-index'
 }, {
   path: '/admin/faq_slider',
-  component: _components_back_admin_pages_FaqSliderComponent__WEBPACK_IMPORTED_MODULE_18__["default"]
+  component: _components_back_admin_pages_FaqSliderComponent__WEBPACK_IMPORTED_MODULE_18__["default"],
+  name: 'admin-faq-slider-index'
 }, {
   path: '/admin/navigate',
-  component: _components_back_admin_pages_NavigateComponent__WEBPACK_IMPORTED_MODULE_19__["default"]
+  component: _components_back_admin_pages_NavigateComponent__WEBPACK_IMPORTED_MODULE_19__["default"],
+  name: 'admin-navigate-index'
 }, {
   path: '/admin/contact',
-  component: _components_back_admin_pages_ContactComponent__WEBPACK_IMPORTED_MODULE_20__["default"]
+  component: _components_back_admin_pages_ContactComponent__WEBPACK_IMPORTED_MODULE_20__["default"],
+  name: 'admin-contact-index'
 }, {
   path: '/admin/seo',
-  component: _components_back_admin_pages_SeoComponent__WEBPACK_IMPORTED_MODULE_21__["default"]
+  component: _components_back_admin_pages_SeoComponent__WEBPACK_IMPORTED_MODULE_21__["default"],
+  name: 'admin-seo-index'
 }, {
   path: '/admin/users',
-  component: _components_back_admin_pages_UsersComponent__WEBPACK_IMPORTED_MODULE_22__["default"]
+  component: _components_back_admin_pages_UsersComponent__WEBPACK_IMPORTED_MODULE_22__["default"],
+  name: 'admin-users-index'
 }];
 var router = vue_router__WEBPACK_IMPORTED_MODULE_23__.createRouter({
   history: vue_router__WEBPACK_IMPORTED_MODULE_23__.createWebHistory(''),

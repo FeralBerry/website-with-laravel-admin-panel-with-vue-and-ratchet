@@ -206,35 +206,37 @@
                                     }
                                 });
                                 let rating_width = item.rating * 100 / 5;
-                                document.getElementById('products').innerHTML += '<li class="product">' +
-                                    '<div class="picture">' + new_sale +
-                                    '<a href="/shop/product/'+item.id+'"><img src="'+img+'" data-at2x="'+img+'" alt="">' +
-                                    '<span class="hover-effect"></span></a>' +
-                                    '<div class="link-cont">' +
-                                    '<a href="'+img+'" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
-                                    '<a href="/shop/product/'+item.id+'" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '<div class="product-name">' +
-                                    '<a href="/shop/product/'+item.id+'">'+item.name+'</a>' +
-                                    '</div>' +
-                                    '<div class="star-rating" >' +
-                                    '<a class="shop_rating" data_rating="1" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' +
-                                    '<a class="shop_rating" data_rating="2" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -76px;position:absolute;width: 22px;height: 24px"></a>' +
-                                    '<a class="shop_rating" data_rating="3" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -57px;position:absolute;width: 20px;height: 24px"></a>' +
-                                    '<a class="shop_rating" data_rating="4" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -39px;position:absolute;width: 20px;height: 24px"</a>' +
-                                    '<a class="shop_rating" data_rating="5" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -20px;position:absolute;width: 24px;height: 24px"></a>' +
-                                    '<span id="rating_width_'+item.id+'" style="width:'+rating_width+'%">' +
-                                    '</div>' +
-                                    '<span class="price">' +
-                                    '<span class="amount">'+sale_price+'&#32;<sup><del>'+item.price+'.'+item.sub_price+'</del></sup>&#8381;</span>' +
-                                    '</span>' +
-                                    '<div class="product-description">' +
-                                    '<div class="short-description">' +
-                                    '<p>'+description+'</p>' +
-                                    '</div>' +
-                                    '</div>' + link +
-                                    '</li>';
+                                if (document.getElementById("products") !== null) {
+                                    document.getElementById('products').innerHTML += '<li class="product">' +
+                                        '<div class="picture">' + new_sale +
+                                        '<a href="/shop/product/'+item.id+'"><img src="'+img+'" data-at2x="'+img+'" alt="">' +
+                                        '<span class="hover-effect"></span></a>' +
+                                        '<div class="link-cont">' +
+                                        '<a href="'+img+'" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
+                                        '<a href="/shop/product/'+item.id+'" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="product-name">' +
+                                        '<a href="/shop/product/'+item.id+'">'+item.name+'</a>' +
+                                        '</div>' +
+                                        '<div class="star-rating" >' +
+                                        '<a class="shop_rating" data_rating="1" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' +
+                                        '<a class="shop_rating" data_rating="2" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -76px;position:absolute;width: 22px;height: 24px"></a>' +
+                                        '<a class="shop_rating" data_rating="3" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -57px;position:absolute;width: 20px;height: 24px"></a>' +
+                                        '<a class="shop_rating" data_rating="4" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -39px;position:absolute;width: 20px;height: 24px"</a>' +
+                                        '<a class="shop_rating" data_rating="5" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -20px;position:absolute;width: 24px;height: 24px"></a>' +
+                                        '<span id="rating_width_'+item.id+'" style="width:'+rating_width+'%">' +
+                                        '</div>' +
+                                        '<span class="price">' +
+                                        '<span class="amount">'+sale_price+'&#32;<sup><del>'+item.price+'.'+item.sub_price+'</del></sup>&#8381;</span>' +
+                                        '</span>' +
+                                        '<div class="product-description">' +
+                                        '<div class="short-description">' +
+                                        '<p>'+description+'</p>' +
+                                        '</div>' +
+                                        '</div>' + link +
+                                        '</li>';
+                                }
                             });
                             $('#shop_category_link').html('')
                             let paginate_item = document.getElementById('paginate_item');
@@ -321,20 +323,13 @@
                                 if(mounth === 12){mounth = 'Дек'}
                                 let day = date.getDate();
                                 let tags_post = document.getElementById('tags-post');
-                                let tags;
-                                if(item.tags.length > 1){
-                                    if(item.tags.indexOf(';') >0){
-                                        tags = item.tags.split(';');
+                                let blog_tags = document.getElementById('blog_tags');
+                                if(item.tags_name.length > 1){
+                                    for(let i = 0; i < item.tags_name.length; i++){
+                                        tags_post.innerHTML += '<a href="#"><i class="'+item.tags_icon[i]+'"></i>'+item.tags_name[i]+'</a>';
+                                        blog_tags.innerHTML += '<a href="#" rel="tag">'+item.tags_name[i]+'</a> ';
                                     }
-                                    let k = 0;
-                                    data.blog_tags.map((i) => {
-                                        if(i.id == tags[k]){
-                                            tags_post.innerHTML += '<a href="#"><i class="'+i.icon+'"></i>'+i.name+'</a>';
-                                        }
-                                        k++
-                                    });
                                 }
-
                                 blog_article.innerHTML = '<div class="post-info">' +
                                     '<div class="date-post">' +
                                     '<div class="day">'+day+'</div>' +
@@ -350,10 +345,6 @@
 
                             data.last_news.map((item) => {
                                 last_news.innerHTML += '<li class="cat-item cat-item-1 current-cat"><a href="/blog/article/'+item.id+'">'+item.title+'</a></li>';
-                            });
-                            let blog_tags = document.getElementById('blog_tags');
-                            data.blog_tags.map((item) => {
-                                blog_tags.innerHTML += '<a href="#" rel="tag">'+item.name+'</a> ';
                             });
                         }
                         else if(data.message === 'blog_comment_add'){

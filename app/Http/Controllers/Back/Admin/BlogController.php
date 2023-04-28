@@ -7,15 +7,8 @@ use Illuminate\Support\Facades\DB;
 class BlogController extends BackController
 {
     public function index(){
-        $blog = DB::table('blog')
-            ->get();
-        $blog_tags = DB::table('blog_tags')
-            ->get();
-        foreach ($blog as $item => $value){
-            $blog[$item]->description = strip_tags($blog[$item]->description);
-        }
         $data = array_merge($this->adminData(),[
-            'blog' => $blog
+
         ]);
         return view('back.admin.index',['data' => $data]);
     }

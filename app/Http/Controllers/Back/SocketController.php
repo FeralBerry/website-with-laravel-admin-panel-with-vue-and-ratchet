@@ -199,6 +199,24 @@ class SocketController extends Controller
         $blog = DB::table('blog')
             ->where('id',$url[3])
             ->get();
+        $blog_tags = DB::table('blog_tags')
+            ->get();
+        foreach ($blog as $item => $value){
+            $blog[$item]->description = strip_tags($blog[$item]->description);
+            $blog_tags_con = DB::table('blog_tags_con')
+                ->where('blog_id',$blog[$item]->id)
+                ->get();
+            $blog[$item]->tags_name = [];
+            $blog[$item]->tags_icon = [];
+            foreach ($blog_tags_con as $tag_con){
+                foreach ($blog_tags as $tag){
+                    if($tag->id == $tag_con->tag_id){
+                        array_push($blog[$item]->tags_name,$tag->name);
+                        array_push($blog[$item]->tags_icon,$tag->icon);
+                    }
+                }
+            }
+        }
         foreach ($blog as $item){
             $seo['title'] = $item->title;
             $seo['description'] = Str::limit(strip_tags($item->description),150,'...');
@@ -214,8 +232,6 @@ class SocketController extends Controller
             )
             ->paginate(20);
         $count_comments = count($comments);
-        $blog_tags = DB::table('blog_tags')
-            ->get();
         $last_news = DB::table('blog')
             ->orderByDesc('created_at')
             ->take(10)
@@ -225,7 +241,6 @@ class SocketController extends Controller
             'blog' => $blog,
             'comments' => $comments,
             'count_comments' => $count_comments,
-            'blog_tags' => $blog_tags,
             'last_news' => $last_news,
             'message' => 'front_blog_article'
         ]);
