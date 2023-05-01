@@ -24,7 +24,6 @@
             $route(to, from) {
                 //Подгрузка данных на страницу
                 let con = this;
-                console.log(this.connection)
                 setTimeout(function (){
                     //Проверка адреса страницы по имени роутера vue.js
                     if(to.name){
@@ -43,7 +42,7 @@
                             for(let i = 0; i < item.tags_icon.length; i++){
                                 tags += '<i class="'+item.tags_icon[i]+'"></i> '+item.tags_name[i]+'<br>';
                             }
-                            document.getElementById('blog_table').innerHTML += '<tr><td>'+item.title+'</td>' +
+                            document.getElementById('blog_table').innerHTML += '<tr id="blog_article_'+item.id+'"><td>'+item.title+'</td>' +
                                 '<td>'+item.description+'</td>' +
                                 '<td><img style="width:200px" src="'+item.img+'"></td>' +
                                 '<td><div class="row">' +
@@ -52,11 +51,23 @@
                                 '</div>' +
                                 '</td>' +
                                 '<td>' +
-                                '<a class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
-                                '<a class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                                '<a href="/admin/blog/edit/'+item.id+'" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a href="#" onclick="blog_article_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
                                 '</td>' +
                                 '</tr>';
                         });
+                    }
+                    else if(data.message === 'admin-blog-add'){
+                        let blog_tags_add = document.getElementById('blog_tags_add');
+                        if(data.blog_tags.length > 0){
+                            $('#blog_tags_add').html('');
+                            data.blog_tags.map((item) => {
+                                blog_tags_add.innerHTML += '<div class="col-md-3 custom-control custom-checkbox">' +
+                                    '<input class="custom-control-input custom-control-input-danger custom-control-input-outline" name="tags[]" id="tag_'+item.id+'" value="'+item.id+'" type="checkbox">' +
+                                    '<label for="tag_'+item.id+'" class="custom-control-label"><i class="'+item.icon+'"></i> '+item.name+'</label>' +
+                                    '</div>'
+                            });
+                        }
                     }
                 }
             }

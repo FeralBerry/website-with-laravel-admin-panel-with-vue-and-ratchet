@@ -36,6 +36,8 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- dropzonejs -->
+<script src="{{ asset('plugins/dropzone/min/dropzone.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('back/js/adminlte.js') }}"></script>
 <!-- Bootstrap Material Design -->
@@ -44,26 +46,47 @@
 <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('back/js/demo.js') }}"></script>
-
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+    $(function () {
+        // Summernote
+        $('#summernote').summernote()
+
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
     });
+</script>
+<script>
     $("body").on('click', ".nav-link", function() {
         $(".nav-link").not(this).removeClass("active");
         this.classList.add('active');
     });
 </script>
 <script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
+    function blog_article_delete(id) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: '/admin/blog/delete/' + id,
+            data: {},
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function () {
+                return confirm("Точно нужно удалить статью!");
+            },
+            success: function (data) {
+                let blog_article = document.getElementById('blog_article_'+id).remove();
+            }
+        });
+    }
 </script>
+
 

@@ -33,4 +33,13 @@ class BlogController extends BackController
         ];
         return $data;
     }
+    public function blog_add($command){
+        $blog_tags = DB::table('blog_tags')
+            ->get();
+        $data = [
+            'message' => $command->command,
+            'blog_tags' => $blog_tags
+        ];
+        return $data;
+    }
 }

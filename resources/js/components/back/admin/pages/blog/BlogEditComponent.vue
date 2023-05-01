@@ -8,6 +8,7 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <router-link to="/admin/blog/add" class="btn btn-block btn-outline-info">Добавить статью</router-link>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -31,6 +32,7 @@
                                 </tr>
                                 </tfoot>
                             </table>
+                            <router-link to="/admmin/blog/add" class="btn btn-block btn-outline-info">Добавить статью</router-link>
                         </div>
                         <!-- /.card-body -->
                     </div>

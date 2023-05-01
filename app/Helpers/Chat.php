@@ -211,6 +211,14 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif($command->command == 'admin-blog-add'){
+            $data = $this->blogAdminController->blog_add($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         elseif($command->command == 'admin-blog-tags-index'){
             $data = $this->blogTagsAdminController->blog_tags_index($command);
             foreach ($this->clients as $client) {

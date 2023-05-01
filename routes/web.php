@@ -81,8 +81,10 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             Route::get('/user_question', ['uses' => 'IndexController@user_question', 'as' => 'back-admin-user_question-index']);
             //Маршруты редактирования и просмотра блога
             Route::get('/blog', ['uses' => 'BlogController@index', 'as' => 'back-admin-blog-index']);
-            Route::match(['GET','POST'],'/blog/add', ['uses' => 'BlogController@add', 'as' => 'back-admin-blog-add']);
-            Route::match(['GET','POST'],'/blog/edit/{id}', ['uses' => 'BlogController@edit', 'as' => 'back-admin-blog-edit']);
+            Route::get('/blog/add', ['uses' => 'BlogController@add', 'as' => 'back-admin-blog-add']);
+            Route::post('/blog_add', ['uses' => 'BlogController@blog_add', 'as' => 'back-admin-blog_add']);
+            Route::get('/blog/edit/{id}', ['uses' => 'BlogController@edit', 'as' => 'back-admin-blog-edit']);
+            Route::post('/blog_edit/{id}', ['uses' => 'BlogController@blog_edit', 'as' => 'back-admin-blog_edit']);
             Route::post('/blog/delete/{id}', ['uses' => 'BlogController@delete', 'as' => 'back-admin-blog-delete']);
             //Редактирование и просмотр тегов блога
             Route::get('/blog/tags', ['uses' => 'BlogController@tags', 'as' => 'back-admin-blog-tags-index']);
