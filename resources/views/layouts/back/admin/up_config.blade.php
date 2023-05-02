@@ -11,8 +11,6 @@
 <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 <!-- JQVMap -->
 <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
-<!-- dropzonejs -->
-<link rel="stylesheet" href="{{ asset('plugins/dropzone/min/dropzone.min.css') }}">
 <!-- Theme style -->
 <link rel="stylesheet" href="{{ asset('back/css/adminlte.min.css') }}">
 <!-- Bootstrap Material Design style -->

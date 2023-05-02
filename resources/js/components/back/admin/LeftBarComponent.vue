@@ -123,12 +123,12 @@
                                 </router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/admin/blog/add" class="nav-link">
+                                <a href="/admin/blog/add" class="nav-link">
                                     <i class="nav-icon fa fa-bolt"></i>
                                     <p>
                                         Добавить
                                     </p>
-                                </router-link>
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <router-link to="/admin/blog/tags" class="nav-link">

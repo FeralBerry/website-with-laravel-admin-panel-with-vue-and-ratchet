@@ -88,35 +88,88 @@ class BlogController extends BackController
         return redirect()->back();
     }
     public function edit($id){
+        $blog = DB::table('blog')
+            ->where('id',$id)
+            ->get();
+        $blog_tags_checked = DB::table('blog_tags_con')
+            ->where('blog_id',$id)
+            ->get();
+        $blog_tags = DB::table('blog_tags')
+            ->get();
+        foreach ($blog_tags as $item => $value){
+            $array = json_encode($blog_tags[$item]);
+            $blog_tags[$item] = json_decode(str_replace('"}','","checked":"0"}',$array));
+            foreach ($blog_tags_checked as $checked){
+                if($blog_tags[$item]->id == $checked->tag_id){
+                    $array = json_encode($blog_tags[$item]);
+                    $blog_tags[$item] = json_decode(str_replace('"}','","checked":"1"}',$array));
+                }
+            }
+        }
         $data = array_merge($this->adminData(),[
-
+            'blog' => $blog,
+            'blog_tags' => $blog_tags,
+            'id' => $id
         ]);
         return view('back.admin.index',['data' => $data]);
     }
     public function blog_edit(Request $request,$id){
-        if ($request->hasFile('img')) {
+        $img_name = NULL;
+        if ($request->hasFile('img') && $request['img'] !== NULL) {
             if ($request['old_img'] !== '' && $request['old_img'] !== NULL) {
-                if (File_exists(public_path('front/img/gallery' . $request['old_img']))) {
-                    unlink(public_path('front/img/gallery' . $request['old_img']));
+                if (File_exists(public_path('/back/img/blog' . $request['old_img']))) {
+                    unlink(public_path('/back/img/blog' . $request['old_img']));
                     $image = $request->file('img');
                     $img_name = time() . '.' . $image->getClientOriginalExtension();
-                    $destinationPath = public_path('front/img/gallery');
+                    $destinationPath = public_path('/back/img/blog');
                     $image->move($destinationPath, $img_name);
+                    $img_name = '/back/img/blog/'.$img_name;
                 } else {
                     $image = $request->file('img');
                     $img_name = time() . '.' . $image->getClientOriginalExtension();
-                    $destinationPath = public_path('front/img/gallery');
+                    $destinationPath = public_path('/back/img/blog');
                     $image->move($destinationPath, $img_name);
+                    $img_name = '/back/img/blog/'.$img_name;
                 }
             } else {
                 $image = $request->file('img');
                 $img_name = time() . '.' . $image->getClientOriginalExtension();
-                $destinationPath = public_path('front/img/gallery');
+                $destinationPath = public_path('/back/img/blog');
                 $image->move($destinationPath, $img_name);
+                $img_name = '/back/img/blog/'.$img_name;
             }
         } else {
             $img_name = $request['old_img'];
         }
+        DB::table('blog')
+            ->where('id',$id)
+            ->update([
+                'img' => $img_name,
+                'title' => $request['title'],
+                'description' => $request['description'],
+            ]);
+        if($request['tags'] !== NULL){
+            DB::table('blog_tags_con')
+                ->where('blog_id',$id)
+                ->delete();
+            foreach ($request['tags'] as $item => $value){
+                DB::table('blog_tags_con')
+                    ->insert([
+                        'blog_id' => $id,
+                        'tag_id' => $value
+                    ]);
+            }
+        } else {
+            DB::table('blog_tags_con')
+                ->where('blog_id',$id)
+                ->delete();
+        }
+        DB::table('navigate')
+            ->where('href','/blog/article/'.$id)
+            ->update([
+                'title' => $request['title'],
+            ]);
+        return redirect()->route('back-admin-blog-index');
     }
     public function delete($id){
         $blog = DB::table('blog')
@@ -126,23 +179,36 @@ class BlogController extends BackController
         foreach ($blog as $item){
             $img = $item->img;
         }
-        if (file_exists(public_path().$img)) {
-            unlink(public_path().$img);
+        if($img !== NULL){
+            if (file_exists(public_path().$img)) {
+                unlink(public_path().$img);
+            }
         }
-        $blog = DB::table('blog')
+        DB::table('blog')
             ->where('id',$id)
             ->delete();
+        DB::table('blog_tags_con')
+            ->where('blog_id',$id)
+            ->delete();
+        DB::table('navigate')
+            ->where('href','/blog/article/'.$id)
+            ->delete();
+        return redirect()->route('back-admin-blog-index');
     }
+
     public function tags(){
         $data = array_merge($this->adminData(),[
 
         ]);
         return view('back.admin.index',['data' => $data]);
     }
-    public function tagsEdit(){
-        $data = array_merge($this->adminData(),[
+    public function tagsAdd(){
 
-        ]);
-        return view('back.admin.index',['data' => $data]);
+    }
+    public function tagsEdit(){
+
+    }
+    public function tagsDelete(){
+
     }
 }

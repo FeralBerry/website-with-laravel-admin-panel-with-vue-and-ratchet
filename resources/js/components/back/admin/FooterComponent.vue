@@ -36,12 +36,13 @@
                     //Распарсивание данных полученых от сокета
                     let data = JSON.parse(event.data);
                     if(data.message === 'admin-blog-index'){//проверка получаемых данных для отрисовки страницы блога
-                        $('#blog_table').html('');
+                        $('#blog_table').html('');//очищаем таблицу от данных
                         let tags = '';
-                        data.blog.map((item) => {
+                        data.blog.map((item) => { //обходим массив данных таблицы блог
                             for(let i = 0; i < item.tags_icon.length; i++){
-                                tags += '<i class="'+item.tags_icon[i]+'"></i> '+item.tags_name[i]+'<br>';
+                                tags += '<i class="'+item.tags_icon[i]+'"></i> '+item.tags_name[i]+'<br>'; //сохраняем все теги с иконками относящиеся к данной статье
                             }
+                            //заполнякем таблицу данными по статьям блога
                             document.getElementById('blog_table').innerHTML += '<tr id="blog_article_'+item.id+'"><td>'+item.title+'</td>' +
                                 '<td>'+item.description+'</td>' +
                                 '<td><img style="width:200px" src="'+item.img+'"></td>' +
@@ -52,7 +53,7 @@
                                 '</td>' +
                                 '<td>' +
                                 '<a href="/admin/blog/edit/'+item.id+'" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
-                                '<a href="#" onclick="blog_article_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                                '<a href="/admin/blog/delete/'+item.id+'" onclick="return confirm(`Точно нужно удалить статью!`)" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
                                 '</td>' +
                                 '</tr>';
                         });
@@ -68,6 +69,17 @@
                                     '</div>'
                             });
                         }
+                    }
+                    else if(data.message === 'admin-blog-tags-index'){
+                        data.blog_tags.map((item) => {
+                            document.getElementById('blog_tags').innerHTML += '<tr style="font-size:20px" id="blog_tag_'+item.id+'">' +
+                                '<td><input class="form-control" name="icon" id="icon_'+item.id+'" value="'+item.icon+'"></td>' +
+                                '<td><input class="form-control" name="icon" id="tag_name_'+item.id+'" value="'+item.name+'"></td>'+
+                                '<td>' +
+                                '<a onclick="tag_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a onclick="tag_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                                '</td>';
+                        });
                     }
                 }
             }
@@ -85,7 +97,10 @@
         },
         created() {
             this.today = new Date();
-            this.date_now = this.today.getFullYear()
+            this.date_now = this.today.getFullYear();
+            $('body').on('submit',function () {
+                blog_tags_add
+            });
         }
     }
 </script>

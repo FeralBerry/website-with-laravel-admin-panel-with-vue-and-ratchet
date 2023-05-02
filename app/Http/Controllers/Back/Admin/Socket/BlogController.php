@@ -42,4 +42,17 @@ class BlogController extends BackController
         ];
         return $data;
     }
+    public function blog_edit($command){
+        $blog_tags = DB::table('blog_tags')
+            ->get();
+        $blog_tags_checked = DB::table('blog_tags_con')
+            ->where('blog_id',$command->blog_id)
+            ->get();
+        $data = [
+            'message' => $command->command,
+            'blog_tags' => $blog_tags,
+            ''
+        ];
+        return $data;
+    }
 }

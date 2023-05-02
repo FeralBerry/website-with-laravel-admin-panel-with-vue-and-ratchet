@@ -8,31 +8,46 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <router-link to="/admin/blog/add" class="btn btn-block btn-outline-info">Добавить статью</router-link>
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Название статьи</th>
-                                    <th>Описание</th>
-                                    <th>Картинка</th>
-                                    <th>Теги</th>
-                                    <th>Кнопки</th>
-                                </tr>
-                                </thead>
-                                <tbody id="blog_table">
-
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Название статьи</th>
-                                    <th>Описание</th>
-                                    <th>Картинка</th>
-                                    <th>Теги</th>
-                                    <th>Кнопки</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                            <router-link to="/admmin/blog/add" class="btn btn-block btn-outline-info">Добавить статью</router-link>
+                            <form id="blog_edit" method="post" :action="'/admin/blog_edit/'+this.data.id" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" :value="csrf">
+                                <span class="bmd-form-group bmd-form-group-lg">
+                                    Название новости
+                                    <template v-for="item in this.data.blog">
+                                        <input class="form-control form-control-lg" name="title" id="blog_title" type="text" :value="item.title" placeholder="Название новости">
+                                    </template>
+                                </span>
+                                <br>
+                                Теги
+                                <br>
+                                <div class="row col-md-12" id="blog_tags_edit" >
+                                    <template v-for="item in this.data.blog_tags">
+                                        <div class="col-md-3 custom-control custom-checkbox">
+                                            <template v-if="item.checked == 1">
+                                                <input checked class="custom-control-input custom-control-input-danger custom-control-input-outline" name="tags[]" :id="'tag_'+item.id" :value="item.id" type="checkbox">
+                                                <label :for="'tag_'+item.id" class="custom-control-label"><i class="'+item.icon+'"></i> {{ item.name }}</label>
+                                            </template>
+                                            <template v-if="item.checked == 0">
+                                                <input class="custom-control-input custom-control-input-danger custom-control-input-outline" name="tags[]" :id="'tag_'+item.id" :value="item.id" type="checkbox">
+                                                <label :for="'tag_'+item.id" class="custom-control-label"><i class="'+item.icon+'"></i> {{ item.name }}</label>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                                <br>
+                                Описание новости
+                                <br>
+                                <template v-for="item in this.data.blog">
+                                <textarea rows="20" name="description" id="summernote">{{ item.description }}</textarea>
+                                </template>
+                                Заглавная картинка
+                                <br>
+                                <template v-for="item in this.data.blog">
+                                <input type="file" name="img" id="img">
+                                    <input type="hidden" name="old_img" :value="item.img">
+                                    <img style="width:200px;height: 150px" :src="item.img">
+                                </template>
+                                <button type="submit" class="btn btn-block btn-outline-success" style="margin-top: 20px">Отправить</button>
+                            </form>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -49,7 +64,7 @@
 
 <script>
     export default {
-        name: "BlogComponent",
+        name: "BlogEditComponent",
         props:['data'],
         data(){
             return{
@@ -65,7 +80,8 @@
                             'link':'/admin/blog'
                         }
                     }
-                }
+                },
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             }
         },
         created() {

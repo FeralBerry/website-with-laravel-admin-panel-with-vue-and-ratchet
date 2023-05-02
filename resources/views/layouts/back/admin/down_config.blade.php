@@ -36,8 +36,6 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-<!-- dropzonejs -->
-<script src="{{ asset('plugins/dropzone/min/dropzone.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('back/js/adminlte.js') }}"></script>
 <!-- Bootstrap Material Design -->
@@ -51,11 +49,11 @@
         // Summernote
         $('#summernote').summernote()
 
-        // CodeMirror
+        /*// CodeMirror
         CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
             mode: "htmlmixed",
             theme: "monokai"
-        });
+        });*/
     });
 </script>
 <script>
@@ -70,11 +68,11 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    function blog_article_delete(id) {
+    function tag_edit(id) {
         $.ajax({
             async: true,
             type: "POST",
-            url: '/admin/blog/delete/' + id,
+            url: '/admin/blog/tags/edit/' + id,
             data: {},
             contentType: false,
             cache: false,
@@ -83,8 +81,25 @@
                 return confirm("Точно нужно удалить статью!");
             },
             success: function (data) {
-                let blog_article = document.getElementById('blog_article_'+id).remove();
-            }
+                alert('Успешно изменено!')
+            },
+        });
+    }
+    function tag_delete(id) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: '/admin/blog/tags/delete/' + id,
+            data: {},
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function () {
+                return confirm("Точно нужно удалить тег!");
+            },
+            success: function (data) {
+                let blog_tag = document.getElementById('blog_tag_'+id).remove();
+            },
         });
     }
 </script>
