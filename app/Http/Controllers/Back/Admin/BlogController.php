@@ -202,13 +202,33 @@ class BlogController extends BackController
         ]);
         return view('back.admin.index',['data' => $data]);
     }
-    public function tagsAdd(){
-
+    public function tagsAdd(Request $request){
+        DB::table('blog_tags')
+            ->insert([
+                'name' => $request['tag_name'],
+                'icon' => $request['icon'],
+            ]);
+        $tag = DB::table('blog_tags')
+            ->orderByDesc('created_at')
+            ->limit(1)
+            ->get();
+        $data = [
+            'tag' => $tag,
+        ];
+        return $data;
     }
-    public function tagsEdit(){
-
+    public function tagsEdit(Request $request,$id){
+        DB::table('blog_tags')
+            ->where('id',$id)
+            ->update([
+                'name' => $request['name'],
+                'icon' => $request['icon'],
+            ]);
+        return $request['name'];
     }
-    public function tagsDelete(){
-
+    public function tagsDelete($id){
+        DB::table('blog_tags')
+            ->where('id',$id)
+            ->delete();
     }
 }

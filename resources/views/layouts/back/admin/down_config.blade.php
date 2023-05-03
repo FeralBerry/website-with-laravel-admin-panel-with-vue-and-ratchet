@@ -20,7 +20,7 @@
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <!-- Summernote -->
-<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}" defer></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- DataTables  & Plugins -->
@@ -69,21 +69,20 @@
         }
     });
     function tag_edit(id) {
+        let name = document.getElementById('tag_name_'+id).value;
+        let icon = document.getElementById('icon_'+id).value;
         $.ajax({
-            async: true,
-            type: "POST",
-            url: '/admin/blog/tags/edit/' + id,
-            data: {},
-            contentType: false,
-            cache: false,
-            processData: false,
-            beforeSend: function () {
-                return confirm("Точно нужно удалить статью!");
+            type: "POST", //Метод отправки
+            url: "/admin/blog/tags/edit/"+id, //путь до php фаила отправителя
+            data: {
+                'name':name,
+                'icon':icon,
             },
-            success: function (data) {
-                alert('Успешно изменено!')
-            },
+            success: function(data) {
+                alert('Тег '+data+' успешно изменен!')
+            }
         });
+        return false;
     }
     function tag_delete(id) {
         $.ajax({
@@ -102,6 +101,30 @@
             },
         });
     }
+    $(document).ready(function(){
+        $("#blog_tags_add").submit(function(e) { //устанавливаем событие отправки для формы с id=form
+            e.preventDefault(); // отменяем событие
+            var form_data = $(this).serialize(); //собераем все данные из формы
+            $.ajax({
+                type: "POST", //Метод отправки
+                url: "/admin/blog/tags/add", //путь до php фаила отправителя
+                data: form_data,
+                success: function(data) {
+                    data.tag.map((item) => {
+                        document.getElementById('blog_tags').innerHTML += '<tr style="font-size:20px" id="blog_tag_'+item.id+'">' +
+                            '<td><input class="form-control" name="icon" id="icon_'+item.id+'" value="'+item.icon+'"></td>' +
+                            '<td><input class="form-control" name="icon" id="tag_name_'+item.id+'" value="'+item.name+'"></td>'+
+                            '<td>' +
+                            '<a onclick="tag_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                            '<a onclick="tag_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                            '</td>';
+                    });
+                }
+            });
+            return false;
+        });
+    });
+
 </script>
 
 

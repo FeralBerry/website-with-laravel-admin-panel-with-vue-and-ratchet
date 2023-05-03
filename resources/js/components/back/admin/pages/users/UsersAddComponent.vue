@@ -8,36 +8,31 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form action="/admin/blog/tags/add" method="post" id="blog_tags_add">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input class="form-control form-control-lg" name="tag_name" id="tag_name" type="text" placeholder="Название тега">
-                                        <input class="form-control form-control-lg" name="icon" id="icon" type="text" placeholder="Иконка">
-                                    </div>
-                                    <div class="col-md-3" style="margin-top: 20px;margin-bottom: 20px">
-                                        <button type="submit" class="btn btn-block btn-outline-info">Добавить</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <router-link to="/admin/users/add" class="btn btn-block btn-outline-info">Добавить пользователя</router-link>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Иконка</th>
-                                    <th>Название</th>
+                                    <th>Название статьи</th>
+                                    <th>Описание</th>
+                                    <th>Картинка</th>
+                                    <th>Теги</th>
                                     <th>Кнопки</th>
                                 </tr>
                                 </thead>
-                                <tbody id="blog_tags">
+                                <tbody id="users_table">
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Иконка</th>
-                                    <th>Название</th>
+                                    <th>Название статьи</th>
+                                    <th>Описание</th>
+                                    <th>Картинка</th>
+                                    <th>Теги</th>
                                     <th>Кнопки</th>
                                 </tr>
                                 </tfoot>
                             </table>
+                            <router-link to="/admin/users/add" class="btn btn-block btn-outline-info">Добавить пользователя</router-link>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -54,17 +49,21 @@
 
 <script>
     export default {
-        name: "BlogTagsComponent",
+        name: "UsersComponent",
         props:['data'],
         data(){
             return{
                 breadcrumb: {
-                    'title':'Блог',
+                    'title':'Пользователи',
                     'crumbs':{
                         'first':{
                             'title':'Главная',
                             'link':'/admin'
                         },
+                        'second':{
+                            'title':'Пользователи',
+                            'link':'/admin/users'
+                        }
                     }
                 }
             }

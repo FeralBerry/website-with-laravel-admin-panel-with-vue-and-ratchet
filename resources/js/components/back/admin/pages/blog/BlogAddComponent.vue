@@ -67,10 +67,12 @@
         },
         created() {
 
+        },
+        mounted() {
+
         }
     }
 </script>
-
 <style scoped>
 
 </style>

@@ -44,8 +44,21 @@ class SocketAdminController extends Controller
         return $data;
     }
     public function users_index($command){
+        $users = DB::table('users')
+            ->select([
+                'name',
+                'email',
+                'avatar',
+                'role',
+                'bought_courses_id',
+                'last_open_free_course_id',
+                'last_open_pay_course_id',
+                'connection_id',
+            ])
+            ->get();
         $data = [
-            'message' => $command->command
+            'message' => $command->command,
+            'users' => $users
         ];
         return $data;
     }

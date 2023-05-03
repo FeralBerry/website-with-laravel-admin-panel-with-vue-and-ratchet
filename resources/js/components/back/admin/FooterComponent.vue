@@ -71,6 +71,7 @@
                         }
                     }
                     else if(data.message === 'admin-blog-tags-index'){
+                        $('#blog_tags').html('');
                         data.blog_tags.map((item) => {
                             document.getElementById('blog_tags').innerHTML += '<tr style="font-size:20px" id="blog_tag_'+item.id+'">' +
                                 '<td><input class="form-control" name="icon" id="icon_'+item.id+'" value="'+item.icon+'"></td>' +
@@ -79,6 +80,30 @@
                                 '<a onclick="tag_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
                                 '<a onclick="tag_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
                                 '</td>';
+                        });
+                    }
+                    else if(data.message === 'admin-users-index'){
+                        $('#users_table').html('');
+                        data.users.map((item) => {
+                            let ava = 'no-img45x45.png';
+                            let role = 'user';
+                            if(item.avatar !== null){
+                                ava = item.avatar;
+                            }
+                            if(item.role == 1){
+                                role = 'admin';
+                            }
+                            document.getElementById('users_table').innerHTML += '<tr id="user_'+item.id+'">' +
+                                '<td>'+item.name+'</td>'+
+                                '<td>'+item.email+'</td>'+
+                                '<td>'+role+'</td>'+
+                                '<td>'+item.connection_id+'</td>'+
+                                '<td><img src="/back/img/avatar/'+ava+'"></td>'+
+                                '<td>' +
+                                '<a onclick="user_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a onclick="user_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>'+
+                                '</tr>';
+
                         });
                     }
                 }
@@ -98,9 +123,6 @@
         created() {
             this.today = new Date();
             this.date_now = this.today.getFullYear();
-            $('body').on('submit',function () {
-                blog_tags_add
-            });
         }
     }
 </script>

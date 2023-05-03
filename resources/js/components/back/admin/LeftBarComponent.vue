@@ -123,12 +123,12 @@
                                 </router-link>
                             </li>
                             <li class="nav-item">
-                                <a href="/admin/blog/add" class="nav-link">
+                                <router-link to="/admin/blog/add" class="nav-link">
                                     <i class="nav-icon fa fa-bolt"></i>
                                     <p>
                                         Добавить
                                     </p>
-                                </a>
+                                </router-link>
                             </li>
                             <li class="nav-item">
                                 <router-link to="/admin/blog/tags" class="nav-link">
@@ -253,7 +253,7 @@
                 </ul>
             </nav>
         </div>
-    </aside>-->
+    </aside>
 </template>
 <script>
     export default {
