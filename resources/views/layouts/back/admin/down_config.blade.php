@@ -124,7 +124,82 @@
             return false;
         });
     });
-
+    function contact_edit(name){
+        let example = document.getElementById(name).value;
+        $.ajax({
+            type:'POST',
+            data:{
+                'example':example,
+            },
+            url:'/admin/contact/edit/'+name,
+            success:function (data) {
+                alert(data);
+            }
+        });
+    }
+    function seo_edit(id) {
+        let url = document.getElementById('url_'+id).value;
+        let title = document.getElementById('title_'+id).value;
+        let description = document.getElementById('description_'+id).value;
+        let keywords = document.getElementById('keywords_'+id).value;
+        $.ajax({
+            type:'POST',
+            data:{
+                'url':url,
+                'title':title,
+                'description':description,
+                'keywords':keywords,
+            },
+            url:'/admin/seo/edit/'+id,
+            success:function (data) {
+                alert(data);
+            }
+        });
+    }
+    function seo_add() {
+        let url = document.getElementById('url').value;
+        let title = document.getElementById('title').value;
+        let description = document.getElementById('description').value;
+        let keywords = document.getElementById('keywords').value;
+        $.ajax({
+            type:'POST',
+            data:{
+                'url':url,
+                'title':title,
+                'description':description,
+                'keywords':keywords,
+            },
+            url:'/admin/seo/add',
+            success:function (data) {
+                alert('SEO успешно добавлено!');
+                data.seo.map((item) => {
+                    document.getElementById('seo_table').innerHTML += '<tr id="seo_'+item.id+'">' +
+                        '<td><input class="form-control" name="url_'+item.id+'" id="url_'+item.id+'" value="'+item.url+'"></td>'+
+                        '<td><input class="form-control" name="title_'+item.id+'" id="title_'+item.id+'" value="'+item.title+'"></td>'+
+                        '<td><textarea class="form-control" name="description_'+item.id+'" id="description_'+item.id+'">'+item.description+'</textarea></td>'+
+                        '<td><textarea class="form-control" name="keywords_'+item.id+'" id="keywords_'+item.id+'">'+item.keywords+'</textarea></td>'+
+                        '<td>' +
+                        '<a onclick="seo_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                        '<a onclick="seo_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                        '</td>'+
+                        '</tr>';
+                });
+            }
+        });
+    }
+    function seo_delete(id) {
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:'/admin/seo/delete/'+id,
+            beforeSend:function(){
+                return confirm("Точно нужно это SEO!");
+            },
+            success:function (data) {
+                document.getElementById('seo_'+id).remove();
+            }
+        });
+    }
 </script>
 
 

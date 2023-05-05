@@ -32,14 +32,20 @@ class SocketAdminController extends Controller
         return $data;
     }
     public function contact_index($command){
+        $contact = DB::table('contact')
+            ->get();
         $data = [
-            'message' => $command->command
+            'message' => $command->command,
+            'contact' => $contact
         ];
         return $data;
     }
     public function seo_index($command){
+        $seo = DB::table('seo')
+            ->get();
         $data = [
-            'message' => $command->command
+            'message' => $command->command,
+            'seo' => $seo
         ];
         return $data;
     }

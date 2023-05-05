@@ -69,14 +69,18 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             //Просмотр и редактирование информации о пользователях и их ролях
             Route::match(['GET','POST'],'/users', ['uses' => 'IndexController@users', 'as' => 'back-admin-users-index']);
             //Просмотр и редактирование информации СЕО
-            Route::match(['GET','POST'],'/seo', ['uses' => 'IndexController@seo', 'as' => 'back-admin-seo-index']);
+            Route::get('/seo', ['uses' => 'IndexController@seo', 'as' => 'back-admin-seo-index']);
+            Route::post('/seo/edit/{id}', ['uses' => 'IndexController@seoEdit', 'as' => 'back-admin-seo-edit']);
+            Route::post('/seo/add', ['uses' => 'IndexController@seoAdd', 'as' => 'back-admin-seo-add']);
+            Route::post('/seo/delete/{id}', ['uses' => 'IndexController@seoDelete', 'as' => 'back-admin-seo-delete']);
             //Просмотр и редактирование контактной информации
-            Route::match(['GET','POST'],'/contact', ['uses' => 'IndexController@contact', 'as' => 'back-admin-contact-index']);
+            Route::get('/contact', ['uses' => 'IndexController@contact', 'as' => 'back-admin-contact-index']);
+            Route::post('/contact/edit/{name}', ['uses' => 'IndexController@contactEdit', 'as' => 'back-admin-contact-edit']);
             //Промотр и редактирование навигации на главной странице
-            Route::match(['GET','POST'],'/navigate', ['uses' => 'IndexController@navigate', 'as' => 'back-admin-navigate-index']);
+            Route::get('/navigate', ['uses' => 'IndexController@navigate', 'as' => 'back-admin-navigate-index']);
             //Просмотр и редактирование слайдеров на главной странице
-            Route::match(['GET','POST'],'/slider', ['uses' => 'SlidersController@slider', 'as' => 'back-admin-slider-index']);
-            Route::match(['GET','POST'],'/faq_slider', ['uses' => 'SlidersController@faq_slider', 'as' => 'back-admin-faq_slider-index']);
+            Route::get('/slider', ['uses' => 'SlidersController@slider', 'as' => 'back-admin-slider-index']);
+            Route::get('/faq_slider', ['uses' => 'SlidersController@faq_slider', 'as' => 'back-admin-faq_slider-index']);
             //Просмотр вопросов заданых от пользователей
             Route::get('/user_question', ['uses' => 'IndexController@user_question', 'as' => 'back-admin-user_question-index']);
             //Маршруты редактирования и просмотра блога

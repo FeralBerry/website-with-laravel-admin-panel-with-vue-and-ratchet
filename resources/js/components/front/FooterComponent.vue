@@ -170,8 +170,6 @@
                         }
                         if(data.message === 'front_shop') {
                             $('#products').html('');
-                            document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
-                            document.querySelector('head title').textContent = data.seo.title;
                             data.shop.data.map((item) => {
                                 let new_sale = '<div class="ribbon ribbon-blue"></div>';
                                 if (item.new === 1){
@@ -272,8 +270,6 @@
                             }
                         }
                         else if(data.message === 'front_blog_article'){
-                            document.querySelector('meta[name="description"]').setAttribute("content", ""+data.seo.description+"");
-                            document.querySelector('head title').textContent = data.seo.title;
                             let blog_article = document.getElementById('blog_article');
                             let comments = document.getElementById('comments');
                             let last_news = document.getElementById('last_news');
@@ -306,6 +302,10 @@
                             });
                             comments.innerHTML += '</ol>';
                             data.blog.map((item) => {
+                                console.log(item.description)
+                                let seo_description = item.description.replace(/<\/?[a-zA-Z]+>/gi,'').substr(0, 160);
+                                document.querySelector('meta[name="description"]').setAttribute("content", ""+seo_description+"");
+                                document.querySelector('head title').textContent = item.title;
                                 document.getElementById('blog_id').value = item.id;
                                 let date = new Date(item.created_at);
                                 let mounth = date.getMonth();
@@ -340,7 +340,7 @@
                                     '</div>' +
                                     '<div class="comments-post" id="comments-post"><i class="fa fa-comment"></i> '+data.count_comments+'</div>' +
                                     '</div>' +
-                                    +item.description;
+                                    item.description;
                             });
 
                             data.last_news.map((item) => {
@@ -385,10 +385,6 @@
                         }
                         else if(data.message === 'front_blog'){
                             $("#blog_items").html("");
-                            data.seo.map((item) => {
-                                document.querySelector('meta[name="description"]').setAttribute("content", ""+item.description+"");
-                                document.querySelector('head title').textContent = item.title;
-                            });
                             data.blog.data.map((item) => {
                                 let date = new Date(item.created_at);
                                 let hour = date.getHours();
@@ -798,6 +794,12 @@
         },
         created() {
             let con = this;
+            this.data.seo.map((item) => {
+                if(window.location.pathname === item.url){
+                    document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
+                    document.querySelector('head title').textContent = item.title;
+                }
+            });
             setTimeout(function () {
                 if (window.location.href.indexOf('shop')) {
                     con.connection.send('{"command":"cart"}')

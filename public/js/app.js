@@ -21414,8 +21414,6 @@ __webpack_require__.r(__webpack_exports__);
           }
           if (data.message === 'front_shop') {
             $('#products').html('');
-            document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
-            document.querySelector('head title').textContent = data.seo.title;
             data.shop.data.map(function (item) {
               var new_sale = '<div class="ribbon ribbon-blue"></div>';
               if (item["new"] === 1) {
@@ -21481,8 +21479,6 @@ __webpack_require__.r(__webpack_exports__);
               });
             }
           } else if (data.message === 'front_blog_article') {
-            document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
-            document.querySelector('head title').textContent = data.seo.title;
             var blog_article = document.getElementById('blog_article');
             var comments = document.getElementById('comments');
             var last_news = document.getElementById('last_news');
@@ -21502,6 +21498,10 @@ __webpack_require__.r(__webpack_exports__);
             });
             comments.innerHTML += '</ol>';
             data.blog.map(function (item) {
+              console.log(item.description);
+              var seo_description = item.description.replace(/<\/?[a-zA-Z]+>/gi, '').substr(0, 160);
+              document.querySelector('meta[name="description"]').setAttribute("content", "" + seo_description + "");
+              document.querySelector('head title').textContent = item.title;
               document.getElementById('blog_id').value = item.id;
               var date = new Date(item.created_at);
               var mounth = date.getMonth();
@@ -21550,7 +21550,7 @@ __webpack_require__.r(__webpack_exports__);
                   blog_tags.innerHTML += '<a href="#" rel="tag">' + item.tags_name[i] + '</a> ';
                 }
               }
-              blog_article.innerHTML = '<div class="post-info">' + '<div class="date-post">' + '<div class="day">' + day + '</div>' + '<div class="month">' + mounth + '</div>' + '</div>' + '<div class="post-info-main">' + '<div class="author-post">' + item.title + '</div>' + '</div>' + '<div class="comments-post" id="comments-post"><i class="fa fa-comment"></i> ' + data.count_comments + '</div>' + '</div>' + +item.description;
+              blog_article.innerHTML = '<div class="post-info">' + '<div class="date-post">' + '<div class="day">' + day + '</div>' + '<div class="month">' + mounth + '</div>' + '</div>' + '<div class="post-info-main">' + '<div class="author-post">' + item.title + '</div>' + '</div>' + '<div class="comments-post" id="comments-post"><i class="fa fa-comment"></i> ' + data.count_comments + '</div>' + '</div>' + item.description;
             });
             data.last_news.map(function (item) {
               last_news.innerHTML += '<li class="cat-item cat-item-1 current-cat"><a href="/blog/article/' + item.id + '">' + item.title + '</a></li>';
@@ -21579,10 +21579,6 @@ __webpack_require__.r(__webpack_exports__);
             }, 5000);
           } else if (data.message === 'front_blog') {
             $("#blog_items").html("");
-            data.seo.map(function (item) {
-              document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
-              document.querySelector('head title').textContent = item.title;
-            });
             data.blog.data.map(function (item) {
               var date = new Date(item.created_at);
               var hour = date.getHours();
@@ -21904,6 +21900,12 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     var con = this;
+    this.data.seo.map(function (item) {
+      if (window.location.pathname === item.url) {
+        document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
+        document.querySelector('head title').textContent = item.title;
+      }
+    });
     setTimeout(function () {
       if (window.location.href.indexOf('shop')) {
         con.connection.send('{"command":"cart"}');

@@ -106,6 +106,76 @@
 
                         });
                     }
+                    else if(data.message === 'admin-contact-index'){
+                        $('#contacts').html('');
+                        data.contact.map((item) => {
+                            document.getElementById('contacts').innerHTML = '<tr>' +
+                                '<td>Телефон:</td>' +
+                                '<td><input class="form-control" name="phone" id="phone" value="'+item.phone+'"></td>' +
+                                '<td><a onclick="contact_edit(`phone`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>Оснорвной Е-маил:</td>' +
+                                '<td><input class="form-control" name="email" id="email" value="'+item.email+'"></td>' +
+                                '<td><a onclick="contact_edit(`email`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>Второй Е-маил:</td>' +
+                                '<td><input class="form-control" name="second_email" id="second_email" value="'+item.second_email+'"></td>' +
+                                '<td><a onclick="contact_edit(`second_email`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>WhatsApp:</td>' +
+                                '<td><input class="form-control" name="whatsapp" id="whatsapp" value="'+item.whatsapp+'"></td>' +
+                                '<td><a onclick="contact_edit(`whatsapp`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>Телеграм:</td>' +
+                                '<td><input class="form-control" name="telegram" id="telegram" value="'+item.telegram+'"></td>' +
+                                '<td><a onclick="contact_edit(`telegram`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>ВК:</td>' +
+                                '<td><input class="form-control" name="vk" id="vk" value="'+item.vk+'"></td>' +
+                                '<td><a onclick="contact_edit(`vk`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>GIT:</td>' +
+                                '<td><input class="form-control" name="git" id="git" value="'+item.git+'"></td>' +
+                                '<td><a onclick="contact_edit(`git`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>Интаграм:</td>' +
+                                '<td><input class="form-control" name="instagram" id="instagram" value="'+item.instagram+'"></td>' +
+                                '<td><a onclick="contact_edit(`instagram`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>Twitter:</td>' +
+                                '<td><input class="form-control" name="twitter" id="twitter" value="'+item.twitter+'"></td>' +
+                                '<td><a onclick="contact_edit(`twitter`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>'+
+                                '<tr>' +
+                                '<td>Youtube:</td>' +
+                                '<td><input class="form-control" name="youtube" id="youtube" value="'+item.youtube+'"></td>' +
+                                '<td><a onclick="contact_edit(`youtube`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
+                                '</tr>';
+                        });
+                    }
+                    else if(data.message === 'admin-seo-index'){
+                        let seo_table = document.getElementById('seo_table');
+                        data.seo.map((item) => {
+                            seo_table.innerHTML += '<tr id="seo_'+item.id+'">' +
+                                '<td><input class="form-control" name="url_'+item.id+'" id="url_'+item.id+'" value="'+item.url+'"></td>'+
+                                '<td><input class="form-control" name="title_'+item.id+'" id="title_'+item.id+'" value="'+item.title+'"></td>'+
+                                '<td><textarea class="form-control" name="description_'+item.id+'" id="description_'+item.id+'">'+item.description+'</textarea></td>'+
+                                '<td><textarea class="form-control" name="keywords_'+item.id+'" id="keywords_'+item.id+'">'+item.keywords+'</textarea></td>'+
+                                '<td>' +
+                                '<a onclick="seo_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a onclick="seo_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                                '</td>'+
+                                '</tr>';
+                        });
+                    }
                 }
             }
         },
