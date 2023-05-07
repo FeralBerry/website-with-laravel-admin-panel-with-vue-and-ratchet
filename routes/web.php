@@ -100,10 +100,19 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             Route::match(['GET','POST'],'/shop/add', ['uses' => 'ShopController@add', 'as' => 'back-admin-shop-add']);
             Route::match(['GET','POST'],'/shop/edit/{id}', ['uses' => 'ShopController@edit', 'as' => 'back-admin-shop-edit']);
             Route::post('/shop/delete/{id}', ['uses' => 'ShopController@delete', 'as' => 'back-admin-shop-delete']);
+            //Просмотр и редактирование названия и описания к бесплатным курсам
+            Route::get('/free_courses_name', ['uses' => 'FreeCoursesNameController@index', 'as' => 'back-admin-free-courses-name-index']);
+            Route::post('/free_courses_name/add', ['uses' => 'FreeCoursesNameController@postAdd', 'as' => 'back-admin-free-courses-name-post-add']);
+            Route::get('/free_courses_name/edit/{id}', ['uses' => 'FreeCoursesNameController@getEdit', 'as' => 'back-admin-free-courses-name-get-edit']);
+            Route::post('/free_courses_name/edit/{id}', ['uses' => 'FreeCoursesNameController@postEdit', 'as' => 'back-admin-free-courses-name-post-edit']);
+            Route::post('/free_courses_name/delete/{id}', ['uses' => 'FreeCoursesNameController@delete', 'as' => 'back-admin-free-courses-name-delete']);
+            Route::post('/free_courses_name/erase/{id}', ['uses' => 'FreeCoursesNameController@erase', 'as' => 'back-admin-free-courses-name-erase']);
             //Просмотр и редактирование бесплатных курсов
             Route::get('/free_courses', ['uses' => 'FreeCoursesController@index', 'as' => 'back-admin-free-courses-index']);
-            Route::match(['GET','POST'],'/free_courses/add', ['uses' => 'FreeCoursesController@add', 'as' => 'back-admin-free-courses-add']);
-            Route::match(['GET','POST'],'/free_courses/edit/{id}', ['uses' => 'FreeCoursesController@edit', 'as' => 'back-admin-free-courses-edit']);
+            Route::get('/free_courses/add', ['uses' => 'FreeCoursesController@getAdd', 'as' => 'back-admin-free-courses-get-add']);
+            Route::post('/free_courses/add', ['uses' => 'FreeCoursesController@postAdd', 'as' => 'back-admin-free-courses-post-add']);
+            Route::get('/free_courses/edit/{id}', ['uses' => 'FreeCoursesController@getEdit', 'as' => 'back-admin-free-courses-get-edit']);
+            Route::post('/free_courses/edit/{id}', ['uses' => 'FreeCoursesController@postEdit', 'as' => 'back-admin-free-courses-post-edit']);
             Route::post('/free_courses/delete/{id}', ['uses' => 'FreeCoursesController@delete', 'as' => 'back-admin-free-courses-delete']);
             //Просмотр и редактирование платных курсов
             Route::get('/pay_courses', ['uses' => 'PayCoursesController@index', 'as' => 'back-admin-pay-courses-index']);

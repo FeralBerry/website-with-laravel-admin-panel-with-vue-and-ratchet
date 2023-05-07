@@ -176,6 +176,23 @@
                                 '</tr>';
                         });
                     }
+                    else if(data.message === 'admin-free-courses-name-index'){
+                        let free_courses_name_table = document.getElementById('free_courses_name_table');
+                        data.free_courses_name.map((item) => {
+                            free_courses_name_table.innerHTML += '<tr id="free_courses_name_'+item.id+'">' +
+                                '<td><input class="form-control form-control-lg" name="free_courses_name_title_'+item.id+'" id="free_courses_name_title_'+item.id+'" type="text" placeholder="Название" value="'+item.title+'"></td>' +
+                                '<td><textarea class="form-control" name="free_courses_name_brief_'+item.id+'" id="free_courses_name_brief_'+item.id+'" placeholder="Краткое описание">'+item.brief+'</textarea></td>' +
+                                '<td><input class="form-control" type="file" name="free_courses_name_img_'+item.id+'" id="free_courses_name_img_'+item.id+'" value="'+item.img+'">' +
+                                '<input class="form-control" type="hidden" name="free_courses_name_old_img_'+item.id+'" id="free_courses_name_old_img_'+item.id+'" value="'+item.img+'"><img id="old_img_'+item.id+'" width="200px" src="'+item.img+'"></td>' +
+                                '<td><input class="form-control" type="text" name="free_courses_name_link_'+item.id+'" id="free_courses_name_link_'+item.id+'" placeholder="Ссылка" value="'+item.link+'"></td>' +
+                                '<td>' +
+                                '<a onclick="free_courses_name_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a onclick="free_courses_name_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                                '<a onclick="free_courses_name_erase('+item.id+')" class="btn btn-danger"><i class="fa fa-eraser"></i></a>' +
+                                '</td>'+
+                                '</tr>'
+                        });
+                    }
                 }
             }
         },
@@ -193,6 +210,6 @@
         created() {
             this.today = new Date();
             this.date_now = this.today.getFullYear();
-        }
+        },
     }
 </script>

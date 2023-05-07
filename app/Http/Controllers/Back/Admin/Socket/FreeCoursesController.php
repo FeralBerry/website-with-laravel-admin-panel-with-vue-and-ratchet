@@ -24,4 +24,13 @@ class FreeCoursesController extends BackController
         ];
         return $data;
     }
+    public function free_courses_name_index($command){
+        $free_courses_name = DB::table('free_courses_name')
+            ->get();
+        $data = [
+            'message' => $command->command,
+            'free_courses_name' => $free_courses_name,
+        ];
+        return $data;
+    }
 }
