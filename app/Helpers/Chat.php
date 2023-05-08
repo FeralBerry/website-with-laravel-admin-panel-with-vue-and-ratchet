@@ -235,6 +235,14 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif($command->command == 'admin-pay-courses-name-index'){
+            $data = $this->payCoursesAdminController->pay_courses_name_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         elseif($command->command == 'admin-free-courses-index'){
             $data = $this->freeCoursesAdminController->free_courses_index($command);
             foreach ($this->clients as $client) {
@@ -243,40 +251,8 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
-        elseif($command->command == 'admin-free-courses-add'){
-            $data = $this->freeCoursesAdminController->free_courses_add($command);
-            foreach ($this->clients as $client) {
-                if ($from == $client) {
-                    $client->send(json_encode($data));
-                }
-            }
-        }
-        elseif($command->command == 'admin-free-courses-edit'){
-            $data = $this->freeCoursesAdminController->free_courses_edit($command);
-            foreach ($this->clients as $client) {
-                if ($from == $client) {
-                    $client->send(json_encode($data));
-                }
-            }
-        }
         elseif($command->command == 'admin-pay-courses-index'){
             $data = $this->payCoursesAdminController->pay_courses_index($command);
-            foreach ($this->clients as $client) {
-                if ($from == $client) {
-                    $client->send(json_encode($data));
-                }
-            }
-        }
-        elseif($command->command == 'admin-pay-courses-add'){
-            $data = $this->payCoursesAdminController->pay_courses_add($command);
-            foreach ($this->clients as $client) {
-                if ($from == $client) {
-                    $client->send(json_encode($data));
-                }
-            }
-        }
-        elseif($command->command == 'admin-pay-courses-edit'){
-            $data = $this->payCoursesAdminController->pay_courses_edit($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));

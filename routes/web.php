@@ -103,7 +103,6 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             //Просмотр и редактирование названия и описания к бесплатным курсам
             Route::get('/free_courses_name', ['uses' => 'FreeCoursesNameController@index', 'as' => 'back-admin-free-courses-name-index']);
             Route::post('/free_courses_name/add', ['uses' => 'FreeCoursesNameController@postAdd', 'as' => 'back-admin-free-courses-name-post-add']);
-            Route::get('/free_courses_name/edit/{id}', ['uses' => 'FreeCoursesNameController@getEdit', 'as' => 'back-admin-free-courses-name-get-edit']);
             Route::post('/free_courses_name/edit/{id}', ['uses' => 'FreeCoursesNameController@postEdit', 'as' => 'back-admin-free-courses-name-post-edit']);
             Route::post('/free_courses_name/delete/{id}', ['uses' => 'FreeCoursesNameController@delete', 'as' => 'back-admin-free-courses-name-delete']);
             Route::post('/free_courses_name/erase/{id}', ['uses' => 'FreeCoursesNameController@erase', 'as' => 'back-admin-free-courses-name-erase']);
@@ -119,6 +118,12 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             Route::match(['GET','POST'],'/pay_courses/add', ['uses' => 'PayCoursesController@add', 'as' => 'back-admin-pay-courses-add']);
             Route::match(['GET','POST'],'/pay_courses/edit/{id}', ['uses' => 'PayCoursesController@edit', 'as' => 'back-admin-pay-courses-edit']);
             Route::post('/pay_courses/delete/{id}', ['uses' => 'PayCoursesController@delete', 'as' => 'back-admin-pay-courses-delete']);
+            //Просмотр и редактирование названия и описания к платных курсов
+            Route::get('/pay_courses_name', ['uses' => 'PayCoursesNameController@index', 'as' => 'back-admin-pay-courses-name-index']);
+            Route::post('/pay_courses_name/add', ['uses' => 'PayCoursesNameController@postAdd', 'as' => 'back-admin-pay-courses-name-post-add']);
+            Route::post('/pay_courses_name/edit/{id}', ['uses' => 'PayCoursesNameController@postEdit', 'as' => 'back-admin-pay-courses-name-post-edit']);
+            Route::post('/pay_courses_name/delete/{id}', ['uses' => 'PayCoursesNameController@delete', 'as' => 'back-admin-pay-courses-name-delete']);
+            Route::post('/pay_courses_name/erase/{id}', ['uses' => 'PayCoursesNameController@erase', 'as' => 'back-admin-pay-courses-name-erase']);
         });
     });
 });

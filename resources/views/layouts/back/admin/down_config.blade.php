@@ -44,18 +44,7 @@
 <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('back/js/demo.js') }}"></script>
-<script>
-    $(function () {
-        // Summernote
-        $('#summernote').summernote()
 
-        /*// CodeMirror
-        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-            mode: "htmlmixed",
-            theme: "monokai"
-        });*/
-    });
-</script>
 <script>
     $("body").on('click', ".nav-link", function() {
         $(".nav-link").not(this).removeClass("active");
@@ -292,6 +281,111 @@
             });
         });
     });
+    function pay_courses_name_edit(id) {
+        let pay_courses_name_title = document.getElementById('pay_courses_name_title_' + id).value;
+        let pay_courses_name_brief = document.getElementById('pay_courses_name_brief_' + id).value;
+        let pay_courses_name_img = document.getElementById('pay_courses_name_img_' + id).files[0];
+        let pay_courses_name_link = document.getElementById('pay_courses_name_link_' + id).value;
+        let pay_courses_name_old_img = document.getElementById('pay_courses_name_old_img_' + id).value;
+        let old_img = document.getElementById('old_img_' + id);
+        let formData = new FormData;
+        formData.append('pay_courses_name_title',pay_courses_name_title);
+        formData.append('pay_courses_name_brief',pay_courses_name_brief);
+        formData.append('pay_courses_name_img',pay_courses_name_img);
+        formData.append('pay_courses_name_link',pay_courses_name_link);
+        formData.append('pay_courses_name_old_img',pay_courses_name_old_img);
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            url: '/admin/pay_courses_name/edit/' + id,
+            success: function (data) {
+                alert(data.message);
+                old_img.src = data.img;
+            }
+        });
+    }
+    function pay_courses_name_delete(id) {
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:'/admin/pay_courses_name/delete/'+id,
+            beforeSend:function(){
+                return confirm("Точно нужно удалить этот курс!");
+            },
+            success:function (data) {
+                document.getElementById('pay_courses_name_'+id).remove();
+            }
+        });
+    }
+    function pay_courses_name_erase(id) {
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:'/admin/pay_courses_name/erase/'+id,
+            beforeSend:function(){
+                return confirm("Точно нужно удалить это название курса!");
+            },
+            success:function (data) {
+                document.getElementById('pay_courses_name_'+id).remove();
+            }
+        });
+    }
+    $(document).ready(function() {
+        $("#pay_courses_name_form").submit(function (e) { //устанавливаем событие отправки для формы с id=form
+            e.preventDefault(); // отменяем событие
+            let pay_courses_name_title = document.getElementById('pay_courses_name_title').value;
+            let pay_courses_name_brief = document.getElementById('pay_courses_name_brief').value;
+            let pay_courses_name_img = document.getElementById('pay_courses_name_img').files[0];
+            let pay_courses_name_link = document.getElementById('pay_courses_name_link').value;
+            let formData = new FormData;
+            formData.append('pay_courses_name_title',pay_courses_name_title);
+            formData.append('pay_courses_name_brief',pay_courses_name_brief);
+            formData.append('pay_courses_name_img',pay_courses_name_img);
+            formData.append('pay_courses_name_link',pay_courses_name_link);
+            $.ajax({
+                type: "POST", //Метод отправки
+                url: "/admin/pay_courses_name/add", //путь до php фаила отправителя
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    alert(data.message);
+                    let pay_courses_name_table = document.getElementById('pay_courses_name_table');
+                    data.pay_courses_name.map((item) => {
+                        pay_courses_name_table.innerHTML += '<tr id="pay_courses_name_' + item.id + '">' +
+                            '<td><input class="form-control form-control-lg" name="pay_courses_name_title_' + item.id + '" id="pay_courses_name_title_' + item.id + '" type="text" placeholder="Название" value="' + item.title + '"></td>' +
+                            '<td><textarea class="form-control" name="pay_courses_name_brief_' + item.id + '" id="pay_courses_name_brief_' + item.id + '" placeholder="Краткое описание">' + item.brief + '</textarea></td>' +
+                            '<td><input class="form-control" type="file" name="pay_courses_name_img_' + item.id + '" id="pay_courses_name_img_' + item.id + '" value="' + item.img + '">' +
+                            '<input class="form-control" type="hidden" name="pay_courses_name_old_img_' + item.id + '" id="pay_courses_name_old_img_' + item.id + '" value="' + item.img + '"><img id="old_img_' + item.id + '" width="200px" src="' + item.img + '"></td>' +
+                            '<td><input class="form-control" type="text" name="pay_courses_name_link_' + item.id + '" id="pay_courses_name_link_' + item.id + '" placeholder="Ссылка" value="' + item.link + '"></td>' +
+                            '<td>' +
+                            '<a onclick="pay_courses_name_edit(' + item.id + ')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                            '<a onclick="pay_courses_name_delete(' + item.id + ')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                            '<a onclick="pay_courses_name_erase(' + item.id + ')" class="btn btn-danger"><i class="fa fa-eraser"></i></a>' +
+                            '</td>' +
+                            '</tr>'
+                    });
+                }
+            });
+        });
+    });
+    function free_courses_delete(id) {
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:'/admin/free_courses/delete/'+id,
+            beforeSend:function(){
+                return confirm("Точно нужно удалить этот урок!");
+            },
+            success:function (data) {
+                document.getElementById('free_courses_'+id).remove();
+            }
+        });
+    }
 </script>
 
 

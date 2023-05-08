@@ -13,10 +13,12 @@ import BlogEditComponent from "./components/back/admin/pages/blog/BlogEditCompon
 import BlogTagsComponent from "./components/back/admin/pages/blog/BlogTagsComponent";
 import FreeCoursesComponent from "./components/back/admin/pages/free_courses/FreeCoursesComponent";
 import FreeCoursesAddComponent from "./components/back/admin/pages/free_courses/FreeCoursesAddComponent";
+import FreeCoursesEditComponent from "./components/back/admin/pages/free_courses/FreeCoursesEditComponent";
 import FreeCoursesNameComponent from "./components/back/admin/pages/free_courses/FreeCoursesNameComponent";
 import PayCoursesComponent from "./components/back/admin/pages/pay_courses/PayCoursesComponent";
 import PayCoursesAddComponent from "./components/back/admin/pages/pay_courses/PayCoursesAddComponent";
-import PayCoursesNameComponent from "./components/back/admin/pages/pay_courses/PayCoursesComponent";
+import PayCoursesEditComponent from "./components/back/admin/pages/pay_courses/PayCoursesEditComponent";
+import PayCoursesNameComponent from "./components/back/admin/pages/pay_courses/PayCoursesNameComponent";
 import ShopComponent from "./components/back/admin/pages/ShopComponent";
 import ShopAddComponent from "./components/back/admin/pages/ShopAddComponent";
 import ShopEditComponent from "./components/back/admin/pages/ShopEditComponent";
@@ -36,11 +38,11 @@ const routes = [
     {path: '/admin/blog/tags', component: BlogTagsComponent,name:'admin-blog-tags-index'},
     {path: '/admin/free_courses', component: FreeCoursesComponent,name:'admin-free-courses-index'},
     {path: '/admin/free_courses/add', component: FreeCoursesAddComponent,name:'admin-free-courses-add'},
-    {path: '/admin/free_courses/edit/:id', component: FreeCoursesAddComponent,name:'admin-free-courses-edit'},
+    {path: '/admin/free_courses/edit/:id', component: FreeCoursesEditComponent,name:'admin-free-courses-edit'},
     {path: '/admin/free_courses_name', component: FreeCoursesNameComponent,name:'admin-free-courses-name-index'},
     {path: '/admin/pay_courses', component: PayCoursesComponent,name:'admin-pay-courses-index'},
     {path: '/admin/pay_courses/add', component: PayCoursesAddComponent,name:'admin-pay-courses-add'},
-    {path: '/admin/pay_courses/edit/:id', component: PayCoursesAddComponent,name:'admin-pay-courses-edit'},
+    {path: '/admin/pay_courses/edit/:id', component: PayCoursesEditComponent,name:'admin-pay-courses-edit'},
     {path: '/admin/pay_courses_name', component: PayCoursesNameComponent,name:'admin-pay-courses-name-index'},
     {path: '/admin/shop', component: ShopComponent,name:'admin-shop-index'},
     {path: '/admin/shop/add', component: ShopAddComponent,name:'admin-shop-add'},
@@ -72,9 +74,11 @@ app.component('blog-edit-component', BlogEditComponent);
 app.component('blog-tags-component', BlogTagsComponent);
 app.component('free-courses-component', FreeCoursesComponent);
 app.component('free-courses-add-component', FreeCoursesAddComponent);
+app.component('free-courses-edit-component', FreeCoursesEditComponent);
 app.component('free-courses-name-component', FreeCoursesNameComponent);
 app.component('pay-courses-component', PayCoursesComponent);
 app.component('pay-courses-add-component', PayCoursesAddComponent);
+app.component('pay-courses-edit-component', PayCoursesEditComponent);
 app.component('pay-courses-name-component', PayCoursesNameComponent);
 app.component('shop-component', ShopComponent);
 app.component('shop-add-component', ShopAddComponent);

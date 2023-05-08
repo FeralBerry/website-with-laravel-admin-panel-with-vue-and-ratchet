@@ -8,32 +8,30 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form action="/admin/blog/tags/add" method="post" id="blog_tags_add">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <input class="form-control form-control-lg" name="tag_name" id="tag_name" type="text" placeholder="Название тега">
-                                        <input class="form-control form-control-lg" name="icon" id="icon" type="text" placeholder="Иконка">
-                                    </div>
-                                    <div class="col-md-3" style="margin-top: 20px;margin-bottom: 20px">
-                                        <button type="submit" class="btn btn-block btn-outline-info">Добавить</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <div class="col-md-12" style="margin-top: 20px;margin-bottom: 20px">
+                                <router-link to="/admin/free_courses/add" class="btn btn-block btn-outline-info">Добавить</router-link>
+                            </div>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Иконка</th>
-                                    <th>Название</th>
-                                    <th>Кнопки</th>
+                                    <th style="width:150px">Заголовок и к какому курсу привязано</th>
+                                    <th>Описание</th>
+                                    <th style="width:215px">Видео</th>
+                                    <th style="width:100px">Тип урока с заданием</th>
+                                    <th style="width:75px">Материалы</th>
+                                    <th style="width:75px">Кнопки</th>
                                 </tr>
                                 </thead>
-                                <tbody id="blog_tags">
+                                <tbody id="free_courses_table">
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Иконка</th>
-                                    <th>Название</th>
+                                    <th>Заголовок и к какому курсу привязано</th>
+                                    <th>Описание</th>
+                                    <th>Видео</th>
+                                    <th>Тип урока с заданием</th>
+                                    <th>Материалы</th>
                                     <th>Кнопки</th>
                                 </tr>
                                 </tfoot>

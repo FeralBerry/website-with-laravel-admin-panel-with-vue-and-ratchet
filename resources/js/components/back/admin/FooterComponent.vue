@@ -22,6 +22,16 @@
         },
         watch: {
             $route(to, from) {
+                $(function () {
+                    $("#example1").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false,
+                        "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                });
+                $(function () {
+                    // Summernote
+                    $('#summernote').summernote()
+                });
                 //Подгрузка данных на страницу
                 let con = this;
                 setTimeout(function (){
@@ -191,6 +201,52 @@
                                 '<a onclick="free_courses_name_erase('+item.id+')" class="btn btn-danger"><i class="fa fa-eraser"></i></a>' +
                                 '</td>'+
                                 '</tr>'
+                        });
+                    }
+                    else if(data.message === 'admin-pay-courses-name-index'){
+                        let pay_courses_name_table = document.getElementById('pay_courses_name_table');
+                        data.pay_courses_name.map((item) => {
+                            pay_courses_name_table.innerHTML += '<tr id="pay_courses_name_'+item.id+'">' +
+                                '<td><input class="form-control form-control-lg" name="pay_courses_name_title_'+item.id+'" id="pay_courses_name_title_'+item.id+'" type="text" placeholder="Название" value="'+item.title+'"></td>' +
+                                '<td><textarea class="form-control" name="pay_courses_name_brief_'+item.id+'" id="pay_courses_name_brief_'+item.id+'" placeholder="Краткое описание">'+item.brief+'</textarea></td>' +
+                                '<td><input class="form-control" type="file" name="pay_courses_name_img_'+item.id+'" id="pay_courses_name_img_'+item.id+'" value="'+item.img+'">' +
+                                '<input class="form-control" type="hidden" name="pay_courses_name_old_img_'+item.id+'" id="pay_courses_name_old_img_'+item.id+'" value="'+item.img+'"><img id="old_img_'+item.id+'" width="200px" src="'+item.img+'"></td>' +
+                                '<td><input class="form-control" type="text" name="pay_courses_name_link_'+item.id+'" id="pay_courses_name_link_'+item.id+'" placeholder="Ссылка" value="'+item.link+'"></td>' +
+                                '<td>' +
+                                '<a onclick="pay_courses_name_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a onclick="pay_courses_name_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                                '<a onclick="pay_courses_name_erase('+item.id+')" class="btn btn-danger"><i class="fa fa-eraser"></i></a>' +
+                                '</td>'+
+                                '</tr>'
+                        });
+                    }
+                    else if(data.message === 'admin-free-courses-index'){
+                        let free_courses_table = document.getElementById('free_courses_table');
+                        $('#free_courses_table').html('');
+                        data.free_courses.map((item) => {
+                            let courses_name = '';
+                            let video = '';
+                            data.free_courses_name.map((name) => {
+                                if(name.id == item.free_courses_name_id){
+                                    courses_name = name.title;
+                                }
+                            });
+                            if(data.link !== null){
+                                video = '<video><source src="'+item.link+'" /></video>';
+                            }
+                            if(data.youtube !== null){
+                                video = item.youtube
+                            }
+                            free_courses_table.innerHTML += '<tr id="free_courses_'+item.id+'">' +
+                                '<td>'+item.title+'<br><span style="color:#0a53be">'+courses_name+'</span></td>'+
+                                '<td>'+item.description+'</td>'+
+                                '<td>'+video+'</td>'+
+                                '<td>'+item.type+'</td>'+
+                                '<td></td>'+
+                                '<td>' +
+                                '<a href="/admin/free_courses/edit/'+item.id+'" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a onclick="free_courses_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>'+
+                                '</tr>';
                         });
                     }
                 }

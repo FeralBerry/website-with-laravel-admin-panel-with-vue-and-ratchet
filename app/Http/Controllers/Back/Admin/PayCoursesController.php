@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Back\Admin;
 
 use App\Http\Controllers\Back\BackController;
+use Illuminate\Http\Request;
 
 class PayCoursesController extends BackController
 {
@@ -11,19 +12,19 @@ class PayCoursesController extends BackController
         ]);
         return view('back.admin.index',['data' => $data]);
     }
-    public function add(){
+    public function add(Request $request){
         $data = array_merge($this->adminData(),[
 
         ]);
         return view('back.admin.index',['data' => $data]);
     }
-    public function edit(){
+    public function edit(Request $request,$id){
         $data = array_merge($this->adminData(),[
 
         ]);
         return view('back.admin.index',['data' => $data]);
     }
-    public function delete(){
+    public function delete($id){
         $data = array_merge($this->adminData(),[
 
         ]);
