@@ -251,8 +251,24 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif($command->command == 'admin-free-courses-add'){
+            $data = $this->freeCoursesAdminController->free_courses_add($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         elseif($command->command == 'admin-pay-courses-index'){
             $data = $this->payCoursesAdminController->pay_courses_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-pay-courses-add'){
+            $data = $this->payCoursesAdminController->pay_courses_add($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));

@@ -30,7 +30,7 @@
                 });
                 $(function () {
                     // Summernote
-                    $('#summernote').summernote()
+                    $('.summernote').summernote();
                 });
                 //Подгрузка данных на страницу
                 let con = this;

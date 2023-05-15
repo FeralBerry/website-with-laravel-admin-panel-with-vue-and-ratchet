@@ -18,6 +18,12 @@ class PayCoursesController extends BackController
         ];
         return $data;
     }
+    public function pay_courses_add($command){
+        $data = [
+            'message' => $command->command,
+        ];
+        return $data;
+    }
     public function pay_courses_name_index($command){
         $pay_courses_name = DB::table('pay_courses_name')
             ->get();
