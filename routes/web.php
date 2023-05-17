@@ -115,8 +115,10 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             Route::post('/free_courses/delete/{id}', ['uses' => 'FreeCoursesController@delete', 'as' => 'back-admin-free-courses-delete']);
             //Просмотр и редактирование платных курсов
             Route::get('/pay_courses', ['uses' => 'PayCoursesController@index', 'as' => 'back-admin-pay-courses-index']);
-            Route::match(['GET','POST'],'/pay_courses/add', ['uses' => 'PayCoursesController@add', 'as' => 'back-admin-pay-courses-add']);
-            Route::match(['GET','POST'],'/pay_courses/edit/{id}', ['uses' => 'PayCoursesController@edit', 'as' => 'back-admin-pay-courses-edit']);
+            Route::get('/pay_courses/add', ['uses' => 'PayCoursesController@getAdd', 'as' => 'back-admin-pay-courses-get-add']);
+            Route::post('/pay_courses/add', ['uses' => 'PayCoursesController@postAdd', 'as' => 'back-admin-pay-courses-post-add']);
+            Route::get('/pay_courses/edit/{id}', ['uses' => 'PayCoursesController@getEdit', 'as' => 'back-admin-pay-courses-get-edit']);
+            Route::post('/pay_courses/edit/{id}', ['uses' => 'PayCoursesController@postEdit', 'as' => 'back-admin-pay-courses-post-edit']);
             Route::post('/pay_courses/delete/{id}', ['uses' => 'PayCoursesController@delete', 'as' => 'back-admin-pay-courses-delete']);
             //Просмотр и редактирование названия и описания к платных курсов
             Route::get('/pay_courses_name', ['uses' => 'PayCoursesNameController@index', 'as' => 'back-admin-pay-courses-name-index']);

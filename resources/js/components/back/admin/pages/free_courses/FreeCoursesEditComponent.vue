@@ -13,7 +13,7 @@
                                     <input type="hidden" name="_token" :value="csrf">
                                     <span class="bmd-form-group bmd-form-group-lg">
                                         Название
-                                        <input class="form-control form-control-lg" name="title" id="blog_title" type="text" :value="item.title" placeholder="Название новости">
+                                        <input class="form-control form-control-lg" name="title" id="free_courses_title" type="text" :value="item.title" placeholder="Тема урока">
                                     </span>
                                     <br>
                                     Привязка к какому курсу
@@ -23,11 +23,11 @@
                                             <div class="col-md-3 custom-control custom-radio">
                                                 <template v-if="name.id == item.free_courses_name_id">
                                                     <input checked class="custom-control-input custom-control-input-danger custom-control-input-outline" name="free_courses_name" :id="'free_courses_name_'+name.id" :value="name.id" type="radio">
-                                                    <label :for="'free_courses_name_'+name.id" class="custom-control-label"><i class="'+item.icon+'"></i> {{ name.title }}</label>
+                                                    <label :for="'free_courses_name_'+name.id" class="custom-control-label"> {{ name.title }}</label>
                                                 </template>
                                                 <template v-if="name.id !== item.free_courses_name_id">
                                                     <input class="custom-control-input custom-control-input-danger custom-control-input-outline" name="free_courses_name" :id="'free_courses_name_'+name.id" :value="name.id" type="radio">
-                                                    <label :for="'free_courses_name_'+name.id" class="custom-control-label"><i class="'+item.icon+'"></i> {{ name.title }}</label>
+                                                    <label :for="'free_courses_name_'+name.id" class="custom-control-label"> {{ name.title }}</label>
                                                 </template>
                                             </div>
                                         </template>
@@ -41,7 +41,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <input type="file" name="video" id="video"><br>
-                                            <textarea rows="6" type="text" class="form-control form-control-lg" name="video_youtube" id="video_youtube"></textarea>
+                                            <textarea rows="6" type="text" class="form-control form-control-lg" name="video_youtube" id="video_youtube">{{ item.youtube }}</textarea>
                                         </div>
                                         <div class="col-md-6">
                                             <template v-if="item.link !== null">

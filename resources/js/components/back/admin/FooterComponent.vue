@@ -118,8 +118,9 @@
                     }
                     else if(data.message === 'admin-contact-index'){
                         $('#contacts').html('');
+                        let contacts = document.getElementById('contacts');
                         data.contact.map((item) => {
-                            document.getElementById('contacts').innerHTML = '<tr>' +
+                            contacts.innerHTML += '<tr>' +
                                 '<td>Телефон:</td>' +
                                 '<td><input class="form-control" name="phone" id="phone" value="'+item.phone+'"></td>' +
                                 '<td><a onclick="contact_edit(`phone`)" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>' +
@@ -172,6 +173,7 @@
                         });
                     }
                     else if(data.message === 'admin-seo-index'){
+                        $('#seo_table').html('');
                         let seo_table = document.getElementById('seo_table');
                         data.seo.map((item) => {
                             seo_table.innerHTML += '<tr id="seo_'+item.id+'">' +

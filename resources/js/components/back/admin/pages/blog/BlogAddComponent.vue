@@ -23,7 +23,7 @@
                                 <br>
                                 Описание новости
                                 <br>
-                                <textarea rows="20" name="description" id="summernote"></textarea>
+                                <textarea rows="20" name="description" class="summernote"></textarea>
                                 Заглавная картинка
                                 <br>
                                 <input type="file" name="img" id="img">
