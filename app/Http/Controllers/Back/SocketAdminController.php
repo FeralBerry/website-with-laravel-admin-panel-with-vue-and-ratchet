@@ -68,4 +68,16 @@ class SocketAdminController extends Controller
         ];
         return $data;
     }
+    public function question_index($command){
+        $question = DB::table('contact_form')
+            ->get();
+        $footer_message = DB::table('footer_message')
+            ->get();
+        $data = [
+            'message' => $command->command,
+            'question' => $question,
+            'footer_message' => $footer_message
+        ];
+        return $data;
+    }
 }

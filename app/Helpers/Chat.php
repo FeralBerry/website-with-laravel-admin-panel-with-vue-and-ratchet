@@ -347,6 +347,14 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif($command->command == 'admin-question-index'){
+            $data = $this->socketAdminController->question_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
     }
     public function onClose(ConnectionInterface $conn) {
         $users = DB::table('users')

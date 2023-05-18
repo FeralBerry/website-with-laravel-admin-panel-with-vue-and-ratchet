@@ -19,9 +19,9 @@ import PayCoursesComponent from "./components/back/admin/pages/pay_courses/PayCo
 import PayCoursesAddComponent from "./components/back/admin/pages/pay_courses/PayCoursesAddComponent";
 import PayCoursesEditComponent from "./components/back/admin/pages/pay_courses/PayCoursesEditComponent";
 import PayCoursesNameComponent from "./components/back/admin/pages/pay_courses/PayCoursesNameComponent";
-import ShopComponent from "./components/back/admin/pages/ShopComponent";
-import ShopAddComponent from "./components/back/admin/pages/ShopAddComponent";
-import ShopEditComponent from "./components/back/admin/pages/ShopEditComponent";
+import ShopComponent from "./components/back/admin/pages/shop/ShopComponent";
+import ShopAddComponent from "./components/back/admin/pages/shop/ShopAddComponent";
+import ShopEditComponent from "./components/back/admin/pages/shop/ShopEditComponent";
 import SliderComponent from "./components/back/admin/pages/slider/SliderComponent";
 import FaqSliderComponent from "./components/back/admin/pages/faq_slider/FaqSliderComponent";
 import NavigateComponent from "./components/back/admin/pages/NavigateComponent";
@@ -29,6 +29,7 @@ import ContactComponent from "./components/back/admin/pages/contact/ContactCompo
 import SeoComponent from "./components/back/admin/pages/SeoComponent";
 import UsersComponent from "./components/back/admin/pages/users/UsersComponent";
 import UsersAddComponent from "./components/back/admin/pages/users/UsersAddComponent";
+import QuestionComponent from "./components/back/admin/pages/question/QuestionComponent";
 
 const routes = [
     {path: '/admin', component: MainComponent,name:'admin-index'},
@@ -51,6 +52,7 @@ const routes = [
     {path: '/admin/faq_slider', component: FaqSliderComponent,name:'admin-faq-slider-index'},
     {path: '/admin/navigate', component: NavigateComponent,name:'admin-navigate-index'},
     {path: '/admin/contact', component: ContactComponent,name:'admin-contact-index'},
+    {path: '/admin/user_question', component: QuestionComponent,name:'admin-question-index'},
     {path: '/admin/seo', component: SeoComponent,name:'admin-seo-index'},
     {path: '/admin/users', component: UsersComponent,name:'admin-users-index'},
     {path: '/admin/users/add', component: UsersAddComponent,name:'admin-users-add'},
@@ -65,6 +67,7 @@ const app = createApp({});
 app.use(router);
 
 app.component('back-header-component', HeaderBackComponent);
+app.component('back-question-component', QuestionComponent);
 app.component('bread-crumb-component', BreadCrumbComponent);
 app.component('left-bar-component', LeftBarComponent);
 app.component('main-component', MainComponent);

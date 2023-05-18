@@ -223,8 +223,8 @@
                         });
                     }
                     else if(data.message === 'admin-free-courses-index'){
-                        let free_courses_table = document.getElementById('free_courses_table');
                         $('#free_courses_table').html('');
+                        let free_courses_table = document.getElementById('free_courses_table');
                         data.free_courses.map((item) => {
                             let courses_name = '';
                             let video = '';
@@ -250,6 +250,52 @@
                                 '<a onclick="free_courses_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>'+
                                 '</tr>';
                         });
+                    }
+                    else if(data.message === 'admin-question-index'){
+                        $('#question').html('');
+                        let question = document.getElementById('question');
+                        let i;
+                        if(data.footer_message.length >= data.question.length){
+                            i = data.footer_message.length;
+                        } else {
+                            i = data.question.length;
+                        }
+
+                        for(let j = 0;j<i;j++){
+                            let question_name = '';
+                            let question_email = '';
+                            let question_subject = '';
+                            let question_message = '';
+                            let footer_message_name = '';
+                            let footer_message_phone = '';
+                            let footer_message_message = '';
+                            if(data.question.length > 0){
+                                question_name = data.question[j].name;
+                                question_email = data.question[j].email;
+                                question_subject = data.question[j].subject;
+                                question_message = data.question[j].message;
+                            }
+                            if(data.footer_message.length > 0){
+                                footer_message_name = data.footer_message[j].name;
+                                footer_message_phone = data.footer_message[j].phone;
+                                footer_message_message = data.footer_message[j].message;
+                            }
+                            document.getElementById('question').innerHTML += '<tr>' +
+                                '<td>' +
+                                '<div class="col-md-12">Имя: '+question_name+'</div>' +
+                                '<div class="col-md-12">Email: '+question_email+'</div>' +
+                                '<div class="col-md-12">Тема: '+question_subject+'</div>' +
+                                '<div class="col-md-12">Текст: '+question_message+'</div>' +
+                                '</td>' +
+                                '<td></td>' +
+                                '<td>' +
+                                '<div class="col-md-12">Имя: '+footer_message_name+'</div>' +
+                                '<div class="col-md-12">Телефон: '+footer_message_phone+'</div>' +
+                                '<div class="col-md-12">Тема: '+footer_message_message+'</div>' +
+                                '</td>' +
+                                '<td></td>' +
+                                '</tr>';
+                        }
                     }
                 }
             }
