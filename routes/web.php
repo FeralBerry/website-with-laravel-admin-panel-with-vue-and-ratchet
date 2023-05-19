@@ -83,6 +83,8 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             Route::get('/faq_slider', ['uses' => 'SlidersController@faq_slider', 'as' => 'back-admin-faq_slider-index']);
             //Просмотр вопросов заданых от пользователей
             Route::get('/user_question', ['uses' => 'IndexController@user_question', 'as' => 'back-admin-user_question-index']);
+            Route::post('/footer_message/delete/{id}', ['uses' => 'IndexController@footer_message_delete', 'as' => 'back-admin-footer_message-delete']);
+            Route::post('/question/delete/{id}', ['uses' => 'IndexController@question_delete', 'as' => 'back-admin-question-delete']);
             //Маршруты редактирования и просмотра блога
             Route::get('/blog', ['uses' => 'BlogController@index', 'as' => 'back-admin-blog-index']);
             Route::get('/blog/add', ['uses' => 'BlogController@add', 'as' => 'back-admin-blog-add']);

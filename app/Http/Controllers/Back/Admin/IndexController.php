@@ -139,4 +139,14 @@ class IndexController extends BackController
         ]);
         return view('back.admin.index',['data' => $data]);
     }
+    public function footer_message_delete($id){
+        DB::table('footer_message')
+            ->where('id',$id)
+            ->delete();
+    }
+    public function question_delete($id){
+        DB::table('contact_form')
+            ->where('id',$id)
+            ->delete();
+    }
 }

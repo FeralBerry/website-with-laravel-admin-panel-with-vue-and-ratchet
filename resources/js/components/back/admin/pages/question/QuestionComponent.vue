@@ -50,7 +50,7 @@
         data(){
             return{
                 breadcrumb: {
-                    'title':'Блог',
+                    'title':'Вопросы',
                     'crumbs':{
                         'first':{
                             'title':'Главная',

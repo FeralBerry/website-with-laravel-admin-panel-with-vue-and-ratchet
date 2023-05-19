@@ -189,6 +189,7 @@
                         });
                     }
                     else if(data.message === 'admin-free-courses-name-index'){
+                        $('#free_courses_name_table').html('');
                         let free_courses_name_table = document.getElementById('free_courses_name_table');
                         data.free_courses_name.map((item) => {
                             free_courses_name_table.innerHTML += '<tr id="free_courses_name_'+item.id+'">' +
@@ -206,6 +207,7 @@
                         });
                     }
                     else if(data.message === 'admin-pay-courses-name-index'){
+                        $('#pay_courses_name_table').html('');
                         let pay_courses_name_table = document.getElementById('pay_courses_name_table');
                         data.pay_courses_name.map((item) => {
                             pay_courses_name_table.innerHTML += '<tr id="pay_courses_name_'+item.id+'">' +
@@ -263,37 +265,45 @@
 
                         for(let j = 0;j<i;j++){
                             let question_name = '';
+                            let question_id = '';
                             let question_email = '';
                             let question_subject = '';
                             let question_message = '';
+                            let footer_message_id = '';
                             let footer_message_name = '';
                             let footer_message_phone = '';
                             let footer_message_message = '';
                             if(data.question.length > 0){
+                                question_id = data.question[j].id;
                                 question_name = data.question[j].name;
                                 question_email = data.question[j].email;
                                 question_subject = data.question[j].subject;
                                 question_message = data.question[j].message;
                             }
                             if(data.footer_message.length > 0){
+                                footer_message_id = data.footer_message[j].id;
                                 footer_message_name = data.footer_message[j].name;
                                 footer_message_phone = data.footer_message[j].phone;
                                 footer_message_message = data.footer_message[j].message;
                             }
                             document.getElementById('question').innerHTML += '<tr>' +
-                                '<td>' +
+                                '<td id="question_'+question_id+'">' +
                                 '<div class="col-md-12">Имя: '+question_name+'</div>' +
                                 '<div class="col-md-12">Email: '+question_email+'</div>' +
                                 '<div class="col-md-12">Тема: '+question_subject+'</div>' +
                                 '<div class="col-md-12">Текст: '+question_message+'</div>' +
                                 '</td>' +
-                                '<td></td>' +
                                 '<td>' +
+                                '<a onclick="question_delete('+question_id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>'+
+                                '</td>' +
+                                '<td id="footer_message_'+footer_message_id+'">' +
                                 '<div class="col-md-12">Имя: '+footer_message_name+'</div>' +
                                 '<div class="col-md-12">Телефон: '+footer_message_phone+'</div>' +
                                 '<div class="col-md-12">Тема: '+footer_message_message+'</div>' +
                                 '</td>' +
-                                '<td></td>' +
+                                '<td>' +
+                                '<a onclick="footer_message_delete('+footer_message_id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>'+
+                                '</td>' +
                                 '</tr>';
                         }
                     }

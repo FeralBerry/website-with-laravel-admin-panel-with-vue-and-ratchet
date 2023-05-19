@@ -21275,11 +21275,13 @@ __webpack_require__.r(__webpack_exports__);
             seo_table.innerHTML += '<tr id="seo_' + item.id + '">' + '<td><input class="form-control" name="url_' + item.id + '" id="url_' + item.id + '" value="' + item.url + '"></td>' + '<td><input class="form-control" name="title_' + item.id + '" id="title_' + item.id + '" value="' + item.title + '"></td>' + '<td><textarea class="form-control" name="description_' + item.id + '" id="description_' + item.id + '">' + item.description + '</textarea></td>' + '<td><textarea class="form-control" name="keywords_' + item.id + '" id="keywords_' + item.id + '">' + item.keywords + '</textarea></td>' + '<td>' + '<a onclick="seo_edit(' + item.id + ')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' + '<a onclick="seo_delete(' + item.id + ')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' + '</td>' + '</tr>';
           });
         } else if (data.message === 'admin-free-courses-name-index') {
+          $('#free_courses_name_table').html('');
           var free_courses_name_table = document.getElementById('free_courses_name_table');
           data.free_courses_name.map(function (item) {
             free_courses_name_table.innerHTML += '<tr id="free_courses_name_' + item.id + '">' + '<td><input class="form-control form-control-lg" name="free_courses_name_title_' + item.id + '" id="free_courses_name_title_' + item.id + '" type="text" placeholder="Название" value="' + item.title + '"></td>' + '<td><textarea class="form-control" name="free_courses_name_brief_' + item.id + '" id="free_courses_name_brief_' + item.id + '" placeholder="Краткое описание">' + item.brief + '</textarea></td>' + '<td><input class="form-control" type="file" name="free_courses_name_img_' + item.id + '" id="free_courses_name_img_' + item.id + '" value="' + item.img + '">' + '<input class="form-control" type="hidden" name="free_courses_name_old_img_' + item.id + '" id="free_courses_name_old_img_' + item.id + '" value="' + item.img + '"><img id="old_img_' + item.id + '" width="200px" src="' + item.img + '"></td>' + '<td><input class="form-control" type="text" name="free_courses_name_link_' + item.id + '" id="free_courses_name_link_' + item.id + '" placeholder="Ссылка" value="' + item.link + '"></td>' + '<td>' + '<a onclick="free_courses_name_edit(' + item.id + ')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' + '<a onclick="free_courses_name_delete(' + item.id + ')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' + '<a onclick="free_courses_name_erase(' + item.id + ')" class="btn btn-danger"><i class="fa fa-eraser"></i></a>' + '</td>' + '</tr>';
           });
         } else if (data.message === 'admin-pay-courses-name-index') {
+          $('#pay_courses_name_table').html('');
           var pay_courses_name_table = document.getElementById('pay_courses_name_table');
           data.pay_courses_name.map(function (item) {
             pay_courses_name_table.innerHTML += '<tr id="pay_courses_name_' + item.id + '">' + '<td><input class="form-control form-control-lg" name="pay_courses_name_title_' + item.id + '" id="pay_courses_name_title_' + item.id + '" type="text" placeholder="Название" value="' + item.title + '"></td>' + '<td><textarea class="form-control" name="pay_courses_name_brief_' + item.id + '" id="pay_courses_name_brief_' + item.id + '" placeholder="Краткое описание">' + item.brief + '</textarea></td>' + '<td><input class="form-control" type="file" name="pay_courses_name_img_' + item.id + '" id="pay_courses_name_img_' + item.id + '" value="' + item.img + '">' + '<input class="form-control" type="hidden" name="pay_courses_name_old_img_' + item.id + '" id="pay_courses_name_old_img_' + item.id + '" value="' + item.img + '"><img id="old_img_' + item.id + '" width="200px" src="' + item.img + '"></td>' + '<td><input class="form-control" type="text" name="pay_courses_name_link_' + item.id + '" id="pay_courses_name_link_' + item.id + '" placeholder="Ссылка" value="' + item.link + '"></td>' + '<td>' + '<a onclick="pay_courses_name_edit(' + item.id + ')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' + '<a onclick="pay_courses_name_delete(' + item.id + ')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' + '<a onclick="pay_courses_name_erase(' + item.id + ')" class="btn btn-danger"><i class="fa fa-eraser"></i></a>' + '</td>' + '</tr>';
@@ -21314,24 +21316,28 @@ __webpack_require__.r(__webpack_exports__);
           }
           for (var j = 0; j < i; j++) {
             var question_name = '';
+            var question_id = '';
             var question_email = '';
             var question_subject = '';
             var question_message = '';
+            var footer_message_id = '';
             var footer_message_name = '';
             var footer_message_phone = '';
             var footer_message_message = '';
             if (data.question.length > 0) {
+              question_id = data.question[j].id;
               question_name = data.question[j].name;
               question_email = data.question[j].email;
               question_subject = data.question[j].subject;
               question_message = data.question[j].message;
             }
             if (data.footer_message.length > 0) {
+              footer_message_id = data.footer_message[j].id;
               footer_message_name = data.footer_message[j].name;
               footer_message_phone = data.footer_message[j].phone;
               footer_message_message = data.footer_message[j].message;
             }
-            document.getElementById('question').innerHTML += '<tr>' + '<td>' + '<div class="col-md-12">Имя: ' + question_name + '</div>' + '<div class="col-md-12">Email: ' + question_email + '</div>' + '<div class="col-md-12">Тема: ' + question_subject + '</div>' + '<div class="col-md-12">Текст: ' + question_message + '</div>' + '</td>' + '<td></td>' + '<td>' + '<div class="col-md-12">Имя: ' + footer_message_name + '</div>' + '<div class="col-md-12">Телефон: ' + footer_message_phone + '</div>' + '<div class="col-md-12">Тема: ' + footer_message_message + '</div>' + '</td>' + '<td></td>' + '</tr>';
+            document.getElementById('question').innerHTML += '<tr>' + '<td id="question_' + question_id + '">' + '<div class="col-md-12">Имя: ' + question_name + '</div>' + '<div class="col-md-12">Email: ' + question_email + '</div>' + '<div class="col-md-12">Тема: ' + question_subject + '</div>' + '<div class="col-md-12">Текст: ' + question_message + '</div>' + '</td>' + '<td>' + '<a onclick="question_delete(' + question_id + ')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' + '</td>' + '<td id="footer_message_' + footer_message_id + '">' + '<div class="col-md-12">Имя: ' + footer_message_name + '</div>' + '<div class="col-md-12">Телефон: ' + footer_message_phone + '</div>' + '<div class="col-md-12">Тема: ' + footer_message_message + '</div>' + '</td>' + '<td>' + '<a onclick="footer_message_delete(' + footer_message_id + ')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' + '</td>' + '</tr>';
           }
         }
       };

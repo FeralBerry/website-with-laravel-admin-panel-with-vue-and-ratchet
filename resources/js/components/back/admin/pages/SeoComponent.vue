@@ -67,7 +67,7 @@
         data(){
             return{
                 breadcrumb: {
-                    'title':'Контакты',
+                    'title':'СЕО',
                     'crumbs':{
                         'first':{
                             'title':'Главная',

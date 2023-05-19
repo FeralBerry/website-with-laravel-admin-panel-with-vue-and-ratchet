@@ -386,6 +386,32 @@
             }
         });
     }
+    function question_delete(id) {
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:'/admin/question/delete/'+id,
+            beforeSend:function(){
+                return confirm("Точно нужно удалить этот вопрос!");
+            },
+            success:function (data) {
+                document.getElementById('question_'+id).remove();
+            }
+        });
+    }
+    function footer_message_delete(id) {
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:'/admin/footer_message/delete/'+id,
+            beforeSend:function(){
+                return confirm("Точно нужно удалить этот вопрос!");
+            },
+            success:function (data) {
+                document.getElementById('footer_message_'+id).remove();
+            }
+        });
+    }
 </script>
 
 

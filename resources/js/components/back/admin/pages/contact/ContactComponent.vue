@@ -48,7 +48,7 @@
         data(){
             return{
                 breadcrumb: {
-                    'title':'Блог',
+                    'title':'Контакты',
                     'crumbs':{
                         'first':{
                             'title':'Главная',
