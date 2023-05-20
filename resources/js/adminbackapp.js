@@ -20,6 +20,7 @@ import PayCoursesAddComponent from "./components/back/admin/pages/pay_courses/Pa
 import PayCoursesEditComponent from "./components/back/admin/pages/pay_courses/PayCoursesEditComponent";
 import PayCoursesNameComponent from "./components/back/admin/pages/pay_courses/PayCoursesNameComponent";
 import ShopComponent from "./components/back/admin/pages/shop/ShopComponent";
+import ShopCategoryComponent from "./components/back/admin/pages/shop/ShopCategoryComponent";
 import ShopAddComponent from "./components/back/admin/pages/shop/ShopAddComponent";
 import ShopEditComponent from "./components/back/admin/pages/shop/ShopEditComponent";
 import SliderComponent from "./components/back/admin/pages/slider/SliderComponent";
@@ -30,6 +31,7 @@ import SeoComponent from "./components/back/admin/pages/SeoComponent";
 import UsersComponent from "./components/back/admin/pages/users/UsersComponent";
 import UsersAddComponent from "./components/back/admin/pages/users/UsersAddComponent";
 import QuestionComponent from "./components/back/admin/pages/question/QuestionComponent";
+import QuotesComponent from "./components/back/admin/pages/quotes/QuotesComponent";
 
 const routes = [
     {path: '/admin', component: MainComponent,name:'admin-index'},
@@ -46,6 +48,7 @@ const routes = [
     {path: '/admin/pay_courses/edit/:id', component: PayCoursesEditComponent,name:'admin-pay-courses-edit'},
     {path: '/admin/pay_courses_name', component: PayCoursesNameComponent,name:'admin-pay-courses-name-index'},
     {path: '/admin/shop', component: ShopComponent,name:'admin-shop-index'},
+    {path: '/admin/shop_category', component: ShopCategoryComponent,name:'admin-shop_category-index'},
     {path: '/admin/shop/add', component: ShopAddComponent,name:'admin-shop-add'},
     {path: '/admin/shop/edit', component: ShopEditComponent,name:'admin-shop-edit'},
     {path: '/admin/slider', component: SliderComponent,name:'admin-slider-index'},
@@ -53,6 +56,7 @@ const routes = [
     {path: '/admin/navigate', component: NavigateComponent,name:'admin-navigate-index'},
     {path: '/admin/contact', component: ContactComponent,name:'admin-contact-index'},
     {path: '/admin/user_question', component: QuestionComponent,name:'admin-question-index'},
+    {path: '/admin/quotes', component: QuotesComponent,name:'admin-quotes-index'},
     {path: '/admin/seo', component: SeoComponent,name:'admin-seo-index'},
     {path: '/admin/users', component: UsersComponent,name:'admin-users-index'},
     {path: '/admin/users/add', component: UsersAddComponent,name:'admin-users-add'},
@@ -68,6 +72,7 @@ app.use(router);
 
 app.component('back-header-component', HeaderBackComponent);
 app.component('back-question-component', QuestionComponent);
+app.component('back-quotes-component', QuotesComponent);
 app.component('bread-crumb-component', BreadCrumbComponent);
 app.component('left-bar-component', LeftBarComponent);
 app.component('main-component', MainComponent);
@@ -84,6 +89,7 @@ app.component('pay-courses-add-component', PayCoursesAddComponent);
 app.component('pay-courses-edit-component', PayCoursesEditComponent);
 app.component('pay-courses-name-component', PayCoursesNameComponent);
 app.component('shop-component', ShopComponent);
+app.component('shop-category-component', ShopCategoryComponent);
 app.component('shop-add-component', ShopAddComponent);
 app.component('shop-edit-component', ShopEditComponent);
 app.component('footer-component', FooterComponent);

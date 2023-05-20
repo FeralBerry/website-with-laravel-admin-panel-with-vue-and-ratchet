@@ -106,6 +106,14 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link to="/admin/quotes" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Цитаты
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
@@ -162,6 +170,14 @@
                                     <i class="nav-icon fa fa-bolt"></i>
                                     <p>
                                         Добавить товар
+                                    </p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/admin/shop_category" class="nav-link">
+                                    <i class="nav-icon fa fa-bolt"></i>
+                                    <p>
+                                        Категории товаров
                                     </p>
                                 </router-link>
                             </li>

@@ -85,6 +85,11 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             Route::get('/user_question', ['uses' => 'IndexController@user_question', 'as' => 'back-admin-user_question-index']);
             Route::post('/footer_message/delete/{id}', ['uses' => 'IndexController@footer_message_delete', 'as' => 'back-admin-footer_message-delete']);
             Route::post('/question/delete/{id}', ['uses' => 'IndexController@question_delete', 'as' => 'back-admin-question-delete']);
+            //Цитаты
+            Route::get('/quotes',['uses' => 'QuotesController@index', 'as' => 'back-admin-quotes-index']);
+            Route::post('/quotes/edit/{id}',['uses' => 'QuotesController@edit', 'as' => 'back-admin-quotes-edit']);
+            Route::post('/quotes/add',['uses' => 'QuotesController@add', 'as' => 'back-admin-quotes-add']);
+            Route::post('/quotes/delete/{id}',['uses' => 'QuotesController@delete', 'as' => 'back-admin-quotes-delete']);
             //Маршруты редактирования и просмотра блога
             Route::get('/blog', ['uses' => 'BlogController@index', 'as' => 'back-admin-blog-index']);
             Route::get('/blog/add', ['uses' => 'BlogController@add', 'as' => 'back-admin-blog-add']);
@@ -99,9 +104,16 @@ Route::group(['middleware' => ['auth', 'web','checkAdmin']], function() {
             Route::post('/blog/tags/delete/{id}', ['uses' => 'BlogController@tagsDelete', 'as' => 'back-admin-blog-tags-delete']);
             //Просмотр и редактирование магазина
             Route::get('/shop', ['uses' => 'ShopController@index', 'as' => 'back-admin-shop-index']);
-            Route::match(['GET','POST'],'/shop/add', ['uses' => 'ShopController@add', 'as' => 'back-admin-shop-add']);
-            Route::match(['GET','POST'],'/shop/edit/{id}', ['uses' => 'ShopController@edit', 'as' => 'back-admin-shop-edit']);
+            Route::get('/shop/add', ['uses' => 'ShopController@getAdd', 'as' => 'back-admin-shop-add']);
+            Route::post('/shop_add', ['uses' => 'ShopController@postAdd', 'as' => 'back-admin-shop_post-add']);
+            Route::get('/shop/edit/{id}', ['uses' => 'ShopController@getEdit', 'as' => 'back-admin-shop-edit']);
+            Route::post('/shop_edit/{id}', ['uses' => 'ShopController@postEdit', 'as' => 'back-admin-shop_post-edit']);
             Route::post('/shop/delete/{id}', ['uses' => 'ShopController@delete', 'as' => 'back-admin-shop-delete']);
+            //Просмотр и редактирование категорий магазина
+            Route::get('/shop_category', ['uses' => 'ShopCategoryController@index', 'as' => 'back-admin-shop_category-index']);
+            Route::post('/shop_category/add', ['uses' => 'ShopCategoryController@add', 'as' => 'back-admin-shop_category-add']);
+            Route::post('/shop_category/edit/{id}', ['uses' => 'ShopCategoryController@edit', 'as' => 'back-admin-shop_category-edit']);
+            Route::post('/shop_category/delete/{id}', ['uses' => 'ShopCategoryController@delete', 'as' => 'back-admin-shop_category-delete']);
             //Просмотр и редактирование названия и описания к бесплатным курсам
             Route::get('/free_courses_name', ['uses' => 'FreeCoursesNameController@index', 'as' => 'back-admin-free-courses-name-index']);
             Route::post('/free_courses_name/add', ['uses' => 'FreeCoursesNameController@postAdd', 'as' => 'back-admin-free-courses-name-post-add']);

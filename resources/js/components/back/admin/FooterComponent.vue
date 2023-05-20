@@ -307,6 +307,36 @@
                                 '</tr>';
                         }
                     }
+                    else if(data.message === 'admin-quotes-index'){
+                        $('#quotes_table').html('');
+                        let quotes_table = document.getElementById('quotes_table');
+                        data.quotes.map((item) => {
+                            quotes_table.innerHTML += '<tr id="q_'+item.id+'">' +
+                                '<td><input class="form-control" name="author_'+item.id+'" id="author_'+item.id+'" value="'+item.author+'"></td>'+
+                                '<td><textarea class="form-control" name="quotes_'+item.id+'" id="quotes_'+item.id+'">'+item.quotes+'</textarea></td>'+
+                                '<td>' +
+                                '<a onclick="quotes_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a onclick="quotes_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                                '</td>'+
+                                '</tr>';
+                        });
+                    }
+                    else if(data.message === 'admin-shop-index'){
+
+                    }
+                    else if(data.message === 'admin-shop_category-index'){
+                        $('#shop_category_table').html('');
+                        let shop_category_table = document.getElementById('shop_category_table');
+                        data.shop_cat.map((item) => {
+                            shop_category_table.innerHTML += '<tr id="shop_cat_'+item.id+'">' +
+                                '<td><input class="form-control" name="name_'+item.id+'" id="name_'+item.id+'" value="'+item.name+'"></td>'+
+                                '<td>' +
+                                '<a onclick="shop_category_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                                '<a onclick="shop_category_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                                '</td>'+
+                                '</tr>';
+                        });
+                    }
                 }
             }
         },
@@ -322,6 +352,7 @@
             this.connection = new WebSocket(wsUri);
         },
         created() {
+
             this.today = new Date();
             this.date_now = this.today.getFullYear();
         },

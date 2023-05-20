@@ -8,29 +8,34 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <router-link to="/admin/shop/add" class="btn btn-block btn-outline-info">Добавить</router-link>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Название</th>
-                                    <th>Описание</th>
-                                    <th>Картинка</th>
-                                    <th>Кнопки</th>
+                                    <th>Автор</th>
+                                    <th>Цитата</th>
+                                    <th style="width:100px">Кнопки</th>
                                 </tr>
                                 </thead>
-                                <tbody id="shop_table">
+                                <tbody id="quotes_table">
 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Название</th>
-                                    <th>Описание</th>
-                                    <th>Картинка</th>
+                                    <th>Автор</th>
+                                    <th>Цитата</th>
                                     <th>Кнопки</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="form-control" name="author" id="author" placeholder="Автор">
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" name="quotes" id="quotes" placeholder="Цитата"></textarea>
+                                    </td>
+                                    <td><a onclick="quotes_add()" class="btn btn-success">Добавить</a></td>
                                 </tr>
                                 </tfoot>
                             </table>
-                            <router-link to="/admin/shop/add" class="btn btn-block btn-outline-info">Добавить</router-link>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -47,21 +52,17 @@
 
 <script>
     export default {
-        name: "ShopComponent",
+        name: "QuotesComponent",
         props:['data'],
         data(){
             return{
                 breadcrumb: {
-                    'title':'Магазин',
+                    'title':'Цитаты',
                     'crumbs':{
                         'first':{
                             'title':'Главная',
                             'link':'/admin'
                         },
-                        'second':{
-                            'title':'Магазин',
-                            'link':'/admin/shop'
-                        }
                     }
                 }
             }
@@ -70,7 +71,6 @@
 
         }
     }
-
 </script>
 
 <style scoped>

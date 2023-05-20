@@ -412,6 +412,105 @@
             }
         });
     }
+    function quotes_add(){
+        let author = document.getElementById('author').value;
+        let quotes = document.getElementById('quotes').value;
+        $.ajax({
+            type:'POST',
+            data:{
+                'quotes':quotes,
+                'author':author,
+            },
+            url:'/admin/quotes/add',
+            success:function (data) {
+                data.map((item) => {
+                    document.getElementById('quotes_table').innerHTML += '<tr id="q_'+item.id+'">' +
+                        '<td><input class="form-control" name="author_'+item.id+'" id="author_'+item.id+'" value="'+item.author+'"></td>'+
+                        '<td><textarea class="form-control" name="quotes_'+item.id+'" id="quotes_'+item.id+'">'+item.quotes+'</textarea></td>'+
+                        '<td>' +
+                        '<a onclick="quotes_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                        '<a onclick="quotes_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                        '</td>'+
+                        '</tr>';
+                })
+            }
+        });
+    }
+    function quotes_edit(id) {
+        let author = document.getElementById('author_'+id).value;
+        let quotes = document.getElementById('quotes_'+id).value;
+        $.ajax({
+            type:'POST',
+            data:{
+                'quotes':quotes,
+                'author':author,
+            },
+            url:'/admin/quotes/edit/'+id,
+            success:function (data) {
+                alert('Успешно изменено!')
+            }
+        });
+    }
+    function quotes_delete(id) {
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:'/admin/quotes/delete/'+id,
+            beforeSend:function(){
+                return confirm("Точно нужно удалить эту цитату!");
+            },
+            success:function (data) {
+                document.getElementById('q_'+id).remove();
+            }
+        });
+    }
+    function shop_category_add(){
+        let name = document.getElementById('name').value;
+        $.ajax({
+            type:'POST',
+            data:{
+                'name':name,
+            },
+            url:'/admin/shop_category/add',
+            success:function (data) {
+                data.map((item) => {
+                    document.getElementById('shop_category_table').innerHTML += '<tr id="shop_cat_'+item.id+'">' +
+                        '<td><input class="form-control" name="name_'+item.id+'" id="name_'+item.id+'" value="'+item.name+'"></td>'+
+                        '<td>' +
+                        '<a onclick="shop_category_edit('+item.id+')" class="btn btn-success"><i class="fa fa-pencil"></i></a>' +
+                        '<a onclick="shop_category_delete('+item.id+')" class="btn btn-danger"><i class="fa fa-trash"></i></a>' +
+                        '</td>'+
+                        '</tr>';
+                })
+            }
+        });
+    }
+    function shop_category_edit(id) {
+        let name = document.getElementById('name_'+id).value;
+        $.ajax({
+            type:'POST',
+            data:{
+                'name':name,
+            },
+            url:'/admin/shop_category/edit/'+id,
+            success:function (data) {
+                alert('Успешно изменено!')
+            }
+        });
+    }
+    function shop_category_delete(id) {
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:'/admin/shop_category/delete/'+id,
+            beforeSend:function(){
+                return confirm("Точно нужно удалить эту категорию!");
+            },
+            success:function (data) {
+                document.getElementById('shop_cat_'+id).remove();
+            }
+        });
+    }
 </script>
 
 

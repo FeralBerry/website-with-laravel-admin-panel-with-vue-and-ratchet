@@ -18,14 +18,14 @@ import HomeComponent from "./components/back/user/HomeComponent";
 
 
 const routes = [
-    {path: '/user', component: HomeComponent},
-    {path: '/user/profile', component: ProfileComponent},
-    {path: '/user/settings', component: SettingsComponent},
-    {path: '/user/free/courses', component: FreeCoursesComponent},
-    {path: '/user/free/course/:id', component: FreeCourseComponent},
-    {path: '/user/pay/courses', component: PayCoursesComponent},
-    {path: '/user/pay/course/:id', component: PayCourseComponent},
-    {path: '/user/buy/courses', component: BuyCoursesComponent},
+    {path: '/user', component: HomeComponent,name:'user_home_index'},
+    {path: '/user/profile', component: ProfileComponent,name:'user_profile_index'},
+    {path: '/user/settings', component: SettingsComponent,name:'user_settings_index'},
+    {path: '/user/free/courses', component: FreeCoursesComponent,name:'user_free_courses_index'},
+    {path: '/user/free/course/:id', component: FreeCourseComponent,name:'user_free_course_index'},
+    {path: '/user/pay/courses', component: PayCoursesComponent,name:'user_pay_courses_index'},
+    {path: '/user/pay/course/:id', component: PayCourseComponent,name:'user_pay_course_index'},
+    {path: '/user/buy/courses', component: BuyCoursesComponent,name:'user_buy_courses_index'},
 ];
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(''),

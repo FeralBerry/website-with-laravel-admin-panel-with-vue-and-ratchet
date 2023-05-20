@@ -80,4 +80,13 @@ class SocketAdminController extends Controller
         ];
         return $data;
     }
+    public function quotes_index($command){
+        $quotes = DB::table('quotes_footer')
+            ->get();
+        $data = [
+            'message' => $command->command,
+            'quotes' => $quotes,
+        ];
+        return $data;
+    }
 }

@@ -57,7 +57,7 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
-        elseif($command->command == 'open_course'){
+        elseif($command->command == 'user_free_open_course_index'){
             $data = $this->socketController->open_course($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
@@ -66,7 +66,7 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
-        elseif($command->command == 'open_free_courses'){
+        elseif($command->command == 'user_free_courses_index'){
             $data = $this->socketController->open_free_courses();
             foreach ($this->clients as $client) {
                 if ($from == $client) {
@@ -74,7 +74,7 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
-        elseif($command->command == 'open_pay_courses'){
+        elseif($command->command == 'user_pay_courses_index'){
             $data = $this->socketController->open_pay_courses($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
@@ -299,6 +299,14 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
+        elseif($command->command == 'admin-shop_category-index'){
+            $data = $this->shopAdminController->shop_category_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
         elseif($command->command == 'admin-slider-index'){
             $data = $this->socketAdminController->slider_index($command);
             foreach ($this->clients as $client) {
@@ -349,6 +357,14 @@ class Chat implements MessageComponentInterface {
         }
         elseif($command->command == 'admin-question-index'){
             $data = $this->socketAdminController->question_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-quotes-index'){
+            $data = $this->socketAdminController->quotes_index($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));

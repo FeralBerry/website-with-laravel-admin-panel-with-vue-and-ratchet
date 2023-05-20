@@ -1746,3 +1746,7 @@ a.animated-button4:hover{
 .note-editor.note-airframe .note-editing-area .note-editable, .note-editor.note-frame .note-editing-area .note-editable{
     min-height: 500px;
 }
+.youtube_frame{
+    width: 400px;
+    height: 300px;
+}

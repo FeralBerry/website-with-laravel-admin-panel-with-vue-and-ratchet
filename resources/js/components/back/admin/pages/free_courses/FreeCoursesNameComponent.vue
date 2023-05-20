@@ -9,6 +9,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <form id="free_courses_name_form" method="post" action="/admin/free_courses_name/add">
+                                <input name="_token" :value="csrf" type="hidden">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <input class="form-control form-control-lg" name="free_courses_name_title" id="free_courses_name_title" type="text" placeholder="Название">
@@ -68,6 +69,7 @@
         props:['data'],
         data(){
             return{
+                csrf:document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 breadcrumb: {
                     'title':'Названия бесплатных курсов',
                     'crumbs':{
