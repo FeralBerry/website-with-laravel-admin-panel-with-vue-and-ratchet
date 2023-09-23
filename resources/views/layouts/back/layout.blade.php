@@ -9,13 +9,15 @@
     <link rel="shortcut icon" href="{{ asset('front/img/favicon.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="user_id" content="{{ Auth::id() }}">
-    @include('layouts.back.up_config')
+    @if(Auth::user()->role == '1')
+        @include('layouts.back.admin.up_config')
+    @else
+        @include('layouts.back.user.up_config')
+    @endif
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper" id="app">
-    <!-- Navbar -->
-    <back-header-component></back-header-component>
-    <!-- /.navbar -->
+    <back-header-component :data='{!! json_encode($data) !!}'></back-header-component>
     <!-- Main Sidebar Container -->
     <left-bar-component :data='{!! json_encode($data) !!}'></left-bar-component>
     <!-- Content Wrapper. Contains page content -->
@@ -23,7 +25,7 @@
         <router-view :data='{!! json_encode($data) !!}'></router-view>
     </div>
     <!-- /.content-wrapper -->
-    <footer-component></footer-component>
+    <footer-component :data='{!! json_encode($data) !!}'></footer-component>
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
@@ -32,9 +34,16 @@
 </div>
 <!-- ./wrapper -->
 
-
-@include('layouts.back.down_config')
-<script src="{{ asset('js/backapp.js') }}"></script>
+@if(Auth::user()->role == '1')
+    @include('layouts.back.admin.down_config')
+@else
+    @include('layouts.back.user.down_config')
+@endif
+@if(Auth::user()->role == '1')
+    <script src="{{ asset('js/adminbackapp.js') }}?v-{{ $data['version'] }}"></script>
+@else
+    <script src="{{ asset('js/backapp.js') }}?v-{{ $data['version'] }}"></script>
+@endif
 </body>
 </html>
 

@@ -19,6 +19,7 @@
                                 <input type="text" id="contact_form_subject" name="subject" value="" size="40" placeholder="Тема обращения" aria-invalid="false" aria-required="true">
                                 <textarea id="contact_form_message" name="message" cols="40" rows="3" placeholder="Сообщение" aria-invalid="false" aria-required="true"></textarea>
                                 <input id="contact_form_button" type="submit" value="Отправить" class="cws-button border-radius alt">
+                                <div id="contact_form_error_message" style="font-size: 25px;color:#f27c66"></div>
                             </form>
                             <!--/contact-form -->
                         </div>
@@ -33,31 +34,27 @@
                                 <p>{{ item.quotes }}</p>
                             </div>
                             <div v-for="item in data.contacts">
-                                <div v-if="item.phone || item.whatsapp || item.telegram">
-                                    <p><strong class="fs-18">Телефон:</strong><br>
-                                        <span v-if="item.phone">
-                                            <a :href="'tel:'+item.phone"><i class="fa fa-phone" aria-hidden="true"></i> Позвонить</a><br>
-                                        </span>
-                                        <span v-if="item.whatsapp">
-                                            <a :href="'https://wa.me/'+item.whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i> Написать </a><br>
-                                        </span>
-                                        <span v-if="item.telegram">
-                                            <a :href="'https://t.me/'+item.telegram"><i class="fa fa-telegram" aria-hidden="true"></i> Написать </a>
-                                        </span>
-                                    </p>
-                                </div>
+                                <p><strong class="fs-18">Телефон:</strong><br>
+                                    <span v-if="item.phone">
+                                        <a :href="'tel:'+item.phone"><i class="fa fa-phone" aria-hidden="true"></i> Позвонить</a><br>
+                                    </span>
+                                    <span v-if="item.whatsapp">
+                                        <a :href="'https://wa.me/'+item.whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i> Написать </a><br>
+                                    </span>
+                                    <span v-if="item.telegram">
+                                        <a :href="'https://t.me/'+item.telegram"><i class="fa fa-telegram" aria-hidden="true"></i> Написать </a>
+                                    </span>
+                                </p>
                             </div>
                             <div v-for="item in data.contacts">
-                                <div v-if="item.email || item.second_email">
-                                    <p><strong class="fs-18">E-mail:</strong><br>
-                                        <span v-if="item.email">
-                                            <a :href="'mailto:'+item.email">{{ item.email }}</a><br>
-                                        </span>
-                                        <span v-if="item.second_email">
-                                            <a :href="'mailto:'+item.second_email">{{ item.second_email }}</a>
-                                        </span>
-                                    </p>
-                                </div>
+                                <p><strong class="fs-18">E-mail:</strong><br>
+                                    <span v-if="item.email">
+                                        <a :href="'mailto:'+item.email">{{ item.email }}</a><br>
+                                    </span>
+                                    <span v-if="item.second_email">
+                                        <a :href="'mailto:'+item.second_email">{{ item.second_email }}</a>
+                                    </span>
+                                </p>
                             </div>
                             <aside class="widget-subscribe">
                                 <ContactLinksComponent

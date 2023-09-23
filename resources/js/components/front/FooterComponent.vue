@@ -133,43 +133,43 @@
                         }
                         if(data.cart === 'cart'){
                             document.querySelector('meta[name="cookie_id"]').setAttribute("content", data.cookie_id);
-                            let cart = document.getElementById('cart');
-                            if(data.users_cart != null){
-                                cart.style.display = 'block';
-                                cart.innerHTML = '';
-                                let cart_price;
-                                let cart_price_with_percent;
-                                if(data.cart_price == 0){
-                                    cart_price = 0;
-                                    cart_price_with_percent = 0;
-                                } else {
-                                    cart_price = data.cart_price;
-                                    cart_price_with_percent = data.cart_price_with_percent;
+                            if(window.screen.width > 800){
+                                let cart = document.getElementById('cart');
+                                if(data.users_cart != null){
+                                    cart.style.display = 'block';
+                                    cart.innerHTML = '';
+                                    let cart_price;
+                                    let cart_price_with_percent;
+                                    if(data.cart_price == 0){
+                                        cart_price = 0;
+                                        cart_price_with_percent = 0;
+                                    } else {
+                                        cart_price = data.cart_price;
+                                        cart_price_with_percent = data.cart_price_with_percent;
+                                    }
+                                    data.users_cart.map((item) => {
+                                        let price = Math.round(((item.price + (item.sub_price/100)) - (item.price + (item.sub_price/100)) *item.percent/100) * 100) / 100;
+                                        cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>' +
+                                            '                                        <div class="col-md-8">' +
+                                            '                                            <p><span class="cart_item_title">'+item.name+'</span></p>' +
+                                            '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
+                                            '                                        </div>' +
+                                            '                                        <div class="col-md-1">' +
+                                            '                                            <span class="del_cart" onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
+                                            '                                        </div></li>';
+                                    });
+                                    cart.innerHTML += '<li>Стоимость покупок: '+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</li>'+
+                                        '<li>' +
+                                        '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' +
+                                        '                        </li>';
                                 }
-                                data.users_cart.map((item) => {
-                                    let price = Math.round(((item.price + (item.sub_price/100)) - (item.price + (item.sub_price/100)) *item.percent/100) * 100) / 100;
-                                    cart.innerHTML += '<li class="cart row" style="padding: 10px"><div class="col-md-3" style="background-image: url(/front/img/shop/'+item.img+');background-size: cover"></div>' +
-                                        '                                        <div class="col-md-8">' +
-                                        '                                            <p><span class="cart_item_title">'+item.name+'</span></p>' +
-                                        '                                            <span class="price"><span class="amount">'+price+' <sup><del>'+item.price+'.'+item.sub_price+'</del></sup>₽</span></span>' +
-                                        '                                        </div>' +
-                                        '                                        <div class="col-md-1">' +
-                                        '                                            <span class="del_cart" onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span>' +
-                                        '                                        </div></li>';
-                                });
-                                cart.innerHTML += '<li>Стоимость покупок: '+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</li>'+
-                                    '<li>' +
-                                    '                            <a href="/cart" rel="nofollow" class="cws-button border-radius icon-left alt"> <i class="fa fa-shopping-cart"></i> В корзину</a>' +
-                                    '                        </li>';
-                            }
-                            if(data.users_cart === undefined || data.users_cart.length === 0) {
-                                cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
+                                if(data.users_cart === undefined || data.users_cart.length === 0) {
+                                    cart.innerHTML = '<li class="cart row" style="padding: 10px"><h3>Пока корзина пуста</h3></li>';
+                                }
                             }
                         }
                         if(data.message === 'front_shop') {
                             $('#products').html('');
-                            document.querySelector('meta[name="description"]').setAttribute("content", "" + data.seo.description + "");
-                            document.querySelector('head title').textContent = data.seo.title;
                             data.shop.data.map((item) => {
                                 let new_sale = '<div class="ribbon ribbon-blue"></div>';
                                 if (item.new === 1){
@@ -204,35 +204,37 @@
                                     }
                                 });
                                 let rating_width = item.rating * 100 / 5;
-                                document.getElementById('products').innerHTML += '<li class="product">' +
-                                    '<div class="picture">' + new_sale +
-                                    '<a href="/shop/product/'+item.id+'"><img src="'+img+'" data-at2x="'+img+'" alt="">' +
-                                    '<span class="hover-effect"></span></a>' +
-                                    '<div class="link-cont">' +
-                                    '<a href="'+img+'" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
-                                    '<a href="/shop/product/'+item.id+'" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '<div class="product-name">' +
-                                    '<a href="/shop/product/'+item.id+'">'+item.name+'</a>' +
-                                    '</div>' +
-                                    '<div class="star-rating" >' +
-                                    '<a class="shop_rating" data_rating="1" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' +
-                                    '<a class="shop_rating" data_rating="2" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -76px;position:absolute;width: 22px;height: 24px"></a>' +
-                                    '<a class="shop_rating" data_rating="3" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -57px;position:absolute;width: 20px;height: 24px"></a>' +
-                                    '<a class="shop_rating" data_rating="4" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -39px;position:absolute;width: 20px;height: 24px"</a>' +
-                                    '<a class="shop_rating" data_rating="5" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -20px;position:absolute;width: 24px;height: 24px"></a>' +
-                                    '<span id="rating_width_'+item.id+'" style="width:'+rating_width+'%">' +
-                                    '</div>' +
-                                    '<span class="price">' +
-                                    '<span class="amount">'+sale_price+'&#32;<sup><del>'+item.price+'.'+item.sub_price+'</del></sup>&#8381;</span>' +
-                                    '</span>' +
-                                    '<div class="product-description">' +
-                                    '<div class="short-description">' +
-                                    '<p>'+description+'</p>' +
-                                    '</div>' +
-                                    '</div>' + link +
-                                    '</li>';
+                                if (document.getElementById("products") !== null) {
+                                    document.getElementById('products').innerHTML += '<li class="product">' +
+                                        '<div class="picture">' + new_sale +
+                                        '<a href="/shop/product/'+item.id+'"><img src="'+img+'" data-at2x="'+img+'" alt="">' +
+                                        '<span class="hover-effect"></span></a>' +
+                                        '<div class="link-cont">' +
+                                        '<a href="'+img+'" class="cws-right cws-slide-left "><i class="fa fa-search"></i></a>' +
+                                        '<a href="/shop/product/'+item.id+'" class=" cws-left cws-slide-right"><i class="fa fa-link"></i></a>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="product-name">' +
+                                        '<a href="/shop/product/'+item.id+'">'+item.name+'</a>' +
+                                        '</div>' +
+                                        '<div class="star-rating" >' +
+                                        '<a class="shop_rating" data_rating="1" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -98px;position:absolute;width: 24px;height: 24px"></a>' +
+                                        '<a class="shop_rating" data_rating="2" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -76px;position:absolute;width: 22px;height: 24px"></a>' +
+                                        '<a class="shop_rating" data_rating="3" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -57px;position:absolute;width: 20px;height: 24px"></a>' +
+                                        '<a class="shop_rating" data_rating="4" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -39px;position:absolute;width: 20px;height: 24px"</a>' +
+                                        '<a class="shop_rating" data_rating="5" data_shop_id="'+item.id+'" style="z-index:10;margin-left: -20px;position:absolute;width: 24px;height: 24px"></a>' +
+                                        '<span id="rating_width_'+item.id+'" style="width:'+rating_width+'%">' +
+                                        '</div>' +
+                                        '<span class="price">' +
+                                        '<span class="amount">'+sale_price+'&#32;<sup><del>'+item.price+'.'+item.sub_price+'</del></sup>&#8381;</span>' +
+                                        '</span>' +
+                                        '<div class="product-description">' +
+                                        '<div class="short-description">' +
+                                        '<p>'+description+'</p>' +
+                                        '</div>' +
+                                        '</div>' + link +
+                                        '</li>';
+                                }
                             });
                             $('#shop_category_link').html('')
                             let paginate_item = document.getElementById('paginate_item');
@@ -268,8 +270,6 @@
                             }
                         }
                         else if(data.message === 'front_blog_article'){
-                            document.querySelector('meta[name="description"]').setAttribute("content", ""+data.seo.description+"");
-                            document.querySelector('head title').textContent = data.seo.title;
                             let blog_article = document.getElementById('blog_article');
                             let comments = document.getElementById('comments');
                             let last_news = document.getElementById('last_news');
@@ -302,6 +302,10 @@
                             });
                             comments.innerHTML += '</ol>';
                             data.blog.map((item) => {
+                                console.log(item.description)
+                                let seo_description = item.description.replace(/<\/?[a-zA-Z]+>/gi,'').substr(0, 160);
+                                document.querySelector('meta[name="description"]').setAttribute("content", ""+seo_description+"");
+                                document.querySelector('head title').textContent = item.title;
                                 document.getElementById('blog_id').value = item.id;
                                 let date = new Date(item.created_at);
                                 let mounth = date.getMonth();
@@ -319,20 +323,13 @@
                                 if(mounth === 12){mounth = 'Дек'}
                                 let day = date.getDate();
                                 let tags_post = document.getElementById('tags-post');
-                                let tags;
-                                if(item.tags.length > 1){
-                                    if(item.tags.indexOf(';') >0){
-                                        tags = item.tags.split(';');
+                                let blog_tags = document.getElementById('blog_tags');
+                                if(item.tags_name.length > 1){
+                                    for(let i = 0; i < item.tags_name.length; i++){
+                                        tags_post.innerHTML += '<a href="#"><i class="'+item.tags_icon[i]+'"></i>'+item.tags_name[i]+'</a>';
+                                        blog_tags.innerHTML += '<a href="#" rel="tag">'+item.tags_name[i]+'</a> ';
                                     }
-                                    let k = 0;
-                                    data.blog_tags.map((i) => {
-                                        if(i.id == tags[k]){
-                                            tags_post.innerHTML += '<a href="#"><i class="'+i.icon+'"></i>'+i.name+'</a>';
-                                        }
-                                        k++
-                                    });
                                 }
-
                                 blog_article.innerHTML = '<div class="post-info">' +
                                     '<div class="date-post">' +
                                     '<div class="day">'+day+'</div>' +
@@ -343,15 +340,11 @@
                                     '</div>' +
                                     '<div class="comments-post" id="comments-post"><i class="fa fa-comment"></i> '+data.count_comments+'</div>' +
                                     '</div>' +
-                                    +item.description;
+                                    item.description;
                             });
 
                             data.last_news.map((item) => {
                                 last_news.innerHTML += '<li class="cat-item cat-item-1 current-cat"><a href="/blog/article/'+item.id+'">'+item.title+'</a></li>';
-                            });
-                            let blog_tags = document.getElementById('blog_tags');
-                            data.blog_tags.map((item) => {
-                                blog_tags.innerHTML += '<a href="#" rel="tag">'+item.name+'</a> ';
                             });
                         }
                         else if(data.message === 'blog_comment_add'){
@@ -392,10 +385,6 @@
                         }
                         else if(data.message === 'front_blog'){
                             $("#blog_items").html("");
-                            data.seo.map((item) => {
-                                document.querySelector('meta[name="description"]').setAttribute("content", ""+item.description+"");
-                                document.querySelector('head title').textContent = item.title;
-                            });
                             data.blog.data.map((item) => {
                                 let date = new Date(item.created_at);
                                 let hour = date.getHours();
@@ -751,8 +740,7 @@
                                         '</div>' +
                                         '</div>' +
                                         '<div class="col-md-2 cart_table_item"><span class="amount">'+price+'<del><sup>'+item.price+'.'+item.sub_price+'</sup></del> <sup>&#8381;</sup></span></div>' +
-                                        '<div class="col-md-1 cart_table_item"><a onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></a></div>';
-
+                                        '<div class="col-md-1 cart_table_item"><span class="del_cart" onclick="return delete_cart('+item.id+')"><i class="fa fa-times" aria-hidden="true"></i></span></div>';
                                 });
                             } else{
                                 cart_products.innerHTML = '<div class="col-md-12 cart_table_item">Пока Ваша корзина пуста</div>';
@@ -765,6 +753,31 @@
                                 cart_price_with_percent = data.cart_price_with_percent;
                                 document.getElementById('cart_price').innerHTML = '<div class="col-md-9">Стоимоть:</div>' +
                                     '                            <div class="col-md-3">'+cart_price_with_percent+'<del><sup>'+cart_price+'</sup></del>&#8381;</div>'
+                            }
+                        }
+                        else if(data.message === "contact_form_message"){
+                            let contact_form_error_message = document.getElementById('contact_form_error_message');
+                            if(data.error_msg === 'success'){
+                                let contact_form_button = document.getElementById('contact_form_button');
+                                setTimeout(function () {
+                                        $('#contact_form_button').value = 'Сообщение успешно отправлено'
+                                    }
+                                    ,5000);
+                                setTimeout(function () {
+                                        $('#contact_form_button').value = 'Отправить'
+                                    }
+                                    ,5000);
+                            }
+                            else  {
+                                contact_form_error_message.innerHTML = data.error_msg
+                                setTimeout(function () {
+                                        $('#contact_form_error_message').fadeOut('fast');
+                                    }
+                                    ,5000);
+                                setTimeout(function () {
+                                        $('#contact_form_error_message').html('');
+                                    }
+                                    ,5000);
                             }
                         }
                     }
@@ -781,6 +794,12 @@
         },
         created() {
             let con = this;
+            this.data.seo.map((item) => {
+                if(window.location.pathname === item.url){
+                    document.querySelector('meta[name="description"]').setAttribute("content", "" + item.description + "");
+                    document.querySelector('head title').textContent = item.title;
+                }
+            });
             setTimeout(function () {
                 if (window.location.href.indexOf('shop')) {
                     con.connection.send('{"command":"cart"}')
@@ -852,8 +871,6 @@
                 let contact_form_subject = document.getElementById('contact_form_subject').value;
                 let contact_form_message = document.getElementById('contact_form_message').value;
                 con.connection.send('{"command":"contact_form_message","contact_form_name":"'+contact_form_name+'","contact_form_email":"'+contact_form_email+'","contact_form_subject":"'+contact_form_subject+'","contact_form_message":"'+contact_form_message+'"}');
-                let contact_form_button = document.getElementById('contact_form_button');
-                contact_form_button.value = 'Сообщение успешно отправлено'
             });
             this.data.footer_blog.map((item) => {
                 let brief = '';

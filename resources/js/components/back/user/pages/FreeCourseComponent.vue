@@ -12,7 +12,9 @@
                                         <video :src="courses.link" controls width="600" height="400"></video>
                                     </template>
                                     <template v-if="courses.youtube != null">
-                                        <iframe width="600" height="400" :src="courses.youtube" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                        <div v-html="courses.youtube" style="margin: 10px">
+
+                                        </div>
                                     </template>
                                     {{ courses.description }}
                                 </template>
@@ -68,13 +70,7 @@
         },
 
         created() {
-            let connection = new WebSocket("ws://127.0.0.1:4710");
-            let user_id = document.querySelector('meta[name="user_id"]').content;
-            connection.onopen = function(event){
-                connection.send('{"command":"connect","user_id":"'+user_id+'"}');
-            };
             let i = 0;
-
             this.data.free_courses_navigate.map((item) => {
                 this.courses_navigate[i] = item;
                 this.breadcrumb = {

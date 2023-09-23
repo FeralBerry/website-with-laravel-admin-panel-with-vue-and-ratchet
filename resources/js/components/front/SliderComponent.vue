@@ -1,6 +1,6 @@
 <template>
     <div class="banner">
-        <div class="slider" :style="{'margin-left':'-'+(100*currentSlideIndex)+'%'}">
+        <div class="slider" :style="{'width':''+(100*this.count_slide)+'%','margin-left':'-'+(100*currentSlideIndex)+'%'}">
             <SlideItemComponent
             v-for="item in this.data.data"
             :key="item.id"
@@ -23,7 +23,8 @@
         data(){
             return{
                 currentSlideIndex:0,
-                interval:5000
+                interval:5000,
+                count_slide:0
             }
         },
         created() {
@@ -46,6 +47,7 @@
             }
         },
         mounted() {
+            this.count_slide = this.data.data.length;
             if(this.interval > 0){
                 let wm = this;
                 setInterval(function(){
@@ -77,5 +79,34 @@
     .slider_link:hover{
         color:#444;
         background: rgba(255, 255, 255);
+    }
+    @media (max-device-width : 375px){
+        .slider_link{
+            display: none;
+        }
+        .banner{
+            min-height: 600px;
+        }
+    }
+    @media (min-device-width : 376px) and (max-device-width : 393px){
+        .slider_link{
+            display: none;
+        }
+        .banner{
+            min-height: 700px;
+        }
+    }
+    @media (min-device-width : 394px) and (max-device-width : 414px){
+        .slider_link{
+            display: none;
+        }
+        .banner{
+            min-height: 700px;
+        }
+    }
+    @media (min-device-width : 414px) and (max-device-width : 820px){
+        .banner{
+            min-height: 700px;
+        }
     }
 </style>

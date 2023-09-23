@@ -1737,3 +1737,16 @@ a.animated-button4:hover{
         transform: translateY(100%);
     }
 }
+.nav-item{
+    width: 100%;
+}
+.note-editor .note-toolbar, .note-popover .popover-content{
+    background-color: #343a40;
+}
+.note-editor.note-airframe .note-editing-area .note-editable, .note-editor.note-frame .note-editing-area .note-editable{
+    min-height: 500px;
+}
+.youtube_frame{
+    width: 400px;
+    height: 300px;
+}

@@ -12,7 +12,7 @@ class BuyCoursesController extends BackController
         parent::__construct();
     }
     public function index(){
-        $data = array_merge($this->mainData(),[
+        $data = array_merge($this->userData(),[
 
         ]);
         return view('back.user.index',['data' => $data]);

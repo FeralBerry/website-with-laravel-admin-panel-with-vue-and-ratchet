@@ -13,10 +13,11 @@ class BackController extends Controller
     public function __construct(){
 
     }
-    protected function mainData(){
+    protected function userData(){
         $auth = false;
         $auth_user_name = '';
         $auth_user_id = '';
+        $auth_user_avatar = '';
         $last_open_free_course_id = '';
         $last_open_pay_course_id = '';
         if(Auth::user()){
@@ -47,6 +48,11 @@ class BackController extends Controller
             $free_courses = $this->payCourses($url);
             $free_courses_navigate = $this->payCoursesNavigate($url);
         }
+        $version = DB::table('version')
+            ->get();
+        foreach($version as $item){
+            $version = $item->version;
+        }
         $data = [
             'auth' => $auth,
             'user_name' => $auth_user_name,
@@ -60,6 +66,32 @@ class BackController extends Controller
             'pay_courses_name' => $this->payCoursesName(),
             'pay_courses' => $pay_courses,
             'pay_courses_navigate' => $pay_courses_navigate,
+            'version' => $version,
+        ];
+        return $data;
+    }
+    public function adminData(){
+        $auth = false;
+        $auth_user_name = '';
+        $auth_user_avatar = '';
+        $auth_user_id = '';
+        if(Auth::user()){
+            $auth = true;
+            $auth_user_name = Auth::user()->name;
+            $auth_user_id = Auth::user()->id;
+            $auth_user_avatar = Auth::user()->avatar;
+        }
+        $version = DB::table('version')
+            ->get();
+        foreach($version as $item){
+            $version = $item->version;
+        }
+        $data = [
+            'auth' => $auth,
+            'user_name' => $auth_user_name,
+            'auth_user_avatar' => $auth_user_avatar,
+            'auth_user_id' => $auth_user_id,
+            'version' => $version,
         ];
         return $data;
     }

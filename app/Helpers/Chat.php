@@ -1,10 +1,15 @@
 <?php
 namespace App\Helpers;
-use App\Http\Controllers\Back\ChatController;
+use App\Http\Controllers\Back\Admin\Socket\BlogController;
+use App\Http\Controllers\Back\Admin\Socket\BlogTagsController;
+use App\Http\Controllers\Back\Admin\Socket\FreeCoursesController;
+use App\Http\Controllers\Back\Admin\Socket\PayCoursesController;
+use App\Http\Controllers\Back\Admin\Socket\ShopController;
+use App\Http\Controllers\Back\SocketAdminController;
+use App\Http\Controllers\Back\SocketController;
 use Illuminate\Support\Facades\DB;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-use function Illuminate\Session\userId;
 
 
 class Chat implements MessageComponentInterface {
@@ -12,11 +17,24 @@ class Chat implements MessageComponentInterface {
     protected $rooms;
     protected $users_name;
     protected $user_id;
-    protected $chatController;
+    protected $socketController;
+    protected $socketAdminController;
+    protected $blogAdminController;
+    protected $blogTagsAdminController;
+    protected $freeCoursesAdminController;
+    protected $payCoursesAdminController;
+    protected $shopAdminController;
 
     public function __construct() {
         $this->clients = new \SplObjectStorage;
-        $this->chatController = new ChatController;
+        $this->socketController = new SocketController;
+        $this->socketAdminController = new SocketAdminController;
+        $this->blogAdminController = new BlogController;
+        $this->blogTagsAdminController = new BlogTagsController;
+        $this->freeCoursesAdminController = new FreeCoursesController;
+        $this->payCoursesAdminController = new PayCoursesController;
+        $this->shopAdminController = new PayCoursesController;
+        $this->shopAdminController = new ShopController;
     }
 
     public function onOpen(ConnectionInterface $conn) {
@@ -32,15 +50,15 @@ class Chat implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg) {
         $command = json_decode($msg);
         if($command->command == 'connect'){
-            $data = $this->chatController->connect($command);
+            $data = $this->socketController->connect($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-        elseif ($command->command == 'open_course'){
-            $data = $this->chatController->open_course($command);
+        elseif($command->command == 'user_free_open_course_index'){
+            $data = $this->socketController->open_course($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     dump($client->resourceId);
@@ -48,32 +66,32 @@ class Chat implements MessageComponentInterface {
                 }
             }
         }
-        elseif ($command->command == 'open_free_courses'){
-            $data = $this->chatController->open_free_courses();
+        elseif($command->command == 'user_free_courses_index'){
+            $data = $this->socketController->open_free_courses();
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-        elseif ($command->command == 'open_pay_courses'){
-            $data = $this->chatController->open_pay_courses($command);
+        elseif($command->command == 'user_pay_courses_index'){
+            $data = $this->socketController->open_pay_courses($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-        elseif ($command->command == 'open_buy_courses'){
-            $data = $this->chatController->open_buy_courses($command);
+        elseif($command->command == 'open_buy_courses'){
+            $data = $this->socketController->open_buy_courses($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-        elseif ($command->command == 'front_footer_message'){
-            $data = $this->chatController->front_footer_message($command);
+        elseif($command->command == 'front_footer_message'){
+            $data = $this->socketController->front_footer_message($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -81,7 +99,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'front_blog'){
-            $data = $this->chatController->front_blog($command);
+            $data = $this->socketController->front_blog($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -89,15 +107,15 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'front_blog_article'){
-            $data = $this->chatController->front_blog_article($command);
+            $data = $this->socketController->front_blog_article($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-        elseif ($command->command == 'blog_comment_add'){
-            $data = $this->chatController->blog_comment_add($command);
+        elseif($command->command == 'blog_comment_add'){
+            $data = $this->socketController->blog_comment_add($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -108,7 +126,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'front_shop'){
-            $data = $this->chatController->front_shop($command);
+            $data = $this->socketController->front_shop($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -116,7 +134,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'add_to_cart'){
-            $data = $this->chatController->add_to_cart($command);
+            $data = $this->socketController->add_to_cart($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -124,37 +142,37 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'front_index'){
-            $data = $this->chatController->front_index();
+            $data = $this->socketController->front_index();
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-        elseif ($command->command == 'cart'){
-            $data = array_merge($this->chatController->cart(),['cart' => 'cart']);
+        elseif($command->command == 'cart'){
+            $data = array_merge($this->socketController->cart(),['cart' => 'cart']);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-        elseif ($command->command == 'front_cart'){
-            $data = $this->chatController->front_cart();
+        elseif($command->command == 'front_cart'){
+            $data = $this->socketController->front_cart();
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-        elseif ($command->command == 'shop_rating'){
-            $data = $this->chatController->shop_rating($command);
+        elseif($command->command == 'shop_rating'){
+            $data = $this->socketController->shop_rating($command);
             foreach ($this->clients as $client) {
                 $client->send(json_encode($data));
             }
         }
         elseif($command->command == 'shop_search'){
-            $data = $this->chatController->shop_search($command);
+            $data = $this->socketController->shop_search($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -162,7 +180,7 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'blog_search'){
-            $data = $this->chatController->blog_search($command);
+            $data = $this->socketController->blog_search($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
@@ -170,14 +188,189 @@ class Chat implements MessageComponentInterface {
             }
         }
         elseif($command->command == 'contact_form_message'){
-            $data = $this->chatController->contact_form_message($command);
+            $data = $this->socketController->contact_form_message($command);
             foreach ($this->clients as $client) {
                 if ($from == $client) {
                     $client->send(json_encode($data));
                 }
             }
         }
-
+        elseif($command->command == 'admin-index'){
+            $data = $this->socketAdminController->index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-blog-index'){
+            $data = $this->blogAdminController->blog_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-blog-add'){
+            $data = $this->blogAdminController->blog_add($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-blog-tags-index'){
+            $data = $this->blogTagsAdminController->blog_tags_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-free-courses-name-index'){
+            $data = $this->freeCoursesAdminController->free_courses_name_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-pay-courses-name-index'){
+            $data = $this->payCoursesAdminController->pay_courses_name_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-free-courses-index'){
+            $data = $this->freeCoursesAdminController->free_courses_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-free-courses-add'){
+            $data = $this->freeCoursesAdminController->free_courses_add($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-pay-courses-index'){
+            $data = $this->payCoursesAdminController->pay_courses_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-pay-courses-add'){
+            $data = $this->payCoursesAdminController->pay_courses_add($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-shop-index'){
+            $data = $this->shopAdminController->shop_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-shop-add'){
+            $data = $this->shopAdminController->shop_add($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-shop-edit'){
+            $data = $this->shopAdminController->shop_edit($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-shop_category-index'){
+            $data = $this->shopAdminController->shop_category_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-slider-index'){
+            $data = $this->socketAdminController->slider_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-faq-slider-index'){
+            $data = $this->socketAdminController->faq_slider_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-navigate-index'){
+            $data = $this->socketAdminController->navigate_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-contact-index'){
+            $data = $this->socketAdminController->contact_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-seo-index'){
+            $data = $this->socketAdminController->seo_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-users-index'){
+            $data = $this->socketAdminController->users_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-question-index'){
+            $data = $this->socketAdminController->question_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
+        elseif($command->command == 'admin-quotes-index'){
+            $data = $this->socketAdminController->quotes_index($command);
+            foreach ($this->clients as $client) {
+                if ($from == $client) {
+                    $client->send(json_encode($data));
+                }
+            }
+        }
     }
     public function onClose(ConnectionInterface $conn) {
         $users = DB::table('users')

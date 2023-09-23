@@ -12,13 +12,13 @@ class FreeCoursesController extends BackController
         parent::__construct();
     }
     public function index(){
-        $data = array_merge($this->mainData(),[
+        $data = array_merge($this->userData(),[
             'free_courses_name' => $this->freeCoursesName(),
         ]);
         return view('back.user.index',['data' => $data]);
     }
     public function singleCourse($id){
-        $data = array_merge($this->mainData(),[
+        $data = array_merge($this->userData(),[
             'free_courses_navigate' => $this->freeCoursesNavigate($id),
             'free_courses' => $this->freeCourses($id)
         ]);

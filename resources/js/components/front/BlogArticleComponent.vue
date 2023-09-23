@@ -10,7 +10,6 @@
                         <div class="blog-post">
                             <article id="blog_article">
 
-
                             </article>
                             <div class="tags-post" id="tags-post">
 

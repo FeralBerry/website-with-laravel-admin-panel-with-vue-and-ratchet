@@ -32,8 +32,6 @@
     <link rel="stylesheet" href="{{ asset('front/fi/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/main.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('front/tuner/css/colorpicker.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('front/tuner/css/styles.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('front/css/jquery.fancybox.css') }}" />
     <link rel="stylesheet" href="{{ asset('front/css/owl.carousel.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('front/rs-plugin/css/settings.css') }}" media="screen">
@@ -67,8 +65,6 @@
 <script src="{{ asset('front/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('front/js/jflickrfeed.min.js') }}"></script>
 <script src="{{ asset('front/js/jquery.tweet.js') }}"></script>
-<script type="text/javascript" src="{{ asset('front/tuner/js/colorpicker.js') }}"></script>
-<script type="text/javascript" src="{{ asset('front/tuner/js/scripts.js') }}"></script>
 <script src="{{ asset('front/js/jquery.fancybox.pack.js') }}"></script>
 <script src="{{ asset('front/js/jquery.fancybox-media.js') }}"></script>
 
